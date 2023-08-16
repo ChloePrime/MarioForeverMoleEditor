@@ -7,7 +7,7 @@ using MixelTools.Util.Extensions;
 namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
-[Icon("res://objects/mario_resources/T_icon.png")]
+[Icon("res://objects/_internal/mario_resources/T_icon.png")]
 public partial class Mario : CharacterBody2D
 {
     #region Movement Params
@@ -193,6 +193,10 @@ public partial class Mario : CharacterBody2D
 
     private void SetSize(MarioSize size)
     {
+        for (var i = 0; i < CollisionBySize.Count; i++)
+        {
+            CollisionBySize[i].Disabled = i != (int)size;
+        }
         _hurtZone.SetSize(size);
         _deathZone.SetSize(size);
         _currentSize = size;
