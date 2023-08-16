@@ -13,8 +13,53 @@ namespace ChloePrime.MarioForever;
 [GlobalClass]
 public partial class MaFoLevel : Node
 {
+	[Export]
+	public AudioStream LevelMusic
+	{
+		get => _levelMusic;
+		set => SetMusic(value);
+	}
+
+	public void StopMusic()
+	{
+		LevelMusic = null;
+	}
+
+	private void SetMusic(AudioStream music)
+	{
+		if (_levelMusic == music)
+		{
+			return;
+		}
+		_levelMusic = music;
+		RefreshMusic();
+	}
+
+	private void RefreshMusic()
+	{
+		if (_musicPlayer is not { } player) return;
+		if (_levelMusic != null)
+		{
+			player.Stream = _levelMusic;
+			player.Play();
+		}
+		else
+		{
+			player.Stop();
+		}
+	}
+	
 	public override void _Ready()
 	{
+		_musicPlayer = new AudioStreamPlayer();
+		_musicPlayer.Name = MusicPlayerName;
+		AddChild(_musicPlayer);
+
+		if (LevelMusic is not null)
+		{
+			RefreshMusic();
+		}
+		
 		var children = GetChildren();
 		foreach (var tilemap in children.OfType<TileMap>())
 		{
@@ -25,6 +70,10 @@ public partial class MaFoLevel : Node
 			ProcessTilemapSeperated(tilemapRoot);
 		}
 	}
+
+	private AudioStreamPlayer _musicPlayer;
+	private AudioStream _levelMusic;
+	private static readonly StringName MusicPlayerName = "Music Player";
 
 	private enum TilemapType
 	{

@@ -1,20 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=8 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/MaFoLevel.cs" id="1_2aafd"]
-[ext_resource type="PackedScene" uid="uid://boesx84engrat" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/mario.tscn" id="3_5usbp"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
+[ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://objects/music_changer.tscn" id="6_5ta4l"]
+[ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_2aafd")
+LevelMusic = ExtResource("2_4kt55")
 
 [node name="Tiles" parent="." instance=ExtResource("1_xiix0")]
 
 [node name="Mario" parent="." instance=ExtResource("3_5usbp")]
-position = Vector2(106, 402)
+position = Vector2(112, 416)
 FastRetry = true
 
 [node name="MaFoCamera" type="Camera2D" parent="."]
 position = Vector2(320, 240)
 script = ExtResource("4_jc67v")
 Border = Rect2(0, 0, 1280, 480)
+
+[node name="Music Changer" parent="." instance=ExtResource("6_5ta4l")]
+position = Vector2(496, -16)
+TargetMusic = ExtResource("7_a81sv")
