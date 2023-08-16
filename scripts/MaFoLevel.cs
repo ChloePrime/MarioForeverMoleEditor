@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -31,13 +30,13 @@ public partial class MaFoLevel : Node
 	{
 		None,
 		SolidOnly,
-		DamageSource
+		DamageSource,
+		DeathSource,
 	}
 
 	private static readonly Dictionary<StringName, TilemapType> TypeLookup = new()
 	{
 		{ "Collision", TilemapType.SolidOnly },
-		{ "DamageSource", TilemapType.DamageSource }
 	};
 
 	private static void ProcessTilemapSeperated(Node tilemapRoot) => ProcessTilemapCore(tilemapRoot, TilemapType.None);
@@ -54,17 +53,11 @@ public partial class MaFoLevel : Node
 			var type = typeByName == TilemapType.None ? baseType : typeByName;
 			if (node is TileMap tilemap)
 			{
-				int layers;
 				switch (type)
 				{
 					case TilemapType.SolidOnly:
-						layers = tilemap.GetLayersCount();
-						for (var i = 0; i < layers; i++)
-						{
-							tilemap.SetLayerModulate(i, Colors.Transparent);
-						}
+						tilemap.Visible = false;
 						break;
-					case TilemapType.DamageSource:
 					case TilemapType.None:
 					default:
 						break;

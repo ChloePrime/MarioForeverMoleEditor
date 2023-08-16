@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/MaFoLevel.cs" id="1_2aafd"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" uid="uid://boesx84engrat" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/mario.tscn" id="3_5usbp"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
 
@@ -10,9 +10,8 @@ script = ExtResource("1_2aafd")
 
 [node name="Tiles" parent="." instance=ExtResource("1_xiix0")]
 
-[node name="Mario" parent="." node_paths=PackedStringArray("HurtZoneBySize") instance=ExtResource("3_5usbp")]
+[node name="Mario" parent="." instance=ExtResource("3_5usbp")]
 position = Vector2(106, 402)
-HurtZoneBySize = []
 FastRetry = true
 
 [node name="MaFoCamera" type="Camera2D" parent="."]

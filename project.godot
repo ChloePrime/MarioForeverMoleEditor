@@ -89,6 +89,8 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
 
 2d_physics/layer_1="Solid"
 2d_physics/layer_9="DamageSource"
+2d_physics/layer_10="DeathSource"
+2d_physics/layer_11="Coins"
 
 [physics]
 

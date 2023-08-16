@@ -103,12 +103,12 @@
     "project": "tiled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "tiles/TS_collision.tsx",
         "tiles/TS_0x1pack_2.tsx",
         "levels/example/example_tiles.tmx",
         "tiles/TS_spikes.tsx",
         "tiles/TS_0x1pack_6.tsx",
         "tiles/TS_grass_green.tsx",
-        "tiles/TS_collision.tsx",
         "tiles/TS_0x1pack_1.tsx",
         "tiles/TS_0x1pack_3.tsx",
         "tiles/TS_0x1pack_4.tsx",

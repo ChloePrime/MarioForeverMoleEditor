@@ -79,7 +79,6 @@ public partial class Mario : CharacterBody2D
     /// <see cref="MarioSize"/> 本数组适用的 key 值
     [ExportGroup("Mario Collision")]
     [Export] public Array<CollisionShape2D> CollisionBySize { get; private set; }
-    [Export] public Array<CollisionShape2D> HurtZoneBySize { get; private set; }
 
     
     [ExportGroup("RPG")]
@@ -194,14 +193,8 @@ public partial class Mario : CharacterBody2D
 
     private void SetSize(MarioSize size)
     {
-        for (var i = 0; i < CollisionBySize.Count; i++)
-        {
-            CollisionBySize[i].Disabled = i != (int)size;
-        }
-        for (var i = 0; i < HurtZoneBySize.Count; i++)
-        {
-            HurtZoneBySize[i].Disabled = i != (int)size;
-        }
+        _hurtZone.SetSize(size);
+        _deathZone.SetSize(size);
         _currentSize = size;
     }
 
@@ -311,6 +304,7 @@ public partial class Mario : CharacterBody2D
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
         this.GetNode(out _hurtZone, Constants.NpHurtZone);
+        this.GetNode(out _deathZone, Constants.NpDeathZone);
         this.GetNode(out _jumpSound, Constants.NpJumpSound);
         this.GetNode(out _swimSound, Constants.NpSwimSound);
         this.GetNode(out _hurtSound, Constants.NpHurtSound);
@@ -319,6 +313,7 @@ public partial class Mario : CharacterBody2D
 
         _hurtZone.BodyEntered += _ => _hurtStack++;
         _hurtZone.BodyExited += _ => _hurtStack--;
+        _deathZone.BodyEntered += _ => Kill();
 
         var statuses = StatusList.Count;
         for (var i = 0; i < statuses; i++)
@@ -340,7 +335,8 @@ public partial class Mario : CharacterBody2D
     private AudioStreamPlayer _jumpSound;
     private AudioStreamPlayer _swimSound;
     private AudioStreamPlayer _hurtSound;
-    private Area2D _hurtZone;
+    private MarioCollisionBySize _hurtZone;
+    private MarioCollisionBySize _deathZone;
 
     [CtfFlag(2)] private bool _crouching;
     [CtfFlag(12)] private bool _isInWater;

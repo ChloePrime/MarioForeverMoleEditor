@@ -17,6 +17,7 @@ public partial class Mario
         public static readonly StringName ActionFire = "[battle] fire";
         public static readonly NodePath NpSpriteRoot = "SpriteRoot";
         public static readonly NodePath NpHurtZone = "Hurt Zone";
+        public static readonly NodePath NpDeathZone = "Death Zone";
         public static readonly NodePath NpJumpSound = "Jump Sound";
         public static readonly NodePath NpSwimSound = "Swim Sound";
         public static readonly NodePath NpHurtSound = "Hurt Sound";
