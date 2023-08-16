@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://2dq2dosvv7hb"]
+
+[ext_resource type="Script" path="res://scripts/player/MarioStatusBasic.cs" id="1_ybo8x"]
+
+[resource]
+script = ExtResource("1_ybo8x")
+Id = &"small"
+Size = 0

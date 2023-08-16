@@ -1,0 +1,83 @@
+[gd_scene load_steps=14 format=3 uid="uid://cfywv6a3w5n52"]
+
+[ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
+[ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://objects/_internal/mario_resources/status_small.tres" id="2_4vo13"]
+[ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://objects/_internal/mario_resources/mario_sprite_small.tscn" id="3_1usva"]
+[ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://objects/_internal/mario_resources/status_big.tres" id="3_60q2k"]
+[ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://objects/_internal/mario_resources/AS_jump.wav" id="4_irhyt"]
+[ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://objects/_internal/mario_resources/AS_swim.wav" id="5_e7o5n"]
+[ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://objects/_internal/mario_resources/AS_hurt.wav" id="7_oqh4d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
+size = Vector2(19, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulo8p"]
+size = Vector2(19, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7d1yp"]
+size = Vector2(9, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_heyer"]
+size = Vector2(17, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vd42n"]
+size = Vector2(17, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
+size = Vector2(7, 11)
+
+[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "HurtZoneBySize", "StatusSpriteNodeList")]
+floor_max_angle = 0.794125
+floor_snap_length = 8.0
+script = ExtResource("1_slc8u")
+CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
+HurtZoneBySize = [NodePath("Hurt Zone/HurtZone_Small"), NodePath("Hurt Zone/HurtZone_Big"), NodePath("Hurt Zone/HurtZone_Mini")]
+StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k")])
+StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
+
+[node name="Collision_Big" type="CollisionShape2D" parent="."]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_66cuu")
+disabled = true
+
+[node name="Collision_Small" type="CollisionShape2D" parent="."]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_ulo8p")
+
+[node name="Collision_Mini" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_7d1yp")
+disabled = true
+
+[node name="Hurt Zone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="HurtZone_Big" type="CollisionShape2D" parent="Hurt Zone"]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_heyer")
+disabled = true
+
+[node name="HurtZone_Small" type="CollisionShape2D" parent="Hurt Zone"]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_vd42n")
+
+[node name="HurtZone_Mini" type="CollisionShape2D" parent="Hurt Zone"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_asyp1")
+disabled = true
+
+[node name="SpriteRoot" type="Node2D" parent="."]
+
+[node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
+position = Vector2(0, -29)
+animation = &"stopped"
+
+[node name="Jump Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_irhyt")
+
+[node name="Swim Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_e7o5n")
+
+[node name="Hurt Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_oqh4d")

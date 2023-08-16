@@ -1,0 +1,126 @@
+[gd_scene load_steps=15 format=3 uid="uid://u3mnx4topf7v"]
+
+[ext_resource type="Texture2D" uid="uid://dfdfodnl0awav" path="res://objects/_internal/mario_resources/T_0_small.png" id="2_4iy74"]
+[ext_resource type="Script" path="res://scripts/util/animation/BetterAnimatedSprite2D.cs" id="3_d672b"]
+[ext_resource type="Resource" uid="uid://dd7bxjcwac518" path="res://objects/_internal/mario_resources/AnimData_swimming_common.tres" id="4_cdue1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys5fp"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 285, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxjky"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 285, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7yu6"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 0, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1y3d"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 342, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6c6f"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 399, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uddkq"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 456, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14ct0"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 513, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijp8o"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 57, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g647b"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 114, 32, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui34q"]
+atlas = ExtResource("2_4iy74")
+region = Rect2(0, 0, 32, 57)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ljpq1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ys5fp")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxjky")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7yu6")
+}],
+"loop": true,
+"name": &"stopped",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1y3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6c6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uddkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1y3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6c6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uddkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1y3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14ct0")
+}],
+"loop": true,
+"name": &"swimming",
+"speed": 17.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijp8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g647b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui34q")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 30.0
+}]
+
+[node name="Sprite_Prefab" type="AnimatedSprite2D"]
+position = Vector2(0, -29)
+sprite_frames = SubResource("SpriteFrames_ljpq1")
+animation = &"walking"
+autoplay = "stopped"
+script = ExtResource("3_d672b")
+AnimationData = {
+"swimming": ExtResource("4_cdue1")
+}
+Pivot = 8
