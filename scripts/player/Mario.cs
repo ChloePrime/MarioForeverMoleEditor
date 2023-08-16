@@ -115,7 +115,8 @@ public partial class Mario : CharacterBody2D
         _camera = GetViewport().GetCamera2D() ?? _camera;
         if (_camera != null)
         {
-            _camera.GlobalPosition = GlobalPosition;
+            var pos = GlobalPosition;
+            _camera.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
         }
         if (_invulnerable && _currentSprite != null)
         {
