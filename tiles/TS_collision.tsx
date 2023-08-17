@@ -120,6 +120,15 @@
    <object id="1" x="16" y="8" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="23">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="32" height="16">
+    <properties>
+     <property name="one_way" type="bool" value="true"/>
+    </properties>
+   </object>
+  </objectgroup>
+ </tile>
  <tile id="26">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="32">
