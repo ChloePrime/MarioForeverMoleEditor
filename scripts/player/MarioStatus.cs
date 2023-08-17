@@ -10,7 +10,13 @@ public abstract partial class MarioStatus : Resource, IEquatable<MarioStatus>
     public static MarioStatus Big => Mario.Constants.BigStatus;
     
     public abstract StringName GetId();
-    public virtual MarioSize GetSize() => MarioSize.Big;
+    [Export] public MarioSize Size { get; private set; } = MarioSize.Big;
+    
+    /// <summary>
+    /// 指定此状态的马里奥受伤后变为什么状态。
+    /// 该值为空时，该状态下的马里奥受伤后会直接挂掉，空值的典型应用场景为小个子状态。
+    /// </summary>
+    [Export] public MarioStatus HurtResult { get; private set; }
     [Export] public PackedScene AnimationNode { get; private set; }
 
     public virtual void Fire(Mario mario)

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ciqbulvhtnxsv" path="res://tiles/T_0x1pack_6.png" id="5_yibbg"]
 [ext_resource type="Texture2D" uid="uid://pfkq8pwcknr8" path="res://tiles/T_spikes.png" id="6_lgmmw"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1l2r7"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_keacj"]
 texture = ExtResource("1_q5grb")
 texture_region_size = Vector2i(32, 32)
 5:2/0 = 0
@@ -89,7 +89,7 @@ texture_region_size = Vector2i(32, 32)
 2:1/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b76y8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1wmqy"]
 texture = ExtResource("2_ldjaf")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -309,9 +309,16 @@ texture_region_size = Vector2i(32, 32)
 6:5/0/physics_layer_2/angular_velocity = 0.0
 6:5/0/physics_layer_2/polygon_0/points = PackedVector2Array(0, 15, -15, -15, 15, -15)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jsufy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfu8y"]
 texture = ExtResource("3_g4h86")
 texture_region_size = Vector2i(32, 32)
+1:13/0 = 0
+1:13/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:13/0/physics_layer_0/angular_velocity = 0.0
+1:13/0/physics_layer_1/linear_velocity = Vector2(0, 0)
+1:13/0/physics_layer_1/angular_velocity = 0.0
+1:13/0/physics_layer_2/linear_velocity = Vector2(0, 0)
+1:13/0/physics_layer_2/angular_velocity = 0.0
 9:9/0 = 0
 9:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:9/0/physics_layer_0/angular_velocity = 0.0
@@ -341,7 +348,7 @@ texture_region_size = Vector2i(32, 32)
 10:10/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 10:10/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c32qg"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ddx3q"]
 texture = ExtResource("4_1pm75")
 texture_region_size = Vector2i(32, 32)
 11:1/0 = 0
@@ -387,7 +394,7 @@ texture_region_size = Vector2i(32, 32)
 1:11/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 1:11/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5l5uh"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1d44x"]
 texture = ExtResource("5_yibbg")
 texture_region_size = Vector2i(32, 32)
 17:5/0 = 0
@@ -398,9 +405,16 @@ texture_region_size = Vector2i(32, 32)
 17:5/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 17:5/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e11cy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8p5xe"]
 texture = ExtResource("6_lgmmw")
 texture_region_size = Vector2i(32, 32)
+4:5/0 = 0
+4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_0/angular_velocity = 0.0
+4:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_1/angular_velocity = 0.0
+4:5/0/physics_layer_2/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_2/angular_velocity = 0.0
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
@@ -409,30 +423,30 @@ texture_region_size = Vector2i(32, 32)
 1:0/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSet" id="TileSet_u83nr"]
+[sub_resource type="TileSet" id="TileSet_0s8p3"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 256
 physics_layer_1/collision_mask = 0
 physics_layer_2/collision_layer = 512
 physics_layer_2/collision_mask = 0
-sources/0 = SubResource("TileSetAtlasSource_1l2r7")
-sources/1 = SubResource("TileSetAtlasSource_b76y8")
-sources/2 = SubResource("TileSetAtlasSource_jsufy")
-sources/3 = SubResource("TileSetAtlasSource_c32qg")
-sources/4 = SubResource("TileSetAtlasSource_5l5uh")
-sources/5 = SubResource("TileSetAtlasSource_e11cy")
+sources/0 = SubResource("TileSetAtlasSource_keacj")
+sources/1 = SubResource("TileSetAtlasSource_1wmqy")
+sources/2 = SubResource("TileSetAtlasSource_gfu8y")
+sources/3 = SubResource("TileSetAtlasSource_ddx3q")
+sources/4 = SubResource("TileSetAtlasSource_1d44x")
+sources/5 = SubResource("TileSetAtlasSource_8p5xe")
 
 [node name="example_tiles" type="Node2D"]
 
 [node name="Geometry" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_u83nr")
+tile_set = SubResource("TileSet_0s8p3")
 format = 2
-layer_0/tile_data = PackedInt32Array(458767, 327680, 0, 458768, 262144, 1, 458769, 262144, 1, 458770, 262144, 1, 458771, 327680, 1, 589839, 196608, 0, 589843, 196608, 0, 655375, 196608, 2, 655379, 196608, 2, 655387, 720899, 1, 720907, 196608, 0, 720923, 720899, 3, 720928, 720899, 0, 786443, 196608, 1, 786447, 196608, 0, 786449, 131075, 11, 786450, 196611, 11, 786454, 65539, 11, 786456, 65541, 0, 786457, 65541, 0, 786459, 1114116, 5, 786464, 1114116, 5, 851968, 65536, 0, 851969, 65536, 0, 851970, 65536, 0, 851971, 65536, 0, 851972, 65536, 0, 851973, 65536, 0, 851974, 65536, 0, 851975, 65536, 0, 851976, 65536, 0, 851977, 65536, 0, 851978, 65536, 0, 851979, 65536, 0, 851980, 65536, 0, 851981, 65536, 0, 851982, 65536, 0, 851983, 65536, 0, 851984, 65536, 0, 851985, 65536, 0, 851986, 131072, 0, 851989, 589826, 9, 851990, 655362, 9, 851991, 655362, 9, 851992, 655362, 9, 851993, 655362, 9, 851994, 655362, 9, 851995, 655362, 9, 851996, 655362, 9, 851997, 655362, 9, 851998, 655362, 9, 851999, 655362, 9, 852000, 655362, 9, 852001, 655362, 9, 852002, 655362, 9, 852003, 655362, 9, 852004, 655362, 9, 852005, 655362, 9, 852006, 655362, 9, 852007, 655362, 9, 917504, 65536, 1, 917505, 65536, 1, 917506, 65536, 1, 917507, 65536, 1, 917508, 65536, 1, 917509, 65536, 1, 917510, 65536, 1, 917511, 65536, 1, 917512, 65536, 1, 917513, 65536, 1, 917514, 65536, 1, 917515, 65536, 1, 917516, 65536, 1, 917517, 65536, 1, 917518, 65536, 1, 917519, 65536, 1, 917520, 65536, 1, 917521, 65536, 1, 917522, 131072, 1, 917525, 589826, 10, 917526, 655362, 10, 917527, 655362, 10, 917528, 655362, 10, 917529, 655362, 10, 917530, 655362, 10, 917531, 655362, 10, 917532, 655362, 10, 917533, 655362, 10, 917534, 655362, 10, 917535, 655362, 10, 917536, 655362, 10, 917537, 655362, 10, 917538, 655362, 10, 917539, 655362, 10, 917540, 655362, 10, 917541, 655362, 10, 917542, 655362, 10, 917543, 655362, 10)
+layer_0/tile_data = PackedInt32Array(262161, 262149, 5, 327698, 262149, 5, 458767, 327680, 0, 458768, 262144, 1, 458769, 262144, 1, 458770, 262144, 1, 458771, 327680, 1, 589837, 65538, 13, 589838, 65538, 13, 589839, 196608, 0, 589843, 196608, 0, 655375, 196608, 2, 655379, 196608, 2, 655387, 720899, 1, 720907, 196608, 0, 720923, 720899, 3, 720928, 720899, 0, 786443, 196608, 1, 786447, 196608, 0, 786449, 131075, 11, 786450, 196611, 11, 786454, 65539, 11, 786456, 65541, 0, 786457, 65541, 0, 786459, 1114116, 5, 786464, 1114116, 5, 851968, 65536, 0, 851969, 65536, 0, 851970, 65536, 0, 851971, 65536, 0, 851972, 65536, 0, 851973, 65536, 0, 851974, 65536, 0, 851975, 65536, 0, 851976, 65536, 0, 851977, 65536, 0, 851978, 65536, 0, 851979, 65536, 0, 851980, 65536, 0, 851981, 65536, 0, 851982, 65536, 0, 851983, 65536, 0, 851984, 65536, 0, 851985, 65536, 0, 851986, 131072, 0, 851989, 589826, 9, 851990, 655362, 9, 851991, 655362, 9, 851992, 655362, 9, 851993, 655362, 9, 851994, 655362, 9, 851995, 655362, 9, 851996, 655362, 9, 851997, 655362, 9, 851998, 655362, 9, 851999, 655362, 9, 852000, 655362, 9, 852001, 655362, 9, 852002, 655362, 9, 852003, 655362, 9, 852004, 655362, 9, 852005, 655362, 9, 852006, 655362, 9, 852007, 655362, 9, 917504, 65536, 1, 917505, 65536, 1, 917506, 65536, 1, 917507, 65536, 1, 917508, 65536, 1, 917509, 65536, 1, 917510, 65536, 1, 917511, 65536, 1, 917512, 65536, 1, 917513, 65536, 1, 917514, 65536, 1, 917515, 65536, 1, 917516, 65536, 1, 917517, 65536, 1, 917518, 65536, 1, 917519, 65536, 1, 917520, 65536, 1, 917521, 65536, 1, 917522, 131072, 1, 917525, 589826, 10, 917526, 655362, 10, 917527, 655362, 10, 917528, 655362, 10, 917529, 655362, 10, 917530, 655362, 10, 917531, 655362, 10, 917532, 655362, 10, 917533, 655362, 10, 917534, 655362, 10, 917535, 655362, 10, 917536, 655362, 10, 917537, 655362, 10, 917538, 655362, 10, 917539, 655362, 10, 917540, 655362, 10, 917541, 655362, 10, 917542, 655362, 10, 917543, 655362, 10)
 
 [node name="Collision" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_u83nr")
+tile_set = SubResource("TileSet_0s8p3")
 format = 2
-layer_0/tile_data = PackedInt32Array(458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0, 458771, 1, 0, 589837, 196609, 2, 589838, 196609, 2, 589839, 1, 0, 589843, 1, 0, 655375, 1, 0, 655379, 1, 0, 720906, 196609, 0, 720907, 1, 0, 786441, 196609, 0, 786443, 1, 0, 786447, 1, 0, 786456, 393217, 3, 786457, 393217, 3, 851968, 1, 0, 851969, 1, 0, 851970, 1, 0, 851971, 1, 0, 851972, 1, 0, 851973, 1, 0, 851974, 1, 0, 851975, 1, 0, 851976, 1, 0, 851980, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0, 851984, 1, 0, 851985, 1, 0, 851986, 1, 0, 851989, 1, 0, 851990, 1, 0, 851991, 1, 0, 851992, 1, 0, 851993, 1, 0, 851994, 1, 0, 851995, 1, 0, 851996, 1, 0, 851997, 1, 0, 851998, 1, 0, 851999, 1, 0, 852000, 1, 0, 852001, 1, 0, 852002, 1, 0, 852003, 1, 0, 852004, 1, 0, 852005, 1, 0, 852006, 1, 0, 852007, 1, 0, 917522, 1, 0, 917525, 1, 0)
+layer_0/tile_data = PackedInt32Array(262161, 393217, 2, 327698, 393217, 2, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0, 458771, 1, 0, 589837, 196609, 2, 589838, 196609, 2, 589839, 1, 0, 589843, 1, 0, 655375, 1, 0, 655379, 1, 0, 720906, 196609, 0, 720907, 1, 0, 786441, 196609, 0, 786443, 1, 0, 786447, 1, 0, 786456, 393217, 3, 786457, 393217, 3, 851968, 1, 0, 851969, 1, 0, 851970, 1, 0, 851971, 1, 0, 851972, 1, 0, 851973, 1, 0, 851974, 1, 0, 851975, 1, 0, 851976, 1, 0, 851980, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0, 851984, 1, 0, 851985, 1, 0, 851986, 1, 0, 851989, 1, 0, 851990, 1, 0, 851991, 1, 0, 851992, 1, 0, 851993, 1, 0, 851994, 1, 0, 851995, 1, 0, 851996, 1, 0, 851997, 1, 0, 851998, 1, 0, 851999, 1, 0, 852000, 1, 0, 852001, 1, 0, 852002, 1, 0, 852003, 1, 0, 852004, 1, 0, 852005, 1, 0, 852006, 1, 0, 852007, 1, 0, 917522, 1, 0, 917525, 1, 0)

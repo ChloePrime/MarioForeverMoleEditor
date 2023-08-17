@@ -273,7 +273,7 @@ public partial class Mario : CharacterBody2D
     {
         _hasFallingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimFalling);
         _hasCrouchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimCrouching);
-        _standingSize = _currentStatus.GetSize();
+        _standingSize = _currentStatus.Size;
         if (!(_standingSize == MarioSize.Big && _crouching))
         {
             SetSize(_standingSize);

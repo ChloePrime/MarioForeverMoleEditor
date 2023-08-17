@@ -7,17 +7,16 @@ public partial class Mario
 {
     public void Hurt()
     {
-        if (IsInvulnerable())
+        if (IsInvulnerable() || _currentStatus == null)
         {
             return;
         }
-        if (_currentStatus == MarioStatus.Small)
+        if (_currentStatus.HurtResult == null)
         {
             Kill();
             return;
         }
-        
-        GlobalData.Status = _currentStatus == MarioStatus.Big ? MarioStatus.Small : MarioStatus.Big;
+        GlobalData.Status = _currentStatus.HurtResult;
         SetInvulnerable(InvulnerableTimeOnHurt);
         _hurtSound.Play();
     }
