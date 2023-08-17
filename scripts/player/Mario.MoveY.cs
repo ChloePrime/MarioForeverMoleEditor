@@ -53,6 +53,8 @@ public partial class Mario
                 ConsumeJumpInput();
             }
         }
+
+        _wilyJumpTime -= delta;
     }
 
     private void MoveY()
@@ -85,6 +87,11 @@ public partial class Mario
             }
             _isInAir = !collided;
         }
+
+        if (!_isInAir)
+        {
+            _wilyJumpTime = JumpTolerateTime;
+        }
     }
 
     private void OnHeadHit()
@@ -108,7 +115,7 @@ public partial class Mario
     {
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {
-            if (!_isInAir)
+            if (!_isInAir || _wilyJumpTime >= 0)
             {
                 Jump();
             }
@@ -157,6 +164,7 @@ public partial class Mario
 
     private float _ySpeed;
     [CtfFlag(11)] private bool _isInAir = true;
+    private float _wilyJumpTime;
     private bool _jumpPressed;
     private bool _upPressed;
     private bool _downPressed;

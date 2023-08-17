@@ -28,6 +28,12 @@ public partial class Mario : CharacterBody2D
     [Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(1);
     [Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
     [Export] public float JumpStrength { get; set; } = Units.Speed.CtfToGd(13);
+    
+    /// <summary>
+    /// 在脚滑踩空后的多少时间内仍然可以跳起来，
+    /// 即 "威利狼跳"
+    /// </summary>
+    [Export] public float JumpTolerateTime { get; set; } = 0.1F;
     [Export] public float GravityInWater { get; set; } = Units.Acceleration.CtfToGd(1) / 10;
     [Export] public float MaxYSpeedInWater { get; set; } = Units.Speed.CtfToGd(3);
     [Export] public float SwimStrength { get; set; } = Units.Speed.CtfToGd(3);
@@ -106,6 +112,7 @@ public partial class Mario : CharacterBody2D
     {
         _ySpeed = -strength;
         _isInAir = true;
+        _wilyJumpTime = -1;
     }
 
     public override void _Process(double delta)
