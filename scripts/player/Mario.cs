@@ -207,6 +207,11 @@ public partial class Mario : CharacterBody2D
         _hurtZone.SetSize(size);
         _deathZone.SetSize(size);
         _currentSize = size;
+
+        if (size != MarioSize.Big && _crouching)
+        {
+            _crouching = false;
+        }
     }
 
     private void UpdateAnimation()
