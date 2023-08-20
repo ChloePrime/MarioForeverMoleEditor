@@ -7,3 +7,4 @@
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_s2ib2")
+flip_v = true
