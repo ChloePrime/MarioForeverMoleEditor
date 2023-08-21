@@ -43,6 +43,15 @@ public static partial class NodeEx
         }
     }
 
+    public static IEnumerable<KinematicCollision2D> GetSlideCollisions(this CharacterBody2D body)
+    {
+        var count = body.GetSlideCollisionCount();
+        for (var i = 0; i < count; i++)
+        {
+            yield return body.GetSlideCollision(i);
+        }
+    }
+
     public static Transform3D BestEffortGetGlobalTransform(this Node3D node)
     {
         Transform3D t = node.Transform;

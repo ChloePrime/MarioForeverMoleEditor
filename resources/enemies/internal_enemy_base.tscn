@@ -7,10 +7,11 @@ size = Vector2(30, 30)
 
 [node name="Internal Walkable Base" type="CharacterBody2D"]
 collision_layer = 131072
-collision_mask = 5
+collision_mask = 131077
 floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_kh6g8")
+CollideWithOthers = true
 
 [node name="Collision Shape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -18,10 +19,5 @@ shape = SubResource("RectangleShape2D_8kmp8")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 
-[node name="Turning Detector" type="Area2D" parent="."]
-position = Vector2(0, 1)
-collision_layer = 0
-collision_mask = 131072
-
-[node name="Collision Shape" type="CollisionShape2D" parent="Turning Detector"]
-shape = SubResource("RectangleShape2D_8kmp8")
+[node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -16, 32, 32)

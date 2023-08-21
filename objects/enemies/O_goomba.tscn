@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://skpl30bmwg2q"]
+
+[ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_kvxpk"]
+[ext_resource type="Texture2D" uid="uid://mtuhoajr513i" path="res://resources/enemies/AT_goomba.tres" id="2_2hibf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2bvd"]
+atlas = ExtResource("2_2hibf")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axoq1"]
+atlas = ExtResource("2_2hibf")
+region = Rect2(36, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l4iyx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2bvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axoq1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Goomba" instance=ExtResource("1_kvxpk")]
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_l4iyx")
+autoplay = "default"
