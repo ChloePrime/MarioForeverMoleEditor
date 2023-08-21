@@ -4,10 +4,10 @@
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
 [ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://resources/mario/mario_sprite_small.tscn" id="3_1usva"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="3_60q2k"]
-[ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/AS_jump.wav" id="4_irhyt"]
+[ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/SE_jump.wav" id="4_irhyt"]
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
-[ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/AS_swim.wav" id="5_e7o5n"]
-[ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/AS_hurt.wav" id="7_oqh4d"]
+[ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
+[ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/SE_hurt.wav" id="7_oqh4d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
 size = Vector2(19, 52)

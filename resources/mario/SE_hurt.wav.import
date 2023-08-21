@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://4yo63sgji6p3"
-path="res://.godot/imported/AS_hurt.wav-bb5755b093935d2aeca81f0f4443e78b.sample"
+path="res://.godot/imported/SE_hurt.wav-32dbd243503661ffb4a2ac9a5863c35f.sample"
 
 [deps]
 
-source_file="res://resources/mario/AS_hurt.wav"
-dest_files=["res://.godot/imported/AS_hurt.wav-bb5755b093935d2aeca81f0f4443e78b.sample"]
+source_file="res://resources/mario/SE_hurt.wav"
+dest_files=["res://.godot/imported/SE_hurt.wav-32dbd243503661ffb4a2ac9a5863c35f.sample"]
 
 [params]
 

@@ -7,7 +7,7 @@ using MixelTools.Util.Extensions;
 namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
-[Icon("res://objects/_internal/mario_resources/T_icon.png")]
+[Icon("res://resources/mario/AS_icon.tres")]
 public partial class Mario : CharacterBody2D
 {
     #region Movement Params

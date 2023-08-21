@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dqmafju6sqf6u"
-path="res://.godot/imported/AS_die.wav-b3569ca1954c30d0cc4372ad23323d2c.sample"
+uid="uid://d1hl8pya43a0d"
+path="res://.godot/imported/SE_swim.wav-954335d95c264d6de6d7f5b2085b775e.sample"
 
 [deps]
 
-source_file="res://resources/mario/AS_die.wav"
-dest_files=["res://.godot/imported/AS_die.wav-b3569ca1954c30d0cc4372ad23323d2c.sample"]
+source_file="res://resources/mario/SE_swim.wav"
+dest_files=["res://.godot/imported/SE_swim.wav-954335d95c264d6de6d7f5b2085b775e.sample"]
 
 [params]
 
