@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bf5pyelftad5i"]
 
-[ext_resource type="Texture2D" uid="uid://4ndu2r41vai1" path="res://objects/enemies/spiky_facility/T_spike_grey_up.tres" id="1_0b6tr"]
+[ext_resource type="Texture2D" uid="uid://4ndu2r41vai1" path="res://resources/enemies/spiky_facility/T_spike_grey_up.tres" id="1_0b6tr"]
 
 [node name="Spike (Grey, Up)" type="StaticBody2D"]
 z_index = -100

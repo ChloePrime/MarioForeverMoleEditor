@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d1hl8pya43a0d"
-path="res://.godot/imported/AS_swim.wav-9c89105aa675bda25fa7674b786db1e8.sample"
+path="res://.godot/imported/AS_swim.wav-9d5d93f0ebcaf2c0ffda167dcdc1073a.sample"
 
 [deps]
 
-source_file="res://objects/_internal/mario_resources/AS_swim.wav"
-dest_files=["res://.godot/imported/AS_swim.wav-9c89105aa675bda25fa7674b786db1e8.sample"]
+source_file="res://resources/mario/AS_swim.wav"
+dest_files=["res://.godot/imported/AS_swim.wav-9d5d93f0ebcaf2c0ffda167dcdc1073a.sample"]
 
 [params]
 

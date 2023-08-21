@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd61b03rbmtil"
-path="res://.godot/imported/T_icon.png-2de1160939cad4d6acec0b7c372ac5c7.ctex"
+uid="uid://dfdfodnl0awav"
+path="res://.godot/imported/T_0_small.png-23e31cd9f593b2c21c3096de2d34fb76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/_internal/mario_resources/T_icon.png"
-dest_files=["res://.godot/imported/T_icon.png-2de1160939cad4d6acec0b7c372ac5c7.ctex"]
+source_file="res://resources/mario/T_0_small.png"
+dest_files=["res://.godot/imported/T_0_small.png-23e31cd9f593b2c21c3096de2d34fb76.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://chv2x1iogg8fl"
-path="res://.godot/imported/T_mario_corpse.png-e7addf4a5245d5018ebf49d91106a85c.ctex"
+path="res://.godot/imported/T_mario_corpse.png-73885fbc8c6c9d09ea524812a0e959bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/_internal/mario_resources/T_mario_corpse.png"
-dest_files=["res://.godot/imported/T_mario_corpse.png-e7addf4a5245d5018ebf49d91106a85c.ctex"]
+source_file="res://resources/mario/T_mario_corpse.png"
+dest_files=["res://.godot/imported/T_mario_corpse.png-73885fbc8c6c9d09ea524812a0e959bb.ctex"]
 
 [params]
 

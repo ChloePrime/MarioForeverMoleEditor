@@ -30,13 +30,13 @@ public partial class Mario
         public static readonly StringName AnimJumping = "jumping";
         public static readonly StringName AnimFalling = "falling";
         public static readonly StringName AnimCrouching = "crouching";
-        public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://objects/_internal/mario_corpse.tscn");
+        public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://resources/mario/mario_corpse.tscn");
         [CtfAnimation(12)] public static readonly StringName AnimSwimming = "swimming";
 
         static Constants()
         {
-            NodeEx.Load(out SmallStatus, "res://objects/_internal/mario_resources/status_small.tres");
-            NodeEx.Load(out BigStatus, "res://objects/_internal/mario_resources/status_big.tres");
+            NodeEx.Load(out SmallStatus, "res://resources/mario/status_small.tres");
+            NodeEx.Load(out BigStatus, "res://resources/mario/status_big.tres");
         }
     }
 }

@@ -1,13 +1,13 @@
 [gd_scene load_steps=15 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
-[ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://objects/_internal/mario_resources/status_small.tres" id="2_4vo13"]
-[ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://objects/_internal/mario_resources/mario_sprite_small.tscn" id="3_1usva"]
-[ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://objects/_internal/mario_resources/status_big.tres" id="3_60q2k"]
-[ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://objects/_internal/mario_resources/AS_jump.wav" id="4_irhyt"]
+[ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
+[ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://resources/mario/mario_sprite_small.tscn" id="3_1usva"]
+[ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="3_60q2k"]
+[ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/AS_jump.wav" id="4_irhyt"]
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
-[ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://objects/_internal/mario_resources/AS_swim.wav" id="5_e7o5n"]
-[ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://objects/_internal/mario_resources/AS_hurt.wav" id="7_oqh4d"]
+[ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/AS_swim.wav" id="5_e7o5n"]
+[ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/AS_hurt.wav" id="7_oqh4d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
 size = Vector2(19, 52)
@@ -27,7 +27,8 @@ size = Vector2(17, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
 size = Vector2(7, 11)
 
-[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "StatusSpriteNodeList")]
+[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "StatusSpriteNodeList") groups=["player"]]
+z_index = 100
 collision_layer = 65536
 collision_mask = 3
 floor_max_angle = 0.794125

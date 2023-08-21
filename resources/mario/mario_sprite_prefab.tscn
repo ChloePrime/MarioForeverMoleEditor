@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dc4sbrhjkjgrr"]
+[gd_scene load_steps=15 format=3 uid="uid://u3mnx4topf7v"]
 
-[ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://objects/_internal/mario_resources/mario_sprite_prefab.tscn" id="1_n5f4k"]
-[ext_resource type="Texture2D" uid="uid://dfdfodnl0awav" path="res://objects/_internal/mario_resources/T_0_small.png" id="2_4iy74"]
+[ext_resource type="Texture2D" uid="uid://dfdfodnl0awav" path="res://resources/mario/T_0_small.png" id="2_4iy74"]
+[ext_resource type="Script" path="res://scripts/util/animation/BetterAnimatedSprite2D.cs" id="3_d672b"]
+[ext_resource type="Resource" uid="uid://dd7bxjcwac518" path="res://resources/mario/AnimData_swimming_common.tres" id="4_cdue1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ys5fp"]
 atlas = ExtResource("2_4iy74")
@@ -43,7 +44,7 @@ region = Rect2(0, 114, 32, 57)
 atlas = ExtResource("2_4iy74")
 region = Rect2(0, 0, 32, 57)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_yua1i"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ljpq1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -113,7 +114,13 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="Sprite_Small" instance=ExtResource("1_n5f4k")]
-position = Vector2(-18, -20)
-sprite_frames = SubResource("SpriteFrames_yua1i")
-animation = &"falling"
+[node name="Sprite_Prefab" type="AnimatedSprite2D"]
+position = Vector2(0, -29)
+sprite_frames = SubResource("SpriteFrames_ljpq1")
+animation = &"walking"
+autoplay = "stopped"
+script = ExtResource("3_d672b")
+AnimationData = {
+"swimming": ExtResource("4_cdue1")
+}
+Pivot = 8
