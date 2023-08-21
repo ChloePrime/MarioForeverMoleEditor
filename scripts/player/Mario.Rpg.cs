@@ -1,4 +1,4 @@
-﻿using ChloePrime.MarioForever.Util;
+﻿using ChloePrime.MarioForever.level;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;
@@ -58,7 +58,10 @@ public partial class Mario
     private void PostDeath()
     {
         GlobalData.Status = MarioStatus.Small;
-        this.GetLevel()?.StopMusic();
+        if (!FastRetry)
+        {
+            BackgroundMusic.Stop();
+        }
     }
 
     private int _hurtStack;

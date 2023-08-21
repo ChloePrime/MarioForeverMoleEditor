@@ -15,6 +15,10 @@ run/main_scene="res://levels/example/example.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+BackgroundMusic="*res://scripts/level/BackgroundMusic.cs"
+
 [display]
 
 window/size/viewport_width=640
