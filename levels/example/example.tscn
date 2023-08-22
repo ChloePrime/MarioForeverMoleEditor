@@ -40,7 +40,7 @@ position = Vector2(240, 272)
 position = Vector2(592, 208)
 
 [node name="Goomba5" parent="." instance=ExtResource("10_swv1r")]
-position = Vector2(432, 392)
+position = Vector2(408, 392)
 
 [node name="Goomba2" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 176)

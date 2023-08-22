@@ -10,6 +10,7 @@ namespace ChloePrime.MarioForever.Enemy;
 public partial class WalkableObjectBase : GravityObjectBase
 {
     [Export] public float TargetSpeed { get; set; } = Units.Speed.CtfToGd(1);
+    [Export] public float JumpStrength { get; set; }
     
     [Export]
     public bool CollideWithOthers
@@ -55,6 +56,10 @@ public partial class WalkableObjectBase : GravityObjectBase
         {
             XDirection *= -1;
             XSpeed = TargetSpeed;
+        }
+        if (IsOnFloor() && JumpStrength != 0)
+        {
+            YSpeed = -JumpStrength;
         }
     }
 
