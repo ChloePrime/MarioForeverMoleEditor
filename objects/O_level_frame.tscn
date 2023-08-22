@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwanfr0onc8vt"]
+
+[ext_resource type="Script" path="res://scripts/level/LevelFrame.cs" id="1_bhhpe"]
+[ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
+
+[node name="Level Frame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_bhhpe")
+Level = ExtResource("2_bego7")
+
+[node name="Aspect Ratio Container" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -480.0
+offset_right = 640.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.3333
+
+[node name="SubViewport Container" type="SubViewportContainer" parent="Aspect Ratio Container"]
+custom_minimum_size = Vector2(1280, 960)
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Aspect Ratio Container/SubViewport Container"]
+own_world_3d = true
+handle_input_locally = false
+canvas_item_default_texture_repeat = 1
+size = Vector2i(1280, 960)
+size_2d_override = Vector2i(640, 480)
+size_2d_override_stretch = true
+render_target_update_mode = 4

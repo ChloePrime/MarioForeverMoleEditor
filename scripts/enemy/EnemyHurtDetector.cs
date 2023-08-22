@@ -44,7 +44,8 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
         HurtBy(new DamageEvent(DamageType.Stomp, stomper));
         if (stomper is Mario mario)
         {
-            mario.Jump(Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength);
+            var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;
+            mario.CallDeferred(Mario.MethodName.Jump, strength);
         }
     }
 
