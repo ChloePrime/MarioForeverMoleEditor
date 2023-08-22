@@ -13,6 +13,18 @@ public static class FrameUtil
         return rect;
     }
 
+    public static Vector2 GetSpriteSize(this AnimatedSprite2D sprite)
+    {
+        if (sprite.SpriteFrames is not { } frames)
+        {
+            return Vector2.Zero;
+        }
+        else
+        {
+            return frames.GetFrameTexture(sprite.Animation, sprite.Frame)?.GetSize() ?? Vector2.Zero;
+        }
+    }
+
     public static MaFoLevel? GetLevel(this Node node)
     {
         do

@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqd5ut2wsbi1h"]
+[gd_scene load_steps=7 format=3 uid="uid://cqd5ut2wsbi1h"]
 
 [ext_resource type="Script" path="res://scripts/enemy/WalkableObjectBase.cs" id="1_kh6g8"]
+[ext_resource type="Script" path="res://scripts/enemy/EnemyHurtDetector.cs" id="2_hms60"]
+[ext_resource type="Script" path="res://scripts/enemy/EnemyDamageSource.cs" id="3_cbgsw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8kmp8"]
 size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_akg1v"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5eukw"]
+size = Vector2(24, 30)
 
 [node name="Internal Walkable Base" type="CharacterBody2D"]
 collision_layer = 131072
@@ -21,3 +29,22 @@ shape = SubResource("RectangleShape2D_8kmp8")
 
 [node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-16, -16, 32, 32)
+
+[node name="Hurt Detector" type="Area2D" parent="." node_paths=PackedStringArray("RootOverride", "Sprite")]
+collision_layer = 131072
+collision_mask = 65536
+script = ExtResource("2_hms60")
+RootOverride = NodePath("..")
+Sprite = NodePath("../Sprite")
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Hurt Detector"]
+shape = SubResource("RectangleShape2D_akg1v")
+
+[node name="Damage Source" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 65536
+script = ExtResource("3_cbgsw")
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Damage Source"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_5eukw")

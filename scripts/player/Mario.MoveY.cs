@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -8,7 +10,7 @@ public partial class Mario
 {
     public float GetGravityScale()
     {
-        if (!_jumpPressed || _ySpeed >= 0)
+        if (!_jumpPressed || YSpeed >= 0)
         {
             return 1;
         }
@@ -18,26 +20,26 @@ public partial class Mario
     private void PhysicsProcessY(double deltaD)
     {
         var delta = (float)deltaD;
-        MoveY();
+        MoveY(delta);
 
         if (_isInAir)
         {
             if (!_isInWater)
             {
-                _ySpeed = Math.Min(_ySpeed + Gravity * GetGravityScale() * delta, MaxYSpeed);
+                YSpeed = Math.Min(YSpeed + Gravity * GetGravityScale() * delta, MaxYSpeed);
             }
             else
             {
                 var acc = _downPressed ? GravityWhenSinking : GravityInWater;
-                _ySpeed += acc * delta;
+                YSpeed += acc * delta;
                 
-                if (!_downPressed && _ySpeed > MaxYSpeedInWater)
+                if (!_downPressed && YSpeed > MaxYSpeedInWater)
                 {
-                    _ySpeed = Math.Max(MaxYSpeedInWater, _ySpeed - 10 * GravityInWater * delta);
+                    YSpeed = Math.Max(MaxYSpeedInWater, YSpeed - 10 * GravityInWater * delta);
                 }
-                if (_ySpeed < -MaxYSpeedInWater)
+                if (YSpeed < -MaxYSpeedInWater)
                 {
-                    _ySpeed = Math.Min(-MaxYSpeedInWater, _ySpeed + 2 * GravityInWater * delta);
+                    YSpeed = Math.Min(-MaxYSpeedInWater, YSpeed + 2 * GravityInWater * delta);
                 }
             }
         }
@@ -57,16 +59,21 @@ public partial class Mario
         _wilyJumpTime -= delta;
     }
 
-    private void MoveY()
+    private void MoveY(float delta)
     {
         if (_isInAir)
         {
-            Velocity = new Vector2(0, _ySpeed);
+            Velocity = new Vector2(0, YSpeed);
             var collided = MoveAndSlide();
+
+            if (!collided && YSpeed > 0)
+            {
+                PredictAndStomp(delta);
+            }
 
             if (collided && Mathf.IsZeroApprox(Math.Abs(Velocity.Y)))
             {
-                if (_ySpeed >= 0)
+                if (YSpeed >= 0)
                 {
                     _isInAir = false;
                     OnFallOnGround();
@@ -74,7 +81,7 @@ public partial class Mario
                 else
                 {
                     OnHeadHit();
-                    _ySpeed = 0;
+                    YSpeed = 0;
                 }
             }
         }
@@ -83,7 +90,7 @@ public partial class Mario
             var collided = MoveAndCollide(GroundTestVec, true) != null;
             if (collided)
             {
-                _ySpeed = 0;
+                YSpeed = 0;
             }
             _isInAir = !collided;
         }
@@ -91,6 +98,28 @@ public partial class Mario
         if (!_isInAir)
         {
             _wilyJumpTime = JumpTolerateTime;
+        }
+    }
+
+    private void PredictAndStomp(float delta)
+    {
+        var trans = CurrentCollisionShape.GetGlobalTransform().TranslatedLocal(new Vector2(0, YSpeed / Engine.PhysicsTicksPerSecond));
+        // trans.Origin += GetRealVelocity() * delta;
+
+        var query = new PhysicsShapeQueryParameters2D()
+        {
+            Shape = CurrentCollisionShape.Shape,
+            CollisionMask = MaFo.CollisionMask.Enemy,
+            Transform = trans,
+            Exclude = MeInAnArray,
+            CollideWithAreas = true
+        };
+        foreach (var result in GetWorld2D().DirectSpaceState.IntersectShape(query).Select(d => new ShapeHitResult3D(d)))
+        {
+            if (result.Collider is IStompable stompable && WillStomp(stompable))
+            {
+                stompable.StompBy(this);
+            }
         }
     }
 
@@ -151,7 +180,7 @@ public partial class Mario
                         SwimStrengthAccWhenSinking
                     )
                 };
-                Swim(Math.Clamp(min, max, -_ySpeed + acc));
+                Swim(Math.Clamp(min, max, -YSpeed + acc));
             }
             else
             {
@@ -161,8 +190,6 @@ public partial class Mario
     }
 
     private static readonly Vector2 GroundTestVec = 8 * Vector2.Down;
-
-    private float _ySpeed;
     [CtfFlag(11)] private bool _isInAir = true;
     private float _wilyJumpTime;
     private bool _jumpPressed;

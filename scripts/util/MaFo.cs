@@ -11,12 +11,28 @@ public static class MaFo
 
     public static class CollisionLayers
     {
-        public const int Solid = 1;
+        public const int Solid          = 1;
         public const int SolidMarioOnly = 2;
         public const int SolidEnemyOnly = 3;
-        public const int DamageSource = 9;
-        public const int DeathSource = 10;
-        public const int Mario = 17;
-        public const int Enemy = 18;
+        public const int DamageSource   = 9;
+        public const int DeathSource    = 10;
+        public const int Mario          = 17;
+        public const int Enemy          = 18;
+    }
+    
+    public static class CollisionMask
+    {
+        public const uint Solid          = 1U << (CollisionLayers.Solid - 1);
+        public const uint SolidMarioOnly = 1U << (CollisionLayers.SolidMarioOnly - 1);
+        public const uint SolidEnemyOnly = 1U << (CollisionLayers.SolidEnemyOnly - 1);
+        public const uint DamageSource   = 1U << (CollisionLayers.DamageSource - 1);
+        public const uint DeathSource    = 1U << (CollisionLayers.DeathSource - 1);
+        public const uint Mario          = 1U << (CollisionLayers.Mario - 1);
+        public const uint Enemy          = 1U << (CollisionLayers.Enemy - 1);
+    }
+    
+    public static class PropertyHint
+    {
+        public const Godot.PropertyHint LayerDamageType = Godot.PropertyHint.Layers3DNavigation;
     }
 }

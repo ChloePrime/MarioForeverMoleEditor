@@ -4,6 +4,7 @@ using ChloePrime.MarioForever.Util;
 
 namespace ChloePrime.MarioForever.Enemy;
 
+[GlobalClass]
 public partial class GravityObjectBase : CharacterBody2D
 { 
 	[Export] public bool Enabled { get; set; }

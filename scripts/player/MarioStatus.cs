@@ -1,6 +1,5 @@
 ﻿using System;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 

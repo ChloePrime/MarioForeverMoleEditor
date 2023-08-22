@@ -92,8 +92,16 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
 [layer_names]
 
 2d_physics/layer_1="Solid"
+3d_navigation/layer_1="Stomp"
 2d_physics/layer_2="Solid (Mario Only)"
+3d_navigation/layer_2="Fireball"
 2d_physics/layer_3="Solid (Enemy Only)"
+3d_navigation/layer_3="Beetroot"
+3d_navigation/layer_4="Environment"
+3d_navigation/layer_5="KickShell"
+3d_navigation/layer_6="Bump"
+3d_navigation/layer_7="Star"
+3d_navigation/layer_8="Enemy"
 2d_physics/layer_9="DamageSource"
 2d_physics/layer_10="DeathSource"
 2d_physics/layer_11="Coins"

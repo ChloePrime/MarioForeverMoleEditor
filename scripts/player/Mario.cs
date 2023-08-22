@@ -1,4 +1,5 @@
 using System.Linq;
+using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using Godot.Collections;
@@ -11,6 +12,10 @@ namespace ChloePrime.MarioForever.Player;
 public partial class Mario : CharacterBody2D
 {
     #region Movement Params
+    
+    [ExportGroup("Initial Values")]
+
+    [Export] public float YSpeed { get; private set; }
 
     [ExportGroup("Mario Movement")]
     [ExportSubgroup("Walking & Running")]
@@ -110,9 +115,19 @@ public partial class Mario : CharacterBody2D
 
     public void Jump(float strength)
     {
-        _ySpeed = -strength;
+        YSpeed = -strength;
         _isInAir = true;
         _wilyJumpTime = -1;
+    }
+    
+    public bool WillStomp(IStompable other)
+    {
+        return YSpeed >= 0 && ToLocal(other.StompCenter).Y >= -8;
+    }
+
+    public bool WillStomp(Node2D other)
+    {
+        return YSpeed >= 0 && ToLocal(other.GlobalPosition).Y >= -8;
     }
 
     public override void _Process(double delta)
@@ -239,7 +254,7 @@ public partial class Mario : CharacterBody2D
         {
             anim = _isInWater
                 ? Constants.AnimSwimming
-                : ((_ySpeed >= 0 && _hasFallingAnimation) ? Constants.AnimFalling : Constants.AnimJumping);
+                : ((YSpeed >= 0 && _hasFallingAnimation) ? Constants.AnimFalling : Constants.AnimJumping);
         }
         else
         {
@@ -345,6 +360,12 @@ public partial class Mario : CharacterBody2D
     private static void InstallStatusSprite(AnimatedSprite2D sprite)
     {
         sprite?.GetParent()?.RemoveChild(sprite);
+    }
+
+    private CollisionShape2D CurrentCollisionShape
+    {
+        get => CollisionBySize[(int)_currentSize];
+        set => CollisionBySize[(int)_currentSize] = value;
     }
 
     private Node2D _spriteRoot;

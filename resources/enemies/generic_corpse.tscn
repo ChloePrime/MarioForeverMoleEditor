@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdgxjfyqtj612"]
+
+[ext_resource type="Script" path="res://scripts/enemy/GenericCorpse.cs" id="1_4d73o"]
+
+[node name="Generic Corpse" type="AnimatedSprite2D"]
+flip_v = true
+script = ExtResource("1_4d73o")

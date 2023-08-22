@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://skpl30bmwg2q"]
+[gd_scene load_steps=9 format=3 uid="uid://skpl30bmwg2q"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_kvxpk"]
 [ext_resource type="Texture2D" uid="uid://mtuhoajr513i" path="res://resources/enemies/AT_goomba.tres" id="2_2hibf"]
+[ext_resource type="Script" path="res://scripts/enemy/GoombaHurtDetector.cs" id="3_sw373"]
+[ext_resource type="AudioStream" uid="uid://bp5hx4vk1mbkg" path="res://resources/enemies/SE_stomp.wav" id="4_mjcfe"]
+[ext_resource type="PackedScene" uid="uid://cbmforo52axh2" path="res://resources/enemies/goomba_photo.tscn" id="5_deyan"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2bvd"]
 atlas = ExtResource("2_2hibf")
@@ -30,3 +33,10 @@ animations = [{
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_l4iyx")
 autoplay = "default"
+
+[node name="Hurt Detector" parent="." index="3"]
+script = ExtResource("3_sw373")
+StompedSound = ExtResource("4_mjcfe")
+StompedCorpse = ExtResource("5_deyan")
+Stompable = true
+AcceptedDamageTypes = 127

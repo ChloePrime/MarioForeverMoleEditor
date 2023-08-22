@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=16 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
 [ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://resources/mario/mario_sprite_small.tscn" id="3_1usva"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="3_60q2k"]
+[ext_resource type="Script" path="res://scripts/player/MarioHurtZone.cs" id="4_63ovs"]
 [ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/SE_jump.wav" id="4_irhyt"]
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
@@ -52,11 +53,12 @@ position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_7d1yp")
 disabled = true
 
-[node name="Hurt Zone" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
-collision_layer = 0
+[node name="Hurt Zone" type="Area2D" parent="." node_paths=PackedStringArray("Root", "ShapeBySize")]
+collision_layer = 65536
 collision_mask = 256
 input_pickable = false
-script = ExtResource("4_vtk5a")
+script = ExtResource("4_63ovs")
+Root = NodePath("..")
 ShapeBySize = [NodePath("HurtZone_Small"), NodePath("HurtZone_Big"), NodePath("HurtZone_Mini")]
 
 [node name="HurtZone_Big" type="CollisionShape2D" parent="Hurt Zone"]
