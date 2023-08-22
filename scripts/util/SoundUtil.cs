@@ -17,11 +17,11 @@ public static class SoundUtil
         player.Stream = sound;
         player.Finished += () =>
         {
-            // if (PlayerPool.Count >= MaxPooledPlayers)
-            // {
-            //     player.QueueFree();
-            // }
-            // else
+            if (PlayerPool.Count >= MaxPooledPlayers)
+            {
+                player.QueueFree();
+            }
+            else
             {
                 player.GetParent()?.RemoveChild(player);
                 PlayerPool.Push(player);
