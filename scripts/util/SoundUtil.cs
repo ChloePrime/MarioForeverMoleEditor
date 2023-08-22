@@ -23,11 +23,13 @@ public static class SoundUtil
             }
             else
             {
-                player.GetParent()?.RemoveChild(player);
                 PlayerPool.Push(player);
             }
         };
-        node.GetTree().Root.AddChild(player);
+        if (player.GetParent() is null)
+        {
+            node.GetTree().Root.AddChild(player);
+        }
         player.Play();
     }
 
