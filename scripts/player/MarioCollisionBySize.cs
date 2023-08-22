@@ -12,7 +12,7 @@ public partial class MarioCollisionBySize: Area2D
     {
         for (var i = 0; i < ShapeBySize.Count; i++)
         {
-            ShapeBySize[i].Disabled = i != (int)size;
+            ShapeBySize[i].CallDeferred(CollisionShape2D.MethodName.SetDisabled, i != (int)size);
         }
     }
 

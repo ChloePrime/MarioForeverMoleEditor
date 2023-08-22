@@ -217,7 +217,7 @@ public partial class Mario : CharacterBody2D
     {
         for (var i = 0; i < CollisionBySize.Count; i++)
         {
-            CollisionBySize[i].Disabled = i != (int)size;
+            CollisionBySize[i].CallDeferred(CollisionShape2D.MethodName.SetDisabled, i != (int)size);
         }
         _hurtZone.SetSize(size);
         _deathZone.SetSize(size);
