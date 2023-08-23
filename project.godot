@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MarioForeverMoleEditor"
-run/main_scene="res://levels/example/example.tscn"
+run/main_scene="res://objects/O_level_frame.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,9 +21,10 @@ BackgroundMusic="*res://scripts/level/BackgroundMusic.cs"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
-window/stretch/mode="viewport"
+window/size/viewport_width=1707
+window/size/viewport_height=960
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 window/run_on_separate_thread=true
 window/snap/snap_2d_vertices_to_pixel=true
@@ -107,10 +108,6 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
 2d_physics/layer_11="Coins"
 2d_physics/layer_17="Mario"
 2d_physics/layer_18="Enemy (Turning etc.)"
-
-[physics]
-
-2d/run_on_separate_thread=true
 
 [rendering]
 

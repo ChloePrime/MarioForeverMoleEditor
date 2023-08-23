@@ -1,5 +1,4 @@
 ﻿using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Level;
 
@@ -11,20 +10,22 @@ public partial class LevelManager : Control
         get => _level;
         set => SetLevel(value);
     }
+    
+    [Export]
+    public SubViewport GameViewport { get; private set; }
 
     public void ReloadLevel()
     {
-        foreach (var child in _viewport.GetChildren())
+        foreach (var child in GameViewport.GetChildren())
         {
             child.QueueFree();
         }
-        _viewport.AddChild(_level.Instantiate());
+        GameViewport.AddChild(_level.Instantiate());
     }
 
     public override void _Ready()
     {
         base._Ready();
-        this.GetNode(out _viewport, NpViewport);
         ReloadLevel();
         _ready = true;
     }
@@ -41,10 +42,7 @@ public partial class LevelManager : Control
             ReloadLevel();
         }
     }
-
-    private static readonly NodePath NpViewport = "Aspect Ratio Container/SubViewport Container/SubViewport";
     
     private PackedScene _level;
-    private SubViewport _viewport;
     private bool _ready;
 }
