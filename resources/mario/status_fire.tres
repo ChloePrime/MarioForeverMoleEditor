@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/player/MarioStatusFire.cs" id="1_oco3b"]
 [ext_resource type="PackedScene" uid="uid://c2cqpgt3klu63" path="res://resources/mario/mario_sprite_fire.tscn" id="1_ubuub"]
 [ext_resource type="AudioStream" uid="uid://dpdrfh863rt07" path="res://resources/shared/SE_fireball.wav" id="2_qxcpa"]
-[ext_resource type="PackedScene" uid="uid://btfcsg5fg6i3h" path="res://resources/mario/fireball_mario.tscn" id="3_hpgot"]
+[ext_resource type="PackedScene" uid="uid://8iq3fcddygub" path="res://resources/mario/fireball_mario.tscn" id="3_hpgot"]
 
 [resource]
 script = ExtResource("1_oco3b")

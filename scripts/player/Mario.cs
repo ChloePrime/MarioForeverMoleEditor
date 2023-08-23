@@ -344,10 +344,6 @@ public partial class Mario : CharacterBody2D
             _firePreInput = 0.2F;
             TryFire();
         }
-        if (e.IsActionReleased(Constants.ActionFire))
-        {
-            _firePreInput = 0;
-        }
     }
 
     protected override void Dispose(bool disposing)
