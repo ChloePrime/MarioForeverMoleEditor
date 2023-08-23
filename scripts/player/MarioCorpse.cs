@@ -18,7 +18,17 @@ public partial class MarioCorpse : Sprite2D
 		this.GetNode(out _startMoveTimer, NpStartMoveTimer);
 		this.GetNode(out _restartLevelTimer, NpRestartLevelTimer);
 		_startMoveTimer.Timeout += StartMoving;
-		_restartLevelTimer.Timeout += () => this.GetLevelManager()?.ReloadLevel();
+		_restartLevelTimer.Timeout += () =>
+		{
+			if (this.GetLevelManager() is { } levelManager)
+			{
+				levelManager.ReloadLevel();
+			}
+			else
+			{
+				GetTree().ReloadCurrentScene();
+			}
+		};
 	}
 
 	public void SetFastRetry(bool fastRetry)

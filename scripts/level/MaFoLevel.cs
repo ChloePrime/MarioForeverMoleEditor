@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -23,6 +24,16 @@ public partial class MaFoLevel : Node
 			BackgroundMusic.Music = bgm;
 		}
 		
+		if (this.GetLevelManager() is null)
+		{
+			GetTree().Root.ContentScaleAspect = Window.ContentScaleAspectEnum.Keep;
+		}
+		
+		ProcessTilemaps();
+	}
+
+	private void ProcessTilemaps()
+	{
 		var children = GetChildren();
 		foreach (var tilemap in children.OfType<TileMap>())
 		{
