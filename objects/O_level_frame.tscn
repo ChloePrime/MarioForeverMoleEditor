@@ -68,9 +68,8 @@ grow_vertical = 2
 
 [node name="L" type="Control" parent="Frame Curtain"]
 layout_mode = 1
-anchor_right = 0.125
+anchor_left = -0.125
 anchor_bottom = 1.0
-offset_right = 0.625
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
@@ -88,16 +87,14 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("3_nh8oc")
-expand_mode = 4
+expand_mode = 1
 stretch_mode = 6
 
 [node name="R" type="Control" parent="Frame Curtain"]
 layout_mode = 1
-anchor_left = 0.875
-anchor_right = 1.0
+anchor_left = 1.0
+anchor_right = 1.125
 anchor_bottom = 1.0
-offset_left = -0.125
-offset_right = -0.00012207
 grow_horizontal = 0
 mouse_filter = 2
 
@@ -111,7 +108,7 @@ offset_right = 776.0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("3_nh8oc")
-expand_mode = 4
+expand_mode = 1
 stretch_mode = 6
 
 [node name="Frame Anime" type="Control" parent="."]
@@ -126,9 +123,8 @@ grow_vertical = 2
 [node name="L" type="Control" parent="Frame Anime"]
 clip_contents = true
 layout_mode = 1
-anchor_right = 0.125
+anchor_left = -0.125
 anchor_bottom = 1.0
-offset_right = 0.625
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
@@ -148,16 +144,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_bly6j")
-expand_mode = 4
+expand_mode = 1
 stretch_mode = 6
 
 [node name="R" type="Control" parent="Frame Anime"]
 clip_contents = true
 layout_mode = 1
-anchor_left = 0.875
-anchor_right = 1.0
+anchor_left = 1.0
+anchor_right = 1.125
 anchor_bottom = 1.0
-offset_left = -0.125122
 grow_horizontal = 0
 mouse_filter = 2
 
@@ -176,5 +171,5 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("4_leriq")
-expand_mode = 4
+expand_mode = 1
 stretch_mode = 6

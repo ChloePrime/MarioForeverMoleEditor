@@ -19,9 +19,10 @@ public partial class LevelFrame : LevelManager
     private void OnResize()
     {
         var sizeRate = _game.Position.X / this.Size.X;
-        _la.AnchorRight = _ln.AnchorRight = sizeRate;
-        _ra.AnchorLeft = _rn.AnchorLeft = 1 - sizeRate;
-        _ra.Position = new Vector2(_game.Position.X + _game.Size.X, _ra.Position.Y);
+        _la.AnchorLeft = _ln.AnchorLeft = -sizeRate;
+        _ra.AnchorRight = _rn.AnchorRight = 1 + sizeRate;
+        _la.Position = _ln.Position = new Vector2(0, _ra.Position.Y);
+        _ra.Position = _rn.Position = new Vector2(_game.Position.X + _game.Size.X, _ra.Position.Y);
     }
 
     private static readonly NodePath NpLeftNormalFrame = "Frame Curtain/L"; 
