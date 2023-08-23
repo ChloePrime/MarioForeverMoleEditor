@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using ChloePrime.MarioForever.Level;
 using Godot;
 
 namespace ChloePrime.MarioForever.Util;
@@ -27,11 +28,21 @@ public static class FrameUtil
 
     public static MaFoLevel? GetLevel(this Node node)
     {
+        return node.FindParentOfType<MaFoLevel>();
+    }
+
+    public static LevelManager? GetLevelManager(this Node node)
+    {
+        return node.FindParentOfType<LevelManager>();
+    }
+
+    public static T? FindParentOfType<T>(this Node node) where T: class
+    {
         do
         {
-            if (node is MaFoLevel level)
+            if (node is T t)
             {
-                return level;
+                return t;
             }
         } while ((node = node.GetParent()) != null);
 

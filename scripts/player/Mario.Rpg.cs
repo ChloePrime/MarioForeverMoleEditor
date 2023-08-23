@@ -1,4 +1,4 @@
-﻿using ChloePrime.MarioForever.level;
+﻿using ChloePrime.MarioForever.Level;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;

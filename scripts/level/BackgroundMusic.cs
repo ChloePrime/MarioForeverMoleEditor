@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 
-namespace ChloePrime.MarioForever.level;
+namespace ChloePrime.MarioForever.Level;
 
 /**
  * 需要挂到 AutoLoad 上

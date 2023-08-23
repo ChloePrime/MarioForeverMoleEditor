@@ -1,7 +1,7 @@
 ﻿using ChloePrime.MarioForever.Player;
 using Godot;
 
-namespace ChloePrime.MarioForever.level;
+namespace ChloePrime.MarioForever.Level;
 
 public partial class MusicChanger : Area2D
 {
