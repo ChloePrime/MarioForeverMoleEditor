@@ -20,14 +20,14 @@ public partial class WalkableObjectBase : GravityObjectBase
     }
     
     [ExportGroup($"{nameof(WalkableObjectBase)} (Advanced)")] 
-    [Export] public float ControlAcceleration = Units.Acceleration.CtfMovementToGd(1);
+    [Export] public float ControlAcceleration = 0;
 
     private VisibleOnScreenNotifier2D _enterScreenDetector;
 
     public override void _Ready()
     {
         base._Ready();
-        this.GetNode(out _enterScreenDetector, NpEnterScreenNotifier);
+        this.GetNodeOrNull(out _enterScreenDetector, NpEnterScreenNotifier);
         
         // 进入屏幕后激活
         if (_enterScreenDetector is { } detector)
@@ -76,27 +76,15 @@ public partial class WalkableObjectBase : GravityObjectBase
     {
         if (Enabled)
         {
-            XSpeed = Mathf.MoveToward(XSpeed, TargetSpeed, ControlAcceleration * (float)deltaD);
+            if (!Mathf.IsZeroApprox(ControlAcceleration))
+            {
+                XSpeed = Mathf.MoveToward(XSpeed, TargetSpeed, ControlAcceleration * (float)deltaD);
+            }
+            else
+            {
+                XSpeed = TargetSpeed;
+            }
         }
         base._PhysicsProcess(deltaD);
     }
-
-    // private void OnCollideWithOthers(Node2D other)
-    // {
-    //     if (!CollideWithOthers || other == this || other is not WalkableObjectBase { CollideWithOthers: true } otherEnemy)
-    //     {
-    //         return;
-    //     }
-    //     var relativeX = otherEnemy.Position.X - Position.X;
-    //     SetDirectionOnCollide(relativeX);
-    //     otherEnemy.SetDirectionOnCollide(-relativeX);
-    // }
-    //
-    // private void SetDirectionOnCollide(float relativeX)
-    // {
-    //     if (relativeX != 0)
-    //     {
-    //         XDirection = Math.Sign(relativeX);
-    //     }
-    // }
 }

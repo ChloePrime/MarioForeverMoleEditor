@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Util;
+﻿using System.Collections.Immutable;
+using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -23,11 +24,20 @@ public partial class Mario
         public static readonly NodePath NpHurtSound = "Hurt Sound";
         public static readonly MarioStatus SmallStatus;
         public static readonly MarioStatus BigStatus;
+        public static readonly MarioStatus FireStatus;
         public static readonly Vector2 FlipX = new(-1, 1);
         public static readonly Vector2 DoNotFlipX = new(1, 1);
         public static readonly StringName AnimStopped = "stopped";
         public static readonly StringName AnimWalking = "walking";
         public static readonly StringName AnimJumping = "jumping";
+        public static readonly StringName AnimAppearing = "appearing";
+        public static readonly StringName AnimLaunching = "launching";
+
+        public static readonly ImmutableHashSet<StringName> SpecialAnimations = ImmutableHashSet.Create(
+            AnimAppearing,
+            AnimLaunching
+        );
+        
         public static readonly StringName AnimFalling = "falling";
         public static readonly StringName AnimCrouching = "crouching";
         public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://resources/mario/mario_corpse.tscn");
@@ -37,6 +47,7 @@ public partial class Mario
         {
             NodeEx.Load(out SmallStatus, "res://resources/mario/status_small.tres");
             NodeEx.Load(out BigStatus, "res://resources/mario/status_big.tres");
+            NodeEx.Load(out FireStatus, "res://resources/mario/status_fire.tres");
         }
     }
 }

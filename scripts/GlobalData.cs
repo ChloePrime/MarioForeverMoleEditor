@@ -11,5 +11,6 @@ public static class GlobalData
 {
     public static MarioStatus Status { get; set; } = MarioStatus.Big;
     public static BigInteger Score { get; set; }
+    public static int Coins { get; set; }
     public static int Lives { get; set; }
 }

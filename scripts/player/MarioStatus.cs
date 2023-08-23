@@ -3,10 +3,12 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Player;
 
+[GlobalClass]
 public abstract partial class MarioStatus : Resource, IEquatable<MarioStatus>
 {
     public static MarioStatus Small => Mario.Constants.SmallStatus;
     public static MarioStatus Big => Mario.Constants.BigStatus;
+    public static MarioStatus FireFlower => Mario.Constants.FireStatus;
     
     public abstract StringName GetId();
     [Export] public MarioSize Size { get; private set; } = MarioSize.Big;
@@ -18,8 +20,9 @@ public abstract partial class MarioStatus : Resource, IEquatable<MarioStatus>
     [Export] public MarioStatus HurtResult { get; private set; }
     [Export] public PackedScene AnimationNode { get; private set; }
 
-    public virtual void Fire(Mario mario)
+    public virtual bool Fire(Mario mario)
     {
+        return false;
     }
 
     public bool Equals(MarioStatus other)

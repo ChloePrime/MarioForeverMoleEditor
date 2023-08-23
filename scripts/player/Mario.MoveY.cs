@@ -14,12 +14,11 @@ public partial class Mario
         {
             return 1;
         }
-        return _xSpeed >= MinSpeed ? 0.5F : 0.6F;
+        return XSpeed >= MinSpeed ? 0.5F : 0.6F;
     }
     
-    private void PhysicsProcessY(double deltaD)
+    private void PhysicsProcessY(float delta)
     {
-        var delta = (float)deltaD;
         MoveY(delta);
 
         if (_isInAir)

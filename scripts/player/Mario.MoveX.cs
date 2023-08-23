@@ -9,12 +9,12 @@ public partial class Mario
     /// <summary>
     /// X 速度的绝对值
     /// </summary>
-    private float _xSpeed;
+    public float XSpeed { get; set; }
 
     /// <summary>
     /// X 方向，-1 或 1
     /// </summary>
-    private int _xDirection = 1;
+    public int XDirection { get; private set; } = 1;
 
     private bool _leftPressed;
     private bool _rightPressed;
@@ -29,54 +29,53 @@ public partial class Mario
     /// <summary>
     /// RE: 马里奥移动
     /// </summary>
-    private void PhysicsProcessX(double deltaD)
+    private void PhysicsProcessX(float delta)
     {
-        var delta = (float)deltaD;
         _running = _runPressed;
         _walkAxis = FetchWalkingInput();
         _walkAxis = (_crouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
         
         // RE: Flag10控制转向过程
-        if (_xDirection * _walkAxis < 0 && _xSpeed > 0)
+        if (XDirection * _walkAxis < 0 && XSpeed > 0)
         {
             _turning = true;
         }
-        if (_xDirection * _walkAxis > 0)
+        if (XDirection * _walkAxis > 0)
         {
             _turning = false;
         }
         
         // RE: 同时按住左和右会有问题，此处修正
-        if (_leftPressed && _rightPressed && _xSpeed > MinSpeed)
+        if (_leftPressed && _rightPressed && XSpeed > MinSpeed)
         {
             var acc = _running ? AccelerationWhenRunning : AccelerationWhenWalking;
-            _xSpeed = Math.Max(MinSpeed, _xSpeed - acc * delta);
+            XSpeed = Math.Max(MinSpeed, XSpeed - acc * delta);
         }
         
         // RE: 转向时先减速
         if (_turning)
         {
-            if (_walking && _xSpeed > 0)
+            if (_walking && XSpeed > 0)
             {
-                _xSpeed -= AccelerationWhenTurning * delta;
+                XSpeed -= AccelerationWhenTurning * delta;
             }
-            if (_xSpeed <= 0 && _xDirection * _walkAxis < 0)
+            if (XSpeed <= 0 && XDirection * _walkAxis < 0)
             {
                 _turning = false;
-                _xSpeed = -1;
+                XSpeed = -1;
             }
         }
-        if (_turning && _xSpeed <= 0 && _walkAxis == 0)
+        if (_turning && XSpeed <= 0 && _walkAxis == 0)
         {
             _turning = false;
-            _xSpeed = 0;
+            XSpeed = 0;
         }
 
         // RE: 改变方向
         if (!_turning && !_completedLevel && _walking)
         {
-            _xDirection = Math.Sign(_walkAxis);
+            XDirection = Math.Sign(_walkAxis);
         }
         
         // RE: 走/跑
@@ -84,37 +83,37 @@ public partial class Mario
         {
             if (!_running)
             {
-                if (_xSpeed < MaxSpeedWhenWalking)
+                if (XSpeed < MaxSpeedWhenWalking)
                 {
-                    _xSpeed = Math.Min(MaxSpeedWhenWalking, _xSpeed + AccelerationWhenWalking * delta);
+                    XSpeed = Math.Min(MaxSpeedWhenWalking, XSpeed + AccelerationWhenWalking * delta);
                 }
-                if (_xSpeed > MaxSpeedWhenWalking)
+                if (XSpeed > MaxSpeedWhenWalking)
                 {
-                    _xSpeed = Math.Max(MaxSpeedWhenWalking, _xSpeed - AccelerationWhenWalking * delta);
+                    XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenWalking * delta);
                 }
             }
-            if (_running && _xSpeed < MaxSpeedWhenRunning)
+            if (_running && XSpeed < MaxSpeedWhenRunning)
             {
-                _xSpeed = Math.Min(MaxSpeedWhenRunning, _xSpeed + AccelerationWhenRunning * delta);
+                XSpeed = Math.Min(MaxSpeedWhenRunning, XSpeed + AccelerationWhenRunning * delta);
             }
         }
-        if (!_walking && _xSpeed > 0)
+        if (!_walking && XSpeed > 0)
         {
-            _xSpeed = Math.Max(0, _xSpeed - AccelerationWhenWalking * delta);
+            XSpeed = Math.Max(0, XSpeed - AccelerationWhenWalking * delta);
         }
-        if (!_running && _xSpeed > MaxSpeedWhenWalking)
+        if (!_running && XSpeed > MaxSpeedWhenWalking)
         {
-            _xSpeed = Math.Max(MaxSpeedWhenWalking, _xSpeed - AccelerationWhenRunning * delta);
+            XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenRunning * delta);
         }
         
         // RE: 初速度
-        if (_walking && !_turning && _xSpeed < MinSpeed)
+        if (_walking && !_turning && XSpeed < MinSpeed)
         {
-            _xSpeed += MinSpeed;
+            XSpeed += MinSpeed;
         }
-        if (_leftPressed && _rightPressed && _xSpeed < MinSpeed && !_crouching && !_completedLevel)
+        if (_leftPressed && _rightPressed && XSpeed < MinSpeed && !_crouching && !_completedLevel)
         {
-            _xSpeed += MinSpeed;
+            XSpeed += MinSpeed;
         }
         
         // RE: 马里奥出屏判定
@@ -127,30 +126,30 @@ public partial class Mario
             var xRightFrame = frame.End.X;
             var leftHitScreen = x - xLeftFrame <= ScreenBorderPadding;
             var rightHitScreen = xRightFrame - x <= ScreenBorderPadding;
-            if (_xDirection < 0 && leftHitScreen)
+            if (XDirection < 0 && leftHitScreen)
             {
                 pos.X = xLeftFrame + ScreenBorderPadding;
                 Position = pos;
-                _xSpeed = 0;
+                XSpeed = 0;
                 return;
             }
-            if (_xDirection > 0 && rightHitScreen)
+            if (XDirection > 0 && rightHitScreen)
             {
                 pos.X = xRightFrame - ScreenBorderPadding;
                 Position = pos;
-                _xSpeed = 0;
+                XSpeed = 0;
                 return;
             }
         }
             
         // 属于 Godot 的实际移动部分
-        Velocity = new Vector2(_xSpeed * _xDirection, 0);
+        Velocity = new Vector2(XSpeed * XDirection, 0);
         var collided = MoveAndSlide();
         _walkResult = Velocity.X * delta;
 
-        if (collided && _xSpeed > 0 && Mathf.IsZeroApprox(Math.Abs(Velocity.X)))
+        if (collided && XSpeed > 0 && Mathf.IsZeroApprox(Math.Abs(Velocity.X)))
         {
-            _xSpeed = 0;
+            XSpeed = 0;
             Velocity = Vector2.Zero;
         }
     }

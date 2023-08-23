@@ -1,7 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://xk3v8y8h1dpp"]
+[gd_scene load_steps=17 format=3 uid="uid://xk3v8y8h1dpp"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://resources/mario/mario_sprite_prefab.tscn" id="1_3f8m8"]
 [ext_resource type="Texture2D" uid="uid://dyt4t4nk472hy" path="res://resources/mario/T_1_big.png" id="2_xbtxo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxjcc"]
+atlas = ExtResource("2_xbtxo")
+region = Rect2(0, 177, 45, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhsy4"]
+atlas = ExtResource("2_xbtxo")
+region = Rect2(0, 236, 45, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seyb2"]
+atlas = ExtResource("2_xbtxo")
+region = Rect2(0, 118, 45, 59)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kt6sh"]
 atlas = ExtResource("2_xbtxo")
@@ -47,6 +59,20 @@ region = Rect2(0, 0, 45, 59)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_cxjcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhsy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seyb2")
+}],
+"loop": true,
+"name": &"appearing",
+"speed": 45.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_kt6sh")
 }],
 "loop": true,
@@ -59,7 +85,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"falling",
-"speed": 5.0
+"speed": 0.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -123,4 +149,5 @@ animations = [{
 
 [node name="Sprite_Big" instance=ExtResource("1_3f8m8")]
 sprite_frames = SubResource("SpriteFrames_47fc0")
-animation = &"crouching"
+animation = &"stopped"
+GlobalOffset = Vector2(4, 0)

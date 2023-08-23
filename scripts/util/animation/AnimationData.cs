@@ -7,6 +7,7 @@ namespace ChloePrime.MarioForever.Util.Animation;
 public partial class AnimationData : Resource
 {
     [Export] public int LoopStarts { get; set; }
+    [Export] public int LoopCount { get; set; }
     [Export] public Array<Pivot> FramePivots { get; private set; }
 
     /// <summary>

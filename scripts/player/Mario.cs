@@ -95,8 +95,10 @@ public partial class Mario : CharacterBody2D
     [ExportGroup("RPG")]
     [Export] public float InvulnerableTimeOnHurt { get; private set; } = 2;
     [Export] public bool FastRetry { get; set; }
-    [Export] public Array<MarioStatus> StatusList { get; set; }
-    [Export] public Array<Node> StatusSpriteNodeList { get; set; }
+    public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
+    [Export] public Array<Node2D> MuzzleBySize { get; private set; }
+    [Export] public Array<MarioStatus> StatusList { get; private set; }
+    [Export] public Array<Node> StatusSpriteNodeList { get; private set; }
 
     [ExportGroup("")]
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
@@ -155,9 +157,9 @@ public partial class Mario : CharacterBody2D
         }
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double deltaD)
     {
-        base._PhysicsProcess(delta);
+        base._PhysicsProcess(deltaD);
         if (_hurtStack > 0)
         {
             Hurt();
@@ -167,10 +169,29 @@ public partial class Mario : CharacterBody2D
             Kill();
             return;
         }
+        var delta = (float)deltaD;
         PhysicsProcessX(delta);
         PhysicsProcessY(delta);
         UpdateCrouch();
         UpdateAnimation();
+
+        if (_firePreInput > 0)
+        {
+            _firePreInput -= delta;
+            TryFire();
+        }
+    }
+
+    private void TryFire()
+    {
+        if (GlobalData.Status.Fire(this))
+        {
+            _firePreInput = 0;
+            if (_hasLaunchingAnimation && !_crouching && _currentSprite is { } sprite)
+            {
+                sprite.Animation = Constants.AnimLaunching;
+            }
+        }
     }
 
     private void UpdateCrouch()
@@ -232,8 +253,13 @@ public partial class Mario : CharacterBody2D
     private void UpdateAnimation()
     {
         TrySwitchStatusSprite();
-        _spriteRoot.Scale = _xDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
-        
+        _spriteRoot.Scale = XDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
+
+        if (IsInSpecialAnimation())
+        {
+            _currentSprite.SpeedScale = 1;
+            return;
+        }
         var (anim, speed) = GetAnimationIdAndSpeed();
         if (_currentSprite.Animation != anim)
         {
@@ -258,10 +284,10 @@ public partial class Mario : CharacterBody2D
         }
         else
         {
-            if (_xSpeed > 0)
+            if (XSpeed > 0)
             {
                 anim = Constants.AnimWalking;
-                speed = _xSpeed / MaxSpeedWhenRunning;
+                speed = XSpeed / MaxSpeedWhenRunning;
             }
             else
             {
@@ -269,6 +295,11 @@ public partial class Mario : CharacterBody2D
             }
         }
         return (anim, speed);
+    }
+
+    private bool IsInSpecialAnimation()
+    {
+        return _currentSprite != null && Constants.SpecialAnimations.Contains(_currentSprite.Animation);
     }
 
     private void TrySwitchStatusSprite()
@@ -281,7 +312,7 @@ public partial class Mario : CharacterBody2D
         }
         if (_currentSprite != null && _currentSprite.GetParent() == null)
         {
-            foreach (var child in _spriteRoot.Children())
+            foreach (var child in _spriteRoot.Children().OfType<AnimatedSprite2D>())
             {
                 _spriteRoot.CallDeferred(Node.MethodName.RemoveChild, child);
             }
@@ -293,6 +324,7 @@ public partial class Mario : CharacterBody2D
     {
         _hasFallingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimFalling);
         _hasCrouchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimCrouching);
+        _hasLaunchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimLaunching);
         _standingSize = _currentStatus.Size;
         if (!(_standingSize == MarioSize.Big && _crouching))
         {
@@ -307,6 +339,15 @@ public partial class Mario : CharacterBody2D
         FetchInput(ref _runPressed, e, Constants.ActionRun);
         FetchInput(ref _upPressed, e, Constants.ActionMoveUp);
         FetchInput(ref _downPressed, e, Constants.ActionMoveDown);
+        if (e.IsActionPressed(Constants.ActionFire))
+        {
+            _firePreInput = 0.2F;
+            TryFire();
+        }
+        if (e.IsActionReleased(Constants.ActionFire))
+        {
+            _firePreInput = 0;
+        }
     }
 
     protected override void Dispose(bool disposing)
@@ -359,7 +400,12 @@ public partial class Mario : CharacterBody2D
 
     private static void InstallStatusSprite(AnimatedSprite2D sprite)
     {
-        sprite?.GetParent()?.RemoveChild(sprite);
+        sprite.GetParent()?.RemoveChild(sprite);
+        sprite.AnimationFinished += () =>
+        {
+            sprite.Animation = Constants.AnimStopped;
+            sprite.Play();
+        };
     }
 
     private CollisionShape2D CurrentCollisionShape
@@ -379,6 +425,7 @@ public partial class Mario : CharacterBody2D
     [CtfFlag(12)] private bool _isInWater;
     private bool _isNearWaterSurface;
     [CtfFlag(28)] private bool _completedLevel;
+    private float _firePreInput;
 
     private MarioStatus _currentStatus;
     private AnimatedSprite2D _currentSprite;
@@ -395,5 +442,6 @@ public partial class Mario : CharacterBody2D
     private MarioSize _currentSize;
     private bool _hasFallingAnimation;
     private bool _hasCrouchingAnimation;
+    private bool _hasLaunchingAnimation;
     private System.Collections.Generic.Dictionary<MarioStatus, AnimatedSprite2D> SpriteNodes { get; } = new();
 }

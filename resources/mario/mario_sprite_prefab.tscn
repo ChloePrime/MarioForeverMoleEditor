@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://u3mnx4topf7v"]
+[gd_scene load_steps=16 format=3 uid="uid://u3mnx4topf7v"]
 
 [ext_resource type="Texture2D" uid="uid://dfdfodnl0awav" path="res://resources/mario/T_0_small.png" id="2_4iy74"]
 [ext_resource type="Script" path="res://scripts/util/animation/BetterAnimatedSprite2D.cs" id="3_d672b"]
 [ext_resource type="Resource" uid="uid://dd7bxjcwac518" path="res://resources/mario/AnimData_swimming_common.tres" id="4_cdue1"]
+[ext_resource type="Resource" uid="uid://cto35s0xckg5p" path="res://resources/mario/AnimData_apperaing_common.tres" id="4_m175q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ys5fp"]
 atlas = ExtResource("2_4iy74")
@@ -121,6 +122,7 @@ animation = &"walking"
 autoplay = "stopped"
 script = ExtResource("3_d672b")
 AnimationData = {
+"appearing": ExtResource("4_m175q"),
 "swimming": ExtResource("4_cdue1")
 }
 Pivot = 8

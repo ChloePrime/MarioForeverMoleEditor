@@ -1,4 +1,5 @@
 using System;
+using ChloePrime.MarioForever.Player;
 using Godot;
 using ChloePrime.MarioForever.Util;
 
@@ -30,8 +31,11 @@ public partial class GravityObjectBase : CharacterBody2D
 	
 	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
+	[Export] public Node2D Sprite { get; set; }
 	
 	public bool HasHitWall { get; private set; }
+	public float LastXSpeed { get; private set; }
+	public float LastYSpeed { get; private set; }
 
 	public override void _Ready()
 	{
@@ -56,12 +60,19 @@ public partial class GravityObjectBase : CharacterBody2D
 		var collided = MoveAndSlide();
 
 		HasHitWall = Math.Abs(Velocity.X) < XSpeed;
+		LastXSpeed = XSpeed;
+		LastYSpeed = YSpeed;
 		XSpeed = Math.Abs(Velocity.X);
 		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
 
 		if (collided)
 		{
 			_ProcessCollision();
+		}
+
+		if (Sprite is { } sprite)
+		{
+			sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
 		}
 	}
 

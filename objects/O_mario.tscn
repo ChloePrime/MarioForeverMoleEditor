@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=17 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
 [ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://resources/mario/mario_sprite_small.tscn" id="3_1usva"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="3_60q2k"]
 [ext_resource type="Script" path="res://scripts/player/MarioHurtZone.cs" id="4_63ovs"]
+[ext_resource type="Resource" uid="uid://6ijibb8vqa75" path="res://resources/mario/status_fire.tres" id="4_eji8b"]
 [ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/SE_jump.wav" id="4_irhyt"]
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
@@ -28,7 +29,7 @@ size = Vector2(17, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
 size = Vector2(7, 11)
 
-[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "StatusSpriteNodeList") groups=["player"]]
+[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
 z_index = 100
 collision_layer = 65536
 collision_mask = 3
@@ -36,7 +37,8 @@ floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_slc8u")
 CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
-StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k")])
+MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
+StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b")])
 StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
 [node name="Collision_Big" type="CollisionShape2D" parent="."]
@@ -97,6 +99,12 @@ shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
 [node name="SpriteRoot" type="Node2D" parent="."]
+
+[node name="Muzzle" type="Node2D" parent="SpriteRoot"]
+position = Vector2(10, -40)
+
+[node name="Muzzle (Crouching)" type="Node2D" parent="SpriteRoot"]
+position = Vector2(10, -30)
 
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
 position = Vector2(0, -29)
