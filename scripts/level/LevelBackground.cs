@@ -14,6 +14,7 @@ public partial class LevelBackground : Sprite2D
     [Export] public bool WrapX { get; set; } = true;
     [Export] public bool WrapY { get; set; }
     [Export] public Vector2 ParallaxRatio { get; set; } = Vector2.One;
+    [Export] public Vector2 PositionOffset { get; set; }
     
     public LevelBackground()
     {
@@ -23,6 +24,7 @@ public partial class LevelBackground : Sprite2D
     public override void _Ready()
     {
         base._Ready();
+        _intitalOffset = GlobalPosition - this.GetFrame().Size / 2;
         TextureChanged += OnTextureChanged;
         InitSubSprites();
     }
@@ -40,7 +42,8 @@ public partial class LevelBackground : Sprite2D
         var screenSize = viewport.GetVisibleRect().Size;
         var screenCenter = this.GetFrame().GetCenter();
         var start = new Vector2(camera?.LimitLeft ?? 0, camera?.LimitTop ?? 0);
-        var pos = (this.GetFrame().GetCenter() - start - size / 2) * (Vector2.One - ParallaxRatio) + start + size / 2;
+        var pos = (this.GetFrame().GetCenter() - start - size / 2) * (Vector2.One - ParallaxRatio) + start + size / 2 +
+                  PositionOffset;
         
         if (WrapX)
         {
@@ -63,7 +66,7 @@ public partial class LevelBackground : Sprite2D
         }
         else
         {
-            pos.X = GlobalPosition.X;
+            pos.X = ParallaxRatio.X == 0 ? screenCenter.X + _intitalOffset.X : GlobalPosition.X;
         }
         
         if (WrapY)
@@ -87,7 +90,7 @@ public partial class LevelBackground : Sprite2D
         }
         else
         {
-            pos.Y = GlobalPosition.Y;
+            pos.Y = ParallaxRatio.Y == 0 ? screenCenter.Y + _intitalOffset.Y : GlobalPosition.Y;
         }
         GlobalPosition = pos;
     }
@@ -124,5 +127,6 @@ public partial class LevelBackground : Sprite2D
         }
     }
 
+    private Vector2 _intitalOffset;
     private (Sprite2D, Vector2)[] _subs;
 }

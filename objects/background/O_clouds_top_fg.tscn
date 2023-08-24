@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://xvmcqrqgmclu"]
+
+[ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="1_3oq3c"]
+
+[node name="Cloud (Foreground)" instance=ExtResource("1_3oq3c")]
+z_index = 550
+Speed = Vector2(-125, 0)
