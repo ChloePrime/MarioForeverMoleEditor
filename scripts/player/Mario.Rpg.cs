@@ -34,7 +34,7 @@ public partial class Mario
         }
         _invulnerable = true;
         _invulnerableFlashPhase = 0;
-        _invulnerableTimer?.Free();
+        _invulnerableTimer?.Dispose();
         _invulnerableTimer = GetTree().CreateTimer(time);
         _invulnerableTimer.Timeout += () => _invulnerable = false;
     }
