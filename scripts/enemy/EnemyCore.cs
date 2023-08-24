@@ -2,6 +2,7 @@
 
 namespace ChloePrime.MarioForever.Enemy;
 
+[GlobalClass]
 public partial class EnemyCore : Area2D
 {
     [Export] public Node2D RootOverride { get; private set; }
