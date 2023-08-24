@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -93,15 +94,19 @@ public partial class LevelBackground : Sprite2D
 
     private void InitSubSprites()
     {
-        _tl = new Sprite2D();
-        _t = new Sprite2D();
-        _tr = new Sprite2D();
-        _l = new Sprite2D();
-        _r = new Sprite2D();
-        _bl = new Sprite2D();
-        _b = new Sprite2D();
-        _br = new Sprite2D();
-        foreach (var (sub, _) in SubSprites)
+        var size = Texture.GetSize() * GlobalScale;
+        var windowSize = GetViewportRect().Size;
+        var builder = new List<(Sprite2D, Vector2)>();
+        var w = WrapX ? Math.Max(3, 2 * Mathf.CeilToInt(windowSize.X / size.X) + 2) : 1;
+        var h = WrapY ? Math.Max(3, 2 * Mathf.CeilToInt(windowSize.Y / size.Y) + 2) : 1;
+        for (var x = -(w / 2); x <= w / 2; x++)
+        for (var y = -(h / 2); y <= h / 2; y++)
+        {
+            if (x == 0 && y == 0) continue;
+            builder.Add((new Sprite2D(), new Vector2(x, y)));
+        }
+        _subs = builder.ToArray();
+        foreach (var (sub, _) in _subs)
         {
             AddChild(sub);
         }
@@ -112,39 +117,12 @@ public partial class LevelBackground : Sprite2D
     {
         var tex = Texture;
         var size = tex.GetSize();
-        foreach (var (sprite, relPos) in SubSprites)
+        foreach (var (sprite, relPos) in _subs)
         {
             sprite.Texture = tex;
             sprite.Position = relPos * size;
         }
     }
 
-    private IEnumerable<(Sprite2D, Vector2)> SubSprites
-    {
-        get
-        {
-            yield return (_tl, RelPosList[0]);
-            yield return (_t, RelPosList[1]);
-            yield return (_tr, RelPosList[2]);
-            yield return (_l, RelPosList[3]);
-            yield return (_r, RelPosList[4]);
-            yield return (_bl, RelPosList[5]);
-            yield return (_b, RelPosList[6]);
-            yield return (_br, RelPosList[7]);
-        }
-    }
-
-    private Sprite2D _tl, _t, _tr, _l, _r, _bl, _b, _br;
-
-    private static readonly Vector2[] RelPosList =
-    {
-        new(-1, -1),
-        new(0, -1),
-        new(1, -1),
-        new(-1, 0),
-        new(1, 0),
-        new(-1, 1),
-        new(0, 1),
-        new(1, 1),
-    };
+    private (Sprite2D, Vector2)[] _subs;
 }

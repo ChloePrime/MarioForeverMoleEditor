@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dav5m8obc6byj"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://resources/background/background_base.tscn" id="1_8adxg"]
+
+[sub_resource type="Gradient" id="Gradient_ctip4"]
+colors = PackedColorArray(0.235294, 0.470588, 0.627451, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o2jv4"]
+gradient = SubResource("Gradient_ctip4")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
+
+[node name="Background Gradient" instance=ExtResource("1_8adxg")]
+z_index = -4090
+texture = SubResource("GradientTexture2D_o2jv4")
+WrapY = true
