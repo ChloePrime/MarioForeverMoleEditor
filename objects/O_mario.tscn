@@ -104,7 +104,7 @@ disabled = true
 position = Vector2(10, -40)
 
 [node name="Muzzle (Crouching)" type="Node2D" parent="SpriteRoot"]
-position = Vector2(10, -30)
+position = Vector2(10, -21)
 
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
 position = Vector2(0, -29)
