@@ -4,7 +4,7 @@
 Clone this repository and open in godot.
 
 ## Structure:
-Main Scene: `O_level_frame.tscn` <br>
+Main Scene: `O_level_frame.tscn` <br> <br>
 In order to change current level, <br>
-you need to assigned the level prefab to `LevelFrame`'s `Level` property. <br>
-Otherwise you will not have textured screen borders (and game UI later)
+you need to assign the level prefab to `LevelFrame`'s `Level` property. <br>
+**Otherwise you will not have textured screen borders (and game UI later)**
