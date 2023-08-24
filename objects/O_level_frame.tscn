@@ -63,6 +63,7 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Frame Curtain" type="Control" parent="."]
+visible = false
 modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 1
 anchors_preset = 15
