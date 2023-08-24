@@ -28,7 +28,7 @@ FastRetry = true
 [node name="MaFoCamera" type="Camera2D" parent="."]
 position = Vector2(320, 240)
 script = ExtResource("4_jc67v")
-Border = Rect2(0, 0, 2560, 512)
+Border = Rect2(0, 0, 2560, 480)
 
 [node name="Music Changer" parent="." instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
