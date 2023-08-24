@@ -1,28 +1,20 @@
-[gd_scene load_steps=13 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=12 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
-[ext_resource type="Script" path="res://scripts/level/LevelBackground.cs" id="3_5tmba"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
-[ext_resource type="Texture2D" uid="uid://bxdi8tlg4ecb3" path="res://resources/level/background/T_bg_seashore_and_castle.png" id="3_d670x"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
 [ext_resource type="PackedScene" uid="uid://bf5pyelftad5i" path="res://objects/enemies/spiky_facility/O_spike_grey_0_up.tscn" id="8_47vwa"]
 [ext_resource type="PackedScene" uid="uid://blwx4hmks2qf0" path="res://objects/enemies/spiky_facility/O_spike_grey_1_down.tscn" id="9_todrn"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="10_swv1r"]
+[ext_resource type="PackedScene" uid="uid://be6r440u75fjg" path="res://objects/background/O_bg_forest_hills.tscn" id="11_nfc1d"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
 LevelMusic = ExtResource("2_4kt55")
-
-[node name="LevelBackground" type="Sprite2D" parent="."]
-z_index = -4096
-position = Vector2(320, 240)
-texture = ExtResource("3_d670x")
-script = ExtResource("3_5tmba")
-ParallaxRatio = Vector2(0.5, 1)
 
 [node name="Tiles" parent="." instance=ExtResource("1_xiix0")]
 
@@ -59,3 +51,6 @@ position = Vector2(592, 144)
 
 [node name="Goomba4" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 112)
+
+[node name="Background" parent="." instance=ExtResource("11_nfc1d")]
+position = Vector2(256, 240)

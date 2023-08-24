@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxdi8tlg4ecb3"
-path="res://.godot/imported/T_bg_seashore_and_castle.png-d43cc2f2d534613275a2d5521af33e4b.ctex"
+uid="uid://dhx638421iygw"
+path="res://.godot/imported/T_bg_underground.png-920ebf354daa6332754d71380163d48f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/level/background/T_bg_seashore_and_castle.png"
-dest_files=["res://.godot/imported/T_bg_seashore_and_castle.png-d43cc2f2d534613275a2d5521af33e4b.ctex"]
+source_file="res://resources/background/T_bg_underground.png"
+dest_files=["res://.godot/imported/T_bg_underground.png-920ebf354daa6332754d71380163d48f.ctex"]
 
 [params]
 

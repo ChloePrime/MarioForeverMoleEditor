@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://krxd23yk76m0"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://resources/background/background_base.tscn" id="1_255j3"]
+[ext_resource type="Texture2D" uid="uid://7tckhrv6068l" path="res://resources/background/T_bg_castle_smb1.png" id="2_vwmrp"]
+
+[node name="Background" instance=ExtResource("1_255j3")]
+texture = ExtResource("2_vwmrp")
+WrapY = true
