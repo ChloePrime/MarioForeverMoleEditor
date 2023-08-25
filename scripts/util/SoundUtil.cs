@@ -13,8 +13,18 @@ public static class SoundUtil
         {
             return;
         }
-        var player = TryPurgeAndPop(out var p) ? p : new AudioStreamPlayer();
+        var player = TryPurgeAndPop(out var p) ? p : NewPlayer();
         player.Stream = sound;
+        if (player.GetParent() is null)
+        {
+            node.GetTree().Root.AddChild(player);
+        }
+        player.Play();
+    }
+
+    private static AudioStreamPlayer NewPlayer()
+    {
+        var player = new AudioStreamPlayer();
         player.Finished += () =>
         {
             if (PlayerPool.Count >= MaxPooledPlayers)
@@ -26,11 +36,7 @@ public static class SoundUtil
                 PlayerPool.Push(player);
             }
         };
-        if (player.GetParent() is null)
-        {
-            node.GetTree().Root.AddChild(player);
-        }
-        player.Play();
+        return player;
     }
 
     private static bool TryPurgeAndPop(out AudioStreamPlayer ret)
