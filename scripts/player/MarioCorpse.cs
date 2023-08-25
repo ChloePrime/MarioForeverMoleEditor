@@ -12,27 +12,19 @@ public partial class MarioCorpse : Sprite2D
 	[Export] public float JumpStrength { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
 	[Export] public float MaxSpeed { get; set; } = Units.Speed.CtfToGd(10);
+	[Export] public PackedScene GameOverScene { get; set; }
 
 	public override void _Ready()
 	{
 		this.GetNode(out _startMoveTimer, NpStartMoveTimer);
 		this.GetNode(out _restartLevelTimer, NpRestartLevelTimer);
 		_startMoveTimer.Timeout += StartMoving;
-		_restartLevelTimer.Timeout += () =>
-		{
-			if (this.GetLevelManager() is { } levelManager)
-			{
-				levelManager.ReloadLevel();
-			}
-			else
-			{
-				GetTree().ReloadCurrentScene();
-			}
-		};
+		_restartLevelTimer.Timeout += OnDeathAnimOver;
 	}
 
 	public void SetFastRetry(bool fastRetry)
 	{
+		_fastRetry = fastRetry;
 		CallDeferred(MethodName.SetFastRetry0, fastRetry);
 	}
 
@@ -41,6 +33,48 @@ public partial class MarioCorpse : Sprite2D
 		if (fastRetry)
 		{
 			_restartLevelTimer.Start(_restartLevelTimer.WaitTime / 10);
+		}
+	}
+
+	private void OnDeathAnimOver()
+	{
+		if (!this.GetRule().DisableLives)
+		{
+			switch (GlobalData.Lives)
+			{
+				case <= 0:
+					GameOver();
+					return;
+				case > 0:
+					GlobalData.Lives--;
+					break;
+			}
+		}
+
+		if (this.GetLevelManager() is { } levelManager)
+		{
+			levelManager.ReloadLevel();
+		}
+		else
+		{
+			GetTree().ReloadCurrentScene();
+		}
+	}
+
+	private void GameOver()
+	{
+		if (this.GetLevelManager() is not { } manager)
+		{
+			GetTree().ReloadCurrentScene();
+			return;
+		}
+		if (_fastRetry)
+		{
+			manager.RestartGame();
+		}
+		else
+		{
+			manager.GameOver();
 		}
 	}
 
@@ -65,6 +99,7 @@ public partial class MarioCorpse : Sprite2D
 		_ySpeed = Math.Min(MaxSpeed, _ySpeed + Gravity * (float)delta);
 	}
 
+	private bool _fastRetry;
 	private bool _moving;
 	private float _ySpeed;
 	private bool _restarting;

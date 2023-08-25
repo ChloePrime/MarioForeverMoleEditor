@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cjuysccl1gy5i"]
+
+[ext_resource type="Script" path="res://scripts/GameRule.cs" id="1_fgm1i"]
+
+[resource]
+script = ExtResource("1_fgm1i")
+DisableLives = false

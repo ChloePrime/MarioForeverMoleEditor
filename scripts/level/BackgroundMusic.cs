@@ -27,7 +27,7 @@ public partial class BackgroundMusic : AudioStreamPlayer
         }
     }
 
-    public static new void Stop()
+    public new static void Stop()
     {
         CheckInstance();
         ((AudioStreamPlayer)Instance).Stop();
@@ -43,6 +43,10 @@ public partial class BackgroundMusic : AudioStreamPlayer
         CheckInstance();
         if (music == Instance.Stream)
         {
+            if (!Instance.Playing)
+            {
+                Instance.Play();
+            }
             return;
         }
         if (music == null)

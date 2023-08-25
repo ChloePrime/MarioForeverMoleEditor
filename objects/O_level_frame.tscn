@@ -1,14 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene load_steps=10 format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" path="res://scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://resources/level/T_frame_anima_left.png" id="3_bly6j"]
 [ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://objects/O_game_ui.tscn" id="3_i5s5a"]
 [ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://resources/level/T_frame_curtain.png" id="3_nh8oc"]
+[ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://R_game_rule.tres" id="3_qymbr"]
 [ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://resources/level/T_frame_anima_right.png" id="4_leriq"]
+[ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://resources/mario/ME_game_over.ogg" id="4_xrsv5"]
 [ext_resource type="Script" path="res://scripts/level/DebugCheater.cs" id="6_sxgtr"]
 
-[node name="Level Frame" type="Control" node_paths=PackedStringArray("GameViewport")]
+[node name="Level Frame" type="Control" node_paths=PackedStringArray("GameViewport", "Hud")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +22,9 @@ size_flags_vertical = 4
 script = ExtResource("1_bhhpe")
 Level = ExtResource("2_bego7")
 GameViewport = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
+Hud = NodePath("Aspect Ratio Container/Control/Game UI")
+GameRule = ExtResource("3_qymbr")
+GameOverJingle = ExtResource("4_xrsv5")
 
 [node name="Aspect Ratio Container" type="AspectRatioContainer" parent="."]
 layout_mode = 1
