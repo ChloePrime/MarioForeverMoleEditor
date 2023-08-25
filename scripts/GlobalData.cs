@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using System.Numerics;
+using System;
 using ChloePrime.MarioForever.Player;
 
 namespace ChloePrime.MarioForever;
@@ -10,7 +10,7 @@ namespace ChloePrime.MarioForever;
 public static class GlobalData
 {
     public static MarioStatus Status { get; set; } = null!;
-    public static BigInteger Score { get; set; }
+    public static Int128 Score { get; set; }
     public static int Coins { get; set; }
     public static int Lives { get; set; }
     

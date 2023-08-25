@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene load_steps=5 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" path="res://scripts/ui/LevelHud.cs" id="1_beqw8"]
+[ext_resource type="Script" path="res://scripts/ui/SubsystemHud.cs" id="2_d76tu"]
+[ext_resource type="Script" path="res://scripts/ui/ValueWatcherLabel.cs" id="4_qh2x4"]
 
 [node name="Game UI" type="Control"]
 layout_mode = 3
@@ -19,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_d76tu")
 
 [node name="MARIOx" type="Label" parent="Life System"]
 layout_mode = 1
@@ -31,16 +34,36 @@ text = "MARIO×"
 horizontal_alignment = 2
 
 [node name="Life" type="Label" parent="Life System"]
-layout_mode = 0
+layout_mode = 1
 offset_left = 135.0
 offset_top = 8.0
 offset_right = 231.0
 offset_bottom = 32.0
 theme = ExtResource("1_4n6h2")
 text = "4"
+script = ExtResource("4_qh2x4")
+
+[node name="Score System" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_d76tu")
+
+[node name="Score" type="Label" parent="Score System"]
+layout_mode = 1
+offset_left = -106.0
+offset_top = 27.0
+offset_right = 150.0
+offset_bottom = 51.0
+theme = ExtResource("1_4n6h2")
+text = "0"
+horizontal_alignment = 2
+script = ExtResource("4_qh2x4")
 
 [node name="GO" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://jy5he83djmim"]
+
+[ext_resource type="PackedScene" uid="uid://c8s8guay3ciu1" path="res://resources/ui/score_base.tscn" id="1_40pwr"]
+
+[node name="Score 500" instance=ExtResource("1_40pwr")]
+region_rect = Rect2(0, 32, 42, 16)
+Amount = 500

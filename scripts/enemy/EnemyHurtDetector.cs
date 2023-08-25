@@ -18,6 +18,8 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
     [Export]
     public AudioStream DeathSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_enemy_down_2.ogg");
 
+    [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://objects/ui/O_score_200.tscn");
+
     [Export]
     public PackedScene Corpse { get; set; } = GD.Load<PackedScene>("res://resources/enemies/generic_corpse.tscn");
 
@@ -69,14 +71,26 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
         if (Root.GetParent() is { } parent)
         {
-            var corpse = CreateCorpse(e);
-            CustomizeCorpse(e, corpse);
-            parent.AddChild(corpse);
-            corpse.Position = Root.Position;
+            if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
+            {
+                parent.AddChild(score);
+                score.Position = Root.Position;
+            }
+            if (CreateCorpse(e) is { } corpse)
+            {
+                CustomizeCorpse(e, corpse);
+                parent.AddChild(corpse);
+                corpse.Position = Root.Position;
+            }
         }
         
         Root.QueueFree();
         return true;
+    }
+
+    public virtual Node2D CreateScore(DamageEvent e)
+    {
+        return Score?.Instantiate<Node2D>();
     }
 
     public virtual bool CanBeHurtBy(DamageEvent e)
