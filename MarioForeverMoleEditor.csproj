@@ -6,4 +6,7 @@
   <ItemGroup>
     <PackageReference Include="DotNext" Version="4.13.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
 </Project>

@@ -39,7 +39,7 @@ import/use_multiple_threads=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg")
 
 [input]
 
@@ -112,4 +112,3 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
 [rendering]
 
 scaling_3d/mode=1
-2d/snap/snap_2d_vertices_to_pixel=true

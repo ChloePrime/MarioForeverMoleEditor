@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene load_steps=8 format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" path="res://scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://resources/level/T_frame_anima_left.png" id="3_bly6j"]
+[ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://objects/O_game_ui.tscn" id="3_i5s5a"]
 [ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://resources/level/T_frame_curtain.png" id="3_nh8oc"]
 [ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://resources/level/T_frame_anima_right.png" id="4_leriq"]
 [ext_resource type="Script" path="res://scripts/level/DebugCheater.cs" id="6_sxgtr"]
@@ -18,7 +19,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bhhpe")
 Level = ExtResource("2_bego7")
-GameViewport = NodePath("Aspect Ratio Container/Control/SubViewport Container/SubViewport")
+GameViewport = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
 
 [node name="Aspect Ratio Container" type="AspectRatioContainer" parent="."]
 layout_mode = 1
@@ -38,7 +39,7 @@ ratio = 1.3333
 [node name="Control" type="Control" parent="Aspect Ratio Container"]
 layout_mode = 2
 
-[node name="SubViewport Container" type="SubViewportContainer" parent="Aspect Ratio Container/Control"]
+[node name="Level Container" type="SubViewportContainer" parent="Aspect Ratio Container/Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,14 +54,18 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="Aspect Ratio Container/Control/SubViewport Container"]
+[node name="Level Viewport" type="SubViewport" parent="Aspect Ratio Container/Control/Level Container"]
 own_world_3d = true
 handle_input_locally = false
+snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 0
 size = Vector2i(640, 480)
 size_2d_override = Vector2i(640, 480)
 size_2d_override_stretch = true
 render_target_update_mode = 4
+
+[node name="Game UI" parent="Aspect Ratio Container/Control" instance=ExtResource("3_i5s5a")]
+layout_mode = 1
 
 [node name="Frame Curtain" type="Control" parent="."]
 visible = false

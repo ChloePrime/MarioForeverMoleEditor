@@ -13,6 +13,7 @@ public partial class LevelFrame : LevelManager
         this.GetNode(out _ln, NpLeftNormalFrame);
         this.GetNode(out _rn, NpRightNormalFrame);
         this.GetNode(out _game, NpGameContainer);
+        GetWindow().ContentScaleAspect = Window.ContentScaleAspectEnum.Expand;
         GetWindow().SizeChanged += OnResize;
     }
 
