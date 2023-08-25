@@ -1,7 +1,10 @@
 ## Installation:
 * Godot version: 4.1.1 Mono
 * .net version:  7 <br>
-Clone this repository and open in godot.
+Clone this repository and open in godot. <br>
+**Note: Be sure to clone this repository with git bash (or a git client) <br>**
+**There are reports that the content will be corrupt**<br>
+**if you use 'download zip' and decompress it.**
 
 ## Structure:
 Main Scene: `O_level_frame.tscn` <br> <br>
