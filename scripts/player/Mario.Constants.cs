@@ -22,6 +22,8 @@ public partial class Mario
         public static readonly NodePath NpJumpSound = "Jump Sound";
         public static readonly NodePath NpSwimSound = "Swim Sound";
         public static readonly NodePath NpHurtSound = "Hurt Sound";
+        public static readonly NodePath NpInvTimer = "Invulnerable Timer";
+        public static readonly NodePath NpSmkTimer = "Sprint Smoke Timer";
         public static readonly MarioStatus SmallStatus;
         public static readonly MarioStatus BigStatus;
         public static readonly MarioStatus FireStatus;
@@ -29,6 +31,7 @@ public partial class Mario
         public static readonly Vector2 DoNotFlipX = new(1, 1);
         public static readonly StringName AnimStopped = "[00] stopped";
         public static readonly StringName AnimWalking = "[01] walking";
+        public static readonly StringName AnimRunning = "[02] running";
         public static readonly StringName AnimTurning = "[03] turning";
         public static readonly StringName AnimLaunching = "[04] launching";
         public static readonly StringName AnimJumping = "[05] jumping";
@@ -42,6 +45,7 @@ public partial class Mario
         );
         
         public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://resources/mario/mario_corpse.tscn");
+        public static readonly PackedScene SprintSmoke = GD.Load<PackedScene>("res://resources/mario/mario_sprint_smoke.tscn");
 
         static Constants()
         {

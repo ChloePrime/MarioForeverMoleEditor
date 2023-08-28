@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://dvmjngni7ni2h"]
+
+[ext_resource type="Texture2D" uid="uid://226dtq0d3qby" path="res://resources/shared/T_smoke_m.png" id="1_84l4i"]
+[ext_resource type="Script" path="res://scripts/util/helper_nodes/SelfDestroyingBetterAnimatedEffect.cs" id="2_71mjf"]
+[ext_resource type="Script" path="res://scripts/util/animation/AnimationData.cs" id="3_qh5ei"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33log"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 0, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggkw6"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 18, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tyw4"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 36, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fa76x"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 54, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x525c"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 72, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctdh6"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 90, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bevk7"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 108, 22, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28hlc"]
+atlas = ExtResource("1_84l4i")
+region = Rect2(0, 126, 22, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_exn6o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33log")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggkw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tyw4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fa76x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x525c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctdh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bevk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28hlc")
+}],
+"loop": false,
+"name": &"default",
+"speed": 25.0
+}]
+
+[sub_resource type="Resource" id="Resource_ugitm"]
+script = ExtResource("3_qh5ei")
+LoopStarts = 0
+LoopCount = 0
+FramePivots = null
+FramePivotVectors = null
+FrameOffsets = Array[Vector2]([Vector2(0.5, -0.5), Vector2(0.5, -0.5)])
+
+[node name="Medium Smoke" type="AnimatedSprite2D"]
+z_index = 500
+sprite_frames = SubResource("SpriteFrames_exn6o")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+script = ExtResource("2_71mjf")
+AnimationData = {
+"default": SubResource("Resource_ugitm")
+}

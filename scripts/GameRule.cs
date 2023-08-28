@@ -12,8 +12,12 @@ public partial class GameRule : Resource
     public static GameRule Default => _default ??= GD.Load<GameRule>("res://R_game_rule.tres");
     public static GameRule Get() => GetManager(Engine.GetMainLoop() as SceneTree)?.GameRule ?? Default;
     
+    [ExportGroup("Vanilla")]
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
+
+    [ExportGroup("Advanced")] 
+    [Export] public bool EnableMarioBursting { get; set; } = true;
 
     private static Optional<LevelManager> _manager;
     private static GameRule _default;

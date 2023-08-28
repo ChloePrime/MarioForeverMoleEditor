@@ -1,5 +1,6 @@
 ﻿using ChloePrime.MarioForever.Level;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -28,15 +29,13 @@ public partial class Mario
 
     public void SetInvulnerable(double time)
     {
-        if (time < (_invulnerableTimer?.TimeLeft ?? 0))
+        if (time < _invulnerableTimer.TimeLeft)
         {
             return;
         }
         _invulnerable = true;
         _invulnerableFlashPhase = 0;
-        _invulnerableTimer?.Dispose();
-        _invulnerableTimer = GetTree().CreateTimer(time);
-        _invulnerableTimer.Timeout += () => _invulnerable = false;
+        _invulnerableTimer.Start();
     }
     
     public void Kill()
@@ -64,9 +63,21 @@ public partial class Mario
         }
     }
 
+    private void RpgReady()
+    {
+        this.GetNode(out _hurtZone, Constants.NpHurtZone);
+        this.GetNode(out _deathZone, Constants.NpDeathZone);
+        this.GetNode(out _invulnerableTimer, Constants.NpInvTimer);
+        
+        _hurtZone.BodyEntered += _ => _hurtStack++;
+        _hurtZone.BodyExited += _ => _hurtStack--;
+        _deathZone.BodyEntered += _ => Kill();
+        _invulnerableTimer.Timeout += () => _invulnerable = false;
+    }
+
     private int _hurtStack;
     private bool _killed;
     private bool _invulnerable;
     private float _invulnerableFlashPhase;
-    private SceneTreeTimer _invulnerableTimer;
+    private Timer _invulnerableTimer;
 }

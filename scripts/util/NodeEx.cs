@@ -15,9 +15,19 @@ public static partial class NodeEx
         target = self.GetNodeOrNull<T>(path);
     }
 
+    public static void Instantiate<T>(this PackedScene prefab, out T instance) where T : class
+    {
+        instance = prefab.Instantiate<T>();
+    }
+
     public static void Load<T>(out T target, NodePath path) where T : class
     {
         target = GD.Load<T>(path);
+    }
+
+    public static bool TryGetParent<T>(this Node node, out T parent) where T : class
+    {
+        return (parent = node.GetParentOrNull<T>()) != null;
     }
     
     public static IEnumerable<Node> Children(this Node node)

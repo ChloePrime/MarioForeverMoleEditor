@@ -15,4 +15,7 @@ public partial class AnimationData : Resource
     /// </summary>
     [Export]
     public Array<Vector2> FramePivotVectors { get; private set; }
+    
+    [Export]
+    public Array<Vector2> FrameOffsets { get; private set; }
 }

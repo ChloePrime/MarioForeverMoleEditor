@@ -79,7 +79,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
             if (CreateCorpse(e) is { } corpse)
             {
                 CustomizeCorpse(e, corpse);
-                parent.AddChild(corpse);
+                parent.CallDeferred(Node.MethodName.AddChild, corpse);
                 corpse.Position = Root.Position;
             }
         }

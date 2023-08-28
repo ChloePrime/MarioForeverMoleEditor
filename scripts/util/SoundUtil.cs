@@ -6,6 +6,11 @@ namespace MarioForeverMoleEditor.scripts.util;
 public static class SoundUtil
 {
     private const int MaxPooledPlayers = 64;
+
+    public static void Play(this AudioStream sound)
+    {
+        (Engine.GetMainLoop() as SceneTree)?.Root.PlaySound(sound);
+    }
     
     public static void PlaySound(this Node node, AudioStream sound)
     {

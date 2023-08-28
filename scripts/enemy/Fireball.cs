@@ -12,7 +12,7 @@ public partial class Fireball : WalkableObjectBase
     public AudioStream DefaultExplodeSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_fireball_hit.wav");
 
     [Export]
-    public PackedScene ExplodeResult { get; set; } = GD.Load<PackedScene>("res://resources/shared/fireball_explosion.tscn");
+    public PackedScene ExplodeResult { get; set; } = GD.Load<PackedScene>("res://objects/effect/O_explosion_s.tscn");
     
     public Node2D Shooter { get; set; }
     

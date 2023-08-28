@@ -1,6 +1,7 @@
 ﻿using System;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using MarioForeverMoleEditor.scripts.util;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -25,6 +26,8 @@ public partial class Mario
     [CtfFlag(0)] private bool _running;
     [CtfFlag(1)] private bool _walking;
     [CtfFlag(10)] private bool _turning;
+    private bool _sprinting;
+    private float _burstCharge;
     
     /// <summary>
     /// RE: 马里奥移动
@@ -77,24 +80,32 @@ public partial class Mario
         {
             XDirection = Math.Sign(_walkAxis);
         }
+
+        // ME: 冲刺计算
+        ProcessBurst(delta);
         
         // RE: 走/跑
         if (_walking && !_turning)
         {
+            float max, acc;
             if (!_running)
             {
-                if (XSpeed < MaxSpeedWhenWalking)
-                {
-                    XSpeed = Math.Min(MaxSpeedWhenWalking, XSpeed + AccelerationWhenWalking * delta);
-                }
-                if (XSpeed > MaxSpeedWhenWalking)
-                {
-                    XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenWalking * delta);
-                }
+                max = MaxSpeedWhenWalking;
+                acc = AccelerationWhenWalking;
             }
-            if (_running && XSpeed < MaxSpeedWhenRunning)
+            else
             {
-                XSpeed = Math.Min(MaxSpeedWhenRunning, XSpeed + AccelerationWhenRunning * delta);
+                max = _sprinting ? MaxSpeedWhenSprinting : MaxSpeedWhenRunning;
+                acc = AccelerationWhenRunning;
+            }
+            
+            if (XSpeed < max)
+            {
+                XSpeed = Math.Min(max, XSpeed + acc * delta);
+            }
+            if (XSpeed > max)
+            {
+                XSpeed = Math.Max(max, XSpeed - acc * delta);
             }
         }
         if (!_walking && XSpeed > 0)
@@ -164,5 +175,39 @@ public partial class Mario
             return 0;
         }
         return Input.GetAxis(Constants.ActionMoveLeft, Constants.ActionMoveRight);
+    }
+
+    private void ProcessBurst(float delta)
+    {
+        if (!_rule.EnableMarioBursting)
+        {
+            _sprinting = false;
+            _burstCharge = 0;
+            return;
+        }
+        if (_running && !_turning && XSpeed >= MaxSpeedWhenRunning - 1e-3)
+        {
+            if (!_isInAir)
+            {
+                _burstCharge.MoveForward(SprintChargeTime, delta);
+            }
+            if (!_sprinting && _burstCharge >= SprintChargeTime)
+            {
+                SprintStartSound?.Play();
+                _sprintSmokeTimer.EmitSignal(Timer.SignalName.Timeout);
+                _sprintSmokeTimer.Start();
+                XSpeed = MaxSpeedWhenSprinting;
+                _sprinting = true;
+            }
+        }
+        else
+        {
+            if (_sprinting)
+            {
+                _sprintSmokeTimer.Stop();
+                _sprinting = false;
+            }
+            _burstCharge.MoveForward(0, SprintCooldownSpeed * delta);
+        }
     }
 }

@@ -117,3 +117,9 @@ stream = ExtResource("5_e7o5n")
 
 [node name="Hurt Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_oqh4d")
+
+[node name="Invulnerable Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sprint Smoke Timer" type="Timer" parent="."]
+wait_time = 0.05

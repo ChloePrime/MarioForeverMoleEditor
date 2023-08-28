@@ -15,6 +15,14 @@ public static class Units
         }
     }
     
+    public static class Time
+    {
+        public static float Frame60(float frames)
+        {
+            return frames / 60;
+        }
+    }
+    
     public static class Acceleration
     {
         public static float CtfMovementToGd(float acc)

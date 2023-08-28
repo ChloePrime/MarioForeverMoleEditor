@@ -45,7 +45,8 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D
     {
         var frame = newAnimation ? 0 : Frame;
         Pivot pivot;
-        if (!AnimationData.TryGetValue(Animation, out var data))
+        var hasAnimData = AnimationData.TryGetValue(Animation, out var data);
+        if (!hasAnimData)
         {
             pivot = Pivot;
         }
@@ -53,10 +54,22 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D
         {
             pivot = frame >= data.FramePivots.Count ? Pivot : data.FramePivots[frame].Or(Pivot);
         }
+        var hasOffset = false;
+        var offset = Vector2.Zero;
         if (pivot != Pivot.Default)
         {
             SnapToPivot(Animation, frame, pivot);
-            Translate(GlobalOffset);
+            offset += GlobalOffset;
+            hasOffset = true;
+        }
+        if (hasAnimData && frame < data.FrameOffsets.Count)
+        {
+            offset += data.FrameOffsets[frame];
+            hasOffset = true;
+        }
+        if (hasOffset)
+        {
+            Translate(offset);
         }
     }
 

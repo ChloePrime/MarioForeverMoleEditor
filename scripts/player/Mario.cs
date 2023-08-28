@@ -21,12 +21,18 @@ public partial class Mario : CharacterBody2D
     [ExportSubgroup("Walking & Running")]
     [Export] public float MaxSpeedWhenWalking { get; set; } = Units.Speed.CtfMovementToGd(35);
     [Export] public float MaxSpeedWhenRunning { get; set; } = Units.Speed.CtfMovementToGd(60);
+    [Export] public float MaxSpeedWhenSprinting { get; set; } = Units.Speed.CtfMovementToGd(80);
     [Export] public float MinSpeed { get; set; } = Units.Speed.CtfMovementToGd(8);
     [Export] public float AccelerationWhenWalking { get; set; } = Units.Acceleration.CtfMovementToGd(1);
     [Export] public float AccelerationWhenRunning { get; set; } = Units.Acceleration.CtfMovementToGd(1);
     [Export] public float AccelerationWhenTurning { get; set; } = Units.Acceleration.CtfMovementToGd(4);
+    [Export] public float SprintChargeTime { get; set; } = 24F / 64;
+    [Export] public float SprintCooldownSpeed { get; set; } = 1 / 6.4F;
     [Export] public bool AllowMoveOutOfScreen { get; set; }
     [Export] public float ScreenBorderPadding { get; set; } = 16;
+
+    [Export]
+    public AudioStream SprintStartSound { get; set; } = GD.Load<AudioStream>("res://resources/mario/SE_run.ogg");
     
     
     [ExportSubgroup("Jumping & Swimming")]
@@ -286,7 +292,14 @@ public partial class Mario : CharacterBody2D
         {
             if (XSpeed > 0)
             {
-                anim = (_hasTurningAnimation && _turning) ? Constants.AnimTurning : Constants.AnimWalking;
+                if (_hasTurningAnimation && _walking && _turning)
+                {
+                    anim = Constants.AnimTurning;
+                }
+                else
+                {
+                    anim = (_sprinting && _hasRunningAnimation) ? Constants.AnimRunning : Constants.AnimWalking;
+                }
                 speed = XSpeed / MaxSpeedWhenRunning;
             }
             else
@@ -323,6 +336,7 @@ public partial class Mario : CharacterBody2D
     private void PostSwitchStatusSprite()
     {
         _hasTurningAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimTurning);
+        _hasRunningAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimRunning);
         _hasFallingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimFalling);
         _hasCrouchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimCrouching);
         _hasLaunchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimLaunching);
@@ -372,17 +386,14 @@ public partial class Mario : CharacterBody2D
     {
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
-        this.GetNode(out _hurtZone, Constants.NpHurtZone);
-        this.GetNode(out _deathZone, Constants.NpDeathZone);
         this.GetNode(out _jumpSound, Constants.NpJumpSound);
         this.GetNode(out _swimSound, Constants.NpSwimSound);
         this.GetNode(out _hurtSound, Constants.NpHurtSound);
+        this.GetNode(out _sprintSmokeTimer, Constants.NpSmkTimer);
+        _rule = this.GetRule();
 
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
-
-        _hurtZone.BodyEntered += _ => _hurtStack++;
-        _hurtZone.BodyExited += _ => _hurtStack--;
-        _deathZone.BodyEntered += _ => Kill();
+        _sprintSmokeTimer.Timeout += EmitSprintSmoke;
 
         var statuses = StatusList.Count;
         for (var i = 0; i < statuses; i++)
@@ -393,6 +404,8 @@ public partial class Mario : CharacterBody2D
             InstallStatusSprite(sprite);
             SpriteNodes[status] = sprite;
         }
+        
+        RpgReady();
     }
 
     private static void InstallStatusSprite(AnimatedSprite2D sprite)
@@ -403,6 +416,15 @@ public partial class Mario : CharacterBody2D
             sprite.Animation = Constants.AnimStopped;
             sprite.Play();
         };
+    }
+
+    private void EmitSprintSmoke()
+    {
+        if (_isInAir || !this.TryGetParent(out Node parent)) return;
+        Constants.SprintSmoke.Instantiate(out Node2D instance);
+        
+        parent.AddChild(instance);
+        instance.GlobalPosition = GlobalPosition;
     }
 
     private CollisionShape2D CurrentCollisionShape
@@ -417,6 +439,7 @@ public partial class Mario : CharacterBody2D
     private AudioStreamPlayer _hurtSound;
     private MarioCollisionBySize _hurtZone;
     private MarioCollisionBySize _deathZone;
+    private Timer _sprintSmokeTimer;
 
     [CtfFlag(2)] private bool _crouching;
     [CtfFlag(12)] private bool _isInWater;
@@ -427,6 +450,7 @@ public partial class Mario : CharacterBody2D
     private MarioStatus _currentStatus;
     private AnimatedSprite2D _currentSprite;
     private Camera2D _camera;
+    private GameRule _rule;
     
     /// <summary>
     /// 不受是否处于下蹲状态影响
@@ -438,6 +462,7 @@ public partial class Mario : CharacterBody2D
     /// </summary>
     private MarioSize _currentSize;
     private bool _hasTurningAnimation;
+    private bool _hasRunningAnimation;
     private bool _hasFallingAnimation;
     private bool _hasCrouchingAnimation;
     private bool _hasLaunchingAnimation;

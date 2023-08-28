@@ -174,4 +174,4 @@ animations = [{
 [node name="Sprite_Fire" instance=ExtResource("1_3c1jm")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_sxc57")
-animation = &"[03] turning"
+animation = &"[02] running"
