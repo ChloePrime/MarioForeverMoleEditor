@@ -27,21 +27,21 @@ public partial class Mario
         public static readonly MarioStatus FireStatus;
         public static readonly Vector2 FlipX = new(-1, 1);
         public static readonly Vector2 DoNotFlipX = new(1, 1);
-        public static readonly StringName AnimStopped = "stopped";
-        public static readonly StringName AnimWalking = "walking";
-        public static readonly StringName AnimJumping = "jumping";
-        public static readonly StringName AnimAppearing = "appearing";
-        public static readonly StringName AnimLaunching = "launching";
+        public static readonly StringName AnimStopped = "[00] stopped";
+        public static readonly StringName AnimWalking = "[01] walking";
+        public static readonly StringName AnimTurning = "[03] turning";
+        public static readonly StringName AnimLaunching = "[04] launching";
+        public static readonly StringName AnimJumping = "[05] jumping";
+        public static readonly StringName AnimFalling = "[06] falling";
+        public static readonly StringName AnimCrouching = "[07] crouching";
+        [CtfAnimation(12)] public static readonly StringName AnimSwimming = "[12] swimming";
+        public static readonly StringName DeprecatedAnimAppearing = "[03] appearing";
 
         public static readonly ImmutableHashSet<StringName> SpecialAnimations = ImmutableHashSet.Create(
-            AnimAppearing,
             AnimLaunching
         );
         
-        public static readonly StringName AnimFalling = "falling";
-        public static readonly StringName AnimCrouching = "crouching";
         public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://resources/mario/mario_corpse.tscn");
-        [CtfAnimation(12)] public static readonly StringName AnimSwimming = "swimming";
 
         static Constants()
         {

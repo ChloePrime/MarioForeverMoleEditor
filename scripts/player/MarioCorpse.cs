@@ -6,7 +6,7 @@ using MixelTools.Util.Extensions;
 namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
-[Icon("res://resources/mario/T_mario_corpse.png")]
+[Icon("res://resources/mario/AT_mario_corpse.tres")]
 public partial class MarioCorpse : Sprite2D
 {
 	[Export] public float JumpStrength { get; set; } = Units.Speed.CtfToGd(10);

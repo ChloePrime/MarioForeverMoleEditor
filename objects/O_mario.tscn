@@ -99,6 +99,7 @@ shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
 [node name="SpriteRoot" type="Node2D" parent="."]
+position = Vector2(0, 1)
 
 [node name="Muzzle" type="Node2D" parent="SpriteRoot"]
 position = Vector2(10, -40)
@@ -107,8 +108,6 @@ position = Vector2(10, -40)
 position = Vector2(10, -21)
 
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
-position = Vector2(0, -29)
-animation = &"stopped"
 
 [node name="Jump Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_irhyt")

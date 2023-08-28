@@ -286,7 +286,7 @@ public partial class Mario : CharacterBody2D
         {
             if (XSpeed > 0)
             {
-                anim = Constants.AnimWalking;
+                anim = (_hasTurningAnimation && _turning) ? Constants.AnimTurning : Constants.AnimWalking;
                 speed = XSpeed / MaxSpeedWhenRunning;
             }
             else
@@ -322,6 +322,7 @@ public partial class Mario : CharacterBody2D
 
     private void PostSwitchStatusSprite()
     {
+        _hasTurningAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimTurning);
         _hasFallingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimFalling);
         _hasCrouchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimCrouching);
         _hasLaunchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimLaunching);
@@ -436,6 +437,7 @@ public partial class Mario : CharacterBody2D
     /// 受下蹲影响
     /// </summary>
     private MarioSize _currentSize;
+    private bool _hasTurningAnimation;
     private bool _hasFallingAnimation;
     private bool _hasCrouchingAnimation;
     private bool _hasLaunchingAnimation;
