@@ -182,7 +182,7 @@ public partial class Mario : CharacterBody2D
         UpdateCrouch();
         UpdateAnimation();
 
-        var shouldSkid = (_turning && !_isInAir) || (_crouching && XSpeed > 0);
+        var shouldSkid = !_isInAir && (_turning || (_crouching && XSpeed > 0));
         if (_skidding != shouldSkid)
         {
             _skidding = shouldSkid;
