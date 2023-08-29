@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c2cqpgt3klu63"]
+[gd_scene load_steps=20 format=3 uid="uid://c2cqpgt3klu63"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://resources/mario/mario_sprite_prefab.tscn" id="1_3c1jm"]
 [ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://resources/mario/T_mario.png" id="2_ghkeo"]
@@ -42,6 +42,10 @@ region = Rect2(1792, 192, 64, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_venwc"]
 atlas = ExtResource("2_ghkeo")
 region = Rect2(1600, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2s7j"]
+atlas = ExtResource("2_ghkeo")
+region = Rect2(1024, 192, 64, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pa7xr"]
 atlas = ExtResource("2_ghkeo")
@@ -127,6 +131,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_y2s7j")
+}],
+"loop": true,
+"name": &"[05ex] leaping",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_venwc")
 }],
 "loop": true,
@@ -174,4 +186,4 @@ animations = [{
 [node name="Sprite_Fire" instance=ExtResource("1_3c1jm")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_sxc57")
-animation = &"[02] running"
+animation = &"[05ex] leaping"

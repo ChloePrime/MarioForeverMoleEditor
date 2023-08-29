@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Util;
@@ -181,6 +182,22 @@ public partial class Mario : CharacterBody2D
         UpdateCrouch();
         UpdateAnimation();
 
+        if (_skidding != (_turning && !_isInAir))
+        {
+            _skidding = _turning && !_isInAir;
+            if (_skidding)
+            {
+                _skidSound.Play();
+                _skidSmokeTimer.EmitSignal(Timer.SignalName.Timeout);
+                _skidSmokeTimer.Start();
+            }
+            else
+            {
+                _skidSound.Stop();
+                _skidSmokeTimer.Stop();
+            }
+        }
+
         if (_firePreInput > 0)
         {
             _firePreInput -= delta;
@@ -193,7 +210,7 @@ public partial class Mario : CharacterBody2D
         if (GlobalData.Status.Fire(this))
         {
             _firePreInput = 0;
-            if (_hasLaunchingAnimation && !_crouching && _currentSprite is { } sprite)
+            if (!_crouching && _currentSprite is { } sprite && _optionalAnimations.Contains(Constants.AnimLaunching))
             {
                 sprite.Animation = Constants.AnimLaunching;
             }
@@ -278,27 +295,40 @@ public partial class Mario : CharacterBody2D
     {
         StringName anim;
         var speed = 1F;
-        if (_crouching && _hasCrouchingAnimation)
+        if (_crouching && _optionalAnimations.Contains(Constants.AnimCrouching))
         {
             return (Constants.AnimCrouching, speed);
         }
         if (_isInAir)
         {
-            anim = _isInWater
-                ? Constants.AnimSwimming
-                : ((YSpeed >= 0 && _hasFallingAnimation) ? Constants.AnimFalling : Constants.AnimJumping);
+            if (_isInWater)
+            {
+                anim = Constants.AnimSwimming;
+            }
+            else if (_sprinting && _optionalAnimations.Contains(Constants.AnimLeaping))
+            {
+                anim = Constants.AnimLeaping;
+            }
+            else
+            {
+                anim = (YSpeed >= 0 && _optionalAnimations.Contains(Constants.AnimFalling))
+                    ? Constants.AnimFalling
+                    : Constants.AnimJumping;
+            }
         }
         else
         {
             if (XSpeed > 0)
             {
-                if (_hasTurningAnimation && _walking && _turning)
+                if (_optionalAnimations.Contains(Constants.AnimTurning) && _walking && _turning)
                 {
                     anim = Constants.AnimTurning;
                 }
                 else
                 {
-                    anim = (_sprinting && _hasRunningAnimation) ? Constants.AnimRunning : Constants.AnimWalking;
+                    anim = (_sprinting && _optionalAnimations.Contains(Constants.AnimRunning)) 
+                        ? Constants.AnimRunning 
+                        : Constants.AnimWalking;
                 }
                 speed = XSpeed / MaxSpeedWhenRunning;
             }
@@ -335,11 +365,16 @@ public partial class Mario : CharacterBody2D
 
     private void PostSwitchStatusSprite()
     {
-        _hasTurningAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimTurning);
-        _hasRunningAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimRunning);
-        _hasFallingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimFalling);
-        _hasCrouchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimCrouching);
-        _hasLaunchingAnimation = _currentSprite.SpriteFrames.HasAnimation(Constants.AnimLaunching);
+        _optionalAnimations.Clear();
+        var spriteFrames = _currentSprite.SpriteFrames;
+        foreach (var name in Constants.OptionalAnimations)
+        {
+            if (spriteFrames.HasAnimation(name))
+            {
+                _optionalAnimations.Add(name);
+            }
+        }
+        
         _standingSize = _currentStatus.Size;
         if (!(_standingSize == MarioSize.Big && _crouching))
         {
@@ -389,11 +424,14 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _jumpSound, Constants.NpJumpSound);
         this.GetNode(out _swimSound, Constants.NpSwimSound);
         this.GetNode(out _hurtSound, Constants.NpHurtSound);
+        this.GetNode(out _skidSound, Constants.NpSkidSound);
         this.GetNode(out _sprintSmokeTimer, Constants.NpSmkTimer);
+        this.GetNode(out _skidSmokeTimer, Constants.NpSkdTimer);
         _rule = this.GetRule();
 
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
-        _sprintSmokeTimer.Timeout += EmitSprintSmoke;
+        _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
+        _skidSmokeTimer.Timeout += () => EmitSmoke(Constants.SkidSmoke);
 
         var statuses = StatusList.Count;
         for (var i = 0; i < statuses; i++)
@@ -417,11 +455,11 @@ public partial class Mario : CharacterBody2D
             sprite.Play();
         };
     }
-
-    private void EmitSprintSmoke()
+    
+    private void EmitSmoke(PackedScene smoke)
     {
         if (_isInAir || !this.TryGetParent(out Node parent)) return;
-        Constants.SprintSmoke.Instantiate(out Node2D instance);
+        smoke.Instantiate(out Node2D instance);
         
         parent.AddChild(instance);
         instance.GlobalPosition = GlobalPosition;
@@ -437,14 +475,17 @@ public partial class Mario : CharacterBody2D
     private AudioStreamPlayer _jumpSound;
     private AudioStreamPlayer _swimSound;
     private AudioStreamPlayer _hurtSound;
+    private AudioStreamPlayer _skidSound;
     private MarioCollisionBySize _hurtZone;
     private MarioCollisionBySize _deathZone;
     private Timer _sprintSmokeTimer;
+    private Timer _skidSmokeTimer;
 
     [CtfFlag(2)] private bool _crouching;
     [CtfFlag(12)] private bool _isInWater;
     private bool _isNearWaterSurface;
     [CtfFlag(28)] private bool _completedLevel;
+    private bool _skidding;
     private float _firePreInput;
 
     private MarioStatus _currentStatus;
@@ -461,10 +502,7 @@ public partial class Mario : CharacterBody2D
     /// 受下蹲影响
     /// </summary>
     private MarioSize _currentSize;
-    private bool _hasTurningAnimation;
-    private bool _hasRunningAnimation;
-    private bool _hasFallingAnimation;
-    private bool _hasCrouchingAnimation;
-    private bool _hasLaunchingAnimation;
+
+    private readonly HashSet<StringName> _optionalAnimations = new();
     private System.Collections.Generic.Dictionary<MarioStatus, AnimatedSprite2D> SpriteNodes { get; } = new();
 }

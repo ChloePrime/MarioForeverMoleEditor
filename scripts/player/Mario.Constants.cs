@@ -22,8 +22,10 @@ public partial class Mario
         public static readonly NodePath NpJumpSound = "Jump Sound";
         public static readonly NodePath NpSwimSound = "Swim Sound";
         public static readonly NodePath NpHurtSound = "Hurt Sound";
+        public static readonly NodePath NpSkidSound = "Skid Sound";
         public static readonly NodePath NpInvTimer = "Invulnerable Timer";
         public static readonly NodePath NpSmkTimer = "Sprint Smoke Timer";
+        public static readonly NodePath NpSkdTimer = "Skid Smoke Timer";
         public static readonly MarioStatus SmallStatus;
         public static readonly MarioStatus BigStatus;
         public static readonly MarioStatus FireStatus;
@@ -35,10 +37,20 @@ public partial class Mario
         public static readonly StringName AnimTurning = "[03] turning";
         public static readonly StringName AnimLaunching = "[04] launching";
         public static readonly StringName AnimJumping = "[05] jumping";
+        public static readonly StringName AnimLeaping = "[05ex] leaping";
         public static readonly StringName AnimFalling = "[06] falling";
         public static readonly StringName AnimCrouching = "[07] crouching";
         [CtfAnimation(12)] public static readonly StringName AnimSwimming = "[12] swimming";
         public static readonly StringName DeprecatedAnimAppearing = "[03] appearing";
+        
+        public static readonly ImmutableHashSet<StringName> OptionalAnimations = ImmutableHashSet.Create(
+            AnimTurning,
+            AnimRunning,
+            AnimFalling,
+            AnimCrouching,
+            AnimLaunching,
+            AnimLeaping
+        );
 
         public static readonly ImmutableHashSet<StringName> SpecialAnimations = ImmutableHashSet.Create(
             AnimLaunching
@@ -46,6 +58,7 @@ public partial class Mario
         
         public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://resources/mario/mario_corpse.tscn");
         public static readonly PackedScene SprintSmoke = GD.Load<PackedScene>("res://resources/mario/mario_sprint_smoke.tscn");
+        public static readonly PackedScene SkidSmoke = GD.Load<PackedScene>("res://objects/effect/O_smoke_s.tscn");
 
         static Constants()
         {

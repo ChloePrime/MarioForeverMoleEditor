@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=18 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/SE_hurt.wav" id="7_oqh4d"]
+[ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
 size = Vector2(19, 52)
@@ -118,8 +119,14 @@ stream = ExtResource("5_e7o5n")
 [node name="Hurt Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_oqh4d")
 
+[node name="Skid Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lihkt")
+
 [node name="Invulnerable Timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="Sprint Smoke Timer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="Skid Smoke Timer" type="Timer" parent="."]
 wait_time = 0.05
