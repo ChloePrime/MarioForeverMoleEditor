@@ -34,6 +34,18 @@ public partial class GravityObjectBase : CharacterBody2D
 	
 	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
+	
+	[Export]
+	public bool CollideWithOthers
+	{
+		get => GetCollisionLayerValue(MaFo.CollisionLayers.Enemy) || GetCollisionMaskValue(MaFo.CollisionLayers.Enemy);
+		set
+		{
+			SetCollisionLayerValue(MaFo.CollisionLayers.Enemy, value);
+			SetCollisionMaskValue(MaFo.CollisionLayers.Enemy, value);
+		}
+	}
+	
 	[Export] public Node2D Sprite { get; set; }
 
 	[ExportGroup("Appearing")] 

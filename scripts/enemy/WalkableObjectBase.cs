@@ -11,14 +11,7 @@ public partial class WalkableObjectBase : GravityObjectBase
 {
     [Export] public float TargetSpeed { get; set; } = Units.Speed.CtfToGd(1);
     [Export] public float JumpStrength { get; set; }
-    
-    [Export]
-    public bool CollideWithOthers
-    {
-        get => GetCollisionMaskValue(MaFo.CollisionLayers.Enemy);
-        set => SetCollisionMaskValue(MaFo.CollisionLayers.Enemy, value);
-    }
-    
+
     [ExportGroup($"{nameof(WalkableObjectBase)} (Advanced)")] 
     [Export] public float ControlAcceleration = 0;
 
@@ -47,7 +40,6 @@ public partial class WalkableObjectBase : GravityObjectBase
     }
 
     private static readonly NodePath NpEnterScreenNotifier = "Enter Screen Notifier";
-    private bool _collideWithOthers = true;
     private bool _activated;
 
     protected override void _ProcessCollision()

@@ -10,9 +10,12 @@
 size = Vector2(32, 31)
 
 [node name="Internal Bonus Base" instance=ExtResource("1_qua70")]
+z_index = -1
+collision_layer = 0
 script = ExtResource("2_k6fvw")
 Score = ExtResource("3_ikxh7")
 PickSound = ExtResource("4_qtpe2")
+CollideWithOthers = false
 
 [node name="Hurt Detector" parent="." index="3"]
 process_mode = 4

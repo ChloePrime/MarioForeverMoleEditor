@@ -19,8 +19,8 @@ collision_mask = 131077
 floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_kh6g8")
-CollideWithOthers = true
 ControlAcceleration = 312.5
+CollideWithOthers = true
 Sprite = NodePath("Sprite")
 
 [node name="Collision Shape" type="CollisionShape2D" parent="."]

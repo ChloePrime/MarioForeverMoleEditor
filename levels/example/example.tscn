@@ -42,7 +42,15 @@ position = Vector2(240, 336)
 position = Vector2(240, 272)
 
 [node name="Goomba" parent="." instance=ExtResource("10_swv1r")]
+position = Vector2(416, 400)
+
+[node name="Goomba6" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("10_swv1r")]
+position = Vector2(456, 400)
+Sprite = NodePath("../Goomba/Sprite")
+
+[node name="Goomba5" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("10_swv1r")]
 position = Vector2(592, 208)
+Sprite = NodePath("../Goomba/Sprite")
 
 [node name="Goomba2" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 176)
@@ -66,4 +74,4 @@ position = Vector2(128, 24)
 position = Vector2(128, 0)
 
 [node name="Red Mushroom" parent="." instance=ExtResource("15_hk8b2")]
-position = Vector2(432, 400)
+position = Vector2(456, 400)
