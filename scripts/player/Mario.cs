@@ -182,10 +182,11 @@ public partial class Mario : CharacterBody2D
         UpdateCrouch();
         UpdateAnimation();
 
-        if (_skidding != (_turning && !_isInAir))
+        var shouldSkid = (_turning && !_isInAir) || (_crouching && XSpeed > 0);
+        if (_skidding != shouldSkid)
         {
-            _skidding = _turning && !_isInAir;
-            if (_skidding)
+            _skidding = shouldSkid;
+            if (shouldSkid)
             {
                 _skidSound.Play();
                 _skidSmokeTimer.EmitSignal(Timer.SignalName.Timeout);
