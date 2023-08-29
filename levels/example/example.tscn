@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=16 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -14,8 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
 [ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://objects/background/O_bg_gradient.tscn" id="13_o71m4"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
-[ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://objects/bonus/O_red_mushroom.tscn" id="15_hk8b2"]
-[ext_resource type="Script" path="res://scripts/bonus/PowerUpBonus.cs" id="16_l5yw6"]
+[ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://objects/bonus/O_red_mushroom.tscn" id="15_hk8b2"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -68,4 +67,3 @@ position = Vector2(128, 0)
 
 [node name="Red Mushroom" parent="." instance=ExtResource("15_hk8b2")]
 position = Vector2(432, 400)
-script = ExtResource("16_l5yw6")

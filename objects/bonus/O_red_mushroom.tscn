@@ -1,15 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7gvthly3y30h"]
+[gd_scene load_steps=5 format=3 uid="uid://c4f28jot3dg5i"]
 
-[ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://resources/enemies/internal_bonus_base.tscn" id="1_fra3c"]
-[ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="2_8lpx0"]
-[ext_resource type="Script" path="res://scripts/bonus/PowerUpBonus.cs" id="2_exaef"]
+[ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://resources/bonus/powerup_bonus_base.tscn" id="1_pn022"]
 [ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://resources/mario/T_mario.png" id="2_tvd7l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4dhe"]
 atlas = ExtResource("2_tvd7l")
 region = Rect2(2112, 96, 64, 96)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ckq3j"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_8il3s"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -20,10 +18,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Red Mushroom" instance=ExtResource("1_fra3c")]
-script = ExtResource("2_exaef")
-TargetStatus = ExtResource("2_8lpx0")
+[node name="Red Mushroom" instance=ExtResource("1_pn022")]
 
 [node name="Sprite" parent="." index="1"]
 position = Vector2(0.5, -32)
-sprite_frames = SubResource("SpriteFrames_ckq3j")
+sprite_frames = SubResource("SpriteFrames_8il3s")
