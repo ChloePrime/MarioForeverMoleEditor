@@ -102,7 +102,7 @@ public partial class Mario : CharacterBody2D
     [ExportGroup("RPG")]
     [Export] public float InvulnerableTimeOnHurt { get; private set; } = 2;
     [Export] public bool FastRetry { get; set; }
-    [Export] public float DefaultRainbowFlashTime { get; set; } = 0.8F;
+    [Export] public float DefaultRainbowFlashTime { get; set; } = 1.2F;
     [Export] public Array<MarioStatus> StatusList { get; private set; }
     [Export] public Array<Node2D> MuzzleBySize { get; private set; }
     [Export] public Array<Node> StatusSpriteNodeList { get; private set; }

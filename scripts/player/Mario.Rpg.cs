@@ -107,7 +107,7 @@ public partial class Mario
         if (_spriteRoot.Material is ShaderMaterial sm)
         {
             float alpha;
-            const float blendTime = 0.125F;
+            const float blendTime = 0.2F;
             switch (_flashTime)
             {
                 case <= 0:

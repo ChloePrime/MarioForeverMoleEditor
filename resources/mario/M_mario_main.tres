@@ -4,6 +4,8 @@
 
 [resource]
 shader = ExtResource("1_bulgg")
-shader_parameter/alpha = 0.0
-shader_parameter/phase = 0.0
-shader_parameter/flash_speed = 5.0
+shader_parameter/rainbow_alpha = 0.0
+shader_parameter/rainbow_max_power = 0.8
+shader_parameter/rainbow_flash_speed = 5.0
+shader_parameter/rainbow_saturation_scale = 1.125
+shader_parameter/rainbow_brightness_buff = 0.2

@@ -1,8 +1,10 @@
 shader_type canvas_item;
 
-uniform float alpha = 0;
-uniform float phase = 0;
-uniform float flash_speed = 5;
+uniform float rainbow_alpha = 0;
+uniform float rainbow_max_power = 0.8;
+uniform float rainbow_flash_speed = 5;
+uniform float rainbow_saturation_scale = 1;
+uniform float rainbow_brightness_buff = 0.2;
 
 vec3 rgb2hsv(vec3 c)
 {
@@ -26,9 +28,9 @@ vec3 hsv2rgb(vec3 c)
 void fragment() {
 	vec4 orig_color = texture(TEXTURE, UV);
 	vec3 hsv = rgb2hsv(orig_color.xyz);
-	hsv.x = mod(TIME * flash_speed, 1.0);
-	hsv.y *= mix(1.0, 0.8, alpha);
-	hsv.z = mix(hsv.z, 1, alpha * 0.25);
-	COLOR.xyz = mix(orig_color.xyz, hsv2rgb(hsv), alpha);
+	hsv.x = mod(hsv.x + TIME * rainbow_flash_speed, 1.0);
+	hsv.y *= rainbow_saturation_scale;
+	hsv.z = mix(hsv.z, 1, rainbow_alpha * rainbow_brightness_buff);
+	COLOR.xyz = mix(orig_color.xyz, hsv2rgb(hsv), rainbow_alpha * rainbow_max_power);
 	COLOR.a = orig_color.a;
 }
