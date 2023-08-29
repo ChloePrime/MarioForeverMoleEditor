@@ -41,16 +41,11 @@ position = Vector2(240, 336)
 [node name="Spike (Grey, Down)" parent="." instance=ExtResource("9_todrn")]
 position = Vector2(240, 272)
 
-[node name="Goomba" parent="." instance=ExtResource("10_swv1r")]
-position = Vector2(416, 400)
-
-[node name="Goomba6" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("10_swv1r")]
+[node name="Goomba6" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(456, 400)
-Sprite = NodePath("../Goomba/Sprite")
 
-[node name="Goomba5" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("10_swv1r")]
+[node name="Goomba5" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 208)
-Sprite = NodePath("../Goomba/Sprite")
 
 [node name="Goomba2" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 176)
@@ -60,6 +55,9 @@ position = Vector2(592, 144)
 
 [node name="Goomba4" parent="." instance=ExtResource("10_swv1r")]
 position = Vector2(592, 112)
+
+[node name="Goomba" parent="." instance=ExtResource("10_swv1r")]
+position = Vector2(416, 400)
 
 [node name="Background" parent="." instance=ExtResource("11_nfc1d")]
 position = Vector2(256, 240)
