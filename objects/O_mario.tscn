@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=19 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/SE_hurt.wav" id="7_oqh4d"]
+[ext_resource type="Material" uid="uid://myh55fdcpwtl" path="res://resources/mario/M_mario_main.tres" id="7_pl8do"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
@@ -38,8 +39,8 @@ floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_slc8u")
 CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
-MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
 StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b")])
+MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
 StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
 [node name="Collision_Big" type="CollisionShape2D" parent="."]
@@ -100,6 +101,7 @@ shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
 [node name="SpriteRoot" type="Node2D" parent="."]
+material = ExtResource("7_pl8do")
 position = Vector2(0, 1)
 
 [node name="Muzzle" type="Node2D" parent="SpriteRoot"]

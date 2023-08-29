@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://myh55fdcpwtl"]
+
+[ext_resource type="Shader" path="res://resources/mario/S_mario_main.gdshader" id="1_bulgg"]
+
+[resource]
+shader = ExtResource("1_bulgg")
+shader_parameter/alpha = 0.0
+shader_parameter/phase = 0.0
+shader_parameter/flash_speed = 5.0

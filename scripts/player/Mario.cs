@@ -102,13 +102,15 @@ public partial class Mario : CharacterBody2D
     [ExportGroup("RPG")]
     [Export] public float InvulnerableTimeOnHurt { get; private set; } = 2;
     [Export] public bool FastRetry { get; set; }
-    public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
-    [Export] public Array<Node2D> MuzzleBySize { get; private set; }
+    [Export] public float DefaultRainbowFlashTime { get; set; } = 0.8F;
     [Export] public Array<MarioStatus> StatusList { get; private set; }
+    [Export] public Array<Node2D> MuzzleBySize { get; private set; }
     [Export] public Array<Node> StatusSpriteNodeList { get; private set; }
 
     [ExportGroup("")]
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
+    
+    public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
 
     public void Jump()
     {
@@ -148,20 +150,7 @@ public partial class Mario : CharacterBody2D
             var pos = GlobalPosition;
             _camera.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
         }
-        if (_invulnerable && _currentSprite != null)
-        {
-            _invulnerableFlashPhase = (_invulnerableFlashPhase + InvulnerabilityFlashSpeed * (float)delta) % 1;
-            var alpha = Mathf.Cos(2 * Mathf.Pi * _invulnerableFlashPhase);
-            _currentSprite.Modulate = new Color(Colors.White, alpha);
-        }
-        else if (_invulnerableFlashPhase != 0)
-        {
-            _invulnerableFlashPhase = 0;
-            if (_currentSprite != null)
-            {
-                _currentSprite.Modulate = Colors.White;
-            }
-        }
+        ProcessFlashing((float)delta);
     }
 
     public override void _PhysicsProcess(double deltaD)
@@ -366,6 +355,11 @@ public partial class Mario : CharacterBody2D
 
     private void PostSwitchStatusSprite()
     {
+        if (!_invulnerable)
+        {
+            _currentSprite.Modulate = Colors.White;
+        }
+
         _optionalAnimations.Clear();
         var spriteFrames = _currentSprite.SpriteFrames;
         foreach (var name in Constants.OptionalAnimations)

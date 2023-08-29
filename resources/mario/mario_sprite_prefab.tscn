@@ -13,6 +13,7 @@ animations = [{
 }]
 
 [node name="Sprite_Prefab" type="AnimatedSprite2D"]
+use_parent_material = true
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_ku3jn")
 animation = &"[00] stopped"

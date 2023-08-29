@@ -36,6 +36,10 @@ public partial class EnemyDamageSource : Area2D
         {
             return;
         }
+        if (Core.Root is GravityObjectBase { ReallyEnabled: false })
+        {
+            return;
+        }
         if (Core.Stompable && _stompProtection > 0)
         {
             _stompProtection -= (float)delta;

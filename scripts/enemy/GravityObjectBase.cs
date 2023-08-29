@@ -1,13 +1,16 @@
 using System;
+using System.Linq;
 using ChloePrime.MarioForever.Player;
 using Godot;
 using ChloePrime.MarioForever.Util;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 public partial class GravityObjectBase : CharacterBody2D
 { 
+	/// <see cref="ReallyEnabled"/> Enabled 并且不在出水管过程中
 	[Export] public bool Enabled { get; set; }
 	
 	/// <summary>
@@ -32,6 +35,25 @@ public partial class GravityObjectBase : CharacterBody2D
 	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
 	[Export] public Node2D Sprite { get; set; }
+
+	[ExportGroup("Appearing")] 
+	[Export] public float AppearSpeed { get; set; } = Units.Speed.CtfToGd(1);
+
+	public Vector2 Size => _size ??= this.Children().OfType<CollisionShape2D>().First().Shape.GetRect().Size;
+	public bool Appearing { get; private set; }
+	public bool ReallyEnabled => Enabled && !Appearing;
+
+	public void AppearFrom(Vector2 pipeNormal)
+	{
+		var distance = pipeNormal.Abs().MaxAxisIndex() == Vector2.Axis.X ? Size.X : Size.Y;
+		Translate(-pipeNormal * distance);
+		
+		_zIndexBefore = ZIndex;
+		ZIndex = -1;
+		_appearNormal = pipeNormal;
+		_appearDistance = distance;
+		Appearing = true;
+	}
 	
 	public bool HasHitWall { get; private set; }
 	public float LastXSpeed { get; private set; }
@@ -43,9 +65,43 @@ public partial class GravityObjectBase : CharacterBody2D
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
 	}
 
+	protected virtual void _ProcessCollision()
+	{
+	}
+
+	private int _zIndexBefore;
+	private Vector2 _appearNormal;
+	private float _appearDistance;
+	private Vector2? _size;
+
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+		if (!Enabled)
+		{
+			return;
+		}
+		if (Appearing)
+		{
+			ProcessAppearing((float)delta);
+		}
+	}
+
+	private void ProcessAppearing(float delta)
+	{
+		var offset = _appearDistance.MoveToward(0, AppearSpeed * delta);
+		Translate(_appearNormal * offset);
+		
+		if (Mathf.IsZeroApprox(_appearDistance))
+		{
+			Appearing = false;
+			ZIndex = _zIndexBefore;
+		}
+	}
+
 	public override void _PhysicsProcess(double deltaD)
 	{
-		if (!Enabled)
+		if (!Enabled || Appearing)
 		{
 			return;
 		}
@@ -74,9 +130,5 @@ public partial class GravityObjectBase : CharacterBody2D
 		{
 			sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
 		}
-	}
-
-	protected virtual void _ProcessCollision()
-	{
 	}
 }

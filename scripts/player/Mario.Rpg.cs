@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Level;
+﻿using System;
+using ChloePrime.MarioForever.Level;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -6,6 +7,16 @@ namespace ChloePrime.MarioForever.Player;
 
 public partial class Mario
 {
+    public void OnPowerUp()
+    {
+        Flash(DefaultRainbowFlashTime);
+    }
+
+    public void Flash(float duration)
+    {
+        _flashTime = _flashDuration = duration;
+    }
+
     public void Hurt()
     {
         if (IsInvulnerable() || _currentStatus == null)
@@ -75,9 +86,55 @@ public partial class Mario
         _invulnerableTimer.Timeout += () => _invulnerable = false;
     }
 
+    private void ProcessFlashing(float delta)
+    {
+        // 无敌
+        if (_invulnerable && _currentSprite is {} sprite)
+        {
+            _invulnerableFlashPhase = (_invulnerableFlashPhase + InvulnerabilityFlashSpeed * (float)delta) % 1;
+            var alpha = Mathf.Cos(2 * Mathf.Pi * _invulnerableFlashPhase);
+            sprite.Modulate = new Color(Colors.White, alpha);
+        }
+        else if (_invulnerableFlashPhase != 0)
+        {
+            _invulnerableFlashPhase = 0;
+            if (_currentSprite != null)
+            {
+                _currentSprite.Modulate = Colors.White;
+            }
+        }
+        // 强化状态 / 彩虹
+        if (_spriteRoot.Material is ShaderMaterial sm)
+        {
+            float alpha;
+            const float blendTime = 0.125F;
+            switch (_flashTime)
+            {
+                case <= 0:
+                    return;
+                case <= blendTime:
+                    alpha = _flashTime / blendTime;
+                    break;
+                default:
+                    alpha = 1;
+                    break;
+            }
+
+            _flashTime -= delta;
+            if (_flashTime <= 0)
+            {
+                alpha = 0;
+            }
+            
+            sm.SetShaderParameter(Constants.ShaderParamAlpha, alpha);
+        }
+    }
+
     private int _hurtStack;
     private bool _killed;
     private bool _invulnerable;
+    private float _flashTime;
+    private float _flashDuration;
     private float _invulnerableFlashPhase;
     private Timer _invulnerableTimer;
 }

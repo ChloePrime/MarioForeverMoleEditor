@@ -189,7 +189,7 @@ public partial class Mario
         {
             if (!_isInAir)
             {
-                _burstCharge.MoveForward(SprintChargeTime, delta);
+                _burstCharge.MoveToward(SprintChargeTime, delta);
             }
             if (!_sprinting && _burstCharge >= SprintChargeTime)
             {
@@ -207,7 +207,7 @@ public partial class Mario
                 _sprintSmokeTimer.Stop();
                 _sprinting = false;
             }
-            _burstCharge.MoveForward(0, SprintCooldownSpeed * delta);
+            _burstCharge.MoveToward(0, SprintCooldownSpeed * delta);
         }
     }
 }

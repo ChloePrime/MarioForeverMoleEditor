@@ -10,8 +10,10 @@ public static class MathUtil
         i = T.Max(T.Zero, i - r);
     }
 
-    public static void MoveForward(this ref float from, float to, float delta)
+    public static float MoveToward(this ref float from, float to, float delta)
     {
+        var before = from;
         from = Mathf.MoveToward(from, to, delta);
+        return from - before;
     }
 }
