@@ -1,10 +1,14 @@
-﻿using Godot;
+﻿using System;
+using System.Runtime.CompilerServices;
+using DotNext;
+using Godot;
 using Godot.Collections;
+using MarioForeverMoleEditor.scripts.util;
 
 namespace ChloePrime.MarioForever.Util.Animation;
 
 [GlobalClass]
-public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D
+public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D, IAnimatedSprite
 {
     [Export] public Vector2 GlobalOffset { get; set; } = Vector2.Zero;
     [Export] public Dictionary<StringName, AnimationData> AnimationData { get; private set; }
@@ -15,6 +19,7 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D
         AnimationChanged += OnAnimChanged;
         AnimationLooped += OnAnimLooped;
         FrameChanged += () => OnFrameChanged(false);
+        Play();
     }
 
     private void OnAnimLooped()
@@ -74,4 +79,29 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D
     }
 
     private int _loopCount;
+
+    event AnimationPlayer.AnimationFinishedEventHandler IAnimatedSprite.AnimationFinished
+    {
+        add
+        {
+            void Trampoline() => value(Animation);
+            AnimFinImpls.Add(value, Trampoline);
+            this.As<AnimatedSprite2D>()!.AnimationFinished += Trampoline;
+        }
+        remove
+        {
+            if (AnimFinImpls.TryGetValue(value, out var trampoline))
+            {
+                AnimationFinished -= trampoline;
+                AnimFinImpls.Remove(value);
+            }
+        }
+    }
+
+    private ConditionalWeakTable<AnimationPlayer.AnimationFinishedEventHandler, Action> AnimFinImpls { get; } = new();
+
+    public void Play()
+    {
+        this.As<AnimatedSprite2D>()!.Play();
+    }
 }

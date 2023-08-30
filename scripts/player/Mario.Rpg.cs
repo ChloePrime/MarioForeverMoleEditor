@@ -89,19 +89,16 @@ public partial class Mario
     private void ProcessFlashing(float delta)
     {
         // 无敌
-        if (_invulnerable && _currentSprite is {} sprite)
+        if (_invulnerable)
         {
             _invulnerableFlashPhase = (_invulnerableFlashPhase + InvulnerabilityFlashSpeed * (float)delta) % 1;
             var alpha = Mathf.Cos(2 * Mathf.Pi * _invulnerableFlashPhase);
-            sprite.Modulate = new Color(Colors.White, alpha);
+            _spriteRoot.Modulate = new Color(Colors.White, alpha);
         }
         else if (_invulnerableFlashPhase != 0)
         {
             _invulnerableFlashPhase = 0;
-            if (_currentSprite != null)
-            {
-                _currentSprite.Modulate = Colors.White;
-            }
+            _spriteRoot.Modulate = Colors.White;
         }
         // 强化状态 / 彩虹
         if (_spriteRoot.Material is ShaderMaterial sm)

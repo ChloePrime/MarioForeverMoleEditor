@@ -53,10 +53,11 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -319.992
 offset_top = -240.0
-offset_right = 320.008
-offset_bottom = 240.0
+offset_right = 1600.01
+offset_bottom = 1200.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.333, 0.333)
 stretch = true
 
 [node name="Level Viewport" type="SubViewport" parent="Aspect Ratio Container/Control/Level Container"]
@@ -64,7 +65,7 @@ own_world_3d = true
 handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 0
-size = Vector2i(640, 480)
+size = Vector2i(1920, 1440)
 size_2d_override = Vector2i(640, 480)
 size_2d_override_stretch = true
 render_target_update_mode = 4

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cyxyvhym4lhdw"]
+
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="1_8vfm3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8vfm3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]

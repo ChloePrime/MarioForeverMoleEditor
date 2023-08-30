@@ -4,6 +4,8 @@
 
 [resource]
 shader = ExtResource("1_bulgg")
+shader_parameter/outline_width = 6.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/rainbow_alpha = 0.0
 shader_parameter/rainbow_max_power = 0.8
 shader_parameter/rainbow_flash_speed = 5.0

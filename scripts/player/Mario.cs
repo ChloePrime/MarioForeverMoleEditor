@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Util;
+using DotNext.Collections.Generic;
 using Godot;
 using Godot.Collections;
+using MarioForeverMoleEditor.scripts.util;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
@@ -111,6 +113,9 @@ public partial class Mario : CharacterBody2D
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
     
     public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
+    
+    public StringName ExpectedAnimation { get; private set; }
+    public float ExpectedAnimationSpeed { get; private set; }
 
     public void Jump()
     {
@@ -268,17 +273,25 @@ public partial class Mario : CharacterBody2D
         TrySwitchStatusSprite();
         _spriteRoot.Scale = XDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
 
+        var hasSprite = _currentSprite is { } sprite;
+
         if (IsInSpecialAnimation())
         {
-            _currentSprite.SpeedScale = 1;
+            if (hasSprite)
+            {
+                _currentSprite.SpeedScale = 1;
+            }
             return;
         }
         var (anim, speed) = GetAnimationIdAndSpeed();
-        if (_currentSprite.Animation != anim)
+        if (hasSprite)
         {
-            _currentSprite.Animation = anim;
+            if (_currentSprite.Animation != anim)
+            {
+                _currentSprite.Animation = anim;
+            }
+            _currentSprite.SpeedScale = speed;
         }
-        _currentSprite.SpeedScale = speed;
     }
 
     private (StringName, float) GetAnimationIdAndSpeed()
@@ -343,31 +356,46 @@ public partial class Mario : CharacterBody2D
             _currentSprite = SpriteNodes[_currentStatus];
             PostSwitchStatusSprite();
         }
-        if (_currentSprite != null && _currentSprite.GetParent() == null)
+        if (_currentSprite is Node sprite && sprite.GetParent() is null)
         {
-            foreach (var child in _spriteRoot.Children().OfType<AnimatedSprite2D>())
+            foreach (var child in PossibleSprites)
             {
-                _spriteRoot.CallDeferred(Node.MethodName.RemoveChild, child);
+                child.GetParent()?.CallDeferred(Node.MethodName.RemoveChild, child.AsNode());
             }
-            _spriteRoot.AddChild(_currentSprite);
+            (sprite is Node3D ? (Node)_sprite3DRoot : _spriteRoot).AddChild(sprite);
         }
     }
+
+    private IEnumerable<IAnimatedSprite> PossibleSprites =>
+        _spriteRoot.Children().Concat(_sprite3DRoot.Children()).OfType<IAnimatedSprite>();
 
     private void PostSwitchStatusSprite()
     {
         if (!_invulnerable)
         {
-            _currentSprite.Modulate = Colors.White;
+            _spriteRoot.Modulate = Colors.White;
         }
 
         _optionalAnimations.Clear();
-        var spriteFrames = _currentSprite.SpriteFrames;
-        foreach (var name in Constants.OptionalAnimations)
+        if (_currentSprite is AnimatedSprite2D sprite)
         {
-            if (spriteFrames.HasAnimation(name))
+            var frames = sprite.SpriteFrames;
+            foreach (var name in Constants.OptionalAnimations)
             {
-                _optionalAnimations.Add(name);
+                if (frames.HasAnimation(name))
+                {
+                    _optionalAnimations.Add(name);
+                }
             }
+        }
+        else
+        {
+            _optionalAnimations.AddAll(Constants.OptionalAnimations);
+        }
+
+        if (_spriteRoot.Material is ShaderMaterial sm)
+        {
+            sm.SetShaderParameter("outline_width", _currentSprite is Node3D ? 4F : 0F);
         }
         
         _standingSize = _currentStatus.Size;
@@ -393,7 +421,7 @@ public partial class Mario : CharacterBody2D
 
     protected override void Dispose(bool disposing)
     {
-        foreach (var sprite in SpriteNodes.Values.Where(it => IsInstanceValid(it) && it.GetParent() == null))
+        foreach (var sprite in SpriteNodes.Values.Cast<Node>().Where(it => IsInstanceValid(it) && it.GetParent() == null))
         {
             sprite.QueueFree();
         }
@@ -416,6 +444,7 @@ public partial class Mario : CharacterBody2D
     {
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
+        this.GetNode(out _sprite3DRoot, Constants.NpSprite3DRoot);
         this.GetNode(out _jumpSound, Constants.NpJumpSound);
         this.GetNode(out _swimSound, Constants.NpSwimSound);
         this.GetNode(out _hurtSound, Constants.NpHurtSound);
@@ -432,19 +461,22 @@ public partial class Mario : CharacterBody2D
         for (var i = 0; i < statuses; i++)
         {
             var status = StatusList[i];
-            var spriteMaybe = (i >= StatusSpriteNodeList.Count ? null : StatusSpriteNodeList[i]) as AnimatedSprite2D;
-            var sprite = spriteMaybe ?? status.AnimationNode.Instantiate<AnimatedSprite2D>();
-            InstallStatusSprite(sprite);
+            var spriteMaybe = (i >= StatusSpriteNodeList.Count ? null : StatusSpriteNodeList[i]) as IAnimatedSprite;
+            var sprite = spriteMaybe ?? status.AnimationNode?.Instantiate<IAnimatedSprite>();
+            if (sprite is not null)
+            {
+                InstallStatusSprite(sprite);
+            }
             SpriteNodes[status] = sprite;
         }
         
         RpgReady();
     }
 
-    private static void InstallStatusSprite(AnimatedSprite2D sprite)
+    private static void InstallStatusSprite(IAnimatedSprite sprite)
     {
-        sprite.GetParent()?.RemoveChild(sprite);
-        sprite.AnimationFinished += () =>
+        sprite.GetParent()?.RemoveChild(sprite.AsNode());
+        sprite.AnimationFinished += _ =>
         {
             sprite.Animation = Constants.AnimStopped;
             sprite.Play();
@@ -467,6 +499,7 @@ public partial class Mario : CharacterBody2D
     }
 
     private Node2D _spriteRoot;
+    private Node3D _sprite3DRoot;
     private AudioStreamPlayer _jumpSound;
     private AudioStreamPlayer _swimSound;
     private AudioStreamPlayer _hurtSound;
@@ -484,7 +517,7 @@ public partial class Mario : CharacterBody2D
     private float _firePreInput;
 
     private MarioStatus _currentStatus;
-    private AnimatedSprite2D _currentSprite;
+    private IAnimatedSprite _currentSprite;
     private Camera2D _camera;
     private GameRule _rule;
     
@@ -499,5 +532,5 @@ public partial class Mario : CharacterBody2D
     private MarioSize _currentSize;
 
     private readonly HashSet<StringName> _optionalAnimations = new();
-    private System.Collections.Generic.Dictionary<MarioStatus, AnimatedSprite2D> SpriteNodes { get; } = new();
+    private System.Collections.Generic.Dictionary<MarioStatus, IAnimatedSprite> SpriteNodes { get; } = new();
 }

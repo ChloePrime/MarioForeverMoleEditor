@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=21 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://resources/mario/SE_jump.wav" id="4_irhyt"]
 [ext_resource type="Script" path="res://scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://resources/mario/SE_swim.wav" id="5_e7o5n"]
+[ext_resource type="Resource" uid="uid://bodhgx6bdjudy" path="res://resources/mario/status_chloe_3d.tres" id="5_v43mo"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/SE_hurt.wav" id="7_oqh4d"]
 [ext_resource type="Material" uid="uid://myh55fdcpwtl" path="res://resources/mario/M_mario_main.tres" id="7_pl8do"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
@@ -31,6 +32,9 @@ size = Vector2(17, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
 size = Vector2(7, 11)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_myvdk"]
+viewport_path = NodePath("SpriteRoot/Sprite_3D/Viewport")
+
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
 z_index = 100
 collision_layer = 65536
@@ -39,7 +43,7 @@ floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_slc8u")
 CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
-StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b")])
+StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b"), ExtResource("5_v43mo")])
 MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
 StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
@@ -111,6 +115,31 @@ position = Vector2(10, -40)
 position = Vector2(10, -21)
 
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
+
+[node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot"]
+use_parent_material = true
+position = Vector2(1, -48)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("ViewportTexture_myvdk")
+
+[node name="Viewport" type="SubViewport" parent="SpriteRoot/Sprite_3D"]
+transparent_bg = true
+gui_disable_input = true
+size = Vector2i(256, 512)
+size_2d_override = Vector2i(256, 512)
+size_2d_override_stretch = true
+
+[node name="Camera" type="Camera3D" parent="SpriteRoot/Sprite_3D/Viewport"]
+transform = Transform3D(0.809017, -0.0767214, 0.582757, 0, 0.991445, 0.130526, -0.587785, -0.105598, 0.802096, 1.62147, 2.14443, 2.28588)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SpriteRoot/Sprite_3D/Viewport/Camera"]
+transform = Transform3D(0.991445, 0.0652631, -0.113039, 0, 0.866026, 0.5, 0.130526, -0.495723, 0.858617, 0, 0, 0)
+shadow_enabled = true
+sky_mode = 1
+
+[node name="3D Character Root" type="Node3D" parent="SpriteRoot/Sprite_3D/Viewport"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Jump Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_irhyt")

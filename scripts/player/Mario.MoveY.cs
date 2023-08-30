@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -124,7 +126,13 @@ public partial class Mario
 
     private void OnHeadHit()
     {
-        
+        foreach (var collision in this.GetSlideCollisions())
+        {
+            if (collision.GetCollider() is IBumpable bumpable)
+            {
+                bumpable.OnBumpBy(this);
+            }
+        }
     }
 
     private void OnFallOnGround()
