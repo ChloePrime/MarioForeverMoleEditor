@@ -15,6 +15,7 @@ public partial class PowerUpBonusHitbox : Area2D
 
     private void OnBodyEntered(Node2D other)
     {
+        // if (!_root.ReallyEnabled) return;
         if (other is not Mario mario) return;
         _root.OnMarioGotMe(mario);
     }

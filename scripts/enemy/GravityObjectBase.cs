@@ -101,15 +101,21 @@ public partial class GravityObjectBase : CharacterBody2D
 
 	private void ProcessAppearing(float delta)
 	{
-		var offset = _appearDistance.MoveToward(0, AppearSpeed * delta);
+		var wouldFinish = Mathf.IsZeroApprox(_appearDistance);
+		
+		var offset = wouldFinish 
+			? AppearSpeed * delta
+			: -_appearDistance.MoveToward(0, AppearSpeed * delta);
 		Translate(_appearNormal * offset);
 		
-		if (Mathf.IsZeroApprox(_appearDistance))
+		if (Mathf.IsZeroApprox(_appearDistance) && !TestMove(GlobalTransform, DeMargin))
 		{
 			Appearing = false;
 			ZIndex = _zIndexBefore;
 		}
 	}
+
+	private static readonly Vector2 DeMargin = new(0, 0.08F);
 
 	public override void _PhysicsProcess(double deltaD)
 	{

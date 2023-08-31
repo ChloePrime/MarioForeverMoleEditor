@@ -9,40 +9,76 @@ namespace ChloePrime.MarioForever.Bonus;
 
 public partial class BumpableBlock : StaticBody2D, IBumpable
 {
+    /// <summary>
+    /// 设置该问号块是否为隐藏块。
+    /// 在第一次被顶过以后设置就无效了
+    /// </summary>
     [Export]
     public new bool Hidden
     {
         get => _hidden;
-        set
-        {
-            _hidden = value;
-            SetCollisionLayerValue(MaFo.CollisionLayers.HiddenBonus, value);
-            SetCollisionLayerValue(MaFo.CollisionLayers.Solid, !value);
-            if (!Bumped)
-            {
-                Visible = !value;
-            }
-        }
+        set => SetHidden(value);
     }
     
+    [Export] public bool OneTimeUse { get; set; }
+    
     protected bool Bumped { get; set; }
+
+    protected virtual void _Disable()
+    {
+        _bumpAnimation.ProcessMode = ProcessModeEnum.Disabled;
+    }
+
+    protected virtual void _OnBumpedBy(Node2D bumper)
+    {
+        KillMobsAbove(bumper);
+    }
 
     public override void _Ready()
     {
         base._Ready();
         this.GetNode(out _bumpAnimation, NpBumpAnimation);
         this.GetNode(out _shape, NpCollisionShape);
+
+        _bumpAnimation.AnimationFinished += _ => FinishBumping();
     }
 
-    public virtual void OnBumpBy(Node2D bumper)
+    public void OnBumpBy(Node2D bumper)
     {
+        if (_bumping || (OneTimeUse && Bumped))
+        {
+            return;
+        }
+        
         _bumpAnimation.Play(AnimBumped);
         if (Hidden)
         {
             Hidden = false;
         }
-        Bumped = true;
-        KillMobsAbove(bumper);
+        _OnBumpedBy(bumper);
+        
+        Bumped = _bumping = true;
+    }
+
+    private void SetHidden(bool value)
+    {
+        _hidden = value;
+        if (Bumped)
+        {
+            return;
+        }
+        SetCollisionLayerValue(MaFo.CollisionLayers.HiddenBonus, value);
+        SetCollisionLayerValue(MaFo.CollisionLayers.Solid, !value);
+        Visible = !value;
+    }
+
+    private void FinishBumping()
+    {
+        _bumping = false;
+        if (OneTimeUse)
+        {
+            _Disable();
+        }
     }
 
     private void KillMobsAbove(Node2D bumper)
@@ -69,11 +105,13 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
         }
     }
 
+    protected CollisionShape2D Shape => _shape;
     private static readonly NodePath NpBumpAnimation = "Bump Animation";
     private static readonly NodePath NpCollisionShape = "Collision Shape";
     private static readonly StringName AnimBumped = "bumped";
     private static readonly Vector2 BumpTestOffset = new(0, -4); 
     private AnimationPlayer _bumpAnimation;
     private CollisionShape2D _shape;
+    private bool _bumping;
     private bool _hidden;
 }

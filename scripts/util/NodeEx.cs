@@ -29,6 +29,12 @@ public static partial class NodeEx
     {
         instance = prefab.Instantiate<T>();
     }
+    
+    public static bool TryInstantiate<T>(this PackedScene prefab, out T instance, out Node fallback) where T : class
+    {
+        fallback = prefab.Instantiate();
+        return (instance = fallback as T) != null;
+    }
 
     public static void Load<T>(out T target, NodePath path) where T : class
     {
