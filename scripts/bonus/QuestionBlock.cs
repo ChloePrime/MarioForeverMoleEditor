@@ -1,5 +1,6 @@
 ﻿using System;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Player;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -8,6 +9,7 @@ namespace ChloePrime.MarioForever.Bonus;
 public partial class QuestionBlock : BumpableBlock
 {
     [Export] public PackedScene Content { get; set; }
+    [Export] public PackedScene SmallMarioOverride { get; set; }
     
     public override void _Ready()
     {
@@ -45,21 +47,25 @@ public partial class QuestionBlock : BumpableBlock
         {
             return;
         }
-        if (Content.TryInstantiate(out Node2D content, out var fallback))
+        var content = GlobalData.Status == MarioStatus.Small ? SmallMarioOverride ?? Content : Content;
+        if (content.TryInstantiate(out Node2D instance, out var fallback))
         {
-            parent.AddChild(content);
+            parent.AddChild(instance);
             
-            var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y);
-            content.GlobalPosition = GlobalTransform.TranslatedLocal(offset).Origin;
-            
-            if (content is GravityObjectBase gob)
+            if (instance is GravityObjectBase gob)
             {
+                var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y);
+                instance.GlobalPosition = GlobalTransform.TranslatedLocal(offset).Origin;
                 gob.AppearFrom(-GlobalTransform.Y);
+            }
+            else
+            {
+                instance.GlobalPosition = GlobalPosition;
             }
 
             if (!OneTimeUse)
             {
-                _watched = new WeakReference<Node2D>(content);
+                _watched = new WeakReference<Node2D>(instance);
             }
         }
         else

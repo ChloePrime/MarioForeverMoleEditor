@@ -3,6 +3,7 @@ using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using MarioForeverMoleEditor.scripts.util;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
@@ -21,6 +22,7 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
     }
     
     [Export] public bool OneTimeUse { get; set; }
+    [Export] public AudioStream BumpSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_bump.wav");
     
     protected bool Bumped { get; set; }
 
@@ -31,6 +33,7 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
 
     protected virtual void _OnBumpedBy(Node2D bumper)
     {
+        BumpSound?.Play();
         KillMobsAbove(bumper);
     }
 
