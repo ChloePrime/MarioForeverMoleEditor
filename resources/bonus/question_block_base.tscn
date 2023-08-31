@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0f766vnjn4y6"]
+[gd_scene load_steps=11 format=3 uid="uid://b0f766vnjn4y6"]
 
 [ext_resource type="PackedScene" uid="uid://bk2nauiy0bc81" path="res://resources/bonus/bumpable_base.tscn" id="1_s5hwn"]
 [ext_resource type="Texture2D" uid="uid://hdkq0burtgfl" path="res://resources/bonus/T_question_block.png" id="2_bn5x8"]
 [ext_resource type="Script" path="res://scripts/bonus/QuestionBlock.cs" id="2_ku66y"]
 [ext_resource type="Texture2D" uid="uid://yksscbotkc4o" path="res://resources/bonus/T_question_block_bit.png" id="3_nel37"]
+[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://resources/mario/T_mario.png" id="5_dl5mk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l5ub8"]
 atlas = ExtResource("2_bn5x8")
@@ -42,14 +43,18 @@ animations = [{
 "speed": 4.5
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbue1"]
+atlas = ExtResource("5_dl5mk")
+region = Rect2(2127, 160, 33, 32)
+
 [node name="Question Block Base" instance=ExtResource("1_s5hwn")]
 script = ExtResource("2_ku66y")
 Content = null
 OneTimeUse = true
 
 [node name="Sprite" parent="." index="1"]
-visible = false
 sprite_frames = SubResource("SpriteFrames_mnp63")
 autoplay = "default"
 
 [node name="Editor Display" type="Sprite2D" parent="." index="3"]
+texture = SubResource("AtlasTexture_rbue1")

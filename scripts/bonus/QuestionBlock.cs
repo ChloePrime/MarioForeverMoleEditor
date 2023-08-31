@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Enemy;
+﻿using System;
+using ChloePrime.MarioForever.Enemy;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -20,8 +21,26 @@ public partial class QuestionBlock : BumpableBlock
     protected override void _OnBumpedBy(Node2D bumper)
     {
         base._OnBumpedBy(bumper);
-        _sprite.Animation = AnimUsed;
-        
+        if (OneTimeUse)
+        {
+            _sprite.Animation = AnimUsed;
+        }
+        if (_watched is { } reference && reference.TryGetTarget(out var watched))
+        {
+            if (!IsInstanceValid(watched))
+            {
+                _watched = null;
+            }
+            else
+            {
+                var delta = ToLocal(watched.GlobalPosition);
+                if (Math.Abs(delta.X) < 1 && delta.Y < 0)
+                {
+                    return;
+                }
+            }
+        }
+
         if (GetParent() is not { } parent)
         {
             return;
@@ -36,6 +55,11 @@ public partial class QuestionBlock : BumpableBlock
             if (content is GravityObjectBase gob)
             {
                 gob.AppearFrom(-GlobalTransform.Y);
+            }
+
+            if (!OneTimeUse)
+            {
+                _watched = new WeakReference<Node2D>(content);
             }
         }
         else
@@ -54,5 +78,6 @@ public partial class QuestionBlock : BumpableBlock
     private static readonly NodePath NpEdytor = "Editor Display";
     private static readonly StringName AnimUsed = "used";
     private AnimatedSprite2D _sprite;
+    private WeakReference<Node2D> _watched;
     private Sprite2D _edytor;
 }

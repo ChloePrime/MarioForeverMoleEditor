@@ -99,8 +99,10 @@ position = Vector2(112, 184)
 position = Vector2(96, 136)
 
 [node name="Question Block Base" parent="." instance=ExtResource("17_ryih8")]
-position = Vector2(144, 304)
+position = Vector2(48, 304)
 Content = ExtResource("15_hk8b2")
+OneTimeUse = false
 
 [node name="Question Block Base2" parent="." instance=ExtResource("17_ryih8")]
-position = Vector2(144, 272)
+position = Vector2(48, 272)
+Content = ExtResource("15_hk8b2")
