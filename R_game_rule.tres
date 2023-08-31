@@ -7,3 +7,5 @@ script = ExtResource("1_fgm1i")
 DisableLives = false
 DisableScore = false
 EnableMarioBursting = true
+XSpeedBonus = 50.0
+SprintingBonus = 0.0

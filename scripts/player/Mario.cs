@@ -131,7 +131,8 @@ public partial class Mario : CharacterBody2D
 
     public void Jump(float strength)
     {
-        YSpeed = -strength;
+        var bonus = _rule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? _rule.SprintingBonus : 0);
+        YSpeed = -strength - bonus;
         _isInAir = true;
         _wilyJumpTime = -1;
     }

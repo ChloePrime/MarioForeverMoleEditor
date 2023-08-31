@@ -19,6 +19,10 @@ public partial class GameRule : Resource
     [ExportGroup("Advanced")] 
     [Export] public bool EnableMarioBursting { get; set; } = true;
 
+    [ExportSubgroup("Jump Height Bonus")]
+    [Export] public float XSpeedBonus { get; set; } = Units.Speed.CtfToGd(1F);
+    [Export] public float SprintingBonus { get; set; } = 0;
+
     private static Optional<LevelManager> _manager;
     private static GameRule _default;
 
