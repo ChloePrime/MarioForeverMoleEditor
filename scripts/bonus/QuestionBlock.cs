@@ -9,6 +9,7 @@ namespace ChloePrime.MarioForever.Bonus;
 public partial class QuestionBlock : BumpableBlock
 {
     [Export] public PackedScene Content { get; set; }
+    [Export] public Vector2 ContentOffset { get; set; } = Vector2.Zero;
     [Export] public PackedScene SmallMarioOverride { get; set; }
     
     public override void _Ready()
@@ -54,13 +55,13 @@ public partial class QuestionBlock : BumpableBlock
             
             if (instance is GravityObjectBase gob)
             {
-                var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y);
+                var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y) + ContentOffset;
                 instance.GlobalPosition = GlobalTransform.TranslatedLocal(offset).Origin;
                 gob.AppearFrom(-GlobalTransform.Y);
             }
             else
             {
-                instance.GlobalPosition = GlobalPosition;
+                instance.GlobalPosition = GlobalTransform.TranslatedLocal(ContentOffset).Origin;
             }
 
             if (!OneTimeUse)

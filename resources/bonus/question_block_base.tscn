@@ -47,6 +47,7 @@ animations = [{
 [node name="Question Block Base" instance=ExtResource("1_s5hwn")]
 script = ExtResource("2_ku66y")
 Content = null
+ContentOffset = Vector2(0, 0)
 SmallMarioOverride = ExtResource("3_65m1q")
 OneTimeUse = true
 BumpSound = ExtResource("4_v17lf")

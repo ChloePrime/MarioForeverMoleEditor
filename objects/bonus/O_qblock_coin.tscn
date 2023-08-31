@@ -7,6 +7,7 @@
 
 [node name="Question Block (Coin)" instance=ExtResource("1_wpyv6")]
 Content = ExtResource("2_f7lqx")
+ContentOffset = Vector2(0, -32)
 SmallMarioOverride = null
 BumpSound = ExtResource("3_2lktf")
 
