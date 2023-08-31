@@ -4,7 +4,7 @@ namespace ChloePrime.MarioForever.RPG;
 
 public readonly record struct DamageEvent(
     DamageType DamageTypes,
-    Node2D Source,
+    Node2D TrueSource,
     Node2D DirectSource
 )
 {

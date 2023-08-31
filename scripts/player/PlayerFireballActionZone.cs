@@ -23,7 +23,7 @@ public partial class PlayerFireballActionZone : FireballActionZone
         {
             DamageTypes = DamageType.Fireball,
             DirectSource = Fireball,
-            Source = Fireball.Shooter
+            TrueSource = Fireball.Shooter
         });
         Fireball.Explode(hit ? Fireball.ExplodeFlags.None : Fireball.ExplodeFlags.WithDefaultSound);
     }

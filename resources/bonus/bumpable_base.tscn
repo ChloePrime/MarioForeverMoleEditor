@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bk2nauiy0bc81"]
+
+[ext_resource type="Script" path="res://scripts/bonus/BumpableBlock.cs" id="1_ws4w7"]
+[ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://resources/shared/SF_placeholder.tres" id="2_2qoei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkro"]
+size = Vector2(32, 32)
+
+[sub_resource type="Animation" id="Animation_00s4d"]
+resource_name = "bumped"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ddyan"]
+_data = {
+"bumped": SubResource("Animation_00s4d")
+}
+
+[node name="Bumpable Base" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_ws4w7")
+
+[node name="Collision Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_iwkro")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_2qoei")
+
+[node name="Bump Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ddyan")
+}

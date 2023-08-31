@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -67,9 +66,16 @@ public partial class Mario
             Velocity = new Vector2(0, YSpeed);
             var collided = MoveAndSlide();
 
-            if (!collided && YSpeed > 0)
+            if (!collided)
             {
-                PredictAndStomp(delta);
+                if (YSpeed > 0)
+                {
+                    PredictAndStomp(delta);
+                }
+                if (YSpeed < 0)
+                {
+                    TestHiddenBumpables(delta);
+                }
             }
 
             if (collided && Mathf.IsZeroApprox(Math.Abs(Velocity.Y)))
@@ -105,17 +111,16 @@ public partial class Mario
     private void PredictAndStomp(float delta)
     {
         var trans = CurrentCollisionShape.GetGlobalTransform().TranslatedLocal(new Vector2(0, YSpeed / Engine.PhysicsTicksPerSecond));
-        // trans.Origin += GetRealVelocity() * delta;
 
-        var query = new PhysicsShapeQueryParameters2D()
+        var query = new PhysicsShapeQueryParameters2D
         {
             Shape = CurrentCollisionShape.Shape,
             CollisionMask = MaFo.CollisionMask.Enemy,
             Transform = trans,
             Exclude = MeInAnArray,
-            CollideWithAreas = true
+            CollideWithAreas = true,
         };
-        foreach (var result in GetWorld2D().DirectSpaceState.IntersectShape(query).Select(d => new ShapeHitResult3D(d)))
+        foreach (var result in GetWorld2D().DirectSpaceState.IntersectShapeTyped(query))
         {
             if (result.Collider is IStompable stompable && WillStomp(stompable))
             {
@@ -124,15 +129,55 @@ public partial class Mario
         }
     }
 
+    private void TestHiddenBumpables(float delta)
+    {
+        var any = false;
+        foreach (var result in TestBump(MaFo.CollisionMask.HiddenBonus, -YSpeed * delta - 4))
+        {
+            if (result.Collider is not CollisionObject2D collider) continue;
+            if (result.Collider is not IBumpable { Hidden: true } bumpable) continue;
+            var shape = collider.ShapeOwnerGetShape(collider.ShapeFindOwner(result.Shape), 0);
+            var blockHeight = shape.GetRect().Size.Y;
+            var marioHeight = CurrentCollisionShape.Shape.GetRect().Size.Y;
+            if (-ToLocal(collider.GlobalPosition).Y >= marioHeight + blockHeight / 2)
+            {
+                bumpable.OnBumpBy(this);
+                any = true;
+            }
+        }
+        if (any)
+        {
+            YSpeed = 0;
+        }
+    }
+
     private void OnHeadHit()
     {
-        foreach (var collision in this.GetSlideCollisions())
+        foreach (var result in TestBump(MaFo.CollisionMask.Solid, 0))
         {
-            if (collision.GetCollider() is IBumpable bumpable)
+            if (result.Collider is IBumpable bumpable)
             {
                 bumpable.OnBumpBy(this);
             }
         }
+    }
+
+
+    private static readonly RectangleShape2D BumpDetector = new();
+    
+    private IEnumerable<ShapeHitResult> TestBump(uint mask, float predict)
+    {
+        var marioSize = CurrentCollisionShape.Shape.GetRect().Size;
+        BumpDetector.Size = new Vector2(marioSize.X, 8);
+        var trans = GlobalTransform.TranslatedLocal(new Vector2(0, -marioSize.Y - predict));
+        var query = new PhysicsShapeQueryParameters2D
+        {
+            Shape = BumpDetector,
+            CollisionMask = mask,
+            Transform = trans,
+            CollideWithAreas = false,
+        };
+        return GetWorld2D().DirectSpaceState.IntersectShapeTyped(query);
     }
 
     private void OnFallOnGround()
