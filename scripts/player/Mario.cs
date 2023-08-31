@@ -114,6 +114,7 @@ public partial class Mario : CharacterBody2D
     
     public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
     
+    public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }
     public float ExpectedAnimationSpeed { get; private set; }
 
@@ -131,7 +132,7 @@ public partial class Mario : CharacterBody2D
 
     public void Jump(float strength)
     {
-        var bonus = _rule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? _rule.SprintingBonus : 0);
+        var bonus = GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
         YSpeed = -strength - bonus;
         _isInAir = true;
         _wilyJumpTime = -1;
@@ -452,7 +453,7 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _skidSound, Constants.NpSkidSound);
         this.GetNode(out _sprintSmokeTimer, Constants.NpSmkTimer);
         this.GetNode(out _skidSmokeTimer, Constants.NpSkdTimer);
-        _rule = this.GetRule();
+        GameRule = this.GetRule();
 
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
@@ -520,8 +521,7 @@ public partial class Mario : CharacterBody2D
     private MarioStatus _currentStatus;
     private IAnimatedSprite _currentSprite;
     private Camera2D _camera;
-    private GameRule _rule;
-    
+
     /// <summary>
     /// 不受是否处于下蹲状态影响
     /// </summary>

@@ -179,7 +179,7 @@ public partial class Mario
 
     private void ProcessBurst(float delta)
     {
-        if (!_rule.EnableMarioBursting)
+        if (!GameRule.EnableMarioBursting)
         {
             _sprinting = false;
             _burstCharge = 0;

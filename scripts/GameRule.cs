@@ -16,6 +16,10 @@ public partial class GameRule : Resource
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
 
+    [ExportGroup("Simple QoL")] 
+    [Export] public bool EnableTossFireballUpward { get; set; } = true;
+    [Export] public float TossFireballUpwardStrength { get; set; } = 400;
+
     [ExportGroup("Advanced")] 
     [Export] public bool EnableMarioBursting { get; set; } = true;
 
