@@ -3,6 +3,7 @@
 [ext_resource type="Shader" path="res://resources/mario/S_mario_main.gdshader" id="1_bulgg"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_bulgg")
 shader_parameter/outline_width = 0.0
 shader_parameter/outline_color = Color(0, 0, 0, 1)
