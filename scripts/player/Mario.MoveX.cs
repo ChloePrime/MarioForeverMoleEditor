@@ -13,10 +13,15 @@ public partial class Mario
     public float XSpeed { get; set; }
 
     /// <summary>
-    /// X 方向，-1 或 1
+    /// X 速度的方向，-1 或 1，不一定等于角色朝向
     /// </summary>
+    /// <see cref="CharacterDirection"/> 代表角色朝向的值
+    /// <see cref="ChloePrime.MarioForever.GameRule.CharacterDirectionPolicy"/>
     public int XDirection { get; private set; } = 1;
 
+    /// <summary>
+    /// 角色的横向朝向，不一定等于 X 速度的方向
+    /// </summary>
     public int CharacterDirection => GameRule.CharacterDirectionPolicy switch
     {
         GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection,
