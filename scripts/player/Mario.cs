@@ -5,7 +5,6 @@ using ChloePrime.MarioForever.Util;
 using DotNext.Collections.Generic;
 using Godot;
 using Godot.Collections;
-using MarioForeverMoleEditor.scripts.util;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
@@ -496,6 +495,7 @@ public partial class Mario : CharacterBody2D
         }
         
         RpgReady();
+        Translate(new Vector2(0, -SafeMargin / 2));
     }
 
     private static void InstallStatusSprite(IAnimatedSprite sprite)
