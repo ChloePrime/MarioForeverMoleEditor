@@ -9,7 +9,7 @@ namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 public partial class GravityObjectBase : CharacterBody2D
-{ 
+{
 	/// <see cref="ReallyEnabled"/> Enabled 并且不在出水管过程中
 	[Export] public bool Enabled { get; set; }
 	

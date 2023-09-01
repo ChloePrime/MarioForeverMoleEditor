@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://objects/bonus/O_red_mushroom.tscn" id="15_hk8b2"]
 [ext_resource type="PackedScene" uid="uid://bk2nauiy0bc81" path="res://resources/bonus/bumpable_base.tscn" id="16_mouxf"]
 [ext_resource type="PackedScene" uid="uid://5qil325ycwfx" path="res://objects/bonus/O_qblock_red_mushroom.tscn" id="17_00npn"]
-[ext_resource type="PackedScene" uid="uid://yirnxxc024q5" path="res://objects/bonus/O_qblock_coin.tscn" id="18_5vs0d"]
+[ext_resource type="PackedScene" uid="uid://sfmvdwkyehet" path="res://objects/bonus/O_qblock_flower.tscn" id="18_e8es8"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -102,5 +102,5 @@ position = Vector2(96, 136)
 [node name="Question Block (Red Mushroom)" parent="." instance=ExtResource("17_00npn")]
 position = Vector2(48, 304)
 
-[node name="Question Block (Coin)" parent="." instance=ExtResource("18_5vs0d")]
+[node name="Question Block (Flower)" parent="." instance=ExtResource("18_e8es8")]
 position = Vector2(144, 304)
