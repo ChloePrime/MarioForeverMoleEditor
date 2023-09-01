@@ -27,16 +27,6 @@ public partial class WalkableObjectBase : GravityObjectBase
         {
             detector.ScreenEntered += EnableOnce;
         }
-        
-        if (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) is not Node2D mario)
-        {
-            return;
-        }
-        var relPos = ToLocal(mario.GlobalPosition).X;
-        if (relPos != 0)
-        {
-            XDirection = Math.Sign(relPos);
-        }
     }
 
     private static readonly NodePath NpEnterScreenNotifier = "Enter Screen Notifier";
@@ -62,6 +52,16 @@ public partial class WalkableObjectBase : GravityObjectBase
         
         Enabled = true;
         XSpeed = TargetSpeed;
+        
+        if (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) is not Node2D mario)
+        {
+            return;
+        }
+        var relPos = ToLocal(mario.GlobalPosition).X;
+        if (relPos != 0)
+        {
+            XDirection = Math.Sign(relPos);
+        }
     }
 
     public override void _PhysicsProcess(double deltaD)
