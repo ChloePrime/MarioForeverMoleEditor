@@ -6,6 +6,7 @@
 script = ExtResource("1_fgm1i")
 DisableLives = false
 DisableScore = false
+CharacterDirectionPolicy = 1
 EnableTossFireballUpward = true
 TossFireballUpwardStrength = 400.0
 EnableMarioBursting = true

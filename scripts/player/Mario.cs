@@ -273,7 +273,7 @@ public partial class Mario : CharacterBody2D
     private void UpdateAnimation()
     {
         TrySwitchStatusSprite();
-        _spriteRoot.Scale = XDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
+        _spriteRoot.Scale = CharacterDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
 
         var hasSprite = _currentSprite is { } sprite;
 

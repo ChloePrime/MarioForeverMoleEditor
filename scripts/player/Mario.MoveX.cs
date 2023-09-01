@@ -17,9 +17,16 @@ public partial class Mario
     /// </summary>
     public int XDirection { get; private set; } = 1;
 
+    public int CharacterDirection => GameRule.CharacterDirectionPolicy switch
+    {
+        GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection,
+        GameRule.MarioDirectionPolicy.FollowXSpeed or _ => XDirection
+    };
+
     private bool _leftPressed;
     private bool _rightPressed;
     private bool _runPressed;
+    private int _controlDirection;
 
     private float _walkAxis;
     private float _walkResult;
@@ -38,6 +45,11 @@ public partial class Mario
         _walkAxis = FetchWalkingInput();
         _walkAxis = (_crouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
+
+        if (_leftPressed != _rightPressed)
+        {
+            _controlDirection = (_leftPressed ? -1 : 0) + (_rightPressed ? 1 : 0);
+        }
         
         // RE: Flag10控制转向过程
         if (XDirection * _walkAxis < 0 && XSpeed > 0)

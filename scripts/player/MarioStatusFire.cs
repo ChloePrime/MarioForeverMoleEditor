@@ -42,7 +42,7 @@ public partial class MarioStatusFire : MarioStatus
         }
         if (fireball is GravityObjectBase ball)
         {
-            ball.XDirection = mario.XDirection;
+            ball.XDirection = mario.CharacterDirection;
             if (mario.GameRule.EnableTossFireballUpward && Input.IsActionPressed(Mario.Constants.ActionMoveUp))
             {
                 ball.YSpeed = -mario.GameRule.TossFireballUpwardStrength;

@@ -16,7 +16,17 @@ public partial class GameRule : Resource
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
 
-    [ExportGroup("Simple QoL")] 
+    [ExportGroup("Simple QoL")]
+    [ExportSubgroup("Direction Calculation")]
+    [Export] public MarioDirectionPolicy CharacterDirectionPolicy { get; set; } = MarioDirectionPolicy.FollowXSpeed;
+    
+    public enum MarioDirectionPolicy
+    {
+        FollowXSpeed,
+        FollowControlDirection,
+    }
+    
+    [ExportSubgroup("Toss Fireball Upward")]
     [Export] public bool EnableTossFireballUpward { get; set; } = true;
     [Export] public float TossFireballUpwardStrength { get; set; } = 400;
 
