@@ -172,16 +172,25 @@ public partial class MaFoLevel : Node
 		var instance = prefab.Instantiate();
 		var sprSize = @object.Texture.GetSize() * @object.Scale;
 		var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
+		
 		parent.AddChild(instance);
 		if (instance is Node2D node2D)
 		{
 			node2D.GlobalPosition = @object.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
 		}
+		LoadProperties(@object, instance);
+		
 		@object.QueueFree();
 	}
 
-	private static void AddChild(Node2D parent, Node instance)
+	private static void LoadProperties(GodotObject dataSrc, GodotObject dataTarget)
 	{
-		
+		foreach (var name in dataSrc.GetMetaList())
+		{
+			if (name == ResPathName) continue;
+			dataTarget.Set(name, dataSrc.GetMeta(name));
+		}
 	}
+
+	private static readonly StringName ResPathName = "res_path";
 }
