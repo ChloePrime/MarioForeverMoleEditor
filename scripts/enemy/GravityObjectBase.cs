@@ -75,9 +75,21 @@ public partial class GravityObjectBase : CharacterBody2D
 	{
 		base._Ready();
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
+		
+		if (!Appearing)
+		{
+			CallDeferred(MethodName._ReallyReady);
+		}
 	}
 
 	protected virtual void _ProcessCollision()
+	{
+	}
+	
+	/// <summary>
+	/// 在该物件完全从水管中钻出后触发。
+	/// </summary>
+	public virtual void _ReallyReady()
 	{
 	}
 
@@ -112,6 +124,7 @@ public partial class GravityObjectBase : CharacterBody2D
 		{
 			Appearing = false;
 			ZIndex = _zIndexBefore;
+			_ReallyReady();
 		}
 	}
 

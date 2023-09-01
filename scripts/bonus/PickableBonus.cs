@@ -21,6 +21,15 @@ public partial class PickableBonus : WalkableObjectBase
         QueueFree();
     }
 
+    public override void _ReallyReady()
+    {
+        base._ReallyReady();
+        if (TargetSpeed > 0)
+        {
+            TryFaceTowardsMario();
+        }
+    }
+
     private void CreateScore()
     {
         if (!this.TryGetParent(out Node parent)) return;
