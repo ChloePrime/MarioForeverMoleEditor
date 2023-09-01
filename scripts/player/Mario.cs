@@ -417,6 +417,10 @@ public partial class Mario : CharacterBody2D
             _optionalAnimations.AddAll(Constants.OptionalAnimations);
         }
 
+        var is3D = _currentSprite is Node3D;
+        _sprite3DRoot.Visible = is3D;
+        _sprite3DRoot.ProcessMode = is3D ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+
         if (_spriteRoot.Material is ShaderMaterial sm)
         {
             sm.SetShaderParameter("outline_width", _currentSprite is Node3D ? 4F : 0F);
