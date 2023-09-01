@@ -268,6 +268,29 @@ public partial class Mario : CharacterBody2D
         {
             _crouching = false;
         }
+
+        if (size == MarioSize.Big)
+        {
+            TestAndForceCrouch();
+        }
+    }
+
+    private void TestAndForceCrouch()
+    {
+        var bigShape = CollisionBySize[(int)MarioSize.Big];
+        var query = new PhysicsShapeQueryParameters2D
+        {
+            Shape = bigShape.Shape,
+            Transform = bigShape.GlobalTransform,
+            CollisionMask = CollisionMask,
+            CollideWithBodies = true,
+            CollideWithAreas = false,
+        };
+        if (GetWorld2D().DirectSpaceState.IntersectShape(query).Count > 0)
+        {
+            SetSize(MarioSize.Small);
+            _crouching = true;
+        }
     }
 
     private void UpdateAnimation()
