@@ -4,6 +4,7 @@ using System.Linq;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
+using Array = Godot.Collections.Array;
 
 namespace ChloePrime.MarioForever.Level;
 
@@ -39,7 +40,7 @@ public partial class MaFoLevel : Node
 		{
 			ProcessTilemapWithLayers(tilemap);
 		}
-		foreach (var tilemapRoot in children.Where(it => it.GetType() == typeof(Node2D)))
+		foreach (var tilemapRoot in children.Where(IsPossibleTilemapRoot))
 		{
 			ProcessTilemapSeperated(tilemapRoot);
 		}
@@ -57,25 +58,31 @@ public partial class MaFoLevel : Node
 		DeathSource,
 	}
 
-	private static readonly Dictionary<StringName, TilemapType> TypeLookup = new()
+	private static readonly System.Collections.Generic.Dictionary<StringName, TilemapType> TypeLookup = new()
 	{
 		{ "Collision", TilemapType.SolidOnly },
 	};
 
-	private static void ProcessTilemapSeperated(Node tilemapRoot) => ProcessTilemapCore(tilemapRoot, TilemapType.None);
+	private static bool IsPossibleTilemapRoot(Node node)
+	{
+		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMap>().Any();
+	}
+
+	private static void ProcessTilemapSeperated(Node root) => ProcessTilemapCore(root, root, TilemapType.None);
 
 	/// <summary>
 	/// 针对未勾选 Use Tilemap Layers 的 tmx scene 的处理，
 	/// 支持伤害层。
 	/// </summary>
-	private static void ProcessTilemapCore(Node tilemapRoot, TilemapType baseType)
+	private static void ProcessTilemapCore(Node root, Node parent, TilemapType baseType)
 	{
-		foreach (var node in tilemapRoot.Children())
+		foreach (var node in parent.Children())
 		{
 			var typeByName = TypeLookup.GetValueOrDefault(node.Name, TilemapType.None);
 			var type = typeByName == TilemapType.None ? baseType : typeByName;
 			if (node is TileMap tilemap)
 			{
+				LoadObjectsFromTile(tilemap, 0);
 				switch (type)
 				{
 					case TilemapType.SolidOnly:
@@ -88,7 +95,11 @@ public partial class MaFoLevel : Node
 			}
 			else if (node.GetType() == typeof(Node2D))
 			{
-				ProcessTilemapCore(node, type);
+				ProcessTilemapCore(root, node, type);
+			}
+			else if (node is Sprite2D possibleObject)
+			{
+				LoadObject(root, possibleObject);
 			}
 		}
 	}
@@ -106,6 +117,71 @@ public partial class MaFoLevel : Node
 			{
 				tilemap.SetLayerModulate(i, Colors.Transparent);
 			}
+			else
+			{
+				LoadObjectsFromTile(tilemap, i);
+			}
 		}
+	}
+
+	private static void LoadObjectsFromTile(TileMap tilemap, int layer)
+	{
+		var all = tilemap.GetUsedCells(layer);
+		using var _ = (Array)all;
+		var tileSize = tilemap.TileSet.TileSize;
+		var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
+		var resPathLayer = tilemap.TileSet.GetCustomDataLayerByName("res_path");
+		
+		foreach (var coord in all)
+		{
+			var customData = tilemap.GetCellTileData(layer, coord)?.GetCustomDataByLayerId(resPathLayer);
+			if (customData is not {} data || data.VariantType == Variant.Type.Nil)
+			{
+				continue;
+			}
+			var resPath = data.AsString();
+			if (resPath.Length == 0 ||
+			    !resPath.StartsWith("res://") ||
+			    GD.Load(data.AsString()) is not PackedScene prefab)
+			{
+				continue;
+			}
+			var instance = prefab.Instantiate();
+			tilemap.AddChild(instance);
+			if (instance is Node2D node2D)
+			{
+				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
+			}
+			tilemap.EraseCell(layer, coord);
+		}
+	}
+
+	private static void LoadObject(Node parent, Sprite2D @object)
+	{
+		string resPath;
+		if (!@object.HasMeta("res_path") ||
+		    (resPath = @object.GetMeta("res_path").AsString()).Length == 0 ||
+		    !resPath.StartsWith("res://"))
+		{
+			return;
+		}
+		if (GD.Load(resPath) is not PackedScene prefab)
+		{
+			return;
+		}
+		var instance = prefab.Instantiate();
+		var sprSize = @object.Texture.GetSize() * @object.Scale;
+		var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
+		parent.AddChild(instance);
+		if (instance is Node2D node2D)
+		{
+			node2D.GlobalPosition = @object.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
+		}
+		@object.QueueFree();
+	}
+
+	private static void AddChild(Node2D parent, Node instance)
+	{
+		
 	}
 }
