@@ -1,5 +1,5 @@
-﻿using Godot;
-using MarioForeverMoleEditor.scripts.util;
+﻿using ChloePrime.MarioForever.Util;
+using Godot;
 
 namespace ChloePrime.MarioForever.UI;
 

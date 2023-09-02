@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Godot;
 
-namespace MarioForeverMoleEditor.scripts.util;
+namespace ChloePrime.MarioForever.Util;
 
 public static class SoundUtil
 {
