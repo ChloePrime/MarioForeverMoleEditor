@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -15,11 +16,13 @@ namespace ChloePrime.MarioForever.Level;
 [GlobalClass]
 public partial class MaFoLevel : Node
 {
-	[Export]
-	public AudioStream LevelMusic { get; private set; }
-	
+	[Export] public AudioStream LevelMusic { get; private set; }
+	[Export] public ObjectTilePresetList TileLoadingPreset { get; private set; }
+
 	public override void _Ready()
 	{
+		TileLoadingPreset ??= GD.Load<ObjectTilePresetList>("res://tiles/R_object_tile_presets.tres");
+		
 		if (LevelMusic is { } bgm)
 		{
 			BackgroundMusic.Music = bgm;
@@ -46,10 +49,6 @@ public partial class MaFoLevel : Node
 		}
 	}
 
-	private AudioStreamPlayer _musicPlayer;
-	private AudioStream _levelMusic;
-	private static readonly StringName MusicPlayerName = "Music Player";
-
 	private enum TilemapType
 	{
 		None,
@@ -68,13 +67,13 @@ public partial class MaFoLevel : Node
 		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMap>().Any();
 	}
 
-	private static void ProcessTilemapSeperated(Node root) => ProcessTilemapCore(root, root, TilemapType.None);
+	private void ProcessTilemapSeperated(Node root) => ProcessTilemapCore(root, root, TilemapType.None);
 
 	/// <summary>
 	/// 针对未勾选 Use Tilemap Layers 的 tmx scene 的处理，
 	/// 支持伤害层。
 	/// </summary>
-	private static void ProcessTilemapCore(Node root, Node parent, TilemapType baseType)
+	private void ProcessTilemapCore(Node root, Node parent, TilemapType baseType)
 	{
 		foreach (var node in parent.Children())
 		{
@@ -108,7 +107,7 @@ public partial class MaFoLevel : Node
 	/// 针对使用 Use Tilemap Layers 的 tmx scene 的处理，
 	/// 不支持伤害层。
 	/// </summary>
-	private static void ProcessTilemapWithLayers(TileMap tilemap)
+	private void ProcessTilemapWithLayers(TileMap tilemap)
 	{
 		var count = tilemap.GetLayersCount();
 		for (var i = 0; i < count; i++)
@@ -124,35 +123,85 @@ public partial class MaFoLevel : Node
 		}
 	}
 
-	private static void LoadObjectsFromTile(TileMap tilemap, int layer)
+	private void LoadObjectsFromTile(TileMap tilemap, int layer)
 	{
 		var all = tilemap.GetUsedCells(layer);
 		using var _ = (Array)all;
 		var tileSize = tilemap.TileSet.TileSize;
 		var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
 		var resPathLayer = tilemap.TileSet.GetCustomDataLayerByName("res_path");
+		var presetLayer = tilemap.TileSet.GetCustomDataLayerByName("preset");
 		
 		foreach (var coord in all)
 		{
-			var customData = tilemap.GetCellTileData(layer, coord)?.GetCustomDataByLayerId(resPathLayer);
-			if (customData is not {} data || data.VariantType == Variant.Type.Nil)
+			if (tilemap.GetCellTileData(layer, coord) is not { } tileData)
 			{
 				continue;
 			}
-			var resPath = data.AsString();
+			var resPath = tileData.GetCustomDataByLayerId(resPathLayer).AsString();
 			if (resPath.Length == 0 ||
 			    !resPath.StartsWith("res://") ||
-			    GD.Load(data.AsString()) is not PackedScene prefab)
+			    GD.Load(resPath) is not PackedScene prefab)
 			{
 				continue;
 			}
 			var instance = prefab.Instantiate();
+			
 			tilemap.AddChild(instance);
 			if (instance is Node2D node2D)
 			{
 				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
 			}
+			
+			var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
+			if (preset > 0)
+			{
+				LoadPreset(instance, preset);
+			}
+			
 			tilemap.EraseCell(layer, coord);
+		}
+	}
+
+	private ConditionalWeakTable<Type, ObjectTilePreset> PresetCache { get; } = new();
+
+	private void LoadPreset(GodotObject instance, int preset)
+	{
+		var typeInfo = PresetCache.GetValue(instance.GetType(), type =>
+		{
+			bool ConfigFilter(ObjectTilePreset p)
+			{
+				var script0 = instance.GetScript();
+				if (script0.VariantType != Variant.Type.Object || script0.AsGodotObject() is not Script script)
+				{
+					return false;
+				}
+				do
+				{
+					if (script == p.BaseClass)
+					{
+						return true;
+					}
+				} while ((script = script.GetBaseScript()) != null);
+
+				return false;
+			}
+			return TileLoadingPreset.Presets.FirstOrDefault(ConfigFilter);
+		});
+		if (typeInfo is null)
+		{
+			return;
+		}
+		
+		if (preset <= 0 || preset > typeInfo.PropertiesById.Count)
+		{
+			this.LogWarn($"Invalid preset: preset should in 1..{typeInfo.PropertiesById.Count}");
+			return;
+		}
+		var presetData = typeInfo.PropertiesById[preset - 1];
+		foreach (var (prop, value) in presetData)
+		{
+			instance.Set(prop, value);
 		}
 	}
 

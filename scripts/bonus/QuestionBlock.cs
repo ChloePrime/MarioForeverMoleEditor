@@ -24,6 +24,10 @@ public partial class QuestionBlock : BumpableBlock
     protected override void _OnBumpedBy(Node2D bumper)
     {
         base._OnBumpedBy(bumper);
+        if (Hidden)
+        {
+            Modulate = Colors.White;
+        }
         if (OneTimeUse)
         {
             _sprite.Animation = AnimUsed;

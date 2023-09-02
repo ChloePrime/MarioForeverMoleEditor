@@ -7,6 +7,7 @@ using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
 
+[GlobalClass]
 public partial class BumpableBlock : StaticBody2D, IBumpable
 {
     /// <summary>
@@ -53,12 +54,12 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
         }
         
         _bumpAnimation.Play(AnimBumped);
+        _OnBumpedBy(bumper);
+        
         if (Hidden)
         {
             Hidden = false;
         }
-        _OnBumpedBy(bumper);
-        
         Bumped = _bumping = true;
     }
 
