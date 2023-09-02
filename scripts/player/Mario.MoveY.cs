@@ -148,6 +148,7 @@ public partial class Mario
         if (any)
         {
             YSpeed = 0;
+            OnHeadHit();
         }
     }
 
