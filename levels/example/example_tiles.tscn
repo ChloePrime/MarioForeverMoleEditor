@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=20 format=3 uid="uid://cry2tnvrwsxjn"]
 
 [ext_resource type="Texture2D" uid="uid://l4fu8sespl4y" path="res://resources/enemies/T_enemies.png" id="1_xxcmu"]
 [ext_resource type="Texture2D" uid="uid://dlwtrwivjxupw" path="res://tiles/T_grass_green.png" id="2_mwbmk"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b30op2nqw7s2m" path="res://tiles/T_0x1pack_3.png" id="8_fauku"]
 [ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://tiles/T_tileset_bonus.png" id="9_dxdgw"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mbje1"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3fil8"]
 texture = ExtResource("2_mwbmk")
 texture_region_size = Vector2i(32, 32)
 5:2/0 = 0
@@ -99,7 +99,7 @@ texture_region_size = Vector2i(32, 32)
 2:1/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s2lcn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qjgga"]
 texture = ExtResource("3_e6obl")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -319,7 +319,7 @@ texture_region_size = Vector2i(32, 32)
 6:5/0/physics_layer_2/angular_velocity = 0.0
 6:5/0/physics_layer_2/polygon_0/points = PackedVector2Array(0, 15, -15, -15, 15, -15)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_124x5"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aq7fe"]
 texture = ExtResource("4_rfx8u")
 texture_region_size = Vector2i(32, 32)
 1:13/0 = 0
@@ -372,7 +372,7 @@ texture_region_size = Vector2i(32, 32)
 11:10/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 11:10/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jwuw7"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mmv41"]
 texture = ExtResource("5_ry5y8")
 texture_region_size = Vector2i(32, 32)
 11:1/0 = 0
@@ -474,7 +474,7 @@ texture_region_size = Vector2i(32, 32)
 7:1/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 7:1/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kxpft"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s2cb8"]
 texture = ExtResource("6_dksnp")
 texture_region_size = Vector2i(32, 32)
 17:5/0 = 0
@@ -485,7 +485,7 @@ texture_region_size = Vector2i(32, 32)
 17:5/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 17:5/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xnqeg"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o7wgy"]
 texture = ExtResource("7_5wj0t")
 texture_region_size = Vector2i(32, 32)
 1:0/0 = 0
@@ -496,11 +496,11 @@ texture_region_size = Vector2i(32, 32)
 1:0/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_11tea"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qc3t1"]
 texture = ExtResource("8_fauku")
 texture_region_size = Vector2i(32, 32)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na0oj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aqa8m"]
 resource_name = "T_enemies"
 texture = ExtResource("1_xxcmu")
 margins = Vector2i(1, 0)
@@ -514,7 +514,7 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_goomba.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x1ueh"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mdsud"]
 texture = ExtResource("9_dxdgw")
 texture_region_size = Vector2i(32, 32)
 2:0/0 = 0
@@ -585,7 +585,7 @@ texture_region_size = Vector2i(32, 32)
 4:2/0/custom_data_0 = "res://objects/bonus/O_qblock_flower.tscn"
 4:2/0/custom_data_1 = 1
 
-[sub_resource type="TileSet" id="TileSet_xibii"]
+[sub_resource type="TileSet" id="TileSet_wf6nm"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 256
@@ -596,15 +596,15 @@ custom_data_layer_0/name = "res_path"
 custom_data_layer_0/type = 4
 custom_data_layer_1/name = "preset"
 custom_data_layer_1/type = 2
-sources/0 = SubResource("TileSetAtlasSource_mbje1")
-sources/1 = SubResource("TileSetAtlasSource_s2lcn")
-sources/2 = SubResource("TileSetAtlasSource_124x5")
-sources/3 = SubResource("TileSetAtlasSource_jwuw7")
-sources/4 = SubResource("TileSetAtlasSource_kxpft")
-sources/5 = SubResource("TileSetAtlasSource_xnqeg")
-sources/6 = SubResource("TileSetAtlasSource_11tea")
-sources/7 = SubResource("TileSetAtlasSource_na0oj")
-sources/8 = SubResource("TileSetAtlasSource_x1ueh")
+sources/0 = SubResource("TileSetAtlasSource_3fil8")
+sources/1 = SubResource("TileSetAtlasSource_qjgga")
+sources/2 = SubResource("TileSetAtlasSource_aq7fe")
+sources/3 = SubResource("TileSetAtlasSource_mmv41")
+sources/4 = SubResource("TileSetAtlasSource_s2cb8")
+sources/5 = SubResource("TileSetAtlasSource_o7wgy")
+sources/6 = SubResource("TileSetAtlasSource_qc3t1")
+sources/7 = SubResource("TileSetAtlasSource_aqa8m")
+sources/8 = SubResource("TileSetAtlasSource_mdsud")
 
 [node name="example_tiles" type="Node2D"]
 
@@ -619,14 +619,23 @@ offset = Vector2(856, -544)
 metadata/JumpStrength = 400.0
 metadata/res_path = "res://objects/enemies/O_goomba.tscn"
 
+[node name="T_tileset_bonus_tile" type="Sprite2D" parent="Objects"]
+position = Vector2(162, 324.667)
+texture = ExtResource("9_dxdgw")
+offset = Vector2(16, -16)
+region_enabled = true
+region_rect = Rect2(128, 32, 32, 32)
+metadata/preset = 1
+metadata/res_path = "res://objects/bonus/O_qblock_flower.tscn"
+
 [node name="Geometry" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_xibii")
+tile_set = SubResource("TileSet_wf6nm")
 format = 2
 layer_0/tile_data = PackedInt32Array(65539, 65541, 0, 65540, 65541, 0, 196611, 7, 0, 196623, 262152, 1, 262144, 262144, 0, 262149, 262144, 0, 327684, 8, 2, 327696, 7, 0, 393234, 7, 0, 458767, 327680, 0, 458768, 262144, 1, 458769, 262144, 1, 458770, 262144, 1, 458771, 327680, 1, 458773, 262144, 0, 458775, 262144, 0, 458777, 262144, 0, 458779, 262144, 0, 458781, 262144, 0, 458783, 262144, 0, 589825, 262152, 2, 589828, 262152, 2, 589837, 65538, 13, 589838, 65538, 13, 589839, 196608, 0, 589843, 196608, 0, 655375, 196608, 2, 655379, 196608, 2, 655387, 720899, 1, 720907, 196608, 0, 720923, 720899, 3, 720928, 720899, 0, 720937, 327683, 0, 720938, 393219, 0, 720939, 393219, 0, 720940, 393219, 0, 720941, 589827, 0, 720942, 393219, 0, 720943, 393219, 0, 720944, 393219, 0, 720945, 393219, 0, 720946, 393219, 0, 720947, 393219, 0, 720948, 393219, 0, 720949, 589827, 0, 720950, 393219, 0, 720951, 393219, 0, 720952, 393219, 0, 720953, 393219, 0, 720954, 458755, 0, 786443, 196608, 1, 786447, 196608, 0, 786449, 131075, 11, 786450, 196611, 11, 786454, 65539, 11, 786456, 65541, 0, 786457, 65541, 0, 786459, 1114116, 5, 786464, 1114116, 5, 786473, 327683, 1, 786474, 393219, 1, 786475, 393219, 1, 786476, 393219, 1, 786477, 393219, 1, 786478, 393219, 1, 786479, 393219, 1, 786480, 589827, 1, 786481, 393219, 1, 786482, 393219, 1, 786483, 393219, 1, 786484, 393219, 1, 786485, 393219, 1, 786486, 393219, 1, 786487, 393219, 1, 786488, 589827, 1, 786489, 393219, 1, 786490, 458755, 1, 851968, 65536, 0, 851969, 65536, 0, 851970, 65536, 0, 851971, 65536, 0, 851972, 65536, 0, 851973, 65536, 0, 851974, 65536, 0, 851975, 65536, 0, 851976, 65536, 0, 851977, 65536, 0, 851978, 65536, 0, 851979, 65536, 0, 851980, 65536, 0, 851981, 65536, 0, 851982, 65536, 0, 851983, 65536, 0, 851984, 65536, 0, 851985, 65536, 0, 851986, 131072, 0, 851989, 589826, 9, 851990, 655362, 9, 851991, 655362, 9, 851992, 655362, 9, 851993, 655362, 9, 851994, 655362, 9, 851995, 655362, 9, 851996, 655362, 9, 851997, 655362, 9, 851998, 655362, 9, 851999, 655362, 9, 852000, 655362, 9, 852001, 655362, 9, 852002, 655362, 9, 852003, 655362, 9, 852004, 655362, 9, 852005, 655362, 9, 852006, 720898, 9, 852009, 327683, 1, 852010, 393219, 1, 852011, 393219, 1, 852012, 589827, 1, 852013, 393219, 1, 852014, 393219, 1, 852015, 393219, 1, 852016, 393219, 1, 852017, 393219, 1, 852018, 393219, 1, 852019, 589827, 1, 852020, 393219, 1, 852021, 393219, 1, 852022, 393219, 1, 852023, 393219, 1, 852024, 393219, 1, 852025, 393219, 1, 852026, 458755, 1, 917504, 65536, 1, 917505, 65536, 1, 917506, 65536, 1, 917507, 65536, 1, 917508, 65536, 1, 917509, 65536, 1, 917510, 65536, 1, 917511, 65536, 1, 917512, 65536, 1, 917513, 65536, 1, 917514, 65536, 1, 917515, 65536, 1, 917516, 65536, 1, 917517, 65536, 1, 917518, 65536, 1, 917519, 65536, 1, 917520, 65536, 1, 917521, 65536, 1, 917522, 131072, 1, 917525, 589826, 10, 917526, 655362, 10, 917527, 655362, 10, 917528, 655362, 10, 917529, 655362, 10, 917530, 655362, 10, 917531, 655362, 10, 917532, 655362, 10, 917533, 655362, 10, 917534, 655362, 10, 917535, 655362, 10, 917536, 655362, 10, 917537, 655362, 10, 917538, 655362, 10, 917539, 655362, 10, 917540, 655362, 10, 917541, 655362, 10, 917542, 720898, 10, 917545, 327683, 1, 917546, 393219, 1, 917547, 393219, 1, 917548, 393219, 1, 917549, 393219, 1, 917550, 393219, 1, 917551, 393219, 1, 917552, 393219, 1, 917553, 393219, 1, 917554, 393219, 1, 917555, 393219, 1, 917556, 393219, 1, 917557, 393219, 1, 917558, 393219, 1, 917559, 393219, 1, 917560, 393219, 1, 917561, 393219, 1, 917562, 458755, 1)
 
 [node name="Collision" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_xibii")
+tile_set = SubResource("TileSet_wf6nm")
 format = 2
 layer_0/tile_data = PackedInt32Array(262144, 1, 0, 262149, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0, 458771, 1, 0, 458773, 1, 0, 458775, 1, 0, 458777, 1, 0, 458779, 1, 0, 458781, 1, 0, 458783, 1, 0, 589837, 196609, 2, 589838, 196609, 2, 589839, 1, 0, 589843, 1, 0, 655375, 1, 0, 655379, 1, 0, 720907, 1, 0, 720937, 196609, 2, 720938, 196609, 2, 720939, 196609, 2, 720940, 196609, 2, 720941, 196609, 2, 720942, 196609, 2, 720943, 196609, 2, 720944, 196609, 2, 720945, 196609, 2, 720946, 196609, 2, 720947, 196609, 2, 720948, 196609, 2, 720949, 196609, 2, 720950, 196609, 2, 720951, 196609, 2, 720952, 196609, 2, 720953, 196609, 2, 720954, 196609, 2, 786443, 1, 0, 786447, 1, 0, 786456, 393217, 3, 786457, 393217, 3, 851968, 1, 0, 851969, 1, 0, 851970, 1, 0, 851971, 1, 0, 851972, 1, 0, 851973, 1, 0, 851974, 1, 0, 851975, 1, 0, 851976, 1, 0, 851977, 1, 0, 851978, 1, 0, 851980, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0, 851984, 1, 0, 851985, 1, 0, 851986, 1, 0, 851989, 1, 0, 851990, 1, 0, 851991, 1, 0, 851992, 1, 0, 851993, 1, 0, 851994, 1, 0, 851995, 1, 0, 851996, 1, 0, 851997, 1, 0, 851998, 1, 0, 851999, 1, 0, 852000, 1, 0, 852001, 1, 0, 852002, 1, 0, 852003, 1, 0, 852004, 1, 0, 852005, 1, 0, 852006, 1, 0, 917522, 1, 0, 917525, 1, 0, 917542, 1, 0)

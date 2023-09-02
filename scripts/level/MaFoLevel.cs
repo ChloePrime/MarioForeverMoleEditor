@@ -152,7 +152,7 @@ public partial class MaFoLevel : Node
 			{
 				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
 			}
-			
+
 			var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
 			if (preset > 0)
 			{
@@ -205,7 +205,7 @@ public partial class MaFoLevel : Node
 		}
 	}
 
-	private static void LoadObject(Node parent, Sprite2D @object)
+	private void LoadObject(Node parent, Sprite2D @object)
 	{
 		string resPath;
 		if (!@object.HasMeta("res_path") ||
@@ -219,21 +219,39 @@ public partial class MaFoLevel : Node
 			return;
 		}
 		var instance = prefab.Instantiate();
-		var sprSize = @object.Texture.GetSize() * @object.Scale;
-		var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
 		
 		parent.AddChild(instance);
 		if (instance is Node2D node2D)
 		{
-			node2D.GlobalPosition = @object.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
+			node2D.GlobalPosition = GetTileObjectRealPosition(@object);
 		}
 		LoadProperties(@object, instance);
 		
 		@object.QueueFree();
 	}
 
-	private static void LoadProperties(GodotObject dataSrc, GodotObject dataTarget)
+	private static Vector2 GetTileObjectRealPosition(Sprite2D tileObject)
 	{
+		Vector2 sprSize;
+		if (tileObject.RegionEnabled)
+		{
+			sprSize = tileObject.RegionRect.Size * tileObject.GlobalScale;
+		}
+		else
+		{
+			sprSize = tileObject.Texture.GetSize() * tileObject.GlobalScale;
+		}
+		var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
+		return tileObject.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
+	}
+
+	private void LoadProperties(GodotObject dataSrc, GodotObject dataTarget)
+	{
+		if (dataSrc.HasMeta(PresetName))
+		{
+			LoadPreset(dataTarget, dataSrc.GetMeta(PresetName).AsInt32());
+			return;
+		}
 		foreach (var name in dataSrc.GetMetaList())
 		{
 			if (name == ResPathName) continue;
@@ -242,4 +260,5 @@ public partial class MaFoLevel : Node
 	}
 
 	private static readonly StringName ResPathName = "res_path";
+	private static readonly StringName PresetName = "preset";
 }
