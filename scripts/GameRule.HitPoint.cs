@@ -69,7 +69,10 @@ public partial class GameRule
 
     public void ResetHitPoint()
     {
-        GlobalData.HitPointLo = GlobalData.MaxHitPointLo = MaxHitPointLo;
-        GlobalData.HitPointHi = GlobalData.MaxHitPointHi = MaxHitPointHi;
+        var hpMust = KillPlayerWhenHitPointReachesZero;
+        GlobalData.HitPointLo = hpMust ? Math.Max(1, DefaultHitPointLo) : DefaultHitPointLo;
+        GlobalData.HitPointHi = hpMust ? Math.Max(1, DefaultHitPointHi) : DefaultHitPointHi;
+        GlobalData.MaxHitPointLo = MaxHitPointLo;
+        GlobalData.MaxHitPointHi = MaxHitPointHi;
     }
 }

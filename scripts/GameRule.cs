@@ -64,6 +64,8 @@ public partial class GameRule : Resource
     [Export] public bool CoinGivesHitPoint { get; set; } = true;
     [Export] public float MaxHitPointLo { get; set; } = 8;
     [Export] public float MaxHitPointHi { get; set; } = 400;
+    [Export] public float DefaultHitPointLo { get; set; } = 8;
+    [Export] public float DefaultHitPointHi { get; set; } = 100;
     [Export] public float DefaultTerrainDamageLo { get; set; } = 1;
     [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
 
