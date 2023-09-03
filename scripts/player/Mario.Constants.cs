@@ -25,6 +25,7 @@ public partial class Mario
         public static readonly NodePath NpHurtSound = "Hurt Sound";
         public static readonly NodePath NpSkidSound = "Skid Sound";
         public static readonly NodePath NpInvTimer = "Invulnerable Timer";
+        public static readonly NodePath NpSlipperyGas = "Slippery Foot Gas";
         public static readonly NodePath NpSmkTimer = "Sprint Smoke Timer";
         public static readonly NodePath NpSkdTimer = "Skid Smoke Timer";
         public static readonly MarioStatus SmallStatus;

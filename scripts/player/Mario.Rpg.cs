@@ -30,7 +30,7 @@ public partial class Mario
         {
             if (_currentStatus.HurtResult == null)
             {
-                Kill();
+                Kill(e);
                 return;
             }
             DropStatus();
@@ -44,7 +44,7 @@ public partial class Mario
             }
             if (rule.HitPoint <= 0 && rule.KillPlayerWhenHitPointReachesZero)
             {
-                Kill();
+                Kill(e);
                 return;
             }
             if (!rule.HitPointProtectsYourPowerup)
@@ -85,7 +85,7 @@ public partial class Mario
         _invulnerableTimer.Start();
     }
     
-    public void Kill()
+    public void Kill(DamageEvent e)
     {
         if (_killed)
         {
@@ -96,9 +96,53 @@ public partial class Mario
         var corpse = Constants.CorpsePrefab.Instantiate<MarioCorpse>();
         GetParent()?.AddChild(corpse);
         corpse.GlobalPosition = GlobalPosition;
+        if (_slipperyGas.Visible &&
+            e.DirectSource == _slipperyGas &&
+            corpse.TryGetNode(out AudioStreamPlayer funnySound, NpCorpseDeathSound))
+        {
+            funnySound.Stream = GD.Load<AudioStream>("res://resources/mario/ME_slippery_man.ogg");
+            funnySound.Play();
+            FastRetry = false;
+        }
         corpse.SetFastRetry(FastRetry);
         PostDeath();
         QueueFree();
+    }
+
+    private static readonly NodePath NpCorpseDeathSound = "The Funny Sound";
+
+    public void MakeSlippery(bool enabled, float maxSpeedScale, float accScale, bool accModifyTurnOnly = true)
+    {
+        _speedBackups ??= new float?[6];
+        if (enabled)
+        {
+            _speedBackups[0] ??= MaxSpeedWhenWalking;
+            _speedBackups[1] ??= MaxSpeedWhenRunning;
+            _speedBackups[2] ??= MaxSpeedWhenSprinting;
+            _speedBackups[3] ??= AccelerationWhenWalking;
+            _speedBackups[4] ??= AccelerationWhenRunning;
+            _speedBackups[5] ??= AccelerationWhenTurning;
+            MaxSpeedWhenWalking *= maxSpeedScale;
+            MaxSpeedWhenRunning *= maxSpeedScale;
+            MaxSpeedWhenSprinting *= maxSpeedScale;
+            if (!accModifyTurnOnly)
+            {
+                AccelerationWhenWalking *= accScale;
+                AccelerationWhenRunning *= accScale;
+            }
+            AccelerationWhenTurning *= accScale;
+        }
+        else
+        {
+            MaxSpeedWhenWalking = _speedBackups[0] ?? MaxSpeedWhenWalking;
+            MaxSpeedWhenRunning = _speedBackups[1] ?? MaxSpeedWhenRunning;
+            MaxSpeedWhenSprinting = _speedBackups[2] ?? MaxSpeedWhenSprinting;
+            AccelerationWhenWalking = _speedBackups[3] ?? AccelerationWhenWalking;
+            AccelerationWhenRunning = _speedBackups[4] ?? AccelerationWhenRunning;
+            AccelerationWhenTurning = _speedBackups[5] ?? AccelerationWhenTurning;
+            Array.Fill(_speedBackups, null);
+        }
+        _slipperyGas.Visible = enabled;
     }
 
     private void PostDeath()
@@ -115,10 +159,16 @@ public partial class Mario
         this.GetNode(out _hurtZone, Constants.NpHurtZone);
         this.GetNode(out _deathZone, Constants.NpDeathZone);
         this.GetNode(out _invulnerableTimer, Constants.NpInvTimer);
+        this.GetNode(out _slipperyGas, Constants.NpSlipperyGas);
         
         _hurtZone.BodyEntered += _ => _hurtStack++;
         _hurtZone.BodyExited += _ => _hurtStack--;
-        _deathZone.BodyEntered += _ => Kill();
+        _deathZone.BodyEntered += body => Kill(new DamageEvent
+        {
+            DamageTypes = DamageType.Environment,
+            DirectSource = body,
+            TrueSource = body,
+        });
         _invulnerableTimer.Timeout += () => _invulnerable = false;
     }
 
@@ -169,5 +219,9 @@ public partial class Mario
     private float _flashTime;
     private float _flashDuration;
     private float _invulnerableFlashPhase;
+    private float?[] _speedBackups;
+    private MarioCollisionBySize _hurtZone;
+    private MarioCollisionBySize _deathZone;
     private Timer _invulnerableTimer;
+    private AnimatedSprite2D _slipperyGas;
 }

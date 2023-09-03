@@ -13,6 +13,7 @@ public enum DamageType : uint
     Bump        = 1 << 5,
     Star        = 1 << 6,
     Enemy       = 1 << 7,
+    Poison      = 1 << 8,
 }
 
 public static class DamageTypeEx

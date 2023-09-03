@@ -14,6 +14,11 @@ public static partial class NodeEx
     {
         target = self.GetNodeOrNull<T>(path);
     }
+    
+    public static bool TryGetNode<T>(this Node self, out T target, NodePath path) where T : class
+    {
+        return (target = self.GetNodeOrNull<T>(path)) != null;
+    }
 
     public static void GetParent<T>(this Node node, out T parent) where T : class
     {

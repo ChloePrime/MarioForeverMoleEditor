@@ -32,8 +32,8 @@ public partial class PickableBonus : WalkableObjectBase
 
     private void CreateScore()
     {
-        if (!this.TryGetParent(out Node parent)) return;
-        Score.Instantiate(out Node2D score);
+        if (!this.TryGetParent(out Node parent) || Score is not {} prefab) return;
+        prefab.Instantiate(out Node2D score);
         parent.AddChild(score);
         score.GlobalPosition = GlobalPosition;
     }

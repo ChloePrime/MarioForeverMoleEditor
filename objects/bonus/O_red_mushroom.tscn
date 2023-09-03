@@ -19,8 +19,6 @@ animations = [{
 }]
 
 [node name="Red Mushroom" instance=ExtResource("1_pn022")]
-HitPointNutritionLo = 3.0
-HitPointNutritionHi = 100.0
 TargetSpeed = 100.0
 
 [node name="Sprite" parent="." index="1"]

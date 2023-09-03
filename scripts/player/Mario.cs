@@ -178,7 +178,12 @@ public partial class Mario : CharacterBody2D
         }
         if (GlobalPosition.Y > this.GetFrame().End.Y + 48)
         {
-            Kill();
+            Kill(new DamageEvent
+            {
+                DamageTypes = DamageType.Environment,
+                DirectSource = _slipperyGas,
+                TrueSource = _slipperyGas,
+            });
             return;
         }
         var delta = (float)deltaD;
@@ -543,8 +548,6 @@ public partial class Mario : CharacterBody2D
     private AudioStreamPlayer _swimSound;
     private AudioStreamPlayer _hurtSound;
     private AudioStreamPlayer _skidSound;
-    private MarioCollisionBySize _hurtZone;
-    private MarioCollisionBySize _deathZone;
     private Timer _sprintSmokeTimer;
     private Timer _skidSmokeTimer;
 

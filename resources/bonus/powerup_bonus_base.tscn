@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7gvthly3y30h"]
 
-[ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://resources/enemies/internal_bonus_base.tscn" id="1_fra3c"]
+[ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://resources/bonus/internal_bonus_base.tscn" id="1_6kmgn"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://resources/mario/status_big.tres" id="2_8lpx0"]
 [ext_resource type="Script" path="res://scripts/bonus/PowerUpBonus.cs" id="2_exaef"]
 
-[node name="Powerup Bonus Base" instance=ExtResource("1_fra3c")]
+[node name="Powerup Bonus Base" instance=ExtResource("1_6kmgn")]
 script = ExtResource("2_exaef")
 HitPointNutritionLo = 3.0
 HitPointNutritionHi = 100.0

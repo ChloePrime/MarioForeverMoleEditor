@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=14 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="PackedScene" uid="uid://cry2tnvrwsxjn" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
 [ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://objects/background/O_bg_gradient.tscn" id="13_o71m4"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
-[ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://objects/bonus/O_red_mushroom.tscn" id="15_hk8b2"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -51,6 +50,3 @@ position = Vector2(128, 24)
 
 [node name="Cloud (Foreground)" parent="." instance=ExtResource("14_1osfy")]
 position = Vector2(128, 0)
-
-[node name="Red Mushroom" parent="." instance=ExtResource("15_hk8b2")]
-position = Vector2(456, 400)
