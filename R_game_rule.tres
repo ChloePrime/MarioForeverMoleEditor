@@ -1,11 +1,16 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cjuysccl1gy5i"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cjuysccl1gy5i"]
 
 [ext_resource type="Script" path="res://scripts/GameRule.cs" id="1_fgm1i"]
+[ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://objects/ui/O_1up.tscn" id="1_ja4j4"]
 
 [resource]
 script = ExtResource("1_fgm1i")
 DisableLives = false
 DisableScore = false
+DisableCoin = false
+CoinAutoExchangeLife = true
+CostOf1Life = 100
+AddLifeMethod = [ExtResource("1_ja4j4")]
 CharacterDirectionPolicy = 1
 EnableTossFireballUpward = true
 TossFireballUpwardStrength = 400.0

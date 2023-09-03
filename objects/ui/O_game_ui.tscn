@@ -1,9 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene load_steps=10 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" path="res://scripts/ui/LevelHud.cs" id="1_beqw8"]
 [ext_resource type="Script" path="res://scripts/ui/SubsystemHud.cs" id="2_d76tu"]
 [ext_resource type="Script" path="res://scripts/ui/ValueWatcherLabel.cs" id="4_qh2x4"]
+[ext_resource type="Texture2D" uid="uid://b5pf7euoxkyay" path="res://resources/ui/T_hud_coinx.png" id="5_lyecc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf38m"]
+atlas = ExtResource("5_lyecc")
+region = Rect2(0, 0, 28, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emcms"]
+atlas = ExtResource("5_lyecc")
+region = Rect2(0, 16, 28, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg5ha"]
+atlas = ExtResource("5_lyecc")
+region = Rect2(0, 32, 28, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aiayr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf38m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emcms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg5ha")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
 
 [node name="Game UI" type="Control"]
 layout_mode = 3
@@ -62,6 +92,36 @@ theme = ExtResource("1_4n6h2")
 text = "0"
 horizontal_alignment = 2
 script = ExtResource("4_qh2x4")
+
+[node name="Coin System" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.391
+anchor_right = 0.391
+offset_left = -14.24
+offset_top = 27.0
+offset_right = 13.76
+offset_bottom = 43.0
+grow_horizontal = 2
+script = ExtResource("2_d76tu")
+
+[node name="Coin" type="Label" parent="Coin System"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 47.0
+offset_top = -8.0
+offset_right = 303.0
+offset_bottom = 24.0
+grow_vertical = 2
+theme = ExtResource("1_4n6h2")
+text = "0"
+script = ExtResource("4_qh2x4")
+
+[node name="Coin X" type="AnimatedSprite2D" parent="Coin System"]
+sprite_frames = SubResource("SpriteFrames_aiayr")
+autoplay = "default"
+centered = false
 
 [node name="GO" type="Label" parent="."]
 layout_mode = 1

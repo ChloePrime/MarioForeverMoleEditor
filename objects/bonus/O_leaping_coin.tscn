@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://dnfiyq8iuoad2"]
+[gd_scene load_steps=27 format=3 uid="uid://dnfiyq8iuoad2"]
 
+[ext_resource type="Script" path="res://scripts/bonus/LeapingCoin.cs" id="1_ycbnh"]
 [ext_resource type="Texture2D" uid="uid://jslpfrp6fydt" path="res://resources/bonus/T_leaping_coin.png" id="2_xtqbv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjmhy"]
@@ -179,9 +180,9 @@ _data = {
 }
 
 [node name="O_leaping_coin" type="Node2D"]
+script = ExtResource("1_ycbnh")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_38hgb")
 autoplay = "default"
 

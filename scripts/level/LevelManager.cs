@@ -1,5 +1,9 @@
-﻿using ChloePrime.MarioForever.UI;
+﻿using System;
+using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.UI;
+using ChloePrime.MarioForever.Util;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Level;
 
@@ -61,10 +65,47 @@ public partial class LevelManager : Control
             _level = level;
         }
 #endif
+        ProcessPriority = -100;
         GameRule ??= GameRule.Default;
         SceneAfterGameOver ??= Level;
         Hud.GameOverLabel.Visible = false;
         _ready = true;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+        if (GameRule.DisableLives || GameRule.DisableCoin || !GameRule.CoinAutoExchangeLife)
+        {
+            return;
+        }
+        var cost = GameRule.CostOf1Life;
+        var coins = GlobalData.Coins;
+        if (coins < cost) return;
+        
+        AddLives(coins / cost);
+        GlobalData.Coins = coins % cost;
+    }
+
+    private void AddLives(int count)
+    {
+        if (GameRule.AddLifeMethod is not { } scores ||
+            GetTree()?.GetFirstNodeInGroup(MaFo.Groups.Player) is not Mario mario ||
+            mario.GetParent() is not { } level)
+        {
+            GlobalData.Lives += count;
+            return;
+        }
+
+        var livesAddedByScore = Math.Min(count, scores.Count);
+        var is2D = scores[livesAddedByScore - 1].TryInstantiate(out Node2D score2D, out var score);
+        level.AddChild(score);
+        if (is2D)
+        {
+            score2D.GlobalPosition = mario.GlobalTransform.TranslatedLocal(new Vector2(0, -32)).Origin;
+        }
+
+        GlobalData.Lives += count - livesAddedByScore;
     }
 
     public override void _Input(InputEvent e)

@@ -36,5 +36,17 @@ public partial class DebugCheater : Node
                 return;
             }
         }
+        if (e is InputEventKey keyEvent && keyEvent.PhysicalKeycode == Key.Key9)
+        {
+            if (e.IsPressed() && Input.IsPhysicalKeyPressed(Key.Ctrl))
+            {
+                GlobalData.Lives = 999999;
+                return;
+            }
+            if (e.IsPressed() || e.IsEcho())
+            {
+                GlobalData.Lives++;
+            }
+        }
     }
 }

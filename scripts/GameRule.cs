@@ -3,6 +3,7 @@ using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using DotNext;
 using Godot;
+using Godot.Collections;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever;
@@ -15,7 +16,18 @@ public partial class GameRule : Resource
     [ExportGroup("Vanilla")]
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
+    
+    [ExportSubgroup("Coins")]
+    [Export] public bool DisableCoin { get; set; }
+    [Export] public bool CoinAutoExchangeLife { get; set; } = true;
+    [Export] public int CostOf1Life { get; set; } = 100;
 
+    [Export]
+    public Array<PackedScene> AddLifeMethod { get; set; } = new()
+    {
+        GD.Load<PackedScene>("res://objects/ui/O_1up.tscn")
+    };
+    
     [ExportGroup("Simple QoL")]
     [ExportSubgroup("Direction Calculation")]
     [Export] public MarioDirectionPolicy CharacterDirectionPolicy { get; set; } = MarioDirectionPolicy.FollowXSpeed;
