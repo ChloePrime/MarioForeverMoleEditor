@@ -70,7 +70,7 @@ public partial class LevelHud : Control
     private string GetRightDisplay(float hp) => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Disabled => "",
-        GameRule.HitPointPolicyType.Metroid => (GetDisplayHp(hp) % 100).ToString(),
+        GameRule.HitPointPolicyType.Metroid => $"{GetDisplayHp(hp) % 100:00}",
         GameRule.HitPointPolicyType.Mario3D => "",
         GameRule.HitPointPolicyType.JRPG or _ => $"{GetDisplayHp(hp)}/{GetDisplayHp(_rule.MaxHitPoint)}",
     };
