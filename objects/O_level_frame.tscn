@@ -193,5 +193,5 @@ texture = ExtResource("4_leriq")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="DebugCheater" type="Node" parent="."]
+[node name="Debug Cheater" type="Node" parent="."]
 script = ExtResource("6_sxgtr")

@@ -28,6 +28,10 @@ public partial class DebugCheater : Node
     public override void _Input(InputEvent e)
     {
         base._Input(e);
+        if (!Enabled)
+        {
+            return;
+        }
         foreach (var (key, status) in StatusTable)
         {
             if (Input.IsPhysicalKeyPressed(key))
