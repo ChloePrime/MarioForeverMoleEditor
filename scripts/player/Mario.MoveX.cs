@@ -50,7 +50,11 @@ public partial class Mario
         _walkAxis = (_crouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
 
-        if (!_leftPressed && !_rightPressed)
+        if (XSpeed <= 0 && GameRule.CharacterDirectionPolicy == GameRule.MarioDirectionPolicy.FollowControlDirection)
+        {
+            XDirection = _controlDirection;
+        }
+        if (!_leftPressed && !_rightPressed && !_isInAir && XSpeed > MaxSpeedWhenWalking)
         {
             _controlDirection = XDirection;
         }
