@@ -49,6 +49,30 @@ public partial class GameRule : Resource
     [Export] public float XSpeedBonus { get; set; } = Units.Speed.CtfToGd(1F);
     [Export] public float SprintingBonus { get; set; } = 0;
 
+    [ExportSubgroup("Hit Point")]
+    [Export] public HitPointPolicyType HitPointPolicy { get; set; } = HitPointPolicyType.Metroid;
+
+    [Export] public bool HideHitPointAtZero { get; set; } = true;
+    
+    /// <summary>
+    /// 如果为 false，那么玩家在 HP 归零后再次受伤会掉状态。
+    /// 如果为 true，那么玩家在 HP 归零时会立刻死亡。
+    /// </summary>
+    [Export] public bool KillPlayerWhenHitPointReachesZero { get; set; }
+
+    [Export] public bool HitPointProtectsYourPowerup { get; set; } = true;
+    [Export] public bool CoinGivesHitPoint { get; set; } = true;
+    [Export] public float MaxHitPointLo { get; set; } = 8;
+    [Export] public float MaxHitPointHi { get; set; } = 400;
+    [Export] public float DefaultTerrainDamageLo { get; set; } = 1;
+    [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
+
+    public void ResetGlobalData()
+    {
+        GlobalData.ResetRuleNeutralValues();
+        ResetHitPoint();
+    }
+
     private static Optional<LevelManager> _manager;
     private static GameRule _default;
 

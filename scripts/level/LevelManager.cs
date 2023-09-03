@@ -36,7 +36,7 @@ public partial class LevelManager : Control
     public void RestartGame()
     {
         Hud.GameOverLabel.Visible = false;
-        GlobalData.Reset();
+        GameRule.ResetGlobalData();
         if (Level == SceneAfterGameOver)
         {
             ReloadLevel();
@@ -65,8 +65,9 @@ public partial class LevelManager : Control
             _level = level;
         }
 #endif
-        ProcessPriority = -100;
         GameRule ??= GameRule.Default;
+        GameRule.ResetHitPoint();
+        ProcessPriority = -100;
         SceneAfterGameOver ??= Level;
         Hud.GameOverLabel.Visible = false;
         _ready = true;

@@ -38,7 +38,8 @@ public partial class MarioCorpse : Sprite2D
 
 	private void OnDeathAnimOver()
 	{
-		if (!this.GetRule().DisableLives)
+		var rule = this.GetRule();
+		if (!rule.DisableLives)
 		{
 			switch (GlobalData.Lives)
 			{
@@ -51,6 +52,7 @@ public partial class MarioCorpse : Sprite2D
 			}
 		}
 
+		rule.ResetHitPoint();
 		if (this.GetLevelManager() is { } levelManager)
 		{
 			levelManager.ReloadLevel();
@@ -65,6 +67,7 @@ public partial class MarioCorpse : Sprite2D
 	{
 		if (this.GetLevelManager() is not { } manager)
 		{
+			this.GetRule().ResetHitPoint();
 			GetTree().ReloadCurrentScene();
 			return;
 		}

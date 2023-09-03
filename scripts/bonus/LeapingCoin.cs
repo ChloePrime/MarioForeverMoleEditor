@@ -5,6 +5,8 @@ namespace ChloePrime.MarioForever.Bonus;
 
 public partial class LeapingCoin : Node2D
 {
+    [Export] public float HitPointNutritionLo { get; set; } = 1;
+    [Export] public float HitPointNutritionHi { get; set; } = 5;
     [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://objects/ui/O_score_200.tscn"); 
     
     public override void _Ready()
@@ -12,6 +14,12 @@ public partial class LeapingCoin : Node2D
         GlobalData.Coins++;
         this.GetNode(out _sprite, NpSprite);
         _sprite.AnimationFinished += OnSpriteAnimationFinished;
+        
+        var rule = this.GetRule();
+        if (rule.CoinGivesHitPoint)
+        {
+            rule.AlterHitPoint(HitPointNutritionLo, HitPointNutritionHi);
+        }
     }
 
     private void OnSpriteAnimationFinished()

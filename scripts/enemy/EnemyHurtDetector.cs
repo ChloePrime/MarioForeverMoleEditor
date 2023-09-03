@@ -42,6 +42,10 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
     public void StompBy(Node2D stomper)
     {
+        if (IsFriendly())
+        {
+            return;
+        }
         HurtBy(new DamageEvent(DamageType.Stomp, stomper));
         if (stomper is Mario mario)
         {
@@ -55,7 +59,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
     public virtual bool HurtBy(DamageEvent e)
     {
-        if (!CanBeHurtBy(e))
+        if (!CanBeHurtBy(e) || IsFriendly())
         {
             return false;
         }
@@ -126,4 +130,9 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
     // IStompable
 
     public Vector2 StompCenter => Root.GlobalPosition;
+
+    public (float, float) GetDamage()
+    {
+        return Root is MarioForeverNpc npc ? (npc.DamageLo, npc.DamageHi) : (0, 0);
+    }
 }

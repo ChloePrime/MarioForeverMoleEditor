@@ -6,19 +6,17 @@ using Godot;
 namespace ChloePrime.MarioForever.UI;
 
 [GlobalClass]
-public partial class ValueWatcherLabel : Label
+public partial class ValueWatcherBar : TextureRect
 {
-    public delegate string Stringifier<in T>(T data);
-
-    public void Watch<T>(Func<T> getter)
-    {
-        Watch(getter, t => t.ToString());
-    }
+    public delegate float WidthSupplier<in T>(T data);
     
-    public void Watch<T>(Func<T> getter, Stringifier<T> stringifier)
+    public void Watch<T>(Func<T> getter, WidthSupplier<T> widthSupplier)
     {
         var observer = Observer.Watch(getter);
-        observer.ValueChanged += () => Text = stringifier(observer.Value);
+        observer.ValueChanged += () => Size = Size with
+        {
+            X = widthSupplier(observer.Value),
+        };
         _updater = observer.Update;
     }
     

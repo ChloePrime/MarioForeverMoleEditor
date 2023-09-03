@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene load_steps=13 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" path="res://scripts/ui/LevelHud.cs" id="1_beqw8"]
 [ext_resource type="Script" path="res://scripts/ui/SubsystemHud.cs" id="2_d76tu"]
 [ext_resource type="Script" path="res://scripts/ui/ValueWatcherLabel.cs" id="4_qh2x4"]
 [ext_resource type="Texture2D" uid="uid://b5pf7euoxkyay" path="res://resources/ui/T_hud_coinx.png" id="5_lyecc"]
+[ext_resource type="Texture2D" uid="uid://bf7ixav1r8u0o" path="res://resources/ui/T_hp_bar_player_bg.png" id="6_bobtx"]
+[ext_resource type="Texture2D" uid="uid://ci527bnq5nh5q" path="res://resources/ui/T_hp_bar_player.png" id="6_rf6hi"]
+[ext_resource type="Script" path="res://scripts/ui/ValueWatcherBar.cs" id="7_eo6s5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uf38m"]
 atlas = ExtResource("5_lyecc")
@@ -122,6 +125,70 @@ script = ExtResource("4_qh2x4")
 sprite_frames = SubResource("SpriteFrames_aiayr")
 autoplay = "default"
 centered = false
+
+[node name="Hit Point System" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.391
+anchor_right = 0.391
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("2_d76tu")
+
+[node name="Text L" type="Label" parent="Hit Point System"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -11.5
+offset_right = -2.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_4n6h2")
+text = "E"
+horizontal_alignment = 2
+script = ExtResource("4_qh2x4")
+
+[node name="Text R" type="Label" parent="Hit Point System"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -11.5
+offset_right = 258.0
+offset_bottom = 11.5
+grow_vertical = 2
+theme = ExtResource("1_4n6h2")
+text = "99"
+script = ExtResource("4_qh2x4")
+
+[node name="Bar Background" type="TextureRect" parent="Hit Point System/Text R"]
+layout_mode = 1
+offset_left = 36.0
+offset_top = 0.5
+offset_right = 76.0
+offset_bottom = 32.5
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_bobtx")
+expand_mode = 1
+stretch_mode = 1
+script = ExtResource("7_eo6s5")
+
+[node name="Bar" type="TextureRect" parent="Hit Point System/Text R"]
+layout_mode = 1
+offset_left = 36.0
+offset_top = 0.5
+offset_right = 46.0
+offset_bottom = 32.5
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_rf6hi")
+expand_mode = 1
+stretch_mode = 1
+script = ExtResource("7_eo6s5")
 
 [node name="GO" type="Label" parent="."]
 layout_mode = 1

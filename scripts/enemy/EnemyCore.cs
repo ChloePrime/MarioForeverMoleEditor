@@ -1,11 +1,12 @@
-﻿using Godot;
+﻿using ChloePrime.MarioForever.RPG;
+using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 public partial class EnemyCore : Area2D
 {
-    [Export] public Node2D RootOverride { get; private set; }
+    [Export] private Node2D RootOverride { get; set; }
     [Export] public AnimatedSprite2D Sprite { get; private set; }
 
     public Node2D Root { get; private set; }
@@ -13,6 +14,11 @@ public partial class EnemyCore : Area2D
     public override void _Ready()
     {
         base._Ready();
-        Root = RootOverride ?? (GetParent() as Node2D);
+        Root = RootOverride ?? (GetParent() as MarioForeverNpc);
+    }
+
+    public bool IsFriendly()
+    {
+        return Root is not MarioForeverNpc npc || npc.Friendly;
     }
 }

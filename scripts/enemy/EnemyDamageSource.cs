@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.RPG;
 using DotNext.Collections.Generic;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -36,7 +37,7 @@ public partial class EnemyDamageSource : Area2D
         {
             return;
         }
-        if (Core.Root is GravityObjectBase { ReallyEnabled: false })
+        if (Core.IsFriendly() || Core.Root is GravityObjectBase { ReallyEnabled: false })
         {
             return;
         }
@@ -49,7 +50,15 @@ public partial class EnemyDamageSource : Area2D
         var filteredOverlaps = Core.Stompable ? _overlaps.Where(m => !m.WillStomp(Core.Root)) : _overlaps;
         foreach (var mario in filteredOverlaps)
         {
-            mario.Hurt();
+            var (lo, hi) = Core.GetDamage();
+            mario.Hurt(new DamageEvent
+            {
+                DamageTypes = DamageType.Enemy,
+                DamageLo = lo,
+                DamageHi = hi,
+                DirectSource = Core.Root,
+                TrueSource = Core.Root,
+            });
         }
     }
 

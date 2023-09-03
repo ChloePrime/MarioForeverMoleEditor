@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using DotNext.Collections.Generic;
 using Godot;
@@ -102,6 +103,8 @@ public partial class Mario : CharacterBody2D
     
     [ExportGroup("RPG")]
     [Export] public float InvulnerableTimeOnHurt { get; private set; } = 2;
+    [Export] public float InvulnerableTimeOnSmallHpHurt { get; private set; } = 1;
+    [Export] public float SmallHpThreshold { get; private set; } = 20;
     [Export] public bool FastRetry { get; set; }
     [Export] public float DefaultRainbowFlashTime { get; set; } = 1.2F;
     [Export] public Array<MarioStatus> StatusList { get; private set; }
@@ -164,7 +167,14 @@ public partial class Mario : CharacterBody2D
         base._PhysicsProcess(deltaD);
         if (_hurtStack > 0)
         {
-            Hurt();
+            Hurt(new DamageEvent
+            {
+                DamageTypes = DamageType.Environment,
+                DirectSource = null,
+                TrueSource = null,
+                DamageLo = GameRule.DefaultTerrainDamageLo,
+                DamageHi = GameRule.DefaultTerrainDamageHi,
+            });
         }
         if (GlobalPosition.Y > this.GetFrame().End.Y + 48)
         {

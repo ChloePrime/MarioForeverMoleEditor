@@ -1,5 +1,6 @@
 ﻿using System;
 using ChloePrime.MarioForever.Level;
+using ChloePrime.MarioForever.RPG;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -17,20 +18,54 @@ public partial class Mario
         _flashTime = _flashDuration = duration;
     }
 
-    public void Hurt()
+    public void Hurt(DamageEvent e)
     {
         if (IsInvulnerable() || _currentStatus == null)
         {
             return;
         }
-        if (_currentStatus.HurtResult == null)
+        var rule = GameRule;
+        float invulnerableTime;
+        if (!rule.HitPointEnabled || (rule.HitPoint <= 0 && !rule.KillPlayerWhenHitPointReachesZero))
         {
-            Kill();
-            return;
+            if (_currentStatus.HurtResult == null)
+            {
+                Kill();
+                return;
+            }
+            DropStatus();
+            invulnerableTime = InvulnerableTimeOnHurt;
         }
-        GlobalData.Status = _currentStatus.HurtResult;
-        SetInvulnerable(InvulnerableTimeOnHurt);
+        else
+        {
+            if (rule.HitPointProtectsYourPowerup || _currentStatus == MarioStatus.Small)
+            {
+                rule.AlterHitPoint(-e.DamageLo, -e.DamageHi);
+            }
+            if (rule.HitPoint <= 0 && rule.KillPlayerWhenHitPointReachesZero)
+            {
+                Kill();
+                return;
+            }
+            if (!rule.HitPointProtectsYourPowerup)
+            {
+                DropStatus();
+            }
+            invulnerableTime = rule.HitPointMagnitude switch
+            {
+                GameRule.HitPointMagnitudeType.High => e.DamageHi <= SmallHpThreshold + 1e-4
+                    ? InvulnerableTimeOnSmallHpHurt
+                    : InvulnerableTimeOnHurt,
+                GameRule.HitPointMagnitudeType.Low or _ => InvulnerableTimeOnHurt,
+            };
+        }
+        SetInvulnerable(invulnerableTime);
         _hurtSound.Play();
+    }
+
+    private void DropStatus()
+    {
+        GlobalData.Status = _currentStatus.HurtResult ?? MarioStatus.Small;
     }
 
     public bool IsInvulnerable()
@@ -46,6 +81,7 @@ public partial class Mario
         }
         _invulnerable = true;
         _invulnerableFlashPhase = 0;
+        _invulnerableTimer.WaitTime = time;
         _invulnerableTimer.Start();
     }
     
