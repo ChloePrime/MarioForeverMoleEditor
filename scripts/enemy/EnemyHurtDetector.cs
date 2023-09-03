@@ -73,7 +73,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
             if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
             {
                 parent.AddChild(score);
-                score.Position = Root.Position;
+                score.Position = Root.ToGlobal(ScorePivot);
             }
             if (CreateCorpse(e) is { } corpse)
             {
@@ -86,6 +86,8 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
         Root.QueueFree();
         return true;
     }
+
+    private static readonly Vector2 ScorePivot = new(0, -16);
 
     public virtual Node2D CreateScore(DamageEvent e)
     {

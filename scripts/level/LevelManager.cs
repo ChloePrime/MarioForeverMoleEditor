@@ -102,7 +102,7 @@ public partial class LevelManager : Control
         level.AddChild(score);
         if (is2D)
         {
-            score2D.GlobalPosition = mario.GlobalTransform.TranslatedLocal(new Vector2(0, -32)).Origin;
+            score2D.GlobalPosition = mario.ToGlobal(new Vector2(0, -32));
         }
 
         GlobalData.Lives += count - livesAddedByScore;
