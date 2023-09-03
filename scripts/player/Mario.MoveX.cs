@@ -50,7 +50,11 @@ public partial class Mario
         _walkAxis = (_crouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
 
-        if (_leftPressed != _rightPressed)
+        if (!_leftPressed && !_rightPressed)
+        {
+            _controlDirection = XDirection;
+        }
+        else if (_leftPressed != _rightPressed)
         {
             _controlDirection = (_leftPressed ? -1 : 0) + (_rightPressed ? 1 : 0);
         }
