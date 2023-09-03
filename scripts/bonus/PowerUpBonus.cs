@@ -19,7 +19,6 @@ public partial class PowerUpBonus : PickableBonus
             this.LogWarn("Invalid PowerUp: TargetStatus is not set");
             return;
         }
-        bool addHp = mario.GameRule.HitPointProtectsYourPowerup;
         if (target == MarioStatus.Big)
         {
             if (GlobalData.Status == MarioStatus.Small)
@@ -29,7 +28,7 @@ public partial class PowerUpBonus : PickableBonus
             }
             else
             {
-                addHp = true;
+                AddHp(mario);
             }
         }
         else
@@ -37,7 +36,7 @@ public partial class PowerUpBonus : PickableBonus
             if (mario.GameRule.HitPointEnabled &&
                 (GlobalData.Status != MarioStatus.Small && GlobalData.Status != MarioStatus.Big))
             {
-                addHp = true;
+                AddHp(mario);
             }
             if (GlobalData.Status != target)
             {
@@ -45,7 +44,11 @@ public partial class PowerUpBonus : PickableBonus
                 mario.OnPowerUp();
             }
         }
-        if (addHp && mario.GameRule.HitPointEnabled)
+    }
+
+    private void AddHp(Mario mario)
+    {
+        if(mario.GameRule.HitPointEnabled)
         {
             mario.GameRule.AlterHitPoint(HitPointNutritionLo, HitPointNutritionHi);
         }
