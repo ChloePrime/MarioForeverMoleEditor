@@ -9,6 +9,7 @@ public partial class Coin : Area2D
     [Export] public int Value { get; set; } = 1;
     [Export] public float HitPointNutritionLo { get; set; } = 1;
     [Export] public float HitPointNutritionHi { get; set; } = 5;
+    [Export] public int Score { get; set; } = 200;
     [Export] public AudioStream Sound { get; set; } = GD.Load<AudioStream>("res://resources/bonus/SE_coin.ogg");
     
     public override void _Ready()
@@ -21,6 +22,7 @@ public partial class Coin : Area2D
     {
         if (other is not Mario mario) return;
         GlobalData.Coins += Value;
+        GlobalData.Score += Score;
         Sound?.Play();
         if (mario.GameRule.CoinGivesHitPoint)
         {
