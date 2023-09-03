@@ -132,7 +132,8 @@ public partial class Mario
     private void TestHiddenBumpables(float delta)
     {
         var any = false;
-        foreach (var result in TestBump(MaFo.CollisionMask.HiddenBonus, -YSpeed * delta - 4))
+        var predict = -YSpeed * delta - 4;
+        foreach (var result in TestBump(MaFo.CollisionMask.HiddenBonus, predict, BumpWidthPolicy.UseHitboxWidth))
         {
             if (result.Collider is not CollisionObject2D collider) continue;
             if (result.Collider is not IBumpable { Hidden: true } bumpable) continue;
@@ -154,7 +155,7 @@ public partial class Mario
 
     private void OnHeadHit()
     {
-        foreach (var result in TestBump(MaFo.CollisionMask.Solid, 0))
+        foreach (var result in TestBump(MaFo.CollisionMask.Solid, 0, BumpWidthPolicy.UseIdealWidth))
         {
             if (result.Collider is IBumpable bumpable)
             {
@@ -166,10 +167,21 @@ public partial class Mario
 
     private static readonly RectangleShape2D BumpDetector = new();
     
-    private IEnumerable<ShapeHitResult> TestBump(uint mask, float predict)
+    private enum BumpWidthPolicy
+    {
+        UseHitboxWidth,
+        UseIdealWidth,
+    }
+    
+    private IEnumerable<ShapeHitResult> TestBump(uint mask, float predict, BumpWidthPolicy widthPolicy)
     {
         var marioSize = CurrentCollisionShape.Shape.GetRect().Size;
-        BumpDetector.Size = new Vector2(marioSize.X, 8);
+        var width = widthPolicy switch
+        {
+            BumpWidthPolicy.UseIdealWidth => _currentSize.GetIdealWidth(),
+            BumpWidthPolicy.UseHitboxWidth or _ => marioSize.X,
+        };
+        BumpDetector.Size = new Vector2(width, 8);
         var trans = GlobalTransform.TranslatedLocal(new Vector2(0, -marioSize.Y - predict));
         var query = new PhysicsShapeQueryParameters2D
         {
