@@ -111,6 +111,11 @@ public partial class Mario : CharacterBody2D
     [Export] public Array<Node2D> MuzzleBySize { get; private set; }
     [Export] public Array<Node> StatusSpriteNodeList { get; private set; }
 
+    [ExportGroup("Voices")]
+    [Export] public AudioStream HitPointHurtVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_pain.wav");
+    [Export] public AudioStream HitPointSevereHurtVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_fire.wav");
+    [Export] public AudioStream HitPointSaveSlipperyVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_scream.wav");
+
     [ExportGroup("")]
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
     
@@ -138,6 +143,15 @@ public partial class Mario : CharacterBody2D
         YSpeed = -strength - bonus;
         _isInAir = true;
         _wilyJumpTime = -1;
+    }
+
+    public AudioStream GetHurtVoice(DamageEvent e)
+    {
+        if (e.IsDeathProtection)
+        {
+            return e.DirectSource == _slipperyGas ? HitPointSaveSlipperyVoice : HitPointSevereHurtVoice;
+        }
+        return HitPointHurtVoice;
     }
     
     public bool WillStomp(IStompable other)

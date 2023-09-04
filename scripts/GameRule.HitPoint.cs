@@ -46,6 +46,8 @@ public partial class GameRule
 
     public float MaxHitPoint => SelectHitPoint(GlobalData.MaxHitPointLo, GlobalData.MaxHitPointHi, 1);
 
+    public float HitPointProtectsDeathCost => SelectHitPoint(HitPointProtectsDeathCostLo, HitPointProtectsDeathCostHi);
+
     public float SelectHitPoint(float low, float high, float fallback = 0) => HitPointMagnitude switch
     {
         HitPointMagnitudeType.Disabled => 0,

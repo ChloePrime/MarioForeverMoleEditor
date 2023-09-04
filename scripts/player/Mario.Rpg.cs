@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -27,6 +28,7 @@ public partial class Mario
         }
         var rule = GameRule;
         float invulnerableTime;
+        var useHp = false; 
         if (!rule.HitPointEnabled || (rule.HitPoint <= 0 && !rule.KillPlayerWhenHitPointReachesZero))
         {
             if (_currentStatus.HurtResult == null)
@@ -42,6 +44,7 @@ public partial class Mario
             if (rule.HitPointProtectsYourPowerup || _currentStatus == MarioStatus.Small)
             {
                 rule.AlterHitPoint(-e.DamageLo, -e.DamageHi);
+                useHp = true;
             }
             if (rule.HitPoint <= 0 && rule.KillPlayerWhenHitPointReachesZero)
             {
@@ -61,7 +64,15 @@ public partial class Mario
             };
         }
         SetInvulnerable(invulnerableTime);
-        _hurtSound.Play();
+
+        if (useHp && GetHurtVoice(e) is { } voice)
+        {
+            voice.Play();
+        }
+        else
+        {
+            _hurtSound.Play();
+        }
     }
 
     private void DropStatus()
@@ -97,14 +108,13 @@ public partial class Mario
         {
             if (GameRule.HitPointEnabled &&
                 GameRule.HitPointProtectsDeath &&
-                GameRule.HitPoint >= GameRule.SelectHitPoint(
-                    GameRule.HitPointProtectsDeathCostLo,
-                    GameRule.HitPointProtectsDeathCostHi))
+                GameRule.HitPoint >= GameRule.HitPointProtectsDeathCost)
             {
                 var event2 = e with
                 {
                     DamageLo = GameRule.HitPointProtectsDeathCostLo,
                     DamageHi = GameRule.HitPointProtectsDeathCostHi,
+                    IsDeathProtection = true,
                 };
                 Hurt(event2);
                 if (e.DirectSource == _slipperyGas && _posQueue.TryPeek(out var safePos))
