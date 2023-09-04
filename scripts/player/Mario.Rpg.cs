@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.RPG;
 using Godot;
@@ -30,7 +31,7 @@ public partial class Mario
         {
             if (_currentStatus.HurtResult == null)
             {
-                Kill(e);
+                Kill(e, true);
                 return;
             }
             DropStatus();
@@ -44,7 +45,7 @@ public partial class Mario
             }
             if (rule.HitPoint <= 0 && rule.KillPlayerWhenHitPointReachesZero)
             {
-                Kill(e);
+                Kill(e, true);
                 return;
             }
             if (!rule.HitPointProtectsYourPowerup)
@@ -84,9 +85,36 @@ public partial class Mario
         _invulnerableTimer.WaitTime = time;
         _invulnerableTimer.Start();
     }
-    
+
     public void Kill(DamageEvent e)
     {
+        Kill(e, false);
+    }
+    
+    private void Kill(DamageEvent e, bool killedByHurt)
+    {
+        if (!killedByHurt)
+        {
+            if (GameRule.HitPointEnabled &&
+                GameRule.HitPointProtectsDeath &&
+                GameRule.HitPoint >= GameRule.SelectHitPoint(
+                    GameRule.HitPointProtectsDeathCostLo,
+                    GameRule.HitPointProtectsDeathCostHi))
+            {
+                var event2 = e with
+                {
+                    DamageLo = GameRule.HitPointProtectsDeathCostLo,
+                    DamageHi = GameRule.HitPointProtectsDeathCostHi,
+                };
+                Hurt(event2);
+                if (e.DirectSource == _slipperyGas && _posQueue.TryPeek(out var safePos))
+                {
+                    GlobalPosition = safePos;
+                }
+                return;
+            }
+        }
+
         if (_killed)
         {
             return;
@@ -109,6 +137,36 @@ public partial class Mario
         QueueFree();
     }
 
+    private void UpdatePositionAutoSave()
+    {
+        if (_isInAir || _crouching)
+        {
+            return;
+        }
+        var collision = new KinematicCollision2D();
+        bool safe;
+        if (TestMove(GlobalTransform, GroundTestVec, collision))
+        {
+            safe = collision.GetCollider() is TileMap or StaticBody2D;
+        }
+        else
+        {
+            safe = false;
+        }
+        if (!safe)
+        {
+            return;
+        }
+        
+        while (_posQueue.Count >= PosSaveRecordCount)
+        {
+            _posQueue.Dequeue();
+        }
+        _posQueue.Enqueue(GlobalPosition);
+    }
+
+    private readonly Queue<Vector2> _posQueue = new(32);
+    private const int PosSaveRecordCount = 30;
     private static readonly NodePath NpCorpseDeathSound = "The Funny Sound";
 
     public void MakeSlippery(bool enabled, float maxSpeedScale = 1, float accScale = 1, bool accModifyTurnOnly = true)

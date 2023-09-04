@@ -190,6 +190,7 @@ public partial class Mario : CharacterBody2D
         PhysicsProcessX(delta);
         PhysicsProcessY(delta);
         UpdateCrouch();
+        UpdatePositionAutoSave();
         UpdateAnimation();
 
         var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (_crouching && XSpeed > 0));

@@ -61,6 +61,9 @@ public partial class GameRule : Resource
     [Export] public bool KillPlayerWhenHitPointReachesZero { get; set; }
 
     [Export] public bool HitPointProtectsYourPowerup { get; set; } = true;
+    [Export] public bool HitPointProtectsDeath { get; set; } = true;
+    [Export] public float HitPointProtectsDeathCostLo { get; set; } = 3;
+    [Export] public float HitPointProtectsDeathCostHi { get; set; } = 100;
     [Export] public bool CoinGivesHitPoint { get; set; } = true;
     [Export] public float MaxHitPointLo { get; set; } = 8;
     [Export] public float MaxHitPointHi { get; set; } = 400;
