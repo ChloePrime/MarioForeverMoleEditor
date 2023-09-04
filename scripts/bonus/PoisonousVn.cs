@@ -8,7 +8,7 @@ namespace ChloePrime.MarioForever.Bonus;
 [Icon("res://resources/bonus/AT_vn_icon.tres")]
 public partial class PoisonousVn: PickableBonus
 {
-    public override void OnMarioGotMe(Mario mario)
+    public override void _OnMarioGotMe(Mario mario)
     {
         mario.Kill(new DamageEvent
         {
@@ -16,6 +16,6 @@ public partial class PoisonousVn: PickableBonus
             DirectSource = this,
             TrueSource = this,
         });
-        base.OnMarioGotMe(mario);
+        base._OnMarioGotMe(mario);
     }
 }

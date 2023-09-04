@@ -111,7 +111,7 @@ public partial class Mario
 
     private static readonly NodePath NpCorpseDeathSound = "The Funny Sound";
 
-    public void MakeSlippery(bool enabled, float maxSpeedScale, float accScale, bool accModifyTurnOnly = true)
+    public void MakeSlippery(bool enabled, float maxSpeedScale = 1, float accScale = 1, bool accModifyTurnOnly = true)
     {
         _speedBackups ??= new float?[6];
         if (enabled)

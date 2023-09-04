@@ -9,3 +9,6 @@ script = ExtResource("2_pvsg0")
 MaxSpeedScale = 1.0
 AccelerationScale = 0.25
 PickSound = ExtResource("3_wqacn")
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2(0, 0)

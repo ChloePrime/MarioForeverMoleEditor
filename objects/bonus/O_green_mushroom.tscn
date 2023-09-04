@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0pmmjb7l4rps"]
+
+[ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://resources/bonus/internal_bonus_base.tscn" id="1_tc5vs"]
+[ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://objects/ui/O_1up.tscn" id="2_bdxsb"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://tiles/T_tileset_bonus.png" id="2_puicr"]
+[ext_resource type="Script" path="res://scripts/bonus/GreenMushroom.cs" id="2_qohbl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nk7ps"]
+atlas = ExtResource("2_puicr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jhicn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nk7ps")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="1UP Mushroom" instance=ExtResource("1_tc5vs")]
+script = ExtResource("2_qohbl")
+Score = ExtResource("2_bdxsb")
+PickSound = null
+TargetSpeed = 100.0
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_jhicn")

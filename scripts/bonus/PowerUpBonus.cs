@@ -11,9 +11,9 @@ public partial class PowerUpBonus : PickableBonus
     
     [Export] public MarioStatus TargetStatus { get; private set; }
 
-    public override void OnMarioGotMe(Mario mario)
+    public override void _OnMarioGotMe(Mario mario)
     {
-        base.OnMarioGotMe(mario);
+        base._OnMarioGotMe(mario);
         if (TargetStatus is not { } target)
         {
             this.LogWarn("Invalid PowerUp: TargetStatus is not set");

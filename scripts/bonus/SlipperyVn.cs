@@ -10,10 +10,10 @@ public partial class SlipperyVn : PickableBonus
     [Export] public float MaxSpeedScale { get; set; } = 1F;
     [Export] public float AccelerationScale { get; set; } = 1F / 4;
     
-    public override void OnMarioGotMe(Mario mario)
+    public override void _OnMarioGotMe(Mario mario)
     {
-        mario.MakeSlippery(false, 1, 1);
+        mario.MakeSlippery(false);
         mario.MakeSlippery(true, MaxSpeedScale, AccelerationScale);
-        base.OnMarioGotMe(mario);
+        base._OnMarioGotMe(mario);
     }
 }

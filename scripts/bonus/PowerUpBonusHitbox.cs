@@ -17,7 +17,7 @@ public partial class PowerUpBonusHitbox : Area2D
     {
         // if (!_root.ReallyEnabled) return;
         if (other is not Mario mario) return;
-        _root.OnMarioGotMe(mario);
+        _root._OnMarioGotMe(mario);
     }
 
     private PickableBonus _root;

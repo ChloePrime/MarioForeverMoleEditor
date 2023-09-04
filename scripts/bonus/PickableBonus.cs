@@ -14,7 +14,7 @@ public partial class PickableBonus : WalkableObjectBase
     [Export]
     public AudioStream PickSound { get; set; } = GD.Load<AudioStream>("res://resources/mario/SE_powerup.wav");
 
-    public virtual void OnMarioGotMe(Mario mario)
+    public virtual void _OnMarioGotMe(Mario mario)
     {
         CreateScore();
         PickSound?.Play();
