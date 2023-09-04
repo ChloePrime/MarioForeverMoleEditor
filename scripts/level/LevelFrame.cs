@@ -30,7 +30,7 @@ public partial class LevelFrame : LevelManager
     private static readonly NodePath NpRightNormalFrame = "Frame Curtain/R"; 
     private static readonly NodePath NpLeftAnimFrame = "Frame Anime/L"; 
     private static readonly NodePath NpRightAnimFrame = "Frame Anime/R"; 
-    private static readonly NodePath NpGameContainer = "Aspect Ratio Container"; 
+    private static readonly NodePath NpGameContainer = "Aspect Ratio Container";
     private Control _ln, _rn;
     private Control _la, _ra;
     private AspectRatioContainer _game;

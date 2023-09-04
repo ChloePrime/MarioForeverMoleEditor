@@ -8,6 +8,12 @@ namespace ChloePrime.MarioForever.UI;
 public partial class LevelHud : Control
 {
     public Control GameOverLabel => _go;
+
+    public string WorldName
+    {
+        get => _worldName.Text;
+        set => _worldName.SetText(value);
+    }
     
     public override void _Ready()
     {
@@ -23,12 +29,17 @@ public partial class LevelHud : Control
         this.GetNode(out _hpCounterR, NpHpCounterR);
         this.GetNode(out _hpBarMax, NpHpCounterMaxBar);
         this.GetNode(out _hpBar, NpHpCounterBar);
+        this.GetNode(out _world, NpWorld);
+        this.GetNode(out _worldName, NpWorldName);
         this.GetNode(out _go, NpGameOver);
         _rule = this.GetRule();
+        
         _lifeSystem.Watcher = () => !_rule.DisableLives;
         _scoreSystem.Watcher = () => !_rule.DisableScore;
         _coinSystem.Watcher = () => !_rule.DisableCoin;
         _hpSystem.Watcher = HasHitPoint;
+        _world.Watcher = () => _worldName.Text.Length > 0;
+        
         _lifeCounter.Watch(() => GlobalData.Lives);
         _scoreCounter.Watch(() => GlobalData.Score);
         _coinCounter.Watch(() => GlobalData.Coins);
@@ -92,6 +103,8 @@ public partial class LevelHud : Control
     private static readonly NodePath NpScoreSystem = "Score System";
     private static readonly NodePath NpCoinSystem = "Coin System";
     private static readonly NodePath NpHpSystem = "Hit Point System";
+    private static readonly NodePath NpWorld = "World";
+    private static readonly NodePath NpWorldName = "World/World Name";
     private static readonly NodePath NpLifeCounter = "Life System/Life";
     private static readonly NodePath NpScoreCounter = "Score System/Score";
     private static readonly NodePath NpCoinCounter = "Coin System/Coin";
@@ -106,6 +119,8 @@ public partial class LevelHud : Control
     private SubsystemHud _scoreSystem;
     private SubsystemHud _coinSystem;
     private SubsystemHud _hpSystem;
+    private SubsystemHud _world;
+    private WorldName _worldName;
     private ValueWatcherLabel _lifeCounter;
     private ValueWatcherLabel _scoreCounter;
     private ValueWatcherLabel _coinCounter;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene load_steps=15 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" path="res://scripts/ui/LevelHud.cs" id="1_beqw8"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bf7ixav1r8u0o" path="res://resources/ui/T_hp_bar_player_bg.png" id="6_bobtx"]
 [ext_resource type="Texture2D" uid="uid://ci527bnq5nh5q" path="res://resources/ui/T_hp_bar_player.png" id="6_rf6hi"]
 [ext_resource type="Script" path="res://scripts/ui/ValueWatcherBar.cs" id="7_eo6s5"]
+[ext_resource type="Script" path="res://scripts/ui/WorldName.cs" id="9_k8aoj"]
+[ext_resource type="Theme" uid="uid://dxaw76vg14cno" path="res://resources/ui/Theme_mw.tres" id="9_mwx5i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uf38m"]
 atlas = ExtResource("5_lyecc")
@@ -189,6 +191,37 @@ texture = ExtResource("6_rf6hi")
 expand_mode = 1
 stretch_mode = 1
 script = ExtResource("7_eo6s5")
+
+[node name="World" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.685
+anchor_right = 0.685
+offset_left = -40.4
+offset_top = 8.0
+offset_right = 40.6
+offset_bottom = 31.0
+grow_horizontal = 2
+theme = ExtResource("1_4n6h2")
+text = "WORLD"
+horizontal_alignment = 1
+script = ExtResource("2_d76tu")
+
+[node name="World Name" type="Label" parent="World"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.5
+offset_top = 19.0
+offset_right = 40.5
+offset_bottom = 42.0
+grow_horizontal = 2
+theme = ExtResource("1_4n6h2")
+text = "1-1"
+horizontal_alignment = 1
+script = ExtResource("9_k8aoj")
+ThemeForLongText = ExtResource("9_mwx5i")
 
 [node name="GO" type="Label" parent="."]
 layout_mode = 1

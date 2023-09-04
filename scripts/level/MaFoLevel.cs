@@ -16,6 +16,7 @@ namespace ChloePrime.MarioForever.Level;
 [GlobalClass]
 public partial class MaFoLevel : Node
 {
+	[Export(PropertyHint.MultilineText)] public string LevelName { get; set; } = "Mole Editor";
 	[Export] public AudioStream LevelMusic { get; private set; }
 	[Export] public ObjectTilePresetList TileLoadingPreset { get; private set; }
 

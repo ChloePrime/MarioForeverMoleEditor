@@ -30,7 +30,11 @@ public partial class LevelManager : Control
         {
             child.QueueFree();
         }
-        GameViewport.AddChild(_level.Instantiate());
+        GameViewport.AddChild(_levelInstance = _level.Instantiate());
+        if (_levelInstance is MaFoLevel mfl)
+        {
+            Hud.WorldName = mfl.LevelName;
+        }
     }
     
     public void RestartGame()
@@ -124,7 +128,7 @@ public partial class LevelManager : Control
         return e is InputEventKey or InputEventJoypadButton && e.IsPressed();
     }
 
-    private void SetLevel(PackedScene level)
+    protected void SetLevel(PackedScene level)
     {
         if (_level == level)
         {
@@ -138,6 +142,7 @@ public partial class LevelManager : Control
     }
 
     private PackedScene _level;
+    private Node _levelInstance;
     private bool _ready;
     private bool _waitingForRestart;
 }
