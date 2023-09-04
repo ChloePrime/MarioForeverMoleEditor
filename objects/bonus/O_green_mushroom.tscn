@@ -23,6 +23,7 @@ animations = [{
 [node name="1UP Mushroom" instance=ExtResource("1_tc5vs")]
 script = ExtResource("2_qohbl")
 Score = ExtResource("2_bdxsb")
+PickSound = null
 TargetSpeed = 100.0
 
 [node name="Sprite" parent="." index="1"]
