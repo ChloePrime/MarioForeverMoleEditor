@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=16 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
 [ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://objects/background/O_bg_gradient.tscn" id="13_o71m4"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
+[ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://objects/bonus/O_slippery_vn.tscn" id="15_ls2ex"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -54,3 +55,6 @@ position = Vector2(128, 24)
 
 [node name="Cloud (Foreground)" parent="." instance=ExtResource("14_1osfy")]
 position = Vector2(128, 0)
+
+[node name="Slippery VN" parent="." instance=ExtResource("15_ls2ex")]
+position = Vector2(320, 392)

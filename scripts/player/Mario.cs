@@ -179,7 +179,16 @@ public partial class Mario : CharacterBody2D
     public override void _PhysicsProcess(double deltaD)
     {
         base._PhysicsProcess(deltaD);
-        if (_hurtStack > 0)
+        if (_deathStack > 0)
+        {
+            Kill(new DamageEvent
+            {
+                DamageTypes = DamageType.Environment,
+                DirectSource = null,
+                TrueSource = null,
+            });
+        }
+        else if (_hurtStack > 0)
         {
             Hurt(new DamageEvent
             {
@@ -197,6 +206,7 @@ public partial class Mario : CharacterBody2D
                 DamageTypes = DamageType.Environment,
                 DirectSource = _slipperyGas,
                 TrueSource = _slipperyGas,
+                BypassInvulnerable = true,
             });
             return;
         }

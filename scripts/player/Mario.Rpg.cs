@@ -22,7 +22,7 @@ public partial class Mario
 
     public void Hurt(DamageEvent e)
     {
-        if (IsInvulnerable() || _currentStatus == null)
+        if ((!e.BypassInvulnerable && IsInvulnerable()) || _currentStatus == null)
         {
             return;
         }
@@ -82,7 +82,7 @@ public partial class Mario
 
     public bool IsInvulnerable()
     {
-        return _invulnerable;
+        return _invulnerable || _completedLevel;
     }
 
     public void SetInvulnerable(double time)
@@ -121,6 +121,13 @@ public partial class Mario
                 {
                     GlobalPosition = safePos;
                 }
+                return;
+            }
+            if (GameRule.HitPointEnabled &&
+                GameRule.HitPointProtectsDeath &&
+                !e.BypassInvulnerable &&
+                IsInvulnerable())
+            {
                 return;
             }
         }
@@ -231,12 +238,8 @@ public partial class Mario
         
         _hurtZone.BodyEntered += _ => _hurtStack++;
         _hurtZone.BodyExited += _ => _hurtStack--;
-        _deathZone.BodyEntered += body => Kill(new DamageEvent
-        {
-            DamageTypes = DamageType.Environment,
-            DirectSource = body,
-            TrueSource = body,
-        });
+        _deathZone.BodyEntered += _ => _deathStack++;
+        _deathZone.BodyExited += _ => _deathStack--;
         _invulnerableTimer.Timeout += () => _invulnerable = false;
     }
 
@@ -282,8 +285,15 @@ public partial class Mario
     }
 
     private int _hurtStack;
+    private int _deathStack;
     private bool _killed;
+    
+    /// <summary>
+    /// 该无敌变量不考虑通关过程
+    /// </summary>
+    /// <see cref="IsInvulnerable"/>
     private bool _invulnerable;
+    
     private float _flashTime;
     private float _flashDuration;
     private float _invulnerableFlashPhase;
