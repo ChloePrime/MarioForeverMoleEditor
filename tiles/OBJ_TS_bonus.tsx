@@ -11,6 +11,11 @@
    <property name="res_path" type="file" value="res://objects/bonus/O_red_mushroom.tscn"/>
   </properties>
  </tile>
+ <tile id="3">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/bonus/O_green_mushroom.tscn"/>
+  </properties>
+ </tile>
  <tile id="4">
   <properties>
    <property name="res_path" type="file" value="res://objects/bonus/O_fire_flower.tscn"/>
@@ -34,6 +39,11 @@
  <tile id="13">
   <properties>
    <property name="res_path" type="file" value="res://objects/bonus/O_qblock_red_mushroom.tscn"/>
+  </properties>
+ </tile>
+ <tile id="14">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/bonus/O_qblock_green_mushroom.tscn"/>
   </properties>
  </tile>
  <tile id="15">
@@ -61,6 +71,12 @@
   <properties>
    <property name="preset" type="int" value="1"/>
    <property name="res_path" type="file" value="res://objects/bonus/O_qblock_red_mushroom.tscn"/>
+  </properties>
+ </tile>
+ <tile id="25">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/bonus/O_qblock_green_mushroom.tscn"/>
   </properties>
  </tile>
  <tile id="26">
