@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -18,7 +20,14 @@ public partial class MaFoLevel : Node
 {
 	[Export(PropertyHint.MultilineText)] public string LevelName { get; set; } = "Mole Editor";
 	[Export] public AudioStream LevelMusic { get; private set; }
+	[Export] public double TimeLimit { get; set; } = 400;
+	[Export] public bool TimeFlows { get; set; } = true;
+	
+	[ExportGroup("MaFoLevel: Advanced")]
 	[Export] public ObjectTilePresetList TileLoadingPreset { get; private set; }
+	
+	[Signal]
+	public delegate void TimeoutEventHandler();
 
 	public override void _Ready()
 	{
@@ -27,26 +36,96 @@ public partial class MaFoLevel : Node
 		if (LevelMusic is { } bgm)
 		{
 			BackgroundMusic.Music = bgm;
+			BackgroundMusic.Speed = 1;
 		}
-		
-		if (this.GetLevelManager() is null)
+
+		if ((_manager = this.GetLevelManager()) is null)
 		{
 			GetTree().Root.ContentScaleAspect = Window.ContentScaleAspectEnum.Keep;
 		}
+
+		Timeout += () =>
+		{
+			if (_manager is not { } manager) return;
+			if (manager.GameRule.TimePolicy == GameRule.TimePolicyType.Classic && GetTree() is {} tree)
+			{
+				_timeoutKillList ??= tree.GetNodesInGroup(MaFo.Groups.Player).OfType<Mario>().ToList();
+			}
+		};
 		
-		ProcessTilemaps();
+		LoadTilemaps();
 	}
 
-	private void ProcessTilemaps()
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+		ProcessTime(delta);
+		ProcessTimeoutKill();
+	}
+
+	private void ProcessTime(double delta)
+	{
+		if (!TimeFlows || _manager is not { } manager) return;
+		switch (manager.GameRule.TimePolicy)
+		{
+			case GameRule.TimePolicyType.Disable:
+			case GameRule.TimePolicyType.Date:
+				return;
+			case GameRule.TimePolicyType.CountOnly:
+				GlobalData.Time += delta;
+				return;
+			case GameRule.TimePolicyType.Classic:
+				GlobalData.Time -= delta / manager.GameRule.ClassicTimeUnitSize;
+				break;
+			case GameRule.TimePolicyType.Countdown:
+			default:
+				GlobalData.Time -= delta;
+				break;
+		}
+		if (manager.GameRule.TimePolicy == GameRule.TimePolicyType.Classic)
+		{
+			if (GlobalData.Time <= 100 && !_timeHintEmitted)
+			{
+				manager.GameRule.TimeoutHintSound?.Play();
+				manager.Hud.HintTimeout();
+				BackgroundMusic.Speed = 1.5F;
+				_timeHintEmitted = true;
+			}
+		}
+		if (GlobalData.Time <= 0 && !_timeoutEmitted)
+		{
+			EmitSignal(SignalName.Timeout);
+			_timeoutEmitted = true;
+		}
+	}
+
+	/// <summary>
+	/// 倒计时结束后循环杀死马里奥，仅限 Classic 计时模式才会触发
+	/// </summary>
+	private void ProcessTimeoutKill()
+	{
+		if (_timeoutKillList is not {} list) return;
+		foreach (var mario in list)
+		{
+			mario.Kill(new DamageEvent
+			{
+				DamageTypes = 0,
+				DirectSource = null,
+				TrueSource = null,
+			});
+		}
+	}
+
+	private void LoadTilemaps()
 	{
 		var children = GetChildren();
 		foreach (var tilemap in children.OfType<TileMap>())
 		{
-			ProcessTilemapWithLayers(tilemap);
+			LoadTilemapWithLayers(tilemap);
 		}
 		foreach (var tilemapRoot in children.Where(IsPossibleTilemapRoot))
 		{
-			ProcessTilemapSeperated(tilemapRoot);
+			LoadTilemapSeperated(tilemapRoot);
 		}
 	}
 
@@ -68,13 +147,13 @@ public partial class MaFoLevel : Node
 		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMap>().Any();
 	}
 
-	private void ProcessTilemapSeperated(Node root) => ProcessTilemapCore(root, root, TilemapType.None);
+	private void LoadTilemapSeperated(Node root) => LoadTilemapCore(root, root, TilemapType.None);
 
 	/// <summary>
 	/// 针对未勾选 Use Tilemap Layers 的 tmx scene 的处理，
 	/// 支持伤害层。
 	/// </summary>
-	private void ProcessTilemapCore(Node root, Node parent, TilemapType baseType)
+	private void LoadTilemapCore(Node root, Node parent, TilemapType baseType)
 	{
 		foreach (var node in parent.Children())
 		{
@@ -95,7 +174,7 @@ public partial class MaFoLevel : Node
 			}
 			else if (node.GetType() == typeof(Node2D))
 			{
-				ProcessTilemapCore(root, node, type);
+				LoadTilemapCore(root, node, type);
 			}
 			else if (node is Sprite2D possibleObject)
 			{
@@ -108,7 +187,7 @@ public partial class MaFoLevel : Node
 	/// 针对使用 Use Tilemap Layers 的 tmx scene 的处理，
 	/// 不支持伤害层。
 	/// </summary>
-	private void ProcessTilemapWithLayers(TileMap tilemap)
+	private void LoadTilemapWithLayers(TileMap tilemap)
 	{
 		var count = tilemap.GetLayersCount();
 		for (var i = 0; i < count; i++)
@@ -262,4 +341,8 @@ public partial class MaFoLevel : Node
 
 	private static readonly StringName ResPathName = "res_path";
 	private static readonly StringName PresetName = "preset";
+	private LevelManager _manager;
+	private List<Mario> _timeoutKillList;
+	private bool _timeoutEmitted;
+	private bool _timeHintEmitted;
 }

@@ -15,6 +15,10 @@ run/main_scene="res://objects/O_level_frame.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://R_audio_bus_layout.tres"
+
 [autoload]
 
 BackgroundMusic="*res://scripts/level/BackgroundMusic.cs"

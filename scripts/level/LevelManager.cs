@@ -34,6 +34,18 @@ public partial class LevelManager : Control
         if (_levelInstance is MaFoLevel mfl)
         {
             Hud.WorldName = mfl.LevelName;
+            Hud.CurrentLevel = mfl;
+            Hud.Visible = true;
+            GlobalData.Time = GameRule.TimePolicy switch
+            {
+                GameRule.TimePolicyType.CountOnly => 0,
+                _ => mfl.TimeLimit,
+            };
+        }
+        else
+        {
+            Hud.CurrentLevel = null;
+            Hud.Visible = false;
         }
     }
     

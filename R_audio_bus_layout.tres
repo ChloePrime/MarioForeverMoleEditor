@@ -1,0 +1,16 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://dcqli3s16faxv"]
+
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_x4stc"]
+resource_name = "PitchShift"
+oversampling = 32
+fft_size = 2
+
+[resource]
+bus/1/name = &"Background Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectPitchShift_x4stc")
+bus/1/effect/0/enabled = true

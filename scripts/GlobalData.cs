@@ -13,6 +13,7 @@ public static class GlobalData
     public static Int128 Score { get; set; }
     public static int Coins { get; set; }
     public static int Lives { get; set; }
+    public static double Time { get; set; }
     public static float HitPointLo { get; set; }
     public static float HitPointHi { get; set; }
     public static float MaxHitPointLo { get; set; }

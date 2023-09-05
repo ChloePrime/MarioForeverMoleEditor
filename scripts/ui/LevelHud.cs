@@ -1,6 +1,8 @@
 ﻿using System;
+using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using Godot.NativeInterop;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.UI;
@@ -13,6 +15,13 @@ public partial class LevelHud : Control
     {
         get => _worldName.Text;
         set => _worldName.SetText(value);
+    }
+    
+    public MaFoLevel CurrentLevel { get; set; }
+
+    public void HintTimeout()
+    {
+        _timeoutHintAnim.Play("default");
     }
     
     public override void _Ready()
@@ -31,6 +40,9 @@ public partial class LevelHud : Control
         this.GetNode(out _hpBar, NpHpCounterBar);
         this.GetNode(out _world, NpWorld);
         this.GetNode(out _worldName, NpWorldName);
+        this.GetNode(out _timeSystem, NpTimeSystem);
+        this.GetNode(out _time, NpTime);
+        this.GetNode(out _timeoutHintAnim, NpTimeoutHintAnim);
         this.GetNode(out _go, NpGameOver);
         _rule = this.GetRule();
         
@@ -39,14 +51,22 @@ public partial class LevelHud : Control
         _coinSystem.Watcher = () => !_rule.DisableCoin;
         _hpSystem.Watcher = HasHitPoint;
         _world.Watcher = () => _worldName.Text.Length > 0;
+        _timeSystem.Watcher = () =>
+            _rule.TimePolicy != GameRule.TimePolicyType.Disable && CurrentLevel is { TimeLimit: >= 0 };
         
         _lifeCounter.Watch(() => GlobalData.Lives);
         _scoreCounter.Watch(() => GlobalData.Score);
         _coinCounter.Watch(() => GlobalData.Coins);
-        _hpCounterL.Watch(GetLeftDisplay);
-        _hpCounterR.Watch(() => _rule.HitPoint, GetRightDisplay);
-        _hpBarMax.Watch(() => _rule.MaxHitPoint, hp => GetBarLength(hp) * _hpBarMax.Texture.GetSize().X);
-        _hpBar.Watch(() => _rule.HitPoint, hp => GetBarLength(hp) * _hpBar.Texture.GetSize().X);
+        _hpCounterL.Watch(GetLeftHpDisplay);
+        _hpCounterR.Watch(() => _rule.HitPoint, GetRightHpDisplay);
+        _hpBarMax.Watch(() => _rule.MaxHitPoint, hp => GetHpBarLength(hp) * _hpBarMax.Texture.GetSize().X);
+        _hpBar.Watch(() => _rule.HitPoint, hp => GetHpBarLength(hp) * _hpBar.Texture.GetSize().X);
+        _time.Watch(GetTimeWatchee, GetTimeDisplay);
+        _time.TextChanged += () => _time.Theme = _rule.TimePolicy switch
+        {
+            GameRule.TimePolicyType.Date => _worldName.ThemeForLongText,
+            _ => _lifeCounter.Theme,
+        };
 
         var observer = Observer.WatchOnPhysics(() => _rule.HitPointPolicy == GameRule.HitPointPolicyType.Mario3D);
         var barPosX = _hpBar.Position.X;
@@ -71,14 +91,14 @@ public partial class LevelHud : Control
                (!_rule.HideHitPointAtZero || _rule.HitPoint > 0);
     }
 
-    private string GetLeftDisplay() => _rule.HitPointPolicy switch
+    private string GetLeftHpDisplay() => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Disabled => "",
         GameRule.HitPointPolicyType.Metroid => "E",
         GameRule.HitPointPolicyType.Mario3D or GameRule.HitPointPolicyType.JRPG or _ => "HP",
     };
 
-    private string GetRightDisplay(float hp) => _rule.HitPointPolicy switch
+    private string GetRightHpDisplay(float hp) => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Disabled => "",
         GameRule.HitPointPolicyType.Metroid => $"{GetDisplayHp(hp) % 100:00}",
@@ -86,7 +106,7 @@ public partial class LevelHud : Control
         GameRule.HitPointPolicyType.JRPG or _ => $"{GetDisplayHp(hp)}/{GetDisplayHp(_rule.MaxHitPoint)}",
     };
 
-    public float GetBarLength(float hp) => _rule.HitPointPolicy switch
+    public float GetHpBarLength(float hp) => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Mario3D => GetDisplayHp(hp),
         GameRule.HitPointPolicyType.Metroid => GetDisplayHp(hp) / 100,
@@ -99,12 +119,41 @@ public partial class LevelHud : Control
         return Math.Max(0, isMetroid ? Mathf.CeilToInt(hp - 1) : Mathf.FloorToInt(hp));
     }
 
+    private double GetTimeWatchee() => _rule.TimePolicy switch
+    {
+        GameRule.TimePolicyType.Disable => 0,
+        GameRule.TimePolicyType.Date => BitConverter.Int64BitsToDouble(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()),
+        _ => Math.Max(0, GlobalData.Time),
+    };
+
+    private string GetTimeDisplay(double payload) => _rule.TimePolicy switch
+    {
+        GameRule.TimePolicyType.Disable => "",
+        GameRule.TimePolicyType.Date => GetDateDisplay(),
+        GameRule.TimePolicyType.Classic => Mathf.CeilToInt(payload).ToString(),
+        GameRule.TimePolicyType.Countdown or GameRule.TimePolicyType.CountOnly => FormatTime(payload),
+        _ => ""
+    };
+
+    private static string GetDateDisplay()
+    {
+        return DateTime.Now.ToString("yyyy/M/d");
+    }
+
+    private static string FormatTime(double time)
+    {
+        return TimeSpan.FromSeconds(time).ToString(@"mm\:ss\:ff");
+    }
+
     private static readonly NodePath NpLifeSystem = "Life System";
     private static readonly NodePath NpScoreSystem = "Score System";
     private static readonly NodePath NpCoinSystem = "Coin System";
     private static readonly NodePath NpHpSystem = "Hit Point System";
     private static readonly NodePath NpWorld = "World";
     private static readonly NodePath NpWorldName = "World/World Name";
+    private static readonly NodePath NpTimeSystem = "Time System";
+    private static readonly NodePath NpTime = "Time System/Time";
+    private static readonly NodePath NpTimeoutHintAnim = "Time System/Timeout Hint Animation";
     private static readonly NodePath NpLifeCounter = "Life System/Life";
     private static readonly NodePath NpScoreCounter = "Score System/Score";
     private static readonly NodePath NpCoinCounter = "Coin System/Coin";
@@ -120,6 +169,7 @@ public partial class LevelHud : Control
     private SubsystemHud _coinSystem;
     private SubsystemHud _hpSystem;
     private SubsystemHud _world;
+    private SubsystemHud _timeSystem;
     private WorldName _worldName;
     private ValueWatcherLabel _lifeCounter;
     private ValueWatcherLabel _scoreCounter;
@@ -128,6 +178,8 @@ public partial class LevelHud : Control
     private ValueWatcherLabel _hpCounterR;
     private ValueWatcherBar _hpBarMax;
     private ValueWatcherBar _hpBar;
+    private ValueWatcherLabel _time;
+    private AnimationPlayer _timeoutHintAnim;
     private Control _go;
     private int _lastKnownLife = -1;
 }

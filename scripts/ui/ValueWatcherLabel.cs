@@ -18,10 +18,16 @@ public partial class ValueWatcherLabel : Label
     public void Watch<T>(Func<T> getter, Stringifier<T> stringifier)
     {
         var observer = Observer.Watch(getter);
-        observer.ValueChanged += () => Text = stringifier(observer.Value);
+        observer.ValueChanged += () =>
+        {
+            Text = stringifier(observer.Value);
+            TextChanged?.Invoke();
+        };
         _updater = observer.Update;
     }
-    
+
+    public event Action TextChanged; 
+
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);

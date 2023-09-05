@@ -22,6 +22,39 @@ public partial class GameRule : Resource
     [Export] public bool CoinAutoExchangeLife { get; set; } = true;
     [Export] public int CostOf1Life { get; set; } = 100;
 
+    [ExportSubgroup("Time")]
+    [Export] public TimePolicyType TimePolicy { get; set; } = TimePolicyType.Classic;
+    [Export] public double ClassicTimeUnitSize { get; set; } = 0.64;
+    [Export] public AudioStream TimeoutHintSound { get; set; } = GD.Load<AudioStream>("res://resources/level/ME_timeout.ogg");
+
+    public enum TimePolicyType
+    {
+        /// <summary>
+        /// 禁用时间机制
+        /// </summary>
+        Disable,
+
+        /// <summary>
+        /// 倒计时结束后杀死马里奥
+        /// </summary>
+        Classic,
+
+        /// <summary>
+        /// 倒计时结束后发出信号（TODO 尚未实现）
+        /// </summary>
+        Countdown,
+
+        /// <summary>
+        /// 正计时
+        /// </summary>
+        CountOnly,
+        
+        /// <summary>
+        /// 显示当前日期
+        /// </summary>
+        Date,
+    }
+
     [Export]
     public Array<PackedScene> AddLifeMethod { get; set; } = new()
     {
