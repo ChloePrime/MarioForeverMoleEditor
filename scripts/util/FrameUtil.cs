@@ -48,4 +48,10 @@ public static class FrameUtil
 
         return null;
     }
+    
+
+    public static bool FindParentOfType<T>(this Node node, out T? parent) where T: class
+    {
+        return (parent = node.FindParentOfType<T>()) != null;
+    }
 }

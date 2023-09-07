@@ -14,7 +14,8 @@ namespace ChloePrime.MarioForever.Enemy;
 [GlobalClass]
 public partial class EnemyDamageSource : Area2D
 {
-    [Export] public EnemyHurtDetector Core { get; private set; }
+    [Export] public EnemyHurtDetector Detector { get; private set; }
+    public EnemyCore Core => Detector.Core;
     
     public override void _Ready()
     {
@@ -23,41 +24,41 @@ public partial class EnemyDamageSource : Area2D
         AreaExited += OnAreaExited;
         // BodyEntered += OnBodyEntered;
         // BodyExited += OnBodyExited;
-        Core ??= GetParent()?.Children().OfType<EnemyHurtDetector>().FirstOrNone().Or(null);
-        if (Core is { } core)
+        Detector ??= GetParent()?.Children().OfType<EnemyHurtDetector>().FirstOrNone().Or(null);
+        if (Detector is { } detector)
         {
-            core.Stomped += OnStomped;
+            detector.Stomped += OnStomped;
         }
     }
     
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        if (!IsInstanceValid(Core))
+        if (!IsInstanceValid(Detector))
         {
             return;
         }
-        if (Core.IsFriendly() || Core.Root is GravityObjectBase { ReallyEnabled: false })
+        if (Core.NpcData.Friendly || Detector.Root is GravityObjectBase { ReallyEnabled: false })
         {
             return;
         }
-        if (Core.Stompable && _stompProtection > 0)
+        if (Detector.Stompable && _stompProtection > 0)
         {
             _stompProtection -= (float)delta;
             return;
         }
         
-        var filteredOverlaps = Core.Stompable ? _overlaps.Where(m => !m.WillStomp(Core.Root)) : _overlaps;
+        var filteredOverlaps = Detector.Stompable ? _overlaps.Where(m => !m.WillStomp(Detector.Root)) : _overlaps;
         foreach (var mario in filteredOverlaps)
         {
-            var (lo, hi) = Core.GetDamage();
+            var (lo, hi) = Detector.GetDamage();
             mario.Hurt(new DamageEvent
             {
                 DamageTypes = DamageType.Enemy,
                 DamageLo = lo,
                 DamageHi = hi,
-                DirectSource = Core.Root,
-                TrueSource = Core.Root,
+                DirectSource = Detector.Root,
+                TrueSource = Detector.Root,
             });
         }
     }

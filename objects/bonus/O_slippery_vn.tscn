@@ -12,3 +12,5 @@ PickSound = ExtResource("3_wqacn")
 
 [node name="Sprite" parent="." index="1"]
 position = Vector2(0, 0)
+
+[editable path="Enemy Core"]

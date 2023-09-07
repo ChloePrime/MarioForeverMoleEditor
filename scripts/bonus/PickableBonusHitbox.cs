@@ -1,15 +1,15 @@
 ﻿using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.Util;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
 
-public partial class PowerUpBonusHitbox : Area2D
+public partial class PickableBonusHitbox : Area2D
 {
     public override void _Ready()
     {
         base._Ready();
-        this.GetParent(out _root);
+        this.FindParentOfType(out _root);
         BodyEntered += OnBodyEntered;
     }
 

@@ -1,13 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch0ilgsgq41mh"]
+[gd_scene load_steps=6 format=3 uid="uid://ch0ilgsgq41mh"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_qua70"]
-[ext_resource type="Script" path="res://scripts/bonus/PowerUpBonusHitbox.cs" id="2_dibp5"]
 [ext_resource type="Script" path="res://scripts/bonus/PickableBonus.cs" id="2_k6fvw"]
 [ext_resource type="PackedScene" uid="uid://cunb52mqbotiq" path="res://objects/ui/O_score_1000.tscn" id="3_ikxh7"]
 [ext_resource type="AudioStream" uid="uid://fkv1apskp037" path="res://resources/mario/SE_powerup.wav" id="4_qtpe2"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5ncc"]
-size = Vector2(32, 31)
+[ext_resource type="Script" path="res://scripts/bonus/PickableBonusHitbox.cs" id="5_pkyu0"]
 
 [node name="Internal Bonus Base" instance=ExtResource("1_qua70")]
 z_index = -1
@@ -18,21 +15,18 @@ PickSound = ExtResource("4_qtpe2")
 TargetSpeed = 0.0
 CollideWithOthers = false
 
-[node name="Hurt Detector" parent="." index="3"]
-process_mode = 4
+[node name="Enemy Core" parent="." index="3"]
+script = null
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
 collision_layer = 0
+script = ExtResource("5_pkyu0")
+
+[node name="Damage Source" parent="Enemy Core" index="1"]
+process_mode = 4
 collision_mask = 0
 monitoring = false
 monitorable = false
-AcceptedDamageTypes = 0
+script = null
 
-[node name="Collision Shape" parent="Hurt Detector" index="0"]
-visible = false
-disabled = true
-
-[node name="Damage Source" parent="." index="4"]
-script = ExtResource("2_dibp5")
-
-[node name="Collision Shape" parent="Damage Source" index="0"]
-position = Vector2(0, 0)
-shape = SubResource("RectangleShape2D_h5ncc")
+[editable path="Enemy Core"]

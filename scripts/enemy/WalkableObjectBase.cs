@@ -13,7 +13,7 @@ public partial class WalkableObjectBase : GravityObjectBase
     [Export] public float JumpStrength { get; set; }
 
     [ExportGroup($"{nameof(WalkableObjectBase)} (Advanced)")] 
-    [Export] public float ControlAcceleration = 0;
+    [Export] public float ControlAcceleration;
 
     private VisibleOnScreenNotifier2D _enterScreenDetector;
 

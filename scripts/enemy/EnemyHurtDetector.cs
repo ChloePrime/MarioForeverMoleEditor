@@ -6,7 +6,7 @@ using Godot;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class EnemyHurtDetector : EnemyCore, IStompable
+public partial class EnemyHurtDetector : Area2D, IStompable
 {
     [Export] public bool Stompable { get; set; }
     [Export] public float StompBounceStrength { get; set; } = Units.Speed.CtfToGd(9);
@@ -22,19 +22,23 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
     [Export]
     public PackedScene Corpse { get; set; } = GD.Load<PackedScene>("res://resources/enemies/generic_corpse.tscn");
 
+    public EnemyCore Core { get; private set; }
+    public Node2D Root => Core.Root;
+
     public override void _Ready()
     {
         base._Ready();
+        Core = GetParent<EnemyCore>();
         BodyEntered += OnBodyEntered;
     }
 
     private void OnBodyEntered(Node2D other)
     {
-        if (Root is null)
+        if (Core.NpcData.Friendly)
         {
             return;
         }
-        if (Stompable && other is Mario mario && mario.WillStomp(Root))
+        if (Stompable && other is Mario mario && mario.WillStomp(Core.Root))
         {
             StompBy(mario);
         }
@@ -42,7 +46,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
     public void StompBy(Node2D stomper)
     {
-        if (IsFriendly())
+        if (Core.NpcData.Friendly)
         {
             return;
         }
@@ -59,7 +63,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
     public virtual bool HurtBy(DamageEvent e)
     {
-        if (!CanBeHurtBy(e) || IsFriendly())
+        if (!CanBeHurtBy(e) || Core.NpcData.Friendly)
         {
             return false;
         }
@@ -118,7 +122,7 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
         if (corpse is not GenericCorpse cor) return;
         cor.YSpeed = Units.Speed.CtfMovementToGd(-25);
         
-        if (Sprite is not {} spr) return;
+        if (Core.Sprite is not {} spr) return;
         cor.SpriteFrames = spr.SpriteFrames;
         cor.Animation = spr.Animation;
         cor.Frame = spr.Frame;
@@ -133,6 +137,6 @@ public partial class EnemyHurtDetector : EnemyCore, IStompable
 
     public (float, float) GetDamage()
     {
-        return Root is MarioForeverNpc npc ? (npc.DamageLo, npc.DamageHi) : (0, 0);
+        return Root is IMarioForeverNpc npc ? (npc.NpcData.DamageLo, npc.NpcData.DamageHi) : (0, 0);
     }
 }

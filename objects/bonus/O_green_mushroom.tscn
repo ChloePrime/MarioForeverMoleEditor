@@ -28,3 +28,5 @@ TargetSpeed = 100.0
 
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_jhicn")
+
+[editable path="Enemy Core"]
