@@ -10,6 +10,7 @@ public readonly record struct DamageEvent(
 {
     public float DamageLo { get; init; } = 0;
     public float DamageHi { get; init; } = 0;
+    public float DamageToEnemy { get => DamageLo; init => DamageLo = value; }
     public bool IsDeathProtection { get; init; } = false;
     public bool BypassInvulnerable { get; init; } = false;
     public DamageEvent(DamageType types, Node2D source) : this(types, source, source)

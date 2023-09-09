@@ -22,6 +22,7 @@ public partial class PlayerFireballActionZone : FireballActionZone
         var hit = ehd.HurtBy(new DamageEvent
         {
             DamageTypes = DamageType.Fireball,
+            DamageToEnemy = this.GetRule().FireballPower,
             DirectSource = Fireball,
             TrueSource = Fireball.Shooter
         });

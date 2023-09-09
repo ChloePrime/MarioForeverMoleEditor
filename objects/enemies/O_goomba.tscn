@@ -10,6 +10,7 @@
 [sub_resource type="Resource" id="Resource_fp2oi"]
 resource_local_to_scene = true
 script = ExtResource("2_ytdgl")
+HitPoint = 50.0
 DamageLo = 2.0
 DamageHi = 40.0
 Friendly = false
@@ -49,6 +50,6 @@ script = ExtResource("3_sw373")
 StompedSound = ExtResource("4_mjcfe")
 StompedCorpse = ExtResource("5_deyan")
 Stompable = true
-AcceptedDamageTypes = 127
+OneHitDamageTypes = 127
 
 [editable path="Enemy Core"]

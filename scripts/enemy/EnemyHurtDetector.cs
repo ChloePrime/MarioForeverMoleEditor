@@ -12,7 +12,10 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     [Export] public float StompBounceStrength { get; set; } = Units.Speed.CtfToGd(9);
 
     [Export(MaFo.PropertyHint.LayerDamageType)]
-    public uint AcceptedDamageTypes = (uint)(DamageType.Environment | DamageType.Star | DamageType.Bump | DamageType.KickShell);
+    public uint AcceptedDamageTypes = (uint)(DamageType.Unarmored | DamageType.Stomp);
+    
+    [Export(MaFo.PropertyHint.LayerDamageType)]
+    public uint OneHitDamageTypes = (uint)(DamageType.Armored | DamageType.Stomp);
 
     [Export]
     public AudioStream DeathSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_enemy_down_2.ogg");
@@ -68,6 +71,17 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             return false;
         }
 
+        // 先掉血，血没掉完就不死
+        if (!CanBeOneHitKilledBy(e) && (Core.AsNpc.HitPoint > 0))
+        {
+            Core.AsNpc.AlterHitPoint(-e.DamageToEnemy);
+            if (Core.AsNpc.HitPoint > 0)
+            {
+                OnHurt(e);
+                return false;
+            }
+        }
+
         // 死亡流程
         if (e.DamageTypes.ContainsAny(DamageType.Stomp))
         {
@@ -90,9 +104,15 @@ public partial class EnemyHurtDetector : Area2D, IStompable
                 corpse.Position = Root.Position;
             }
         }
-        
+
+        Core.EmitSignal(EnemyCore.SignalName.Died);
         Root.QueueFree();
         return true;
+    }
+
+    private void OnHurt(DamageEvent e)
+    {
+        Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
     }
 
     private static readonly Vector2 ScorePivot = new(0, -16);
@@ -105,6 +125,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public virtual bool CanBeHurtBy(DamageEvent e)
     {
         return AcceptedDamageTypes.ContainsAny(e.DamageTypes);
+    }
+    
+    public virtual bool CanBeOneHitKilledBy(DamageEvent e)
+    {
+        return OneHitDamageTypes.ContainsAny(e.DamageTypes);
     }
 
     public virtual void PlayDeathSound(DamageEvent e)

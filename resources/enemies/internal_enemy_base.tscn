@@ -7,6 +7,7 @@
 [sub_resource type="Resource" id="Resource_x02rj"]
 resource_local_to_scene = true
 script = ExtResource("2_enr0v")
+HitPoint = 50.0
 DamageLo = 2.0
 DamageHi = 40.0
 Friendly = false
@@ -35,5 +36,6 @@ rect = Rect2(-16, -16, 32, 32)
 
 [node name="Enemy Core" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("3_ketea")]
 Sprite = NodePath("../Sprite")
+MyNpcData = null
 
 [editable path="Enemy Core"]

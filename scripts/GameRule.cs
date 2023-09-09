@@ -82,7 +82,7 @@ public partial class GameRule : Resource
     [Export] public float XSpeedBonus { get; set; } = Units.Speed.CtfToGd(1F);
     [Export] public float SprintingBonus { get; set; } = 0;
 
-    [ExportSubgroup("Hit Point")]
+    [ExportSubgroup("Player's Hit Point")]
     [Export] public HitPointPolicyType HitPointPolicy { get; set; } = HitPointPolicyType.Metroid;
 
     [Export] public bool HideHitPointAtZero { get; set; } = true;
@@ -104,6 +104,10 @@ public partial class GameRule : Resource
     [Export] public float DefaultHitPointHi { get; set; } = 100;
     [Export] public float DefaultTerrainDamageLo { get; set; } = 1;
     [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
+
+    [ExportSubgroup("Player Weapon's Power")]
+    [Export] public float StompPower { get; set; } = 100;
+    [Export] public float FireballPower { get; set; } = 20;
 
     public void ResetGlobalData()
     {

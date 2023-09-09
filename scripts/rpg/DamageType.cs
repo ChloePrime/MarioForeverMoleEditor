@@ -14,6 +14,9 @@ public enum DamageType : uint
     Star        = 1 << 6,
     Enemy       = 1 << 7,
     Poison      = 1 << 8,
+    
+    Armored     = Environment | Bump | Star | KickShell,
+    Unarmored   = Armored | Fireball | Beetroot,
 }
 
 public static class DamageTypeEx
