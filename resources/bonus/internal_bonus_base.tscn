@@ -15,7 +15,7 @@ PickSound = ExtResource("4_qtpe2")
 TargetSpeed = 0.0
 CollideWithOthers = false
 
-[node name="Enemy Core" parent="." index="3"]
+[node name="Enemy Core" parent="." index="2"]
 script = null
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]

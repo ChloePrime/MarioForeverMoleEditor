@@ -5,15 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://tiles/T_tileset_bonus.png" id="2_puicr"]
 [ext_resource type="Script" path="res://scripts/bonus/GreenMushroom.cs" id="2_qohbl"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nk7ps"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcn50"]
 atlas = ExtResource("2_puicr")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_jhicn"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_lr5ih"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nk7ps")
+"texture": SubResource("AtlasTexture_rcn50")
 }],
 "loop": true,
 "name": &"default",
@@ -26,7 +26,8 @@ Score = ExtResource("2_bdxsb")
 PickSound = null
 TargetSpeed = 100.0
 
-[node name="Sprite" parent="." index="1"]
-sprite_frames = SubResource("SpriteFrames_jhicn")
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_lr5ih")
+autoplay = "default"
 
 [editable path="Enemy Core"]

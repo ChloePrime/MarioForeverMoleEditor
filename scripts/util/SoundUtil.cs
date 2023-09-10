@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace ChloePrime.MarioForever.Util;
@@ -7,12 +9,12 @@ public static class SoundUtil
 {
     private const int MaxPooledPlayers = 64;
 
-    public static void Play(this AudioStream sound)
+    public static void Play(this AudioStream? sound)
     {
         (Engine.GetMainLoop() as SceneTree)?.Root.PlaySound(sound);
     }
     
-    public static void PlaySound(this Node node, AudioStream sound)
+    public static void PlaySound(this Node node, AudioStream? sound)
     {
         if (sound is null)
         {
@@ -44,12 +46,13 @@ public static class SoundUtil
         return player;
     }
 
-    private static bool TryPurgeAndPop(out AudioStreamPlayer ret)
+    
+    private static bool TryPurgeAndPop([NotNullWhen(true)] out AudioStreamPlayer? ret)
     {
         while (PlayerPool.TryPop(out var player))
         {
             // 清理跨场景时可能被释放的实例
-            if (player != null && !GodotObject.IsInstanceValid(player))
+            if (!GodotObject.IsInstanceValid(player))
             {
                 continue;
             }

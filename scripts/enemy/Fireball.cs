@@ -22,6 +22,8 @@ public partial class Fireball : WalkableObjectBase
         None = 0,
         WithDefaultSound = 1,
     }
+
+    public void Explode() => Explode(ExplodeFlags.None);
     
     public virtual void Explode(ExplodeFlags flags)
     {

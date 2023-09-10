@@ -10,7 +10,7 @@ MaxSpeedScale = 1.0
 AccelerationScale = 0.25
 PickSound = ExtResource("3_wqacn")
 
-[node name="Sprite" parent="." index="1"]
-position = Vector2(0, 0)
+[node name="Sprite" parent="Enemy Core" index="2"]
+autoplay = "default"
 
 [editable path="Enemy Core"]

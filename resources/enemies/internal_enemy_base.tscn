@@ -29,13 +29,10 @@ CollideWithOthers = true
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_8kmp8")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-
 [node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-16, -16, 32, 32)
 
-[node name="Enemy Core" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("3_ketea")]
-Sprite = NodePath("../Sprite")
+[node name="Enemy Core" parent="." instance=ExtResource("3_ketea")]
 MyNpcData = null
 
 [editable path="Enemy Core"]

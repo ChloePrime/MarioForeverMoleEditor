@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Player;
+﻿using System.Diagnostics.CodeAnalysis;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
@@ -17,7 +18,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     [Export(MaFo.PropertyHint.LayerDamageType)]
     public uint OneHitDamageTypes = (uint)(DamageType.Armored | DamageType.Stomp);
 
-    [Export]
+
+    [Export, MaybeNull]
+    public AudioStream HurtSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_hit_common.wav");
+    
+    [Export, MaybeNull]
     public AudioStream DeathSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_enemy_down_2.ogg");
 
     [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://objects/ui/O_score_200.tscn");
@@ -113,8 +118,14 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     private void OnHurt(DamageEvent e)
     {
         Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
+        if (Core.Animation is {} animation)
+        {
+            animation.Play(AnimHurt);
+        }
+        HurtSound?.Play();
     }
-
+    
+    private static readonly StringName AnimHurt = "hurt";
     private static readonly Vector2 ScorePivot = new(0, -16);
 
     public virtual Node2D CreateScore(DamageEvent e)
@@ -134,7 +145,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     public virtual void PlayDeathSound(DamageEvent e)
     {
-        this.PlaySound(DeathSound);
+        DeathSound?.Play();
     }
 
     public virtual Node2D CreateCorpse(DamageEvent e)

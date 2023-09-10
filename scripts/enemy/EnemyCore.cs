@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using ChloePrime.MarioForever.RPG;
 using Godot;
 
@@ -9,7 +8,6 @@ namespace ChloePrime.MarioForever.Enemy;
 public partial class EnemyCore : Node2D, IMarioForeverNpc
 {
     [Export] private Node2D RootOverride { get; set; }
-    [Export, MaybeNull] public AnimatedSprite2D Sprite { get; private set; }
     
     /// <summary>
     /// 优先使用 <see cref="Root"/> 的 NPC 数据，随后才会用这里的
@@ -22,6 +20,8 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     [Signal]
     public delegate void DiedEventHandler();
     
+    public AnimatedSprite2D Sprite { get; private set; }
+    public AnimationPlayer Animation { get; private set; }
     public Node2D Root { get; private set; }
     public MarioForeverNpcData NpcData => Root == this ? MyNpcData : (Root as IMarioForeverNpc)?.NpcData ?? MyNpcData ?? MarioForeverNpcData.SafeFallback;
     public IMarioForeverNpc AsNpc => this;
@@ -30,5 +30,10 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     {
         base._Ready();
         Root = (RootOverride ?? (GetParent() as WalkableNpc)) ?? this;
+        Sprite = GetNode<AnimatedSprite2D>(NpSprite);
+        Animation = GetNode<AnimationPlayer>(NpAnimation);
     }
+
+    private static readonly NodePath NpSprite = "Sprite";
+    private static readonly NodePath NpAnimation = "Animation Player";
 }

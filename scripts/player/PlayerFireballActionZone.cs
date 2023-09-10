@@ -19,13 +19,13 @@ public partial class PlayerFireballActionZone : FireballActionZone
         {
             return;
         }
-        var hit = ehd.HurtBy(new DamageEvent
+        ehd.HurtBy(new DamageEvent
         {
             DamageTypes = DamageType.Fireball,
             DamageToEnemy = this.GetRule().FireballPower,
             DirectSource = Fireball,
             TrueSource = Fireball.Shooter
         });
-        Fireball.Explode(hit ? Fireball.ExplodeFlags.None : Fireball.ExplodeFlags.WithDefaultSound);
+        Fireball.Explode();
     }
 }

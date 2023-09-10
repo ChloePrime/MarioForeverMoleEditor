@@ -9,3 +9,5 @@ script = ExtResource("2_exaef")
 HitPointNutritionLo = 3.0
 HitPointNutritionHi = 100.0
 TargetStatus = ExtResource("2_8lpx0")
+
+[editable path="Enemy Core"]
