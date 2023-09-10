@@ -29,6 +29,7 @@ public partial class Mario : CharacterBody2D
     [Export] public float AccelerationWhenWalking { get; set; } = Units.Acceleration.CtfMovementToGd(1);
     [Export] public float AccelerationWhenRunning { get; set; } = Units.Acceleration.CtfMovementToGd(1);
     [Export] public float AccelerationWhenTurning { get; set; } = Units.Acceleration.CtfMovementToGd(4);
+    [Export] public float Slipperiness { get; set; }
     [Export] public float SprintChargeTime { get; set; } = 24F / 64;
     [Export] public float SprintCooldownSpeed { get; set; } = 1 / 6.4F;
     [Export] public bool AllowMoveOutOfScreen { get; set; }

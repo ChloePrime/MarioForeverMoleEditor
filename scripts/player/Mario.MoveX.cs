@@ -27,6 +27,8 @@ public partial class Mario
         GameRule.MarioDirectionPolicy.FollowXSpeed or _ => XDirection
     };
 
+    public float NaturalXFriction => 1 / Math.Max(1e-4F, Slipperiness + 1);
+
     private bool _leftPressed;
     private bool _rightPressed;
     private bool _runPressed;
@@ -132,13 +134,15 @@ public partial class Mario
                 XSpeed = Math.Max(max, XSpeed - acc * delta);
             }
         }
+        
+        var natFriction = NaturalXFriction;
         if (!_walking && XSpeed > 0)
         {
-            XSpeed = Math.Max(0, XSpeed - AccelerationWhenWalking * delta);
+            XSpeed = Math.Max(0, XSpeed - AccelerationWhenWalking * natFriction * delta);
         }
         if (!_running && XSpeed > MaxSpeedWhenWalking)
         {
-            XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenRunning * delta);
+            XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenRunning * natFriction * delta);
         }
         
         // RE: 初速度

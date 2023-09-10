@@ -6,7 +6,7 @@ public partial class GreenMushroom : PickableBonus
 {
     public override void _OnMarioGotMe(Mario mario)
     {
-        mario.MakeSlippery(false);
+        mario.MakeSlippery(0);
         base._OnMarioGotMe(mario);
     }
 }

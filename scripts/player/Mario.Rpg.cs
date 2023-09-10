@@ -186,38 +186,10 @@ public partial class Mario
     private const int PosSaveRecordCount = 30;
     private static readonly NodePath NpCorpseDeathSound = "The Funny Sound";
 
-    public void MakeSlippery(bool enabled, float maxSpeedScale = 1, float accScale = 1, bool accModifyTurnOnly = true)
+    public void MakeSlippery(float slipperiness)
     {
-        _speedBackups ??= new float?[6];
-        if (enabled)
-        {
-            _speedBackups[0] ??= MaxSpeedWhenWalking;
-            _speedBackups[1] ??= MaxSpeedWhenRunning;
-            _speedBackups[2] ??= MaxSpeedWhenSprinting;
-            _speedBackups[3] ??= AccelerationWhenWalking;
-            _speedBackups[4] ??= AccelerationWhenRunning;
-            _speedBackups[5] ??= AccelerationWhenTurning;
-            MaxSpeedWhenWalking *= maxSpeedScale;
-            MaxSpeedWhenRunning *= maxSpeedScale;
-            MaxSpeedWhenSprinting *= maxSpeedScale;
-            if (!accModifyTurnOnly)
-            {
-                AccelerationWhenWalking *= accScale;
-                AccelerationWhenRunning *= accScale;
-            }
-            AccelerationWhenTurning *= accScale;
-        }
-        else
-        {
-            MaxSpeedWhenWalking = _speedBackups[0] ?? MaxSpeedWhenWalking;
-            MaxSpeedWhenRunning = _speedBackups[1] ?? MaxSpeedWhenRunning;
-            MaxSpeedWhenSprinting = _speedBackups[2] ?? MaxSpeedWhenSprinting;
-            AccelerationWhenWalking = _speedBackups[3] ?? AccelerationWhenWalking;
-            AccelerationWhenRunning = _speedBackups[4] ?? AccelerationWhenRunning;
-            AccelerationWhenTurning = _speedBackups[5] ?? AccelerationWhenTurning;
-            Array.Fill(_speedBackups, null);
-        }
-        _slipperyGas.Visible = enabled;
+        Slipperiness = slipperiness;
+        _slipperyGas.Visible = slipperiness is not 0;
     }
 
     private void PostDeath()
@@ -297,7 +269,6 @@ public partial class Mario
     private float _flashTime;
     private float _flashDuration;
     private float _invulnerableFlashPhase;
-    private float?[] _speedBackups;
     private MarioCollisionBySize _hurtZone;
     private MarioCollisionBySize _deathZone;
     private Timer _invulnerableTimer;
