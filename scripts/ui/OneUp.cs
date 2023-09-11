@@ -3,7 +3,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.UI;
 
-public partial class OneUp: Score
+public partial class OneUp : Score
 {
     [Export] public AudioStream Sound { get; private set; } = GD.Load<AudioStream>("res://resources/ui/SE_1up.wav");
 
@@ -21,6 +21,11 @@ public partial class OneUp: Score
         if (!this.GetRule().DisableLives)
         {
             GlobalData.Lives += (int)Amount;
+        }
+        else
+        {
+            Visible = false;
+            QueueFree();
         }
     }
 }

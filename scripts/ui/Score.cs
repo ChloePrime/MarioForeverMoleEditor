@@ -34,6 +34,11 @@ public partial class Score: Sprite2D
         {
             GlobalData.Score += Amount;
         }
+        else
+        {
+            Visible = false;
+            QueueFree();
+        }
     }
 
     private float _distanceMoved;
