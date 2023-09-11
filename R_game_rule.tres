@@ -35,3 +35,5 @@ DefaultHitPointLo = 8.0
 DefaultHitPointHi = 100.0
 DefaultTerrainDamageLo = 1.0
 DefaultTerrainDamageHi = 16.0
+StompPower = 100.0
+FireballPower = 20.0

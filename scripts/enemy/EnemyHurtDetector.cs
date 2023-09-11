@@ -58,7 +58,10 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         {
             return;
         }
-        HurtBy(new DamageEvent(DamageType.Stomp, stomper));
+        HurtBy(new DamageEvent(DamageType.Stomp, stomper)
+        {
+            DamageToEnemy = stomper.GetRule().StompPower,
+        });
         if (stomper is Mario mario)
         {
             var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;

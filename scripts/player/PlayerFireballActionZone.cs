@@ -24,7 +24,7 @@ public partial class PlayerFireballActionZone : FireballActionZone
             DamageTypes = DamageType.Fireball,
             DamageToEnemy = this.GetRule().FireballPower,
             DirectSource = Fireball,
-            TrueSource = Fireball.Shooter
+            TrueSource = Fireball.Shooter,
         });
         Fireball.Explode();
     }
