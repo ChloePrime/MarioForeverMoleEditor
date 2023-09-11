@@ -87,4 +87,9 @@ public static partial class NodeEx
         }
         return t;
     }
+
+    public static R Clone<R>(this R resource) where R : Resource
+    {
+        return (R)resource.Duplicate();
+    }
 }

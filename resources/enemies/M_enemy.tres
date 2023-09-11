@@ -3,7 +3,6 @@
 [ext_resource type="Shader" path="res://resources/enemies/S_enemy.gdshader" id="1_81ral"]
 
 [resource]
-resource_local_to_scene = true
 shader = ExtResource("1_81ral")
 shader_parameter/tint_color = Color(1, 0, 0, 1)
 shader_parameter/tint_alpha = 0.0

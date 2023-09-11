@@ -47,10 +47,11 @@ script = ExtResource("3_sw373")
 StompedSound = ExtResource("4_mjcfe")
 StompedCorpse = ExtResource("5_deyan")
 Stompable = true
-OneHitDamageTypes = 125
+OneHitDamageTypes = 127
 HurtSound = ExtResource("7_msb3l")
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_l4iyx")
+autoplay = "default"
 
 [editable path="Enemy Core"]

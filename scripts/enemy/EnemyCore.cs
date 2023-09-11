@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ChloePrime.MarioForever.RPG;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Enemy;
 
@@ -32,6 +33,11 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         Root = (RootOverride ?? (GetParent() as WalkableNpc)) ?? this;
         Sprite = GetNode<AnimatedSprite2D>(NpSprite);
         Animation = GetNode<AnimationPlayer>(NpAnimation);
+
+        if (Sprite.Material is { ResourceLocalToScene: false } material)
+        {
+            Sprite.Material = material.Clone();
+        }
     }
 
     private static readonly NodePath NpSprite = "Sprite";
