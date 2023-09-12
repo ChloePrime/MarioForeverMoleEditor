@@ -24,6 +24,9 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     
     [Export, MaybeNull]
     public AudioStream DeathSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_enemy_down_2.ogg");
+    
+    [Export, MaybeNull]
+    public AudioStream StompedSound { get; set; } = GD.Load<AudioStream>("res://resources/enemies/SE_stomp.wav");
 
     [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://objects/ui/O_score_200.tscn");
 
@@ -175,7 +178,14 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     public virtual void PlayDeathSound(DamageEvent e)
     {
-        DeathSound?.Play();
+        if (e.DamageTypes == DamageType.Stomp)
+        {
+            StompedSound?.Play();
+        }
+        else
+        {
+            DeathSound?.Play();
+        }
     }
 
     public virtual Node2D CreateCorpse(DamageEvent e)

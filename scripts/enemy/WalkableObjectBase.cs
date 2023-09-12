@@ -76,7 +76,7 @@ public partial class WalkableObjectBase : GravityObjectBase
 
     public override void _PhysicsProcess(double deltaD)
     {
-        if (Enabled && !(this as IGrabbable).IsGrabbed)
+        if (CanMove)
         {
             if (!Mathf.IsZeroApprox(ControlAcceleration))
             {

@@ -56,9 +56,9 @@ public partial class DebugCheater : Node
         }
         if (e is InputEventKey { PhysicalKeycode: Key.Q } && e.IsPressed())
         {
-            var goomba = GD.Load<PackedScene>("res://objects/enemies/O_goomba.tscn").Instantiate<GravityObjectBase>();
-            this.GetLevelManager()?.LevelInstance?.AddChild(goomba);
-            (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Mario)?.Grab(goomba);
+            var mole = GD.Load<PackedScene>("res://objects/enemies/O_mole.tscn").Instantiate<GravityObjectBase>();
+            this.GetLevelManager()?.LevelInstance?.AddChild(mole);
+            (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Mario)?.Grab(mole);
         }
     }
 }

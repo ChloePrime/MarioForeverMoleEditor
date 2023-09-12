@@ -64,6 +64,8 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
 	public bool Appearing { get; private set; }
 	public bool ReallyEnabled => Enabled && !Appearing;
+	public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
+	public virtual float AnimationDirection => XDirection;
 
 	public void AppearFrom(Vector2 pipeNormal)
 	{
@@ -109,9 +111,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 		if (!WasThrown) return;
 
-		// TryHitOverlappedEnemyWhenThrown(this.GetSlideCollisions().Select(col => col.GetCollider()));
-
-		if (!IsOnFloorOnly())
+		if (!IsOnFloor())
 		{
 			foreach (var collision in this.GetSlideCollisions())
 			{
@@ -150,18 +150,6 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			.Where(ehd => ehd.Core.Root != this)
 			.ForEach(ehd =>
 			{
-				var e = new DamageEvent
-				{
-					DamageToEnemy = 100,
-					DamageTypes = DamageType.KickShell,
-					DirectSource = this,
-				};
-				// 亲嘴必须能够杀死对方时才会触发
-				if (isKiss && !ehd.CanBeOneHitKilledBy(e))
-				{
-					return;
-				}
-				ehd.HurtBy(e);
 				EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss);
 			});
 

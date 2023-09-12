@@ -13,9 +13,5 @@ public partial class WalkableNpc : WalkableObjectBase, IMarioForeverNpc
 {
     [Export] public MarioForeverNpcData NpcData { get; private set; }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        if (NpcData.DoNotMove) return;
-        base._PhysicsProcess(delta);
-    }
+    public override bool CanMove => !NpcData.DoNotMove && base.CanMove;
 }

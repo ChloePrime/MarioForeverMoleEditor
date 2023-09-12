@@ -80,6 +80,23 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         }
     }
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (Sprite is { } sprite && Root is GravityObjectBase gob)
+        {
+            var shouldFlipH = (gob as IGrabbable).IsGrabbed ? false : gob.AnimationDirection < 0;
+            if (sprite.FlipH != shouldFlipH)
+            {
+                sprite.FlipH = shouldFlipH;
+            }
+            if (gob is IDynamicAnimationSpeedEnemy das)
+            {
+                sprite.SpeedScale = das.AnimationSpeedScale;
+            }
+        }
+    }
+
     private Node2D _root;
     private static readonly NodePath NpSprite = "Sprite";
     private static readonly NodePath NpAnimation = "Animation Player";
