@@ -33,6 +33,17 @@ public struct ShapeHitResult
 
 public static class ShapeHitResultEx
 {
+    public static IEnumerable<ShapeHitResult> IntersectTyped(
+        this CollisionShape2D shape,
+        PhysicsShapeQueryParameters2D param,
+        int maxResults = 32)
+    {
+        var state = shape.GetWorld2D().DirectSpaceState;
+        param.Shape = shape.Shape;
+        param.Transform = shape.GlobalTransform;
+        return state.IntersectShapeTyped(param, maxResults);
+    }
+    
     public static IEnumerable<ShapeHitResult> IntersectShapeTyped(
         this PhysicsDirectSpaceState2D state,
         PhysicsShapeQueryParameters2D parameters,

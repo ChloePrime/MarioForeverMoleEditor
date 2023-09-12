@@ -42,9 +42,15 @@ public partial class EnemyDamageSource : Area2D
         {
             return;
         }
-        if (Detector.Stompable && _stompProtection > 0)
+        // 被抱起来以后不会伤害到马里奥
+        if (Core.Root is IGrabbable { Grabber: not null })
         {
-            _stompProtection -= (float)delta;
+            _protection = 0.2F;
+            return;
+        }
+        if (_protection > 0)
+        {
+            _protection -= (float)delta;
             return;
         }
         
@@ -63,11 +69,11 @@ public partial class EnemyDamageSource : Area2D
         }
     }
 
-    private float _stompProtection;
+    private float _protection;
 
     private void OnStomped()
     {
-        _stompProtection = 0.2F;
+        _protection = 0.2F;
     }
 
     private void OnAreaEntered(Area2D other)

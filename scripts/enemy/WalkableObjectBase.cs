@@ -1,4 +1,5 @@
 ﻿using System;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -9,11 +10,10 @@ namespace ChloePrime.MarioForever.Enemy;
 [GlobalClass]
 public partial class WalkableObjectBase : GravityObjectBase
 {
-    [Export] public float TargetSpeed { get; set; } = Units.Speed.CtfToGd(1);
     [Export] public float JumpStrength { get; set; }
-
-    [ExportGroup($"{nameof(WalkableObjectBase)} (Advanced)")] 
-    [Export] public float ControlAcceleration;
+	
+    [ExportGroup($"{nameof(GravityObjectBase)} (Advanced)")] 
+    [Export] public float ControlAcceleration { get; set; }
 
     private VisibleOnScreenNotifier2D _enterScreenDetector;
 
@@ -34,14 +34,17 @@ public partial class WalkableObjectBase : GravityObjectBase
 
     protected override void _ProcessCollision()
     {
-        if (IsOnWall())
+        base._ProcessCollision();
+        if (!WasThrown)
         {
-            XDirection *= -1;
-            XSpeed = TargetSpeed;
-        }
-        if (IsOnFloor() && JumpStrength != 0)
-        {
-            YSpeed = -JumpStrength;
+            if (IsOnWall())
+            {
+                XSpeed = TargetSpeed;
+            }
+            if (IsOnFloor() && JumpStrength != 0)
+            {
+                YSpeed = -JumpStrength;
+            }
         }
     }
 
@@ -73,7 +76,7 @@ public partial class WalkableObjectBase : GravityObjectBase
 
     public override void _PhysicsProcess(double deltaD)
     {
-        if (Enabled)
+        if (Enabled && !(this as IGrabbable).IsGrabbed)
         {
             if (!Mathf.IsZeroApprox(ControlAcceleration))
             {

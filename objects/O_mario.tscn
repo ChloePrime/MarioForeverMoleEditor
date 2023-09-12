@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=74 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://bodhgx6bdjudy" path="res://resources/mario/status_chloe_3d.tres" id="5_v43mo"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://resources/mario/SE_hurt.wav" id="7_oqh4d"]
 [ext_resource type="Material" uid="uid://myh55fdcpwtl" path="res://resources/mario/M_mario_main.tres" id="7_pl8do"]
+[ext_resource type="Script" path="res://scripts/player/MarioGrabMuzzle.cs" id="9_ug04s"]
 [ext_resource type="Texture2D" uid="uid://dm3igultx8jfo" path="res://resources/mario/T_foot_gas.png" id="10_pqqm3"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
 
@@ -394,16 +395,18 @@ animations = [{
 "speed": 25.0
 }]
 
-[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
+[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
 z_index = 100
 collision_layer = 65536
 collision_mask = 3
 floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_slc8u")
+GrabReleaseTossUpStrength = 800.0
 CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
 StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b"), ExtResource("5_v43mo")])
 MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
+GrabMuzzleBySize = [NodePath("SpriteRoot/Grab Muzzle (Small)"), NodePath("SpriteRoot/Grab Muzzle (Big)"), NodePath("SpriteRoot/Grab Muzzle (Small)")]
 StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
 [node name="Collision_Big" type="CollisionShape2D" parent="."]
@@ -473,7 +476,19 @@ position = Vector2(10, -40)
 [node name="Muzzle (Crouching)" type="Node2D" parent="SpriteRoot"]
 position = Vector2(10, -21)
 
+[node name="Grab Muzzle (Small)" type="Node2D" parent="SpriteRoot"]
+position = Vector2(12, -17)
+script = ExtResource("9_ug04s")
+
+[node name="Grab Muzzle (Big)" type="Node2D" parent="SpriteRoot"]
+position = Vector2(8, -22)
+script = ExtResource("9_ug04s")
+
+[node name="Grab Root" type="Node2D" parent="SpriteRoot"]
+position = Vector2(12, -17)
+
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
+animation = &"[00] stopped"
 
 [node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot"]
 use_parent_material = true

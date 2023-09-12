@@ -23,6 +23,8 @@ floor_max_angle = 0.794125
 floor_snap_length = 8.0
 script = ExtResource("1_hflx6")
 NpcData = SubResource("Resource_x02rj")
+ControlAcceleration = 312.5
+TargetSpeed = 50.0
 CollideWithOthers = true
 
 [node name="Collision Shape" type="CollisionShape2D" parent="."]

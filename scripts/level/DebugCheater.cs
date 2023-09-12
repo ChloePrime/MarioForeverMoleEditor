@@ -1,4 +1,6 @@
-﻿using ChloePrime.MarioForever.Player;
+﻿using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.Util;
 using Godot;
 using Godot.Collections;
 
@@ -40,7 +42,7 @@ public partial class DebugCheater : Node
                 return;
             }
         }
-        if (e is InputEventKey keyEvent && keyEvent.PhysicalKeycode == Key.Key9)
+        if (e is InputEventKey { PhysicalKeycode: Key.Key9 })
         {
             if (e.IsPressed() && Input.IsPhysicalKeyPressed(Key.Ctrl))
             {
@@ -51,6 +53,12 @@ public partial class DebugCheater : Node
             {
                 GlobalData.Lives++;
             }
+        }
+        if (e is InputEventKey { PhysicalKeycode: Key.Q } && e.IsPressed())
+        {
+            var goomba = GD.Load<PackedScene>("res://objects/enemies/O_goomba.tscn").Instantiate<GravityObjectBase>();
+            this.GetLevelManager()?.LevelInstance?.AddChild(goomba);
+            (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Mario)?.Grab(goomba);
         }
     }
 }

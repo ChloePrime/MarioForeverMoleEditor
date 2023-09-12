@@ -114,7 +114,7 @@ public partial class Mario
                 {
                     DamageLo = GameRule.HitPointProtectsDeathCostLo,
                     DamageHi = GameRule.HitPointProtectsDeathCostHi,
-                    IsDeathProtection = true,
+                    EventFlags = DamageEvent.Flags.DeathProtection,
                 };
                 Hurt(event2);
                 if (e.DirectSource == _slipperyGas && _posQueue.TryPeek(out var safePos))
@@ -154,7 +154,7 @@ public partial class Mario
         QueueFree();
     }
 
-    private void UpdatePositionAutoSave()
+    private void ProcessPositionAutoSave()
     {
         if (_isInAir || _crouching)
         {

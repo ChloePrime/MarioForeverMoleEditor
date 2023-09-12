@@ -33,25 +33,6 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public EnemyCore Core { get; private set; }
     public Node2D Root => Core.Root;
 
-    public override void _Ready()
-    {
-        base._Ready();
-        Core = GetParent<EnemyCore>();
-        BodyEntered += OnBodyEntered;
-    }
-
-    private void OnBodyEntered(Node2D other)
-    {
-        if (Core.NpcData.Friendly)
-        {
-            return;
-        }
-        if (Stompable && other is Mario mario && mario.WillStomp(Core.Root))
-        {
-            StompBy(mario);
-        }
-    }
-
     public void StompBy(Node2D stomper)
     {
         if (Core.NpcData.Friendly)
@@ -78,6 +59,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         {
             return false;
         }
+        
+        if (e.DamageTypes.ContainsAny(DamageType.Stomp))
+        {
+            EmitSignal(SignalName.Stomped);
+        }
 
         // 先掉血，血没掉完就不死
         if (!CanBeOneHitKilledBy(e) && (Core.AsNpc.HitPoint > 0))
@@ -89,16 +75,28 @@ public partial class EnemyHurtDetector : Area2D, IStompable
                 return false;
             }
         }
-
-        // 死亡流程
-        if (e.DamageTypes.ContainsAny(DamageType.Stomp))
-        {
-            EmitSignal(SignalName.Stomped);
-        }
         
-        PlayDeathSound(e);
+        return Kill(e);
+    }
 
-        if (Root.GetParent() is { } parent)
+    public virtual bool Kill(DamageEvent e)
+    {
+        if (_killed)
+        {
+            return true;
+        }
+        _killed = true;
+
+        if (!e.IsSilent)
+        {
+            PlayDeathSound(e);
+        }
+
+        if (_oldParent is { } oldParent && Root.GetParent() is not null)
+        {
+            Root.Reparent(oldParent);
+        }
+        if (Root.GetParent() is {} parent)
         {
             if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
             {
@@ -118,6 +116,35 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         return true;
     }
 
+    private bool _killed;
+    private Node _oldParent;
+    private static readonly StringName AnimHurt = "hurt";
+    private static readonly Vector2 ScorePivot = new(0, -16);
+    
+    public override void _Ready()
+    {
+        base._Ready();
+        Core = GetParent<EnemyCore>();
+        BodyEntered += OnBodyEntered;
+        if (Core.Root is IGrabbable grabbable)
+        {
+            grabbable.Grabbed += e => _oldParent = e.OldParent;
+            grabbable.GrabReleased += _ => _oldParent = null;
+        }
+    }
+
+    private void OnBodyEntered(Node2D other)
+    {
+        if (Core.NpcData.Friendly)
+        {
+            return;
+        }
+        if (Stompable && other is Mario mario && mario.WillStomp(Core.Root))
+        {
+            StompBy(mario);
+        }
+    }
+
     private void OnHurt(DamageEvent e)
     {
         Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
@@ -125,11 +152,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         {
             animation.Play(AnimHurt);
         }
-        HurtSound?.Play();
+        if (!e.IsSilent)
+        {
+            HurtSound?.Play();
+        }
     }
-    
-    private static readonly StringName AnimHurt = "hurt";
-    private static readonly Vector2 ScorePivot = new(0, -16);
 
     public virtual Node2D CreateScore(DamageEvent e)
     {

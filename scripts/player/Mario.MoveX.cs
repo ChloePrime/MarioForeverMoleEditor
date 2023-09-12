@@ -32,6 +32,7 @@ public partial class Mario
     private bool _leftPressed;
     private bool _rightPressed;
     private bool _runPressed;
+    private bool _firePressed;
     private int _controlDirection = 1;
 
     private float _walkAxis;

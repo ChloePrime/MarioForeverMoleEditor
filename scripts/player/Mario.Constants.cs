@@ -16,6 +16,7 @@ public partial class Mario
         public static readonly StringName ActionJump = "[moving] jump";
         public static readonly StringName ActionRun = "[moving] run";
         public static readonly StringName ActionFire = "[battle] fire";
+        public static readonly StringName ActionUseWeapon = "[battle] use weapon";
         public static readonly NodePath NpSpriteRoot = "SpriteRoot";
         public static readonly NodePath NpSprite3DRoot = "SpriteRoot/Sprite_3D/Viewport/3D Character Root";
         public static readonly NodePath NpHurtZone = "Hurt Zone";
@@ -34,25 +35,31 @@ public partial class Mario
         public static readonly Vector2 FlipX = new(-1, 1);
         public static readonly Vector2 DoNotFlipX = new(1, 1);
         public static readonly StringName AnimStopped = "[00] stopped";
+        public static readonly StringName AnimGrabStop = "[00g] grabbing-stop";
         public static readonly StringName AnimWalking = "[01] walking";
+        public static readonly StringName AnimGrabWalk = "[01g] grabbing-walk";
         public static readonly StringName AnimRunning = "[02] running";
         public static readonly StringName AnimTurning = "[03] turning";
         public static readonly StringName AnimLaunching = "[04] launching";
         public static readonly StringName AnimJumping = "[05] jumping";
+        public static readonly StringName AnimGrabJump = "[05g] grabbing-jump";
         public static readonly StringName AnimLeaping = "[05ex] leaping";
         public static readonly StringName AnimFalling = "[06] falling";
         public static readonly StringName AnimCrouching = "[07] crouching";
         public static readonly StringName ShaderParamAlpha = "rainbow_alpha";
         [CtfAnimation(12)] public static readonly StringName AnimSwimming = "[12] swimming";
         public static readonly StringName DeprecatedAnimAppearing = "[03] appearing";
-        
+
         public static readonly ImmutableHashSet<StringName> OptionalAnimations = ImmutableHashSet.Create(
             AnimTurning,
             AnimRunning,
             AnimFalling,
             AnimCrouching,
             AnimLaunching,
-            AnimLeaping
+            AnimLeaping,
+            AnimGrabStop,
+            AnimGrabWalk,
+            AnimGrabJump
         );
 
         public static readonly ImmutableHashSet<StringName> SpecialAnimations = ImmutableHashSet.Create(

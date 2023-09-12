@@ -1,4 +1,5 @@
 ﻿using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
@@ -96,14 +97,16 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
         };
         foreach (var result in GetWorld2D().DirectSpaceState.IntersectShapeTyped(query))
         {
-            if (result.Collider is EnemyHurtDetector ehd)
+            if (result.Collider is not EnemyHurtDetector ehd) continue;
+            if (ehd.Core.Root is IGrabbable { IsGrabbed: true }) continue;
+            if (ehd.Core.Root is not CharacterBody2D body || body.IsOnFloor())
             {
                 ehd.HurtBy(new DamageEvent
                 {
                     DamageTypes = DamageType.Bump,
                     TrueSource = bumper,
                     DirectSource = this,
-                });
+                });   
             }
         }
     }

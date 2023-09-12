@@ -42,6 +42,7 @@ animations = [{
 
 [node name="Fire Flower" instance=ExtResource("1_xkatw")]
 TargetStatus = ExtResource("2_e04y1")
+ControlAcceleration = 0.0
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_7lhs3")

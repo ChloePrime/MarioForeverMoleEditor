@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c2cqpgt3klu63"]
+[gd_scene load_steps=23 format=3 uid="uid://c2cqpgt3klu63"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://resources/mario/mario_sprite_prefab.tscn" id="1_3c1jm"]
 [ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://resources/mario/T_mario.png" id="2_ghkeo"]
@@ -6,6 +6,10 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_hurfc"]
 atlas = ExtResource("2_ghkeo")
 region = Rect2(448, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54css"]
+atlas = ExtResource("2_ghkeo")
+region = Rect2(0, 192, 64, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iwjs"]
 atlas = ExtResource("2_ghkeo")
@@ -18,6 +22,14 @@ region = Rect2(384, 192, 64, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_hoaw4"]
 atlas = ExtResource("2_ghkeo")
 region = Rect2(448, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cljn5"]
+atlas = ExtResource("2_ghkeo")
+region = Rect2(128, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqca2"]
+atlas = ExtResource("2_ghkeo")
+region = Rect2(64, 192, 64, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hy5g"]
 atlas = ExtResource("2_ghkeo")
@@ -79,6 +91,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_54css")
+}],
+"loop": true,
+"name": &"[00g] grabbing-stop",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8iwjs")
 }, {
 "duration": 1.0,
@@ -89,6 +109,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"[01] walking",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cljn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqca2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54css")
+}],
+"loop": true,
+"name": &"[01g] grabbing-walk",
 "speed": 30.0
 }, {
 "frames": [{
@@ -135,6 +169,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"[05ex] leaping",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cljn5")
+}],
+"loop": true,
+"name": &"[05g] grabbing-jump",
 "speed": 0.0
 }, {
 "frames": [{
@@ -186,4 +228,4 @@ animations = [{
 [node name="Sprite_Fire" instance=ExtResource("1_3c1jm")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_sxc57")
-animation = &"[05ex] leaping"
+animation = &"[05g] grabbing-jump"

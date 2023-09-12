@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 
 namespace ChloePrime.MarioForever.RPG;
 
@@ -8,12 +9,26 @@ public readonly record struct DamageEvent(
     Node2D DirectSource
 )
 {
-    public float DamageLo { get; init; } = 0;
-    public float DamageHi { get; init; } = 0;
-    public float DamageToEnemy { get => DamageLo; init => DamageLo = value; }
-    public bool IsDeathProtection { get; init; } = false;
-    public bool BypassInvulnerable { get; init; } = false;
     public DamageEvent(DamageType types, Node2D source) : this(types, source, source)
     {
     }
+    
+    public float DamageLo { get; init; } = 0;
+    public float DamageHi { get; init; } = 0;
+    public float DamageToEnemy { get => DamageLo; init => DamageLo = value; }
+    
+    
+    [Flags]
+    public enum Flags
+    {
+        None               = 0,
+        DeathProtection    = 1,
+        BypassInvulnerable = 2,
+        Silent             = 4,
+    }
+
+    public Flags EventFlags { get; init; } = Flags.None;
+    public bool IsDeathProtection => EventFlags.HasFlag(Flags.DeathProtection);
+    public bool BypassInvulnerable  => EventFlags.HasFlag(Flags.BypassInvulnerable);
+    public bool IsSilent => EventFlags.HasFlag(Flags.Silent);
 }

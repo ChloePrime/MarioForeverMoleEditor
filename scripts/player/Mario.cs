@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.RPG;
@@ -93,6 +94,13 @@ public partial class Mario : CharacterBody2D
     [Export] public float SwimStrengthAccWhenSinking { get; set; } = Units.Speed.CtfToGd(0.5F);
 
     #endregion
+
+    [ExportGroup("Grabbing")]
+    [Export] public float GrabReleaseThrowStrength { get; set; } = 400;
+    [Export] public float GrabReleaseTossUpStrength { get; set; } = 600;
+
+    [Export, MaybeNull]
+    public AudioStream GrabTossSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_kick.wav");
     
     /// <summary>
     /// 每个大小所对应的碰撞体积，数量必须是 3 个，对应小个子，大个子，迷你状态
@@ -110,6 +118,7 @@ public partial class Mario : CharacterBody2D
     [Export] public float DefaultRainbowFlashTime { get; set; } = 1.2F;
     [Export] public Array<MarioStatus> StatusList { get; private set; }
     [Export] public Array<Node2D> MuzzleBySize { get; private set; }
+    [Export] public Array<MarioGrabMuzzle> GrabMuzzleBySize { get; private set; }
     [Export] public Array<Node> StatusSpriteNodeList { get; private set; }
 
     [ExportGroup("Voices")]
@@ -121,6 +130,7 @@ public partial class Mario : CharacterBody2D
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
     
     public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
+    public MarioGrabMuzzle GrabMuzzle => GrabMuzzleBySize[(int)_currentSize];
     
     public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }
@@ -207,15 +217,16 @@ public partial class Mario : CharacterBody2D
                 DamageTypes = DamageType.Environment,
                 DirectSource = _slipperyGas,
                 TrueSource = _slipperyGas,
-                BypassInvulnerable = true,
+                EventFlags = DamageEvent.Flags.BypassInvulnerable,
             });
             return;
         }
         var delta = (float)deltaD;
         PhysicsProcessX(delta);
         PhysicsProcessY(delta);
-        UpdateCrouch();
-        UpdatePositionAutoSave();
+        ProcessGrab(delta);
+        ProcessCrouch();
+        ProcessPositionAutoSave();
         UpdateAnimation();
 
         var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (_crouching && XSpeed > 0));
@@ -244,6 +255,10 @@ public partial class Mario : CharacterBody2D
 
     private void TryFire()
     {
+        if (WasJustGrabbing)
+        {
+            return;
+        }
         if (GlobalData.Status.Fire(this))
         {
             _firePreInput = 0;
@@ -254,18 +269,18 @@ public partial class Mario : CharacterBody2D
         }
     }
 
-    private void UpdateCrouch()
+    private void ProcessCrouch()
     {
         if (_standingSize != MarioSize.Big)
         {
             return;
         }
-        if (_downPressed && !_crouching)
+        if (_downPressed && !_crouching && !IsGrabbing)
         {
             SetSize(MarioSize.Small);
             _crouching = true;
         }
-        if (!_downPressed && _crouching)
+        if ((!_downPressed || IsGrabbing) && _crouching)
         {
             var bigShape = CollisionBySize[(int)MarioSize.Big];
 
@@ -298,7 +313,17 @@ public partial class Mario : CharacterBody2D
     {
         for (var i = 0; i < CollisionBySize.Count; i++)
         {
-            CollisionBySize[i].CallDeferred(CollisionShape2D.MethodName.SetDisabled, i != (int)size);
+            var isActive = i == (int)size;
+            CollisionBySize[i].CallDeferred(CollisionShape2D.MethodName.SetDisabled, !isActive);
+            // GrabMuzzleBySize[i].ProcessMode = isActive 
+            //     ? ProcessModeEnum.Inherit
+            //     : ProcessModeEnum.Disabled;
+            if (isActive)
+            {
+                _grabRoot.GetParent()?.RemoveChild(_grabRoot);
+                GrabMuzzleBySize[i].AddChild(_grabRoot);
+                _grabRoot.Position = Vector2.Zero;
+            }
         }
         _hurtZone.SetSize(size);
         _deathZone.SetSize(size);
@@ -363,6 +388,21 @@ public partial class Mario : CharacterBody2D
     {
         StringName anim;
         var speed = 1F;
+        if (IsGrabbing)
+        {
+            if (_isInAir && _optionalAnimations.Contains(Constants.AnimGrabJump))
+            {
+                return (Constants.AnimGrabJump, speed);
+            }
+            if (XSpeed > 0 && _optionalAnimations.Contains(Constants.AnimGrabWalk))
+            {
+                return (Constants.AnimGrabWalk, XSpeed / MaxSpeedWhenRunning);
+            }
+            if (_optionalAnimations.Contains(Constants.AnimGrabStop))
+            {
+                return (Constants.AnimGrabStop, speed);
+            }
+        }
         if (_crouching && _optionalAnimations.Contains(Constants.AnimCrouching))
         {
             return (Constants.AnimCrouching, speed);
@@ -479,9 +519,11 @@ public partial class Mario : CharacterBody2D
         base._Input(e);
         FetchInput(ref _jumpPressed, e, Constants.ActionJump);
         FetchInput(ref _runPressed, e, Constants.ActionRun);
+        FetchInput(ref _firePressed, e, Constants.ActionFire);
         FetchInput(ref _upPressed, e, Constants.ActionMoveUp);
         FetchInput(ref _downPressed, e, Constants.ActionMoveDown);
-        if (e.IsActionPressed(Constants.ActionFire))
+        InputGrab(e);
+        if (!WasJustGrabbing && e.IsActionPressed(Constants.ActionFire))
         {
             _firePreInput = 0.2F;
             TryFire();
@@ -520,9 +562,11 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _skidSound, Constants.NpSkidSound);
         this.GetNode(out _sprintSmokeTimer, Constants.NpSmkTimer);
         this.GetNode(out _skidSmokeTimer, Constants.NpSkdTimer);
+        this.GetNode(out _grabRoot, NpGrabRoot);
         GameRule = this.GetRule();
 
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
+        _firePressed = Input.IsActionPressed(Constants.ActionFire);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
         _skidSmokeTimer.Timeout += () => EmitSmoke(Constants.SkidSmoke);
 
@@ -537,6 +581,11 @@ public partial class Mario : CharacterBody2D
                 InstallStatusSprite(sprite);
             }
             SpriteNodes[status] = sprite;
+        }
+        foreach (var grabMuzzle in GrabMuzzleBySize)
+        {
+            // grabMuzzle.SyncTarget = _grabRoot;
+            // grabMuzzle.ProcessMode = ProcessModeEnum.Disabled;
         }
         
         RpgReady();

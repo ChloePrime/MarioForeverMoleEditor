@@ -15,7 +15,9 @@ public partial class LevelManager : Control
         get => _level;
         set => SetLevel(value);
     }
-    
+
+    public Node LevelInstance { get; private set; }
+
     [Export] public PackedScene TestLevel { get; set; }
     [Export] public SubViewport GameViewport { get; private set; }
     [Export] public LevelHud Hud { get; private set; }
@@ -30,8 +32,8 @@ public partial class LevelManager : Control
         {
             child.QueueFree();
         }
-        GameViewport.AddChild(_levelInstance = _level.Instantiate());
-        if (_levelInstance is MaFoLevel mfl)
+        GameViewport.AddChild(LevelInstance = _level.Instantiate());
+        if (LevelInstance is MaFoLevel mfl)
         {
             Hud.WorldName = mfl.LevelName;
             Hud.CurrentLevel = mfl;
@@ -154,7 +156,6 @@ public partial class LevelManager : Control
     }
 
     private PackedScene _level;
-    private Node _levelInstance;
     private bool _ready;
     private bool _waitingForRestart;
 }

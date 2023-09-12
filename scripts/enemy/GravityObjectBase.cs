@@ -1,18 +1,22 @@
 using System;
 using System.Linq;
 using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Shared;
 using Godot;
 using ChloePrime.MarioForever.Util;
+using DotNext.Collections.Generic;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class GravityObjectBase : CharacterBody2D
+public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 {
 	/// <see cref="ReallyEnabled"/> Enabled 并且不在出水管过程中
-	[Export] public bool Enabled { get; set; }
-	
+	[Export]
+	public bool Enabled { get; set; }
+
 	/// <summary>
 	/// X 速度，永远为正
 	/// </summary>
@@ -20,9 +24,12 @@ public partial class GravityObjectBase : CharacterBody2D
 	[Export]
 	public float XSpeed { get; set; }
 	
+	[Export] public float TargetSpeed { get; set; }
+
 	/// <summary>
 	/// Y 速度，可能为负值
 	/// </summary>
+	[ExportGroup($"{nameof(GravityObjectBase)}")] 
 	[Export]
 	public float YSpeed { get; set; }
 
@@ -31,10 +38,10 @@ public partial class GravityObjectBase : CharacterBody2D
 	/// </summary>
 	[Export(PropertyHint.Enum, "Left:-1,Right:1")]
 	public float XDirection { get; set; } = -1;
-	
+
 	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
-	
+
 	[Export]
 	public bool CollideWithOthers
 	{
@@ -45,13 +52,16 @@ public partial class GravityObjectBase : CharacterBody2D
 			SetCollisionMaskValue(MaFo.CollisionLayers.Enemy, value);
 		}
 	}
-	
+
 	[Export] public Node2D Sprite { get; set; }
 
-	[ExportGroup("Appearing")] 
-	[Export] public float AppearSpeed { get; set; } = Units.Speed.CtfToGd(1);
+	[ExportGroup("Appearing")] [Export] public float AppearSpeed { get; set; } = Units.Speed.CtfToGd(1);
 
-	public Vector2 Size => _size ??= this.Children().OfType<CollisionShape2D>().First().Shape.GetRect().Size;
+	[Signal]
+	public delegate void HitEnemyWhenThrownEventHandler(EnemyCore hit, bool isKiss);
+
+	public CollisionShape2D Shape => _shape ??= this.Children().OfType<CollisionShape2D>().First();
+	public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
 	public bool Appearing { get; private set; }
 	public bool ReallyEnabled => Enabled && !Appearing;
 
@@ -59,23 +69,28 @@ public partial class GravityObjectBase : CharacterBody2D
 	{
 		var distance = pipeNormal.Abs().MaxAxisIndex() == Vector2.Axis.X ? Size.X : Size.Y;
 		Translate(-pipeNormal * distance);
-		
+
 		_zIndexBefore = ZIndex;
 		ZIndex = -1;
 		_appearNormal = pipeNormal;
 		_appearDistance = distance;
 		Appearing = true;
 	}
-	
+
 	public bool HasHitWall { get; private set; }
+	public bool WasThrown { get; private set; }
+	public bool WasShot { get; private set; }
+	public bool WillHurtOthers => WasThrown || WasShot || (this as IGrabbable).IsGrabbed;
 	public float LastXSpeed { get; private set; }
 	public float LastYSpeed { get; private set; }
 
 	public override void _Ready()
 	{
 		base._Ready();
+		Grabbed += OnGrabbed;
+		GrabReleased += OnGrabReleased;
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
-		
+
 		if (!Appearing)
 		{
 			CallDeferred(MethodName._ReallyReady);
@@ -84,8 +99,80 @@ public partial class GravityObjectBase : CharacterBody2D
 
 	protected virtual void _ProcessCollision()
 	{
+		var hitSomething = false;
+		
+		if (IsOnWall())
+		{
+			XDirection *= -1;
+			hitSomething = true;
+		}
+
+		if (!WasThrown) return;
+
+		// TryHitOverlappedEnemyWhenThrown(this.GetSlideCollisions().Select(col => col.GetCollider()));
+
+		if (!IsOnFloorOnly())
+		{
+			foreach (var collision in this.GetSlideCollisions())
+			{
+				if (collision.GetCollider() is IBumpable bumpable)
+				{
+					bumpable.OnBumpBy(this);
+					hitSomething = true;
+				}
+			}
+		}
+		if (IsOnFloor() && LastYSpeed > 50)
+		{
+			YSpeed = -LastYSpeed / 4;
+			hitSomething = true;
+		}
+
+		if (hitSomething)
+		{
+			SetDeferred(PropertyName.WasThrown, false);
+		}
 	}
-	
+
+	private void TryHitOverlappedEnemyWhenThrown(bool isKiss)
+	{
+		if (!WillHurtOthers) return;
+		
+		var collisions = Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
+		{
+			CollideWithAreas = true,
+			CollideWithBodies = false,
+			CollisionMask = MaFo.CollisionMask.Enemy,
+		});
+
+		collisions.Select(result => result.Collider)
+			.OfType<EnemyHurtDetector>()
+			.Where(ehd => ehd.Core.Root != this)
+			.ForEach(ehd =>
+			{
+				var e = new DamageEvent
+				{
+					DamageToEnemy = 100,
+					DamageTypes = DamageType.KickShell,
+					DirectSource = this,
+				};
+				// 亲嘴必须能够杀死对方时才会触发
+				if (isKiss && !ehd.CanBeOneHitKilledBy(e))
+				{
+					return;
+				}
+				ehd.HurtBy(e);
+				EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss);
+			});
+
+		if (WasShot && !WasThrown && XSpeed - TargetSpeed <= TargetSpeed)
+		{
+			SetDeferred(PropertyName.WasShot, false);
+			OnShotEnd();
+		}
+	}
+
+
 	/// <summary>
 	/// 在该物件完全从水管中钻出后触发。
 	/// </summary>
@@ -94,9 +181,13 @@ public partial class GravityObjectBase : CharacterBody2D
 	}
 
 	private int _zIndexBefore;
+	private uint _collLayerBeforeGrab;
+	private uint _collMaskBeforeGrab;
+	private bool? _collWithOthersBefore;
 	private Vector2 _appearNormal;
 	private float _appearDistance;
 	private Vector2? _size;
+	private CollisionShape2D _shape;
 
 	public override void _Process(double delta)
 	{
@@ -111,15 +202,58 @@ public partial class GravityObjectBase : CharacterBody2D
 		}
 	}
 
+	private void OnGrabbed(Mario.GrabEvent _)
+	{
+		_collWithOthersBefore = CollideWithOthers;
+		CollideWithOthers = false;
+		
+		_collLayerBeforeGrab = CollisionLayer;
+		_collMaskBeforeGrab = CollisionMask;
+		CollisionLayer = 0;
+		CollisionMask = 0;
+	}
+
+	private void OnGrabReleased(Mario.GrabReleaseEvent e)
+	{
+		if (CollisionMask == 0 && _collMaskBeforeGrab != 0)
+		{
+			CollisionMask = _collMaskBeforeGrab;
+			_collMaskBeforeGrab = 0;
+		}
+		if (e.Flags == Mario.GrabReleaseFlags.Gently)
+		{
+			OnShotEnd();
+		}
+		else
+		{
+			WasThrown = true;
+			WasShot = true;
+		}
+	}
+
+	private void OnShotEnd()
+	{
+		if (CollisionLayer == 0 && _collLayerBeforeGrab != 0)
+		{
+			CollisionLayer = _collLayerBeforeGrab;
+			_collLayerBeforeGrab = 0;
+		}
+		if (_collWithOthersBefore is { } collWithOthersBefore)
+		{
+			CollideWithOthers = collWithOthersBefore;
+			_collWithOthersBefore = null;
+		}
+	}
+
 	private void ProcessAppearing(float delta)
 	{
 		var wouldFinish = Mathf.IsZeroApprox(_appearDistance);
-		
-		var offset = wouldFinish 
+
+		var offset = wouldFinish
 			? AppearSpeed * delta
 			: -_appearDistance.MoveToward(0, AppearSpeed * delta);
 		Translate(_appearNormal * offset);
-		
+
 		if (Mathf.IsZeroApprox(_appearDistance) && !TestMove(GlobalTransform, DeMargin))
 		{
 			Appearing = false;
@@ -132,8 +266,13 @@ public partial class GravityObjectBase : CharacterBody2D
 
 	public override void _PhysicsProcess(double deltaD)
 	{
-		if (!Enabled || Appearing)
+		var grabbed = (this as IGrabbable).IsGrabbed;
+		if (!Enabled || Appearing || grabbed)
 		{
+			if (grabbed)
+			{
+				TryHitOverlappedEnemyWhenThrown(true);
+			}
 			return;
 		}
 
@@ -152,6 +291,8 @@ public partial class GravityObjectBase : CharacterBody2D
 		XSpeed = Math.Abs(Velocity.X);
 		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
 
+		TryHitOverlappedEnemyWhenThrown(false);
+		
 		if (collided)
 		{
 			_ProcessCollision();
@@ -161,5 +302,16 @@ public partial class GravityObjectBase : CharacterBody2D
 		{
 			sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
 		}
+	}
+
+	// IGrabbable
+
+	public Node2D Grabber { get; set; }
+	public event Action<Mario.GrabEvent> Grabbed;
+	public event Action<Mario.GrabReleaseEvent> GrabReleased;
+
+	public void GrabNotify(Mario.GrabEvent e, Mario.GrabReleaseEvent? flags)
+	{
+		IGrabbable.GrabNotifyImpl(Grabbed, GrabReleased, e, flags);
 	}
 }
