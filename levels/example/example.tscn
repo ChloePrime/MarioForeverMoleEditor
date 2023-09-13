@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://objects/enemies/O_mole.tscn" id="15_rlhsy"]
 [ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="16_l4ume"]
 
-[sub_resource type="Resource" id="Resource_tj4eq"]
+[sub_resource type="Resource" id="Resource_wf3r0"]
 resource_local_to_scene = true
 script = ExtResource("16_l4ume")
 HitPoint = 50.0
@@ -60,4 +60,4 @@ position = Vector2(128, 0)
 
 [node name="Mole" parent="." instance=ExtResource("15_rlhsy")]
 position = Vector2(40, 400)
-NpcData = SubResource("Resource_tj4eq")
+NpcData = SubResource("Resource_wf3r0")

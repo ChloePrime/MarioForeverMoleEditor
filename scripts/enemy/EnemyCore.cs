@@ -49,12 +49,14 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             gob.HitEnemyWhenThrown += (it, isKiss) =>
             {
                 if (it.HurtDetector is not { } itsHurtDetector) return;
+                var trueSource = (Root as IGrabbable)?.Grabber ?? this;
                 // 伤害对方
                 var e = new DamageEvent
                 {
                     DamageToEnemy = 100,
                     DamageTypes = DamageType.KickShell,
-                    DirectSource = this,
+                    DirectSource = Root,
+                    TrueSource = trueSource
                 };
                 // 亲嘴必须能够杀死对方时才会触发
                 if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e))
@@ -68,12 +70,9 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
                 {
                     if (!DieWhenThrownAndHitOther) return;
                 }
-                myHurtDetector.HurtBy(new DamageEvent
+                myHurtDetector.HurtBy(e with
                 {
-                    DamageTypes = DamageType.KickShell,
-                    DamageToEnemy = 100,
                     DirectSource = it.Root,
-                    TrueSource = it,
                     EventFlags = DamageEvent.Flags.Silent,
                 });
             };

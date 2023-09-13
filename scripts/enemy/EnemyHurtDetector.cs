@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
@@ -104,13 +105,13 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
             {
                 parent.AddChild(score);
-                score.Position = Root.ToGlobal(ScorePivot);
+                score.GlobalPosition = Root.ToGlobal(ScorePivot);
             }
             if (CreateCorpse(e) is { } corpse)
             {
                 CustomizeCorpse(e, corpse);
-                parent.CallDeferred(Node.MethodName.AddChild, corpse);
-                corpse.Position = Root.Position;
+                parent.AddChild(corpse);
+                corpse.GlobalPosition = Root.GlobalPosition;
             }
         }
 
@@ -196,14 +197,18 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public virtual void CustomizeCorpse(DamageEvent e, Node2D corpse)
     {
         if (corpse is not GenericCorpse cor) return;
-        cor.YSpeed = Units.Speed.CtfMovementToGd(-25);
-        
+        cor.XSpeed = Units.Speed.CtfToGd(2);
+        cor.YSpeed = Units.Speed.CtfMovementToGd(-35);
+        cor.XDirection = -Math.Sign((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X);
+        cor.GlobalScale = Root.GlobalScale.Abs();
+        cor.Rotator.Cycle *= cor.XDirection;
+
         if (Core.Sprite is not {} spr) return;
         cor.SpriteFrames = spr.SpriteFrames;
         cor.Animation = spr.Animation;
         cor.Frame = spr.Frame;
         cor.FlipH = spr.FlipH;
-        cor.FlipV = !spr.FlipV;
+        cor.FlipV = spr.FlipV;
         cor.Stop();
     }
     
