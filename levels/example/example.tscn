@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=16 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -8,8 +8,6 @@
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
-[ext_resource type="PackedScene" uid="uid://bf5pyelftad5i" path="res://objects/enemies/spiky_facility/O_spike_grey_0_up.tscn" id="8_47vwa"]
-[ext_resource type="PackedScene" uid="uid://blwx4hmks2qf0" path="res://objects/enemies/spiky_facility/O_spike_grey_1_down.tscn" id="9_todrn"]
 [ext_resource type="PackedScene" uid="uid://be6r440u75fjg" path="res://objects/background/O_bg_forest_hills.tscn" id="11_nfc1d"]
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
 [ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://objects/background/O_bg_gradient.tscn" id="13_o71m4"]
@@ -17,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://objects/enemies/O_mole.tscn" id="15_rlhsy"]
 [ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="16_l4ume"]
 
-[sub_resource type="Resource" id="Resource_do0uh"]
+[sub_resource type="Resource" id="Resource_tj4eq"]
 resource_local_to_scene = true
 script = ExtResource("16_l4ume")
 HitPoint = 50.0
@@ -48,12 +46,6 @@ Border = Rect2(0, 0, 2560, 480)
 position = Vector2(496, -16)
 TargetMusic = ExtResource("7_a81sv")
 
-[node name="Spike (Up)" parent="." instance=ExtResource("8_47vwa")]
-position = Vector2(240, 336)
-
-[node name="Spike (Grey, Down)" parent="." instance=ExtResource("9_todrn")]
-position = Vector2(240, 272)
-
 [node name="Background" parent="." instance=ExtResource("11_nfc1d")]
 position = Vector2(256, 240)
 
@@ -68,4 +60,4 @@ position = Vector2(128, 0)
 
 [node name="Mole" parent="." instance=ExtResource("15_rlhsy")]
 position = Vector2(40, 400)
-NpcData = SubResource("Resource_do0uh")
+NpcData = SubResource("Resource_tj4eq")
