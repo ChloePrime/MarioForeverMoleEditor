@@ -138,14 +138,12 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	{
 		if (!WillHurtOthers) return;
 		
-		var collisions = Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
+		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
 		{
 			CollideWithAreas = true,
 			CollideWithBodies = false,
 			CollisionMask = MaFo.CollisionMask.Enemy,
-		});
-
-		collisions.Select(result => result.Collider)
+		}).Select(result => result.Collider)
 			.OfType<EnemyHurtDetector>()
 			.Where(ehd => ehd.Core.Root != this)
 			.ForEach(ehd =>
@@ -158,6 +156,20 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			SetDeferred(PropertyName.WasShot, false);
 			OnShotEnd();
 		}
+	}
+
+	private void TryHitOverlappedHiddenBonusWhenThrown()
+	{
+		if (!WillHurtOthers) return;
+		
+		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
+			{
+				CollideWithAreas = false,
+				CollideWithBodies = true,
+				CollisionMask = MaFo.CollisionMask.HiddenBonus,
+			}).Select(result => result.Collider)
+			.OfType<IBumpable>()
+			.ForEach(b => b.OnBumpBy(this));
 	}
 
 
@@ -263,6 +275,8 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			}
 			return;
 		}
+		
+		if (!CanMove) return;
 
 		var delta = (float)deltaD;
 		if (!IsOnFloor() || YSpeed < 0)
@@ -280,6 +294,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
 
 		TryHitOverlappedEnemyWhenThrown(false);
+		TryHitOverlappedHiddenBonusWhenThrown();
 		
 		if (collided)
 		{
