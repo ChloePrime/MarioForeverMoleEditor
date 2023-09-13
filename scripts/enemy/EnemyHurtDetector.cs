@@ -199,9 +199,9 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (corpse is not GenericCorpse cor) return;
         cor.XSpeed = Units.Speed.CtfToGd(2);
         cor.YSpeed = Units.Speed.CtfMovementToGd(-35);
-        cor.XDirection = -Math.Sign((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X);
         cor.GlobalScale = Root.GlobalScale.Abs();
-        cor.Rotator.Cycle *= cor.XDirection;
+        var xDir = cor.XDirection = -Math.Sign((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X);
+        cor.Rotator.Cycle *= xDir is 0 ? (GD.Randf() < 0.5F ? -1 : 1) : xDir;
 
         if (Core.Sprite is not {} spr) return;
         cor.SpriteFrames = spr.SpriteFrames;
