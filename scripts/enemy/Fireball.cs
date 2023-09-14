@@ -5,7 +5,7 @@ using Godot;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-[Icon("res://resources/shared/AT_fireball.tres")]
+[Icon("res://resources/shared/T_fireball.tres")]
 public partial class Fireball : WalkableObjectBase
 {
     [Export]
