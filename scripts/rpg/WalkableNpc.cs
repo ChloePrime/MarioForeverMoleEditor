@@ -14,4 +14,5 @@ public partial class WalkableNpc : WalkableObjectBase, IMarioForeverNpc
     [Export] public MarioForeverNpcData NpcData { get; private set; }
 
     public override bool CanMove => !NpcData.DoNotMove && base.CanMove;
+    public override bool AutoDestroy => !NpcData.DoNotMove && !NpcData.Friendly;
 }

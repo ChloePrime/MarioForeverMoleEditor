@@ -65,6 +65,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public bool Appearing { get; private set; }
 	public bool ReallyEnabled => Enabled && !Appearing;
 	public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
+	public virtual bool AutoDestroy => false;
 	public virtual float AnimationDirection => XDirection;
 
 	public void AppearFrom(Vector2 pipeNormal)
@@ -287,6 +288,9 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
 		var collided = MoveAndSlide();
 
+		TryAutoDestroy();
+		if (IsQueuedForDeletion()) return;
+
 		HasHitWall = Math.Abs(Velocity.X) < XSpeed;
 		LastXSpeed = XSpeed;
 		LastYSpeed = YSpeed;
@@ -304,6 +308,16 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		if (Sprite is { } sprite)
 		{
 			sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
+		}
+	}
+
+	private void TryAutoDestroy()
+	{
+		if (!AutoDestroy) return;
+		if (GetViewport().GetCamera2D() is not { } camera) return;
+		if (Position.Y > camera.LimitBottom + 64)
+		{
+			QueueFree();
 		}
 	}
 
