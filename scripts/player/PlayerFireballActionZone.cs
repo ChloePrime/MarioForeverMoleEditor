@@ -23,6 +23,7 @@ public partial class PlayerFireballActionZone : FireballActionZone
         {
             DamageTypes = DamageType.Fireball,
             DamageToEnemy = this.GetRule().FireballPower,
+            AttackVector = Fireball.VelocityVector,
             DirectSource = Fireball,
             TrueSource = Fireball.Shooter,
         });

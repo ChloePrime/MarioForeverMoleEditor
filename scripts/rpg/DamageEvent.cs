@@ -16,6 +16,7 @@ public readonly record struct DamageEvent(
     public float DamageLo { get; init; } = 0;
     public float DamageHi { get; init; } = 0;
     public float DamageToEnemy { get => DamageLo; init => DamageLo = value; }
+    public Vector2? AttackVector { get; init; } = null;
     
     
     [Flags]

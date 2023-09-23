@@ -62,6 +62,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	public CollisionShape2D Shape => _shape ??= this.Children().OfType<CollisionShape2D>().First();
 	public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
+	public Vector2 VelocityVector => new(XSpeed * XDirection, YSpeed);
 	public bool Appearing { get; private set; }
 	public bool ReallyEnabled => Enabled && !Appearing;
 	public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
@@ -83,7 +84,8 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public bool HasHitWall { get; private set; }
 	public bool WasThrown { get; private set; }
 	public bool WasShot { get; private set; }
-	public bool WillHurtOthers => WasThrown || WasShot || (this as IGrabbable).IsGrabbed;
+	public bool WillHurtOthers => WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
+
 	public float LastXSpeed { get; private set; }
 	public float LastYSpeed { get; private set; }
 

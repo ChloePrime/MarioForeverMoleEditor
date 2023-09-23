@@ -66,6 +66,15 @@ public partial class Mario
         if (GrabbedObject is not { } grabbing) return false;
         GrabbedObject = null;
         _grabReleaseCooldown = 0.25F;
+        
+        grabbing.GrabNotify(default, new GrabReleaseEvent(flags));
+        grabbing.Grabber = null;
+
+        if (grabbing.AsNode.IsQueuedForDeletion())
+        {
+            return true;
+        }
+        
         var gently = flags.HasFlag(GrabReleaseFlags.Gently);
         if (!gently && !flags.HasFlag(GrabReleaseFlags.Silent))
         {
@@ -102,8 +111,6 @@ public partial class Mario
             gob.YSpeed = (tossUp ? coefficient * -GrabReleaseTossUpStrength : 0);
         }
 
-        grabbing.Grabber = null;
-        grabbing.GrabNotify(default, new GrabReleaseEvent(flags));
         return true;
     }
 
