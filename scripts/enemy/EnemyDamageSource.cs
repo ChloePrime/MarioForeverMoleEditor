@@ -43,7 +43,7 @@ public partial class EnemyDamageSource : Area2D
             return;
         }
         // 被抱起来以后不会伤害到马里奥
-        if (Core.Root is IGrabbable { Grabber: not null })
+        if (Core.Root is IGrabbable grabbable && IGrabbable.IsGrabbedByPlayer(grabbable))
         {
             _protection = 0.2F;
             return;

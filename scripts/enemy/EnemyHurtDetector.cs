@@ -100,7 +100,8 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         {
             Root.Reparent(oldParent);
         }
-        if (Root.GetParent() is {} parent)
+        var parent = this.GetLevel() ?? Root.GetParent();
+        if (parent is not null)
         {
             if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
             {
@@ -133,7 +134,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (Core.Root is IGrabbable grabbable)
         {
             grabbable.Grabbed += e => _oldParent = e.OldParent;
-            grabbable.GrabReleased += _ => _oldParent = null;
+            grabbable.GrabReleased += _ => SetDeferred(PropertyName._oldParent, (Node)null);
         }
     }
 
@@ -200,7 +201,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         cor.XSpeed = Units.Speed.CtfToGd(2);
         cor.YSpeed = Units.Speed.CtfMovementToGd(-35);
         cor.GlobalScale = Root.GlobalScale.Abs();
-        var xDir = cor.XDirection = -Math.Sign((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X);
+        var xDir = cor.XDirection = Math.Sign(e.AttackVector?.X ?? -((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X));
         cor.Rotator.Cycle *= xDir is 0 ? (GD.Randf() < 0.5F ? -1 : 1) : xDir;
 
         if (Core.Sprite is not {} spr) return;

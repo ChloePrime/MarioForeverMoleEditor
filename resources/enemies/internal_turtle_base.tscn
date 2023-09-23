@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsc1uriffc8l"]
+
+[ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_cqy3r"]
+
+[sub_resource type="Resource" id="Resource_648hg"]
+resource_local_to_scene = true
+script = ExtResource("2_cqy3r")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fqhyd"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"shell_moving",
+"speed": 67.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"shell_static",
+"speed": 0.0
+}]
+
+[node name="Turtle Base" instance=ExtResource("1_puf1u")]
+NpcData = SubResource("Resource_648hg")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_fqhyd")
+animation = &"shell_static"
+
+[editable path="Enemy Core"]

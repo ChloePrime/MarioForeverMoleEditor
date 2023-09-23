@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Util;
 using Godot;
+using Godot.Collections;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Enemy;
@@ -46,36 +49,8 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
 
         if (Root is GravityObjectBase gob && HurtDetector is { } myHurtDetector)
         {
-            gob.HitEnemyWhenThrown += (it, isKiss) =>
-            {
-                if (it.HurtDetector is not { } itsHurtDetector) return;
-                var trueSource = (Root as IGrabbable)?.Grabber ?? this;
-                // 伤害对方
-                var e = new DamageEvent
-                {
-                    DamageToEnemy = 100,
-                    DamageTypes = DamageType.KickShell,
-                    DirectSource = Root,
-                    TrueSource = trueSource
-                };
-                // 亲嘴必须能够杀死对方时才会触发
-                if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e))
-                {
-                    return;
-                }
-                itsHurtDetector.HurtBy(e);
-                
-                // 自己暴毙
-                if (!isKiss && Root is not IGrabbable { IsGrabbed: true })
-                {
-                    if (!DieWhenThrownAndHitOther) return;
-                }
-                myHurtDetector.HurtBy(e with
-                {
-                    DirectSource = it.Root,
-                    EventFlags = DamageEvent.Flags.Silent,
-                });
-            };
+            gob.GrabReleased += e => OnGrabReleased(e, gob, myHurtDetector);
+            gob.HitEnemyWhenThrown += (c, isKiss) => OnHitOthers(c, isKiss, myHurtDetector);
         }
     }
 
@@ -84,7 +59,7 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         base._Process(delta);
         if (Sprite is { } sprite && Root is GravityObjectBase gob)
         {
-            var shouldFlipH = (gob as IGrabbable).IsGrabbed ? false : gob.AnimationDirection < 0;
+            var shouldFlipH = IGrabbable.IsGrabbedByPlayer(gob) ? false : gob.AnimationDirection < 0;
             if (sprite.FlipH != shouldFlipH)
             {
                 sprite.FlipH = shouldFlipH;
@@ -94,6 +69,65 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
                 sprite.SpeedScale = das.AnimationSpeedScale;
             }
         }
+    }
+
+    private static void OnGrabReleased(Mario.GrabReleaseEvent e, GravityObjectBase myGob, EnemyHurtDetector myEhd)
+    {
+        if (e.Flags.HasFlag(Mario.GrabReleaseFlags.Gently))
+        {
+            return;
+        }
+
+        var isInWall = myGob.Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
+        {
+            CollideWithAreas = false,
+            CollideWithBodies = true,
+            CollisionMask = MaFo.CollisionMask.Solid | MaFo.CollisionMask.SolidEnemyOnly,
+            Exclude = new Array<Rid> { myGob.GetRid() },
+        }).Any();
+
+        if (isInWall)
+        {
+            myEhd.Kill(new DamageEvent
+            {
+                DamageToEnemy = 100,
+                DamageTypes = DamageType.KickShell,
+                AttackVector = new Vector2(myGob.Grabber.GlobalPosition.X - myGob.GlobalPosition.X, 0),
+                DirectSource = myGob.Grabber,
+                TrueSource = myGob.Grabber,
+            });
+        }
+    }
+
+    private void OnHitOthers(EnemyCore it, bool isKiss, EnemyHurtDetector myHurtDetector)
+    {
+        if (it.HurtDetector is not { } itsHurtDetector) return;
+        var trueSource = (Root as IGrabbable)?.Grabber ?? this;
+        // 伤害对方
+        var e = new DamageEvent
+        {
+            DamageToEnemy = 100,
+            DamageTypes = DamageType.KickShell,
+            DirectSource = Root,
+            TrueSource = trueSource
+        };
+        // 亲嘴必须能够杀死对方时才会触发
+        if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e))
+        {
+            return;
+        }
+        itsHurtDetector.HurtBy(e);
+                
+        // 自己暴毙
+        if (!isKiss && Root is not IGrabbable { IsGrabbed: true })
+        {
+            if (!DieWhenThrownAndHitOther) return;
+        }
+        myHurtDetector.Kill(e with
+        {
+            DirectSource = it.Root,
+            EventFlags = DamageEvent.Flags.Silent,
+        });
     }
 
     private Node2D _root;

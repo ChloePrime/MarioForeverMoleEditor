@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=31 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -11,7 +11,97 @@
 [ext_resource type="PackedScene" uid="uid://be6r440u75fjg" path="res://objects/background/O_bg_forest_hills.tscn" id="11_nfc1d"]
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
 [ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://objects/background/O_bg_gradient.tscn" id="13_o71m4"]
+[ext_resource type="PackedScene" uid="uid://dblakd5cjfdla" path="res://objects/enemies/O_rotodisc_core.tscn" id="13_y308r"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
+[ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://objects/enemies/O_mole.tscn" id="14_23duk"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="15_2cf5k"]
+[ext_resource type="PackedScene" uid="uid://ryf2r5cmt4w7" path="res://objects/enemies/O_mole_smb3.tscn" id="16_o84e0"]
+[ext_resource type="PackedScene" uid="uid://c8aes4jehis0j" path="res://objects/enemies/spiky_facility/O_spike_iw_0_up.tscn" id="17_foy4y"]
+[ext_resource type="PackedScene" uid="uid://myfcitnc2nv1" path="res://objects/enemies/spiky_facility/O_spike_iw_1_down.tscn" id="18_lsifq"]
+[ext_resource type="PackedScene" uid="uid://de3l15m5jcviv" path="res://objects/enemies/spiky_facility/O_spike_iw_2_left.tscn" id="19_veeqw"]
+[ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
+[ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
+
+[sub_resource type="Resource" id="Resource_yby1h"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_qm1mv"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_68xah"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_xdoyv"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_u6xvj"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_u3wu2"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_jyrat"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_p8ubs"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_upjxu"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -23,8 +113,7 @@ TileLoadingPreset = ExtResource("3_ad6k1")
 [node name="Tiles" parent="." instance=ExtResource("1_xiix0")]
 
 [node name="Mario" parent="." instance=ExtResource("3_5usbp")]
-position = Vector2(272, 416)
-FastRetry = true
+position = Vector2(272, 408)
 
 [node name="MaFoCamera" type="Camera2D" parent="."]
 position = Vector2(320, 240)
@@ -46,3 +135,78 @@ position = Vector2(128, 24)
 
 [node name="Cloud (Foreground)" parent="." instance=ExtResource("14_1osfy")]
 position = Vector2(128, 0)
+
+[node name="RotoDisc Core" parent="." instance=ExtResource("13_y308r")]
+position = Vector2(336, 144)
+
+[node name="Mole" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+position = Vector2(0, 128)
+NpcData = SubResource("Resource_yby1h")
+
+[node name="Mole2" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+position = Vector2(0, 64)
+NpcData = SubResource("Resource_qm1mv")
+
+[node name="Mole3" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+position = Vector2(0, 96)
+NpcData = SubResource("Resource_68xah")
+
+[node name="Mole4" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+position = Vector2(0, 32)
+NpcData = SubResource("Resource_xdoyv")
+
+[node name="Mole (SMB3)" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+position = Vector2(0, -32)
+NpcData = SubResource("Resource_u6xvj")
+
+[node name="Mole (SMB3)2" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+position = Vector2(0, -64)
+NpcData = SubResource("Resource_u3wu2")
+
+[node name="Mole (SMB3)3" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+position = Vector2(0, -96)
+NpcData = SubResource("Resource_jyrat")
+
+[node name="Mole (SMB3)4" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+position = Vector2(0, -128)
+NpcData = SubResource("Resource_p8ubs")
+
+[node name="RotoDisc Core" parent="RotoDisc Core" instance=ExtResource("13_y308r")]
+position = Vector2(128, 0)
+RotationSpeed = -2.0
+ModifyChildrenRotation = true
+
+[node name="Spike (I Wanna, Up)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("17_foy4y")]
+position = Vector2(0, -32)
+
+[node name="Spike (I Wanna, Down)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("18_lsifq")]
+position = Vector2(0, 32)
+
+[node name="Spike (I Wanna, Left)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("19_veeqw")]
+position = Vector2(-32, 0)
+
+[node name="Spike (I Wanna, Right)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("20_tvwyx")]
+position = Vector2(32, 0)
+
+[node name="RotoDisc Core 2" parent="RotoDisc Core" instance=ExtResource("13_y308r")]
+ModifyChildrenRotation = true
+
+[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2" instance=ExtResource("13_y308r")]
+position = Vector2(-32, 0)
+ModifyChildrenRotation = true
+
+[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core" instance=ExtResource("13_y308r")]
+position = Vector2(-32, 0)
+ModifyChildrenRotation = true
+
+[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+position = Vector2(-32, 0)
+ModifyChildrenRotation = true
+
+[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+position = Vector2(-32, 0)
+ModifyChildrenRotation = true
+
+[node name="Goomba" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
+position = Vector2(-32, 0)
+NpcData = SubResource("Resource_upjxu")

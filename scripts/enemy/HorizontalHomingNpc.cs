@@ -11,7 +11,7 @@ public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEn
     [Export] public bool ScaleAnimationSpeed { get; set; } = true; 
     [Export] public Node2D Target { get; set; }
 
-    public float AnimationSpeedScale => ScaleAnimationSpeed ? XSpeed / MaxSpeed : 1;
+    public float AnimationSpeedScale => (ScaleAnimationSpeed && CanMove) ? XSpeed / MaxSpeed : 1;
 
     public override float AnimationDirection
     {
@@ -29,28 +29,25 @@ public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEn
 
     public override void _PhysicsProcess(double delta)
     {
-        if (CanMove)
+        Target ??= GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Node2D;
+        if (Target is not { } target || !IsInstanceValid(target))
         {
-            Target ??= GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Node2D;
-            if (Target is not { } target || !IsInstanceValid(target))
+            Target = null;
+        }
+        else if (CanMove)
+        {
+            var sameDir = Mathf.IsEqualApprox(Math.Sign(ToLocal(target.GlobalPosition).X), XDirection);
+            if (sameDir)
             {
-                Target = null;
+                TargetSpeed = MaxSpeed;
             }
             else
             {
-                var sameDir = Mathf.IsEqualApprox(Math.Sign(ToLocal(target.GlobalPosition).X), XDirection);
-                if (sameDir)
+                TargetSpeed = 0;
+                if (XSpeed <= 0)
                 {
+                    XDirection *= -1;
                     TargetSpeed = MaxSpeed;
-                }
-                else
-                {
-                    TargetSpeed = 0;
-                    if (XSpeed <= 0)
-                    {
-                        XDirection *= -1;
-                        TargetSpeed = MaxSpeed;
-                    }
                 }
             }
         }
