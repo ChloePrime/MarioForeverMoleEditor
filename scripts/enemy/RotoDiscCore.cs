@@ -24,6 +24,7 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
     {
         base._Ready();
         this.GetNode(out _sprite, NpSprite);
+        NpcData = NpcData.ForceLocalToScene();
 
         _entering = false;
         ChildData.EnsureCapacity(GetChildCount());

@@ -1,20 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://skpl30bmwg2q"]
+[gd_scene load_steps=9 format=3 uid="uid://skpl30bmwg2q"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_kvxpk"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_ytdgl"]
 [ext_resource type="Script" path="res://scripts/enemy/GoombaHurtDetector.cs" id="3_sw373"]
 [ext_resource type="PackedScene" uid="uid://cbmforo52axh2" path="res://resources/enemies/goomba_photo.tscn" id="5_deyan"]
 [ext_resource type="Texture2D" uid="uid://bad5nlt78fc03" path="res://resources/enemies/T_goomba.png" id="6_37d8x"]
 [ext_resource type="AudioStream" uid="uid://b2h5ryb7pmtyb" path="res://resources/enemies/SE_hit_goomba.wav" id="7_msb3l"]
-
-[sub_resource type="Resource" id="Resource_fp2oi"]
-resource_local_to_scene = true
-script = ExtResource("2_ytdgl")
-HitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qayys"]
 atlas = ExtResource("6_37d8x")
@@ -39,7 +29,6 @@ animations = [{
 }]
 
 [node name="Goomba" instance=ExtResource("1_kvxpk")]
-NpcData = SubResource("Resource_fp2oi")
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 script = ExtResource("3_sw373")

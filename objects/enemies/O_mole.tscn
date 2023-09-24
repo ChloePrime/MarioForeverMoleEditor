@@ -1,18 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cokgsxbgqqv72"]
+[gd_scene load_steps=7 format=3 uid="uid://cokgsxbgqqv72"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_a8alf"]
 [ext_resource type="Script" path="res://scripts/enemy/HorizontalHomingNpc.cs" id="2_f52af"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_i3o8s"]
 [ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://resources/enemies/T_mole.png" id="2_s7g71"]
-
-[sub_resource type="Resource" id="Resource_4njk3"]
-resource_local_to_scene = true
-script = ExtResource("2_i3o8s")
-HitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2vdqi"]
 atlas = ExtResource("2_s7g71")
@@ -40,7 +30,6 @@ animations = [{
 script = ExtResource("2_f52af")
 MaxSpeed = 150.0
 ScaleAnimationSpeed = true
-NpcData = SubResource("Resource_4njk3")
 ControlAcceleration = 125.0
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]

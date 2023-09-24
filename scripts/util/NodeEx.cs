@@ -45,6 +45,11 @@ public static partial class NodeEx
     {
         target = GD.Load<T>(path);
     }
+
+    public static T ForceLocalToScene<T>(this T resource) where T : Resource
+    {
+        return resource.ResourceLocalToScene ? resource : (T)resource.Duplicate();
+    }
     
     public static IEnumerable<Node> Children(this Node node)
     {

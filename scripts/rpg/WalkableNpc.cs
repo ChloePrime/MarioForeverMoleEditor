@@ -1,7 +1,6 @@
 ﻿using ChloePrime.MarioForever.Enemy;
-using ChloePrime.MarioForever.Util;
-using DotNext;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.RPG;
 
@@ -15,4 +14,10 @@ public partial class WalkableNpc : WalkableObjectBase, IMarioForeverNpc
 
     public override bool CanMove => !NpcData.DoNotMove && base.CanMove;
     public override bool AutoDestroy => !NpcData.DoNotMove && !NpcData.Friendly;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        NpcData = NpcData.ForceLocalToScene();
+    }
 }
