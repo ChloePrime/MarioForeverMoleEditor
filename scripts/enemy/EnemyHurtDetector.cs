@@ -96,10 +96,6 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             PlayDeathSound(e);
         }
 
-        if (_oldParent is { } oldParent && Root.GetParent() is not null)
-        {
-            Root.Reparent(oldParent);
-        }
         var parent = this.GetLevel() ?? Root.GetParent();
         if (parent is not null)
         {
