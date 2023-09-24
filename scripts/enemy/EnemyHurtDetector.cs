@@ -111,8 +111,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             if (CreateCorpse(e) is { } corpse)
             {
                 CustomizeCorpse(e, corpse);
-                parent.AddChild(corpse);
-                corpse.GlobalPosition = Root.GlobalPosition;
+                CallDeferred(MethodName.AddCorpseLater, parent, corpse, Root.GlobalPosition);
             }
         }
 
@@ -136,6 +135,12 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             grabbable.Grabbed += e => _oldParent = e.OldParent;
             grabbable.GrabReleased += _ => SetDeferred(PropertyName._oldParent, (Node)null);
         }
+    }
+
+    private void AddCorpseLater(Node parent, Node2D child, Vector2 globalPosition)
+    {
+        parent.AddChild(child);
+        child.GlobalPosition = globalPosition;
     }
 
     private void OnBodyEntered(Node2D other)
