@@ -1,0 +1,111 @@
+[gd_scene load_steps=15 format=3 uid="uid://cm06y3cialwt2"]
+
+[ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://resources/enemies/internal_turtle_base.tscn" id="1_kof02"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_of3xi"]
+[ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://resources/enemies/T_turtle.png" id="3_74ubv"]
+
+[sub_resource type="Resource" id="Resource_6bea3"]
+resource_local_to_scene = true
+script = ExtResource("2_of3xi")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xv3g"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 98, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5au10"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 147, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqw6c"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 0, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4su7l"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 49, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxpgy"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 343, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu8it"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 196, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmn32"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 245, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scmpi"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 294, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hix1"]
+atlas = ExtResource("3_74ubv")
+region = Rect2(0, 343, 42, 49)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pfvwb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xv3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5au10")
+}],
+"loop": true,
+"name": &"0_walking",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqw6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4su7l")
+}],
+"loop": true,
+"name": &"1_flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxpgy")
+}],
+"loop": true,
+"name": &"3_shell_static",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu8it")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmn32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scmpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hix1")
+}],
+"loop": true,
+"name": &"4_shell_moving",
+"speed": 67.0
+}]
+
+[node name="Green Turtle" instance=ExtResource("1_kof02")]
+NpcData = SubResource("Resource_6bea3")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+position = Vector2(4, -7)
+sprite_frames = SubResource("SpriteFrames_pfvwb")
+animation = &"0_walking"
+
+[editable path="Enemy Core"]

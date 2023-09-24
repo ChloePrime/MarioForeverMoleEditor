@@ -63,6 +63,7 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             if (sprite.FlipH != shouldFlipH)
             {
                 sprite.FlipH = shouldFlipH;
+                sprite.Position *= new Vector2(-1, 1);
             }
             if (gob is IDynamicAnimationSpeedEnemy das)
             {

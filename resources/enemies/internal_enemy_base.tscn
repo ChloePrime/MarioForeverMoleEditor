@@ -7,6 +7,7 @@
 [sub_resource type="Resource" id="Resource_x02rj"]
 script = ExtResource("2_enr0v")
 HitPoint = 50.0
+MaxHitPoint = 50.0
 DamageLo = 2.0
 DamageHi = 40.0
 Friendly = false
