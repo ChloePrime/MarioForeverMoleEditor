@@ -1,40 +1,99 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsc1uriffc8l"]
+[gd_scene load_steps=16 format=3 uid="uid://dsc1uriffc8l"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_cqy3r"]
+[ext_resource type="Script" path="res://scripts/enemy/Turtle.cs" id="2_aaayt"]
+[ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://resources/enemies/T_mole.png" id="3_hmuuo"]
+[ext_resource type="Script" path="res://scripts/enemy/TurtleEnemyCore.cs" id="3_spfq6"]
+[ext_resource type="Script" path="res://scripts/enemy/TurtleHurtDetector.cs" id="4_1ofhp"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="4_kpfo4"]
+[ext_resource type="Script" path="res://scripts/enemy/TurtleDamageSource.cs" id="5_2gxph"]
+[ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://resources/enemies/T_mole_smb3.png" id="5_dj5y6"]
+[ext_resource type="AudioStream" uid="uid://dy0wtj1ymm2hs" path="res://resources/shared/SE_kick.wav" id="5_f8588"]
 
-[sub_resource type="Resource" id="Resource_648hg"]
-resource_local_to_scene = true
-script = ExtResource("2_cqy3r")
-HitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkc31"]
+atlas = ExtResource("3_hmuuo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6imq"]
+atlas = ExtResource("3_hmuuo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4sii"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_284cn"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yv4t"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fqhyd"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkc31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6imq")
+}],
 "loop": true,
-"name": &"default",
+"name": &"0_walking",
 "speed": 6.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kpfo4")
+}],
 "loop": true,
-"name": &"shell_moving",
-"speed": 67.0
+"name": &"1_flying",
+"speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4sii")
+}],
 "loop": true,
-"name": &"shell_static",
+"name": &"3_shell_static",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kpfo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_284cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yv4t")
+}],
+"loop": true,
+"name": &"4_shell_moving",
+"speed": 67.0
 }]
 
 [node name="Turtle Base" instance=ExtResource("1_puf1u")]
-NpcData = SubResource("Resource_648hg")
+script = ExtResource("2_aaayt")
+WalkSpeed = 50.0
+RollSpeed = 250.0
+State = 2
+
+[node name="Enemy Core" parent="." index="2"]
+script = ExtResource("3_spfq6")
+DieWhenThrownAndHitOther = false
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+script = ExtResource("4_1ofhp")
+KickSound = ExtResource("5_f8588")
+
+[node name="Damage Source" parent="Enemy Core" index="1"]
+script = ExtResource("5_2gxph")
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_fqhyd")
-animation = &"shell_static"
+animation = &"4_shell_moving"
+autoplay = "0_walking"
 
 [editable path="Enemy Core"]

@@ -32,9 +32,9 @@ public partial class WalkableObjectBase : GravityObjectBase
     private static readonly NodePath NpEnterScreenNotifier = "Enter Screen Notifier";
     private bool _activated;
 
-    protected override void _ProcessCollision()
+    protected override void _ProcessCollision(float delta)
     {
-        base._ProcessCollision();
+        base._ProcessCollision(delta);
         if (!WasThrown)
         {
             if (IsOnWall())

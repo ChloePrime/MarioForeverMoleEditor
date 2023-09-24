@@ -13,8 +13,14 @@ public partial class Mario
 
     public GrabReleaseFlags GetCurrentReleaseFlags()
     {
-        return (_downPressed ? GrabReleaseFlags.Gently : GrabReleaseFlags.None) |
-               (_upPressed ? GrabReleaseFlags.TossUp : GrabReleaseFlags.None);
+        var gently = _downPressed;
+        var tossUp = _upPressed;
+        var @throw = (!tossUp || _leftPressed || _rightPressed) && !gently;
+
+        var flags = (gently ? GrabReleaseFlags.Gently : GrabReleaseFlags.None) |
+                     (tossUp ? GrabReleaseFlags.TossUp : GrabReleaseFlags.None) |
+                     (@throw ? GrabReleaseFlags.TossHorizontally : GrabReleaseFlags.None);
+        return flags;
     }
 
     public readonly record struct GrabEvent(Node OldParent);
@@ -26,7 +32,8 @@ public partial class Mario
         None   = 0,
         Gently = 1,
         TossUp = 2,
-        Silent = 4,
+        TossHorizontally = 4,
+        Silent = 0x800,
     }
     
     public bool Grab(IGrabbable obj)
@@ -103,7 +110,7 @@ public partial class Mario
         if (grabbing is GravityObjectBase gob)
         {
             var tossUp = flags.HasFlag(GrabReleaseFlags.TossUp);
-            var @throw = (!tossUp || _leftPressed || _rightPressed) && !gently;
+            var @throw = flags.HasFlag(GrabReleaseFlags.TossHorizontally);
             var coefficient = @throw && tossUp ? 1 / Mathf.Sqrt2 : 1;
 
             gob.XDirection = CharacterDirection;

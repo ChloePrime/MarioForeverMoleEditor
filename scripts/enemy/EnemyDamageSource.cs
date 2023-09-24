@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
@@ -16,6 +17,16 @@ public partial class EnemyDamageSource : Area2D
 {
     [Export] public EnemyHurtDetector Detector { get; private set; }
     public EnemyCore Core => Detector.Core;
+
+    public void HaltFor(TimeSpan duration)
+    {
+        HaltFor((float)duration.TotalSeconds);
+    }
+
+    public void HaltFor(float seconds)
+    {
+        _protection = seconds;
+    }
     
     public override void _Ready()
     {
@@ -45,7 +56,7 @@ public partial class EnemyDamageSource : Area2D
         // 被抱起来以后不会伤害到马里奥
         if (Core.Root is IGrabbable grabbable && IGrabbable.IsGrabbedByPlayer(grabbable))
         {
-            _protection = 0.2F;
+            HaltFor(TimeSpan.FromSeconds(0.2));
             return;
         }
         if (_protection > 0)
@@ -55,25 +66,27 @@ public partial class EnemyDamageSource : Area2D
         }
         
         var filteredOverlaps = Detector.Stompable ? _overlaps.Where(m => !m.WillStomp(Detector.Root)) : _overlaps;
-        foreach (var mario in filteredOverlaps)
+        filteredOverlaps.ForEach(HurtMario);
+    }
+
+    public virtual void HurtMario(Mario mario)
+    {
+        var (lo, hi) = Detector.GetDamage();
+        mario.Hurt(new DamageEvent
         {
-            var (lo, hi) = Detector.GetDamage();
-            mario.Hurt(new DamageEvent
-            {
-                DamageTypes = DamageType.Enemy,
-                DamageLo = lo,
-                DamageHi = hi,
-                DirectSource = Detector.Root,
-                TrueSource = Detector.Root,
-            });
-        }
+            DamageTypes = DamageType.Enemy,
+            DamageLo = lo,
+            DamageHi = hi,
+            DirectSource = Detector.Root,
+            TrueSource = Detector.Root,
+        });
     }
 
     private float _protection;
 
     private void OnStomped()
     {
-        _protection = 0.2F;
+        HaltFor(TimeSpan.FromSeconds(0.2));
     }
 
     private void OnAreaEntered(Area2D other)

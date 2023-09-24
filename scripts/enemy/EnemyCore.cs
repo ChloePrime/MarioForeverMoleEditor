@@ -116,7 +116,11 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         {
             return;
         }
-        itsHurtDetector.HurtBy(e);
+        var itIsShell = it.Root is GravityObjectBase { WillHurtOthers: true } && !it.DieWhenThrownAndHitOther;
+        if (!itIsShell)
+        {
+            itsHurtDetector.HurtBy(e);
+        }
                 
         // 自己暴毙
         if (!isKiss && Root is not IGrabbable { IsGrabbed: true })

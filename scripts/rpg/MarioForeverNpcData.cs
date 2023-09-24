@@ -11,6 +11,7 @@ public partial class MarioForeverNpcData : Resource
     };
 
     [Export] public float HitPoint { get; set; } = 50;
+    [Export] public float MaxHitPoint { get; set; } = 50;
     [Export] public float DamageLo { get; set; } = 2;
     [Export] public float DamageHi { get; set; } = 40;
     [Export] public bool Friendly { get; set; }

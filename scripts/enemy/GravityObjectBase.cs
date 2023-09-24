@@ -84,7 +84,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public bool HasHitWall { get; private set; }
 	public bool WasThrown { get; private set; }
 	public bool WasShot { get; private set; }
-	public bool WillHurtOthers => WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
+	public virtual bool WillHurtOthers => WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
 
 	public float LastXSpeed { get; private set; }
 	public float LastYSpeed { get; private set; }
@@ -102,7 +102,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		}
 	}
 
-	protected virtual void _ProcessCollision()
+	protected virtual void _ProcessCollision(float delta)
 	{
 		var hitSomething = false;
 		
@@ -139,8 +139,6 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	private void TryHitOverlappedEnemyWhenThrown(bool isKiss)
 	{
-		if (!WillHurtOthers) return;
-		
 		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
 		{
 			CollideWithAreas = true,
@@ -154,7 +152,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 				EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss);
 			});
 
-		if (WasShot && !WasThrown && XSpeed - TargetSpeed <= TargetSpeed)
+		if (WasShot && !WasThrown && (Mathf.IsZeroApprox(TargetSpeed) || XSpeed - TargetSpeed <= TargetSpeed))
 		{
 			SetDeferred(PropertyName.WasShot, false);
 			OnShotEnd();
@@ -163,8 +161,6 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	private void TryHitOverlappedHiddenBonusWhenThrown()
 	{
-		if (!WillHurtOthers) return;
-		
 		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
 			{
 				CollideWithAreas = false,
@@ -174,8 +170,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			.OfType<IBumpable>()
 			.ForEach(b => b.OnBumpBy(this));
 	}
-
-
+	
 	/// <summary>
 	/// 在该物件完全从水管中钻出后触发。
 	/// </summary>
@@ -269,13 +264,15 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	public override void _PhysicsProcess(double deltaD)
 	{
+		var willHurtOthers = WillHurtOthers;
+		if (ReallyEnabled && willHurtOthers)
+		{
+			TryHitOverlappedEnemyWhenThrown((this as IGrabbable).IsGrabbed);
+		}
+		
 		var grabbed = (this as IGrabbable).IsGrabbed;
 		if (!Enabled || Appearing || grabbed)
 		{
-			if (grabbed)
-			{
-				TryHitOverlappedEnemyWhenThrown(true);
-			}
 			return;
 		}
 		
@@ -299,12 +296,15 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		XSpeed = Math.Abs(Velocity.X);
 		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
 
-		TryHitOverlappedEnemyWhenThrown(false);
-		TryHitOverlappedHiddenBonusWhenThrown();
+		if (willHurtOthers)
+		{
+			TryHitOverlappedEnemyWhenThrown(false);
+			TryHitOverlappedHiddenBonusWhenThrown();
+		}
 		
 		if (collided)
 		{
-			_ProcessCollision();
+			_ProcessCollision(delta);
 		}
 
 		if (Sprite is { } sprite)

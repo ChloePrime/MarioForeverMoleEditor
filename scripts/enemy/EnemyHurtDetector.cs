@@ -37,7 +37,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public EnemyCore Core { get; private set; }
     public Node2D Root => Core.Root;
 
-    public void StompBy(Node2D stomper)
+    public virtual void StompBy(Node2D stomper)
     {
         if (Core.NpcData.Friendly)
         {

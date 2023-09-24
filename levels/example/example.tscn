@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=34 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -14,12 +14,124 @@
 [ext_resource type="PackedScene" uid="uid://dblakd5cjfdla" path="res://objects/enemies/O_rotodisc_core.tscn" id="13_y308r"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://objects/enemies/O_mole.tscn" id="14_23duk"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="15_2cf5k"]
 [ext_resource type="PackedScene" uid="uid://ryf2r5cmt4w7" path="res://objects/enemies/O_mole_smb3.tscn" id="16_o84e0"]
 [ext_resource type="PackedScene" uid="uid://c8aes4jehis0j" path="res://objects/enemies/spiky_facility/O_spike_iw_0_up.tscn" id="17_foy4y"]
 [ext_resource type="PackedScene" uid="uid://myfcitnc2nv1" path="res://objects/enemies/spiky_facility/O_spike_iw_1_down.tscn" id="18_lsifq"]
 [ext_resource type="PackedScene" uid="uid://de3l15m5jcviv" path="res://objects/enemies/spiky_facility/O_spike_iw_2_left.tscn" id="19_veeqw"]
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
+[ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://resources/enemies/internal_turtle_base.tscn" id="22_ktfrx"]
+
+[sub_resource type="Resource" id="Resource_3e2ss"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_40167"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_d5inu"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_moel7"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_jdrr5"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_6j72l"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_kubt7"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_wjwe6"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_6ucst"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_8c386"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="Resource" id="Resource_g4cqk"]
+resource_local_to_scene = true
+script = ExtResource("15_2cf5k")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -60,27 +172,35 @@ position = Vector2(336, 144)
 
 [node name="Mole" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 128)
+NpcData = SubResource("Resource_3e2ss")
 
 [node name="Mole2" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 64)
+NpcData = SubResource("Resource_40167")
 
 [node name="Mole3" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 96)
+NpcData = SubResource("Resource_d5inu")
 
 [node name="Mole4" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 32)
+NpcData = SubResource("Resource_moel7")
 
 [node name="Mole (SMB3)" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -32)
+NpcData = SubResource("Resource_jdrr5")
 
 [node name="Mole (SMB3)2" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -64)
+NpcData = SubResource("Resource_6j72l")
 
 [node name="Mole (SMB3)3" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -96)
+NpcData = SubResource("Resource_kubt7")
 
 [node name="Mole (SMB3)4" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -128)
+NpcData = SubResource("Resource_wjwe6")
 
 [node name="RotoDisc Core" parent="RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(128, 0)
@@ -120,3 +240,13 @@ ModifyChildrenRotation = true
 
 [node name="Goomba" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
+NpcData = SubResource("Resource_6ucst")
+
+[node name="Turtle Base" parent="." instance=ExtResource("22_ktfrx")]
+position = Vector2(208, 400)
+NpcData = SubResource("Resource_8c386")
+
+[node name="Turtle Base2" parent="." instance=ExtResource("22_ktfrx")]
+position = Vector2(112, 112)
+State = 3
+NpcData = SubResource("Resource_g4cqk")

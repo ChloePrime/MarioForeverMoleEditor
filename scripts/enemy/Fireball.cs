@@ -45,13 +45,13 @@ public partial class Fireball : WalkableObjectBase
         QueueFree();
     }
     
-    protected override void _ProcessCollision()
+    protected override void _ProcessCollision(float delta)
     {
         if (IsOnWall() || IsOnCeiling())
         {
             Explode(ExplodeFlags.WithDefaultSound);
             return;
         }
-        base._ProcessCollision();
+        base._ProcessCollision(delta);
     }
 }
