@@ -152,10 +152,15 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 				EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss);
 			});
 
-		if (WasShot && !WasThrown && (Mathf.IsZeroApprox(TargetSpeed) || XSpeed - TargetSpeed <= TargetSpeed))
+		if (WasShot && !WasThrown)
 		{
-			SetDeferred(PropertyName.WasShot, false);
-			OnShotEnd();
+			var isSpeedUsual = (Mathf.IsZeroApprox(TargetSpeed) && Mathf.IsZeroApprox(XSpeed)) ||
+			                   (XSpeed - TargetSpeed <= TargetSpeed);
+			if (isSpeedUsual)
+			{
+				SetDeferred(PropertyName.WasShot, false);
+				OnShotEnd();
+			}
 		}
 	}
 
