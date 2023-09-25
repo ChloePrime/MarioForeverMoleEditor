@@ -126,9 +126,9 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         }
 
         // 自己暴毙
-        if (!isKiss && Root is not IGrabbable { IsGrabbed: true })
+        if ((!isKiss || !IsShell(it)) && Root is not IGrabbable { IsGrabbed: true })
         {
-            if (!DieWhenThrownAndHitOther && !IsShell(it)) return;
+            if (!DieWhenThrownAndHitOther) return;
         }
         myHurtDetector.Kill(e with
         {
