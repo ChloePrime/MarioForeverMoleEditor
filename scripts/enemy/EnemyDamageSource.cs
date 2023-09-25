@@ -27,6 +27,8 @@ public partial class EnemyDamageSource : Area2D
     {
         _protection = seconds;
     }
+
+    public bool IsHalted => _protection > 0;
     
     public override void _Ready()
     {

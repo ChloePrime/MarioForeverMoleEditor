@@ -36,7 +36,7 @@ public partial class TurtleDamageSource : EnemyDamageSource
 
     private void KickOrGrab(Mario mario)
     {
-        if (Input.IsActionPressed(Mario.Constants.ActionRun))
+        if (Input.IsActionPressed(Mario.Constants.ActionRun) && mario.GameRule.EnableActiveGrabbing)
         {
             mario.Grab(_core.Turtle);
         }

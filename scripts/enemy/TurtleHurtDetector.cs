@@ -20,7 +20,7 @@ public partial class TurtleHurtDetector : EnemyHurtDetector
         // 让静止的龟壳可以被抱起来
         if (_core.Turtle.State is Turtle.TurtleState.StaticShell)
         {
-            var canGrab = stomper is Mario { IsGrabbing: false };
+            var canGrab = stomper is Mario { IsGrabbing: false, GameRule.EnableActiveGrabbing: true };
             var willGrab = canGrab && Input.IsActionPressed(Mario.Constants.ActionRun);
             if (willGrab) return;
         }
@@ -33,7 +33,7 @@ public partial class TurtleHurtDetector : EnemyHurtDetector
         {
             return base.Kill(e);
         }
-        
+
         StompedSound.Play();
 
         _core.NpcData.HitPoint = _core.NpcData.MaxHitPoint;
