@@ -114,7 +114,7 @@ public partial class Mario
             var coefficient = @throw && tossUp ? 1 / Mathf.Sqrt2 : 1;
 
             gob.XDirection = CharacterDirection;
-            gob.XSpeed = (@throw ? coefficient * GrabReleaseThrowStrength : 100) + XSpeed;
+            gob.XSpeed = (@throw ? coefficient * GrabReleaseThrowStrength : (tossUp ? 0 : 100)) + XSpeed;
             gob.YSpeed = (tossUp ? coefficient * -GrabReleaseTossUpStrength : 0);
         }
 
