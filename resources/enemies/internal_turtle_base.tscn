@@ -88,6 +88,7 @@ DieWhenThrownAndHitOther = false
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 script = ExtResource("4_1ofhp")
 KickSound = ExtResource("5_f8588")
+OneHitDamageTypes = 127
 
 [node name="Damage Source" parent="Enemy Core" index="1"]
 script = ExtResource("5_2gxph")
