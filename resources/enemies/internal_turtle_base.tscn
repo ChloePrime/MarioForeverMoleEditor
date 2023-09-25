@@ -78,6 +78,7 @@ animations = [{
 script = ExtResource("2_aaayt")
 WalkSpeed = 50.0
 RollSpeed = 250.0
+ShellTurnAtCliff = false
 State = 2
 
 [node name="Enemy Core" parent="." index="2"]

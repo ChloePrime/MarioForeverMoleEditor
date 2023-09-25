@@ -206,12 +206,13 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         cor.Rotator.Cycle *= xDir is 0 ? (GD.Randf() < 0.5F ? -1 : 1) : xDir;
 
         if (Core.Sprite is not {} spr) return;
-        cor.SpriteFrames = spr.SpriteFrames;
-        cor.Animation = spr.Animation;
-        cor.Frame = spr.Frame;
-        cor.FlipH = spr.FlipH;
-        cor.FlipV = spr.FlipV;
-        cor.Stop();
+        cor.Sprite.Position = spr.Position;
+        cor.Sprite.SpriteFrames = spr.SpriteFrames;
+        cor.Sprite.Animation = spr.Animation;
+        cor.Sprite.Frame = spr.Frame;
+        cor.Sprite.FlipH = spr.FlipH;
+        cor.Sprite.FlipV = spr.FlipV;
+        cor.Sprite.Stop();
     }
     
     // IStompable
