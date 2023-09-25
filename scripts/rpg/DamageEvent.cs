@@ -1,4 +1,5 @@
 ﻿using System;
+using ChloePrime.MarioForever.Shared;
 using Godot;
 
 namespace ChloePrime.MarioForever.RPG;
@@ -17,6 +18,7 @@ public readonly record struct DamageEvent(
     public float DamageHi { get; init; } = 0;
     public float DamageToEnemy { get => DamageLo; init => DamageLo = value; }
     public Vector2? AttackVector { get; init; } = null;
+    public ComboTracker ComboTracker { get; init; }
     
     
     [Flags]

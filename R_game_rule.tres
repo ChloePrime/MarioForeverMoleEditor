@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cjuysccl1gy5i"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://cjuysccl1gy5i"]
 
 [ext_resource type="Script" path="res://scripts/GameRule.cs" id="1_fgm1i"]
 [ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://objects/ui/O_1up.tscn" id="1_ja4j4"]
 [ext_resource type="AudioStream" uid="uid://cgj6twbfl8nf4" path="res://resources/level/ME_timeout.ogg" id="2_llp55"]
+[ext_resource type="Resource" uid="uid://huoeie2nqfiu" path="res://R_default_combo_rule.tres" id="2_mgss1"]
 
 [resource]
 script = ExtResource("1_fgm1i")
@@ -15,6 +16,8 @@ TimePolicy = 1
 ClassicTimeUnitSize = 0.64
 TimeoutHintSound = ExtResource("2_llp55")
 AddLifeMethod = [ExtResource("1_ja4j4")]
+DefaultComboRule = ExtResource("2_mgss1")
+ComboOnStomp = true
 CharacterDirectionPolicy = 1
 EnableTossFireballUpward = true
 TossFireballUpwardStrength = 400.0
@@ -37,3 +40,4 @@ DefaultTerrainDamageLo = 1.0
 DefaultTerrainDamageHi = 16.0
 StompPower = 100.0
 FireballPower = 20.0
+EnableActiveGrabbing = true

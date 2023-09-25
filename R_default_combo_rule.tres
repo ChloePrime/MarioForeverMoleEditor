@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ComboRule" load_steps=15 format=3 uid="uid://huoeie2nqfiu"]
+
+[ext_resource type="PackedScene" uid="uid://j04gurtf7ia4" path="res://objects/ui/O_score_100.tscn" id="1_armvg"]
+[ext_resource type="Script" path="res://scripts/shared/ComboRule.cs" id="1_dwkhp"]
+[ext_resource type="PackedScene" uid="uid://dapxc0x6y1soc" path="res://objects/ui/O_score_200.tscn" id="2_6p804"]
+[ext_resource type="PackedScene" uid="uid://jy5he83djmim" path="res://objects/ui/O_score_500.tscn" id="3_0di0k"]
+[ext_resource type="PackedScene" uid="uid://cunb52mqbotiq" path="res://objects/ui/O_score_1000.tscn" id="4_cyv5y"]
+[ext_resource type="PackedScene" uid="uid://vlfkky6d6jx2" path="res://objects/ui/O_score_2000.tscn" id="5_f4xwx"]
+[ext_resource type="PackedScene" uid="uid://inksxurmj4x0" path="res://objects/ui/O_score_5000.tscn" id="6_4ulxb"]
+[ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://objects/ui/O_1up.tscn" id="7_8ttme"]
+[ext_resource type="AudioStream" uid="uid://c76ko0ih3vbdo" path="res://resources/shared/SE_hit_1.wav" id="8_vfv83"]
+[ext_resource type="AudioStream" uid="uid://cohcgksh3r63d" path="res://resources/shared/SE_hit_2.wav" id="9_8biyv"]
+[ext_resource type="AudioStream" uid="uid://c3f1vdtd0q5df" path="res://resources/shared/SE_hit_3.wav" id="10_r8bbf"]
+[ext_resource type="AudioStream" uid="uid://7h5t63exsou" path="res://resources/shared/SE_hit_4.wav" id="11_h60uq"]
+[ext_resource type="AudioStream" uid="uid://dxft1fjgp4d6q" path="res://resources/shared/SE_hit_5.wav" id="12_05uih"]
+[ext_resource type="AudioStream" uid="uid://dnegqjmx20gam" path="res://resources/shared/SE_hit_6.wav" id="13_tarvu"]
+
+[resource]
+script = ExtResource("1_dwkhp")
+ScoreList = Array[PackedScene]([ExtResource("1_armvg"), ExtResource("2_6p804"), ExtResource("3_0di0k"), ExtResource("4_cyv5y"), ExtResource("5_f4xwx"), ExtResource("6_4ulxb"), ExtResource("7_8ttme")])
+SoundList = Array[AudioStream]([ExtResource("8_vfv83"), ExtResource("9_8biyv"), ExtResource("10_r8bbf"), ExtResource("11_h60uq"), ExtResource("12_05uih"), ExtResource("13_tarvu"), null])
+ResetAtLast = false

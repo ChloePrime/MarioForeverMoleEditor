@@ -91,6 +91,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         }
         _killed = true;
 
+        if (e.ComboTracker is { } tracker)
+        {
+            tracker.MoveNext();
+        }
+
         if (!e.IsSilent)
         {
             PlayDeathSound(e);
@@ -166,7 +171,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     public virtual Node2D CreateScore(DamageEvent e)
     {
-        return Score?.Instantiate<Node2D>();
+        return e.ComboTracker is { } tracker ? tracker.CreateScore() : Score?.Instantiate<Node2D>();
     }
 
     public virtual bool CanBeHurtBy(DamageEvent e)
@@ -187,7 +192,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         }
         else
         {
-            DeathSound?.Play();
+            (e.ComboTracker is { } tracker ? tracker.GetSound() : DeathSound)?.Play();
         }
     }
 

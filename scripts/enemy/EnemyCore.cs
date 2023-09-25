@@ -2,6 +2,7 @@
 using System.Linq;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using Godot.Collections;
@@ -32,6 +33,9 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     public Node2D Root => _root ??= (RootOverride ?? (GetParent() as WalkableNpc)) ?? this;
     public MarioForeverNpcData NpcData => Root == this ? MyNpcData : (Root as IMarioForeverNpc)?.NpcData ?? MyNpcData ?? MarioForeverNpcData.SafeFallback;
     public IMarioForeverNpc AsNpc => this;
+
+    [return: MaybeNull]
+    public virtual ComboTracker GetComboTracker() => null;
 
     public override void _Ready()
     {
@@ -110,7 +114,8 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             DamageToEnemy = 100,
             DamageTypes = DamageType.KickShell,
             DirectSource = Root,
-            TrueSource = trueSource
+            TrueSource = trueSource,
+            ComboTracker = GetComboTracker(),
         };
         // 亲嘴必须能够杀死对方时才会触发
         if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e))

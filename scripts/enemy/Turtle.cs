@@ -1,6 +1,7 @@
 ﻿using System;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -31,6 +32,8 @@ public partial class Turtle : WalkableNpc
 
     [Signal]
     public delegate void TurtleStateChangedEventHandler();
+
+    public ComboTracker ComboTracker => _tracker ??= GetNode<ComboTracker>(NpComboTracker);
 
     public void KickBy(Node2D kicker)
     {
@@ -88,6 +91,7 @@ public partial class Turtle : WalkableNpc
             TurtleState.StaticShell or _ => 0,
         };
 
+        // 让红乌龟的壳不要在悬崖处掉头
         var tacStand = _tacWhenStanding ??= TurnAtCliff;
         TurnAtCliff = value switch
         {
@@ -95,6 +99,12 @@ public partial class Turtle : WalkableNpc
             TurtleState.MovingShell => ShellTurnAtCliff,
             _ => tacStand,
         };
+        
+        // 重置连击计数器
+        if (value != TurtleState.MovingShell)
+        {
+            ComboTracker.Reset();
+        }
 
         var disableOtherCollision = value == TurtleState.MovingShell;
         if (disableOtherCollision)
@@ -108,9 +118,12 @@ public partial class Turtle : WalkableNpc
             _collideWithOthersRecovery = null;
         }
     }
+    
+    private static readonly NodePath NpComboTracker = "Combo Tracker";
 
     private TurtleState _state = TurtleState.Walking;
     private bool? _tacWhenStanding;
     private bool? _collideWithOthersRecovery;
     private bool _ready;
+    private ComboTracker _tracker;
 }

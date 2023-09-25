@@ -1,11 +1,19 @@
-﻿using Godot;
+﻿using ChloePrime.MarioForever.Shared;
+using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
 public partial class TurtleEnemyCore : EnemyCore
 {
     public Turtle Turtle => _turtle ??= GetParent<Turtle>();
-    
+
+    public override ComboTracker GetComboTracker()
+    {
+        return Turtle.State == Turtle.TurtleState.MovingShell 
+            ? Turtle.ComboTracker
+            : base.GetComboTracker();
+    }
+
     public override void _Ready()
     {
         base._Ready();

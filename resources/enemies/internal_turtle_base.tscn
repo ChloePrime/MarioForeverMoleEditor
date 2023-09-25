@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dsc1uriffc8l"]
+[gd_scene load_steps=17 format=3 uid="uid://dsc1uriffc8l"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
 [ext_resource type="Script" path="res://scripts/enemy/Turtle.cs" id="2_aaayt"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/enemy/TurtleDamageSource.cs" id="5_2gxph"]
 [ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://resources/enemies/T_mole_smb3.png" id="5_dj5y6"]
 [ext_resource type="AudioStream" uid="uid://dy0wtj1ymm2hs" path="res://resources/shared/SE_kick.wav" id="5_f8588"]
+[ext_resource type="Script" path="res://scripts/shared/ComboTracker.cs" id="10_0o35x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkc31"]
 atlas = ExtResource("3_hmuuo")
@@ -97,5 +98,8 @@ script = ExtResource("5_2gxph")
 sprite_frames = SubResource("SpriteFrames_fqhyd")
 animation = &"4_shell_moving"
 autoplay = "0_walking"
+
+[node name="Combo Tracker" type="Node" parent="." index="3"]
+script = ExtResource("10_0o35x")
 
 [editable path="Enemy Core"]

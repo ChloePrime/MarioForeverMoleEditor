@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ChloePrime.MarioForever.Level;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using DotNext;
 using Godot;
@@ -61,6 +62,11 @@ public partial class GameRule : Resource
         GD.Load<PackedScene>("res://objects/ui/O_1up.tscn")
     };
     
+    [ExportSubgroup("Shell Combo")]
+    [Export] public ComboRule DefaultComboRule { get; set; }
+    [Export] public bool ComboOnStomp { get; set; } = true;
+    
+        
     [ExportGroup("Simple QoL")]
     [ExportSubgroup("Direction Calculation")]
     [Export] public MarioDirectionPolicy CharacterDirectionPolicy { get; set; } = MarioDirectionPolicy.FollowXSpeed;
@@ -93,6 +99,7 @@ public partial class GameRule : Resource
     /// </summary>
     [Export] public bool KillPlayerWhenHitPointReachesZero { get; set; }
 
+    
     [Export] public bool HitPointProtectsYourPowerup { get; set; } = true;
     [Export] public bool HitPointProtectsDeath { get; set; } = true;
     [Export] public float HitPointProtectsDeathCostLo { get; set; } = 3;
@@ -105,9 +112,14 @@ public partial class GameRule : Resource
     [Export] public float DefaultTerrainDamageLo { get; set; } = 1;
     [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
 
+    
     [ExportSubgroup("Player Weapon's Power")]
     [Export] public float StompPower { get; set; } = 100;
     [Export] public float FireballPower { get; set; } = 20;
+
+    
+    [ExportSubgroup("Grabbing")]
+    [Export] public bool EnableActiveGrabbing { get; set; } = true;
 
     public void ResetGlobalData()
     {
