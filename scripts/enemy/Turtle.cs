@@ -11,6 +11,7 @@ public partial class Turtle : WalkableNpc
 {
     [Export] public float WalkSpeed { get; set; } = Units.Speed.CtfToGd(1);
     [Export] public float RollSpeed { get; set; } = Units.Speed.CtfToGd(5);
+    [Export] public bool ShellTurnAtCliff { get; set; }
 
     public enum TurtleState
     {
@@ -42,6 +43,8 @@ public partial class Turtle : WalkableNpc
     {
         base._Ready();
         GrabReleased += OnGrabReleased;
+        _ready = true;
+        RefreshState();
     }
 
     protected override void _ProcessCollision(float delta)
@@ -67,12 +70,30 @@ public partial class Turtle : WalkableNpc
     {
         if (_state == value) return;
         _state = value;
-        
+
+        if (_ready)
+        {
+            RefreshState();
+        }
+        EmitSignal(SignalName.TurtleStateChanged);
+    }
+
+    private void RefreshState()
+    {
+        var value = State;
         XSpeed = TargetSpeed = value switch
         {
             TurtleState.Jumping or TurtleState.Walking => WalkSpeed,
             TurtleState.MovingShell => RollSpeed,
             TurtleState.StaticShell or _ => 0,
+        };
+
+        var tacStand = _tacWhenStanding ??= TurnAtCliff;
+        TurnAtCliff = value switch
+        {
+            TurtleState.StaticShell => false,
+            TurtleState.MovingShell => ShellTurnAtCliff,
+            _ => tacStand,
         };
 
         var disableOtherCollision = value == TurtleState.MovingShell;
@@ -86,10 +107,10 @@ public partial class Turtle : WalkableNpc
             CollideWithOthers = backup;
             _collideWithOthersRecovery = null;
         }
-
-        EmitSignal(SignalName.TurtleStateChanged);
     }
 
     private TurtleState _state = TurtleState.Walking;
+    private bool? _tacWhenStanding;
     private bool? _collideWithOthersRecovery;
+    private bool _ready;
 }

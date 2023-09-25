@@ -11,6 +11,11 @@ namespace ChloePrime.MarioForever.Enemy;
 public partial class WalkableObjectBase : GravityObjectBase
 {
     [Export] public float JumpStrength { get; set; }
+    
+    /// <summary>
+    /// 悬崖边自动回头 / 红乌龟看路
+    /// </summary>
+    [Export] public bool TurnAtCliff { get; set; }
 	
     [ExportGroup($"{nameof(GravityObjectBase)} (Advanced)")] 
     [Export] public float ControlAcceleration { get; set; }
@@ -76,17 +81,34 @@ public partial class WalkableObjectBase : GravityObjectBase
 
     public override void _PhysicsProcess(double deltaD)
     {
-        if (CanMove)
+        if (!CanMove)
         {
-            if (!Mathf.IsZeroApprox(ControlAcceleration))
-            {
-                XSpeed = Mathf.MoveToward(XSpeed, TargetSpeed, ControlAcceleration * (float)deltaD);
-            }
-            else
-            {
-                XSpeed = TargetSpeed;
-            }
+            base._PhysicsProcess(deltaD);
+            return;
+        }
+
+        if (TurnAtCliff && IsOnFloor() && TestCliff())
+        {
+            XDirection *= -1;
+            base._PhysicsProcess(deltaD);
+            return;
+        }
+
+        if (!Mathf.IsZeroApprox(ControlAcceleration))
+        {
+            XSpeed = Mathf.MoveToward(XSpeed, TargetSpeed, ControlAcceleration * (float)deltaD);
+        }
+        else
+        {
+            XSpeed = TargetSpeed;
         }
         base._PhysicsProcess(deltaD);
+    }
+
+    private bool TestCliff()
+    {
+        var testPos = GlobalTransform.Translated(new Vector2(Size.X * XDirection, 0));
+        var depth = FloorSnapLength + 2 * SafeMargin;
+        return !TestMove(testPos, new Vector2(0, depth));
     }
 }

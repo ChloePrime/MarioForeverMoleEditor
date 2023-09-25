@@ -101,6 +101,7 @@ animations = [{
 }]
 
 [node name="Green Turtle" instance=ExtResource("1_kof02")]
+ShellTurnAtCliff = false
 NpcData = SubResource("Resource_6bea3")
 
 [node name="Sprite" parent="Enemy Core" index="2"]
