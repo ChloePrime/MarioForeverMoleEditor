@@ -155,7 +155,12 @@ public partial class Turtle : WalkableNpc
     protected override void _OnShotEnd()
     {
         base._OnShotEnd();
-        if (_collideWithOthersRecovery is {} backup)
+        if (State == TurtleState.MovingShell)
+        {
+            _collideWithOthersRecovery = CollideWithOthers;
+            CollideWithOthers = false;
+        }
+        else if (_collideWithOthersRecovery is {} backup)
         {
             CollideWithOthers = backup;
             _collideWithOthersRecovery = null;
