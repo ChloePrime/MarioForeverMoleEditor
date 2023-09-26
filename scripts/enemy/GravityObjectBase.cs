@@ -245,6 +245,12 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			CollideWithOthers = collWithOthersBefore;
 			_collWithOthersBefore = null;
 		}
+		_OnShotEnd();
+	}
+	
+	protected virtual void _OnShotEnd()
+	{
+		
 	}
 
 	private void ProcessAppearing(float delta)

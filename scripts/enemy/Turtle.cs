@@ -137,9 +137,12 @@ public partial class Turtle : WalkableNpc
         }
 
         var disableOtherCollision = value == TurtleState.MovingShell;
-        if (disableOtherCollision && !(this as IGrabbable).IsGrabbed)
+        if (disableOtherCollision)
         {
-            _collideWithOthersRecovery = CollideWithOthers;
+            if (!(this as IGrabbable).IsGrabbed)
+            {
+                _collideWithOthersRecovery = CollideWithOthers;
+            }
             CollideWithOthers = false;
         }
         else if (_collideWithOthersRecovery is {} backup)
@@ -148,7 +151,17 @@ public partial class Turtle : WalkableNpc
             _collideWithOthersRecovery = null;
         }
     }
-    
+
+    protected override void _OnShotEnd()
+    {
+        base._OnShotEnd();
+        if (_collideWithOthersRecovery is {} backup)
+        {
+            CollideWithOthers = backup;
+            _collideWithOthersRecovery = null;
+        }
+    }
+
     private static readonly NodePath NpComboTracker = "Combo Tracker";
     private static readonly NodePath NpFlyMovement = "Fly Movement";
 
