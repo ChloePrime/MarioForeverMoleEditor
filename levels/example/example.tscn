@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://de3l15m5jcviv" path="res://objects/enemies/spiky_facility/O_spike_iw_2_left.tscn" id="19_veeqw"]
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
-[ext_resource type="PackedScene" uid="uid://cm06y3cialwt2" path="res://objects/enemies/O_turtle_green.tscn" id="22_2vift"]
+[ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="22_t18ll"]
 [ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="23_elj2l"]
 
 [node name="Example" type="Node2D"]
@@ -126,18 +126,14 @@ position = Vector2(-32, 0)
 [node name="Red Turtle" parent="." instance=ExtResource("23_elj2l")]
 position = Vector2(80, 112)
 
-[node name="Green Turtle" parent="." instance=ExtResource("22_2vift")]
-position = Vector2(224, 384)
-State = 0
-
-[node name="Green Turtle2" parent="." instance=ExtResource("22_2vift")]
-position = Vector2(176, 384)
-State = 0
+[node name="Blue Turtle" parent="." instance=ExtResource("22_t18ll")]
+position = Vector2(448, 248)
+State = 1
 
 [node name="Red Turtle2" parent="." instance=ExtResource("23_elj2l")]
-position = Vector2(96, 384)
-State = 0
+position = Vector2(400, 248)
+State = 1
 
-[node name="Red Turtle3" parent="." instance=ExtResource("23_elj2l")]
-position = Vector2(96, 256)
+[node name="Blue Turtle2" parent="." instance=ExtResource("22_t18ll")]
+position = Vector2(248, 304)
 State = 0

@@ -111,6 +111,7 @@ public partial class Turtle : WalkableNpc
         var tacStand = _tacWhenStanding ??= TurnAtCliff;
         TurnAtCliff = value switch
         {
+            TurtleState.Flying or TurtleState.Jumping => false,
             TurtleState.StaticShell => false,
             TurtleState.MovingShell => ShellTurnAtCliff,
             _ => tacStand,

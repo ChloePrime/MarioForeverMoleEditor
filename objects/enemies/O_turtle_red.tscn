@@ -91,6 +91,7 @@ animations = [{
 
 [node name="Red Turtle" instance=ExtResource("1_el05g")]
 WalkSpeed = 100.0
+JumpStrength = 300.0
 TurnAtCliff = true
 
 [node name="Sprite" parent="Enemy Core" index="2"]
