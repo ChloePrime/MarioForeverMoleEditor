@@ -18,11 +18,9 @@ public partial class TurtleHurtDetector : EnemyHurtDetector
     public override void StompBy(Node2D stomper)
     {
         // 让静止的龟壳可以被抱起来
-        if (_core.Turtle.State is Turtle.TurtleState.StaticShell)
+        if (_core.Turtle.State is Turtle.TurtleState.StaticShell && stomper is Mario { WillActivelyGrab: true })
         {
-            var canGrab = stomper is Mario { IsGrabbing: false, GameRule.EnableActiveGrabbing: true };
-            var willGrab = canGrab && Input.IsActionPressed(Mario.Constants.ActionRun);
-            if (willGrab) return;
+            return;
         }
         base.StompBy(stomper);
     }
