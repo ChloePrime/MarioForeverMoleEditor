@@ -275,13 +275,17 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public override void _PhysicsProcess(double deltaD)
 	{
 		var willHurtOthers = WillHurtOthers;
+		var grabbed = (this as IGrabbable).IsGrabbed;
+		
 		if (ReallyEnabled && willHurtOthers)
 		{
-			TryHitOverlappedEnemyWhenThrown((this as IGrabbable).IsGrabbed);
-			TryHitOverlappedHiddenBonusWhenThrown();
+			TryHitOverlappedEnemyWhenThrown(grabbed);
+			if (!grabbed)
+			{
+				TryHitOverlappedHiddenBonusWhenThrown();
+			}
 		}
 		
-		var grabbed = (this as IGrabbable).IsGrabbed;
 		if (!Enabled || Appearing || grabbed)
 		{
 			return;
