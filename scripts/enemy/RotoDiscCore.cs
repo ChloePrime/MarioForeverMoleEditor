@@ -37,7 +37,7 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
     {
         base._Process(delta);
         var count = GetChildCount();
-        var deltaAngle = Mathf.DegToRad(Units.Speed.CtfToGd(RotationSpeed)) * (float)delta;
+        var deltaAngle = Units.AngularSpeed.CtfToGd(RotationSpeed) * (float)delta;
         for (int i = 0; i < count; i++)
         {
             var child = GetChild(i);

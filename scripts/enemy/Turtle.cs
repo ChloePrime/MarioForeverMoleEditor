@@ -33,7 +33,11 @@ public partial class Turtle : WalkableNpc
     [Signal]
     public delegate void TurtleStateChangedEventHandler();
 
-    public ComboTracker ComboTracker => _tracker ??= GetNode<ComboTracker>(NpComboTracker);
+    public ComboTracker ComboTracker => 
+        _tracker ??= GetNode<ComboTracker>(NpComboTracker);
+
+    public TurtleFlyMovementComponent FlyMovement =>
+        _flyMovement ??= GetNode<TurtleFlyMovementComponent>(NpFlyMovement);
 
     public void KickBy(Node2D kicker)
     {
@@ -48,6 +52,18 @@ public partial class Turtle : WalkableNpc
         GrabReleased += OnGrabReleased;
         _ready = true;
         RefreshState();
+    }
+
+    public override void _PhysicsProcess(double deltaD)
+    {
+        if (State == TurtleState.Flying && FlyMovement is {} flyMovement)
+        {
+            flyMovement._ProcessMovement((float)deltaD);
+        }
+        else
+        {
+            base._PhysicsProcess(deltaD);
+        }
     }
 
     protected override void _ProcessCollision(float delta)
@@ -106,6 +122,20 @@ public partial class Turtle : WalkableNpc
             ComboTracker.Reset();
         }
 
+        // 切换跳跃高度
+        if (value != TurtleState.Jumping)
+        {
+            _jumpStrengthBackup = JumpStrength;
+            JumpStrength = 0;
+        }
+        else
+        {
+            if (JumpStrength == 0)
+            {
+                JumpStrength = _jumpStrengthBackup;
+            }
+        }
+
         var disableOtherCollision = value == TurtleState.MovingShell;
         if (disableOtherCollision)
         {
@@ -120,10 +150,13 @@ public partial class Turtle : WalkableNpc
     }
     
     private static readonly NodePath NpComboTracker = "Combo Tracker";
+    private static readonly NodePath NpFlyMovement = "Fly Movement";
 
     private TurtleState _state = TurtleState.Walking;
     private bool? _tacWhenStanding;
     private bool? _collideWithOthersRecovery;
     private bool _ready;
+    private float _jumpStrengthBackup;
+    private TurtleFlyMovementComponent _flyMovement;
     private ComboTracker _tracker;
 }

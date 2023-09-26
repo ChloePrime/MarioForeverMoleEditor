@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dsc1uriffc8l"]
+[gd_scene load_steps=18 format=3 uid="uid://dsc1uriffc8l"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
 [ext_resource type="Script" path="res://scripts/enemy/Turtle.cs" id="2_aaayt"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://resources/enemies/T_mole_smb3.png" id="5_dj5y6"]
 [ext_resource type="AudioStream" uid="uid://dy0wtj1ymm2hs" path="res://resources/shared/SE_kick.wav" id="5_f8588"]
 [ext_resource type="Script" path="res://scripts/shared/ComboTracker.cs" id="10_0o35x"]
+[ext_resource type="Script" path="res://scripts/enemy/TurtleTrigonometricFlyMovementComponent.cs" id="11_t5ep7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkc31"]
 atlas = ExtResource("3_hmuuo")
@@ -81,6 +82,7 @@ WalkSpeed = 50.0
 RollSpeed = 250.0
 ShellTurnAtCliff = false
 State = 2
+JumpStrength = 400.0
 
 [node name="Enemy Core" parent="." index="2"]
 script = ExtResource("3_spfq6")
@@ -101,5 +103,8 @@ autoplay = "0_walking"
 
 [node name="Combo Tracker" type="Node" parent="." index="3"]
 script = ExtResource("10_0o35x")
+
+[node name="Fly Movement" type="Node" parent="." index="4"]
+script = ExtResource("11_t5ep7")
 
 [editable path="Enemy Core"]

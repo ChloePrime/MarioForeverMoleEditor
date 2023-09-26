@@ -27,17 +27,16 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	[Export] public float TargetSpeed { get; set; }
 
 	/// <summary>
-	/// Y 速度，可能为负值
-	/// </summary>
-	[ExportGroup($"{nameof(GravityObjectBase)}")] 
-	[Export]
-	public float YSpeed { get; set; }
-
-	/// <summary>
 	/// X 方向的运动方向，为 1 或 -1
 	/// </summary>
 	[Export(PropertyHint.Enum, "Left:-1,Right:1")]
 	public float XDirection { get; set; } = -1;
+
+	/// <summary>
+	/// Y 速度，可能为负值
+	/// </summary>
+	[Export]
+	public float YSpeed { get; set; }
 
 	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);

@@ -1,4 +1,6 @@
-﻿namespace ChloePrime.MarioForever.Util;
+﻿using Godot;
+
+namespace ChloePrime.MarioForever.Util;
 
 public static class Units
 {
@@ -12,6 +14,14 @@ public static class Units
         public static float CtfToGd(float speed)
         {
             return speed * 50;
+        }
+    }
+    
+    public static class AngularSpeed
+    {
+        public static float CtfToGd(float speed)
+        {
+            return Mathf.DegToRad(Speed.CtfToGd(speed));
         }
     }
     
