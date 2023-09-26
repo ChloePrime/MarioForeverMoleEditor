@@ -13,7 +13,7 @@ public partial class TurtleTrigonometricFlyMovementComponent : TurtleFlyMovement
     public override void _Ready()
     {
         base._Ready();
-        if (RandomizePhase)
+        if (RandomizePhase && Turtle.State == Turtle.TurtleState.Flying)
         {
             var phase = Phase = GD.Randf() * Mathf.Tau;
             var (sin, cos) = Mathf.SinCos(phase);
