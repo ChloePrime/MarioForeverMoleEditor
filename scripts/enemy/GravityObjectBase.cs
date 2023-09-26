@@ -272,6 +272,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		if (ReallyEnabled && willHurtOthers)
 		{
 			TryHitOverlappedEnemyWhenThrown((this as IGrabbable).IsGrabbed);
+			TryHitOverlappedHiddenBonusWhenThrown();
 		}
 		
 		var grabbed = (this as IGrabbable).IsGrabbed;
@@ -299,12 +300,6 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		LastYSpeed = YSpeed;
 		XSpeed = Math.Abs(Velocity.X);
 		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
-
-		if (willHurtOthers)
-		{
-			TryHitOverlappedEnemyWhenThrown(false);
-			TryHitOverlappedHiddenBonusWhenThrown();
-		}
 		
 		if (collided)
 		{

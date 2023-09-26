@@ -137,7 +137,7 @@ public partial class Turtle : WalkableNpc
         }
 
         var disableOtherCollision = value == TurtleState.MovingShell;
-        if (disableOtherCollision)
+        if (disableOtherCollision && !(this as IGrabbable).IsGrabbed)
         {
             _collideWithOthersRecovery = CollideWithOthers;
             CollideWithOthers = false;

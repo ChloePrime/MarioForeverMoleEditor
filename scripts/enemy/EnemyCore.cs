@@ -131,7 +131,7 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         }
 
         // 自己暴毙
-        if ((!isKiss || !IsShell(it)) && Root is not IGrabbable { IsGrabbed: true })
+        if (!isKiss && Root is not IGrabbable { IsGrabbed: true })
         {
             if (!DieWhenThrownAndHitOther) return;
         }
