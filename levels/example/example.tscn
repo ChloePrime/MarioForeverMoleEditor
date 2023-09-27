@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=22 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -19,9 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://myfcitnc2nv1" path="res://objects/enemies/spiky_facility/O_spike_iw_1_down.tscn" id="18_lsifq"]
 [ext_resource type="PackedScene" uid="uid://de3l15m5jcviv" path="res://objects/enemies/spiky_facility/O_spike_iw_2_left.tscn" id="19_veeqw"]
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
+[ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
-[ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="22_t18ll"]
-[ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="23_elj2l"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -123,17 +122,9 @@ ModifyChildrenRotation = true
 [node name="Goomba" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
 
-[node name="Red Turtle" parent="." instance=ExtResource("23_elj2l")]
-position = Vector2(80, 112)
-
-[node name="Blue Turtle" parent="." instance=ExtResource("22_t18ll")]
-position = Vector2(448, 248)
-State = 1
-
-[node name="Red Turtle2" parent="." instance=ExtResource("23_elj2l")]
-position = Vector2(400, 248)
-State = 1
-
-[node name="Blue Turtle2" parent="." instance=ExtResource("22_t18ll")]
-position = Vector2(248, 304)
+[node name="Golden Turtle" parent="RotoDisc Core" instance=ExtResource("21_0d0u4")]
+position = Vector2(0, 160)
 State = 0
+
+[node name="Golden Turtle2" parent="." instance=ExtResource("21_0d0u4")]
+position = Vector2(448, 264)

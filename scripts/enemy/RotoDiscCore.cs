@@ -99,7 +99,8 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
         }
         else
         {
-            CallDeferred(MethodName.OnChildExitingTree0, child);
+            OnChildExitingTree0(child);
+            // CallDeferred(MethodName.OnChildExitingTree0, child);
         }
     }
 
@@ -113,7 +114,7 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
         ChildData.RemoveAt(child.GetIndex());
         if (!_exiting && child is IGrabbable grabbable && grabbable.Grabber == this)
         {
-            grabbable.GrabNotify(default, default(Mario.GrabReleaseEvent));
+            grabbable.GrabNotify(default, new Mario.GrabReleaseEvent(Mario.GrabReleaseFlags.Gently));
             grabbable.Grabber = null;
         }
     }
