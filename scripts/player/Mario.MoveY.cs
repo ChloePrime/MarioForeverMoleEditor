@@ -195,6 +195,7 @@ public partial class Mario
 
     private void OnFallOnGround()
     {
+        StompComboTracker.Reset();
         if (_comboJumpAsked)
         {
             CallDeferred(MethodName.Jump);
