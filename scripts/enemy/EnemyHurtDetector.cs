@@ -4,6 +4,7 @@ using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using Godot.Collections;
 
 namespace ChloePrime.MarioForever.Enemy;
 
@@ -43,12 +44,12 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         {
             return;
         }
-        HurtBy(new DamageEvent(DamageType.Stomp, stomper)
+        var damaged = HurtBy(new DamageEvent(DamageType.Stomp, stomper)
         {
             DamageToEnemy = stomper.GetRule().StompPower,
             ComboTracker = stomper is Mario { GameRule.ComboOnStomp: true } m ? m.StompComboTracker : null,
         });
-        if (stomper is Mario mario)
+        if (damaged && stomper is Mario mario)
         {
             var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;
             mario.CallDeferred(Mario.MethodName.Jump, strength);
@@ -62,6 +63,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     {
         if (!CanBeHurtBy(e) || Core.NpcData.Friendly)
         {
+            PlayImmuneSound(e);
             return false;
         }
         
@@ -126,7 +128,9 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     private Node _oldParent;
     private static readonly StringName AnimHurt = "hurt";
     private static readonly Vector2 ScorePivot = new(0, -16);
-    
+
+    private static readonly AudioStream DefaultImmuneSound = GD.Load<AudioStream>("res://resources/shared/SE_bump.wav");
+
     public override void _Ready()
     {
         base._Ready();
@@ -166,8 +170,21 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         }
         if (!e.IsSilent)
         {
-            HurtSound?.Play();
+            PlayHurtSound(e);
         }
+    }
+    
+    public virtual void PlayImmuneSound(DamageEvent e)
+    {
+        if (e.DamageTypes.ContainsAny(DamageType.Fireball | DamageType.Beetroot))
+        {
+            DefaultImmuneSound.Play();
+        }
+    }
+
+    public virtual void PlayHurtSound(DamageEvent _)
+    {
+        HurtSound?.Play();
     }
 
     public virtual Node2D CreateScore(DamageEvent e)

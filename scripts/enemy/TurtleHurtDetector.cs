@@ -52,7 +52,7 @@ public partial class TurtleHurtDetector : EnemyHurtDetector
             }
         }
         
-        return false;
+        return true;
     }
 
     private TurtleEnemyCore _core;

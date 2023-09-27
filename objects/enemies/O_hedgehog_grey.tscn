@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh0rc8rlbhfpl"]
+
+[ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://resources/enemies/internal_hedgehog_base.tscn" id="1_4glvl"]
+[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://resources/enemies/T_hedgehog.png" id="2_vc0kl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulukp"]
+atlas = ExtResource("2_vc0kl")
+region = Rect2(0, 64, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g43s"]
+atlas = ExtResource("2_vc0kl")
+region = Rect2(0, 96, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sabns"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulukp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g43s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Grey Hedgehog" instance=ExtResource("1_4glvl")]
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+AcceptedDamageTypes = 120
+OneHitDamageTypes = 120
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_sabns")
+
+[editable path="Enemy Core"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://boio8lcsy30r7"]
+
+[ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://resources/enemies/internal_enemy_base.tscn" id="1_ax0a5"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_4vkbe"]
+[ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://resources/shared/SF_placeholder.tres" id="2_ea25p"]
+
+[sub_resource type="Resource" id="Resource_q3ngr"]
+script = ExtResource("2_4vkbe")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[node name="Internal Hedgehog Base" instance=ExtResource("1_ax0a5")]
+NpcData = SubResource("Resource_q3ngr")
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+AcceptedDamageTypes = 126
+OneHitDamageTypes = 126
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = ExtResource("2_ea25p")
+autoplay = "default"
+
+[editable path="Enemy Core"]

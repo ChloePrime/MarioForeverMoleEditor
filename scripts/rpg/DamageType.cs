@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Numerics;
 
 namespace ChloePrime.MarioForever.RPG;
 
@@ -21,6 +23,8 @@ public enum DamageType : uint
 
 public static class DamageTypeEx
 {
+    public static ReadOnlySpan<DamageType> Values => ValuesPrivate;
+    
     public static bool ContainsAny(this DamageType types, DamageType predicate)
     {
         return (types & predicate) != 0;
@@ -40,4 +44,8 @@ public static class DamageTypeEx
     {
         return ((DamageType)types).ContainsAll(predicate);
     }
+    
+    private static readonly DamageType[] ValuesPrivate = Enum.GetValues<DamageType>()
+        .Where(dt => BitOperations.IsPow2((int)dt))
+        .ToArray();
 }
