@@ -482,7 +482,7 @@ position = Vector2(12, -17)
 script = ExtResource("9_ug04s")
 
 [node name="Grab Muzzle (Big)" type="Node2D" parent="SpriteRoot"]
-position = Vector2(8, -22)
+position = Vector2(8, -26)
 script = ExtResource("9_ug04s")
 
 [node name="Grab Root" type="Node2D" parent="SpriteRoot"]
