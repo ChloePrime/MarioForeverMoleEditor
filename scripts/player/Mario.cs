@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using DotNext.Collections.Generic;
 using Godot;
@@ -131,6 +132,7 @@ public partial class Mario : CharacterBody2D
     
     public Node2D Muzzle => MuzzleBySize[(int)_currentSize];
     public MarioGrabMuzzle GrabMuzzle => GrabMuzzleBySize[(int)_currentSize];
+    public ComboTracker StompComboTracker => _stompComboTracker;
     
     public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }
@@ -363,7 +365,7 @@ public partial class Mario : CharacterBody2D
         TrySwitchStatusSprite();
         _spriteRoot.Scale = CharacterDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
 
-        var hasSprite = _currentSprite is { } sprite;
+        var hasSprite = _currentSprite is not null;
 
         if (IsInSpecialAnimation())
         {
@@ -562,6 +564,7 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _skidSound, Constants.NpSkidSound);
         this.GetNode(out _sprintSmokeTimer, Constants.NpSmkTimer);
         this.GetNode(out _skidSmokeTimer, Constants.NpSkdTimer);
+        this.GetNode(out _stompComboTracker, Constants.NpStompTracker);
         this.GetNode(out _grabRoot, NpGrabRoot);
         GameRule = this.GetRule();
 
@@ -625,6 +628,7 @@ public partial class Mario : CharacterBody2D
     private AudioStreamPlayer _skidSound;
     private Timer _sprintSmokeTimer;
     private Timer _skidSmokeTimer;
+    private ComboTracker _stompComboTracker;
 
     [CtfFlag(2)] private bool _crouching;
     [CtfFlag(12)] private bool _isInWater;

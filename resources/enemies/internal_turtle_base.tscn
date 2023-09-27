@@ -103,6 +103,7 @@ autoplay = "0_walking"
 
 [node name="Combo Tracker" type="Node" parent="." index="3"]
 script = ExtResource("10_0o35x")
+ResetAtLast = true
 
 [node name="Fly Movement" type="Node" parent="." index="4"]
 script = ExtResource("11_t5ep7")

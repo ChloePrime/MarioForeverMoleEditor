@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=75 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/player/MarioGrabMuzzle.cs" id="9_ug04s"]
 [ext_resource type="Texture2D" uid="uid://dm3igultx8jfo" path="res://resources/mario/T_foot_gas.png" id="10_pqqm3"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
+[ext_resource type="Script" path="res://scripts/shared/ComboTracker.cs" id="16_03bpw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
 size = Vector2(19, 52)
@@ -545,3 +546,6 @@ wait_time = 0.05
 
 [node name="Skid Smoke Timer" type="Timer" parent="."]
 wait_time = 0.05
+
+[node name="Stomp Combo Tracker" type="Node" parent="."]
+script = ExtResource("16_03bpw")

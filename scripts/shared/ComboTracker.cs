@@ -7,6 +7,7 @@ namespace ChloePrime.MarioForever.Shared;
 [GlobalClass]
 public partial class ComboTracker : Node
 {
+    [Export] public bool ResetAtLast { get; set; }
     [Export, MaybeNull] public ComboRule RuleOverride { get; set; }
     
     public ComboRule Rule => RuleOverride ?? this.GetRule().DefaultComboRule;
@@ -14,7 +15,7 @@ public partial class ComboTracker : Node
     public void MoveNext()
     {
         _rule = Rule;
-        _position = (_position + 1) % _rule.ScoreList.Count;
+        _position = ResetAtLast ? (_position + 1) % _rule.ScoreList.Count : _position + 1;
     }
 
     public void Reset() => _position = -1;

@@ -29,6 +29,7 @@ public partial class Mario
         public static readonly NodePath NpSlipperyGas = "Slippery Foot Gas";
         public static readonly NodePath NpSmkTimer = "Sprint Smoke Timer";
         public static readonly NodePath NpSkdTimer = "Skid Smoke Timer";
+        public static readonly NodePath NpStompTracker = "Stomp Combo Tracker";
         public static readonly MarioStatus SmallStatus;
         public static readonly MarioStatus BigStatus;
         public static readonly MarioStatus FireStatus;

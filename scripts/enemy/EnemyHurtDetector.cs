@@ -46,6 +46,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         HurtBy(new DamageEvent(DamageType.Stomp, stomper)
         {
             DamageToEnemy = stomper.GetRule().StompPower,
+            ComboTracker = stomper is Mario { GameRule.ComboOnStomp: true } m ? m.StompComboTracker : null,
         });
         if (stomper is Mario mario)
         {
