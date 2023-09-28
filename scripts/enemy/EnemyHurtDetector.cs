@@ -4,7 +4,6 @@ using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
-using Godot.Collections;
 
 namespace ChloePrime.MarioForever.Enemy;
 
@@ -40,16 +39,16 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     public virtual void StompBy(Node2D stomper)
     {
-        if (Core.NpcData.Friendly)
+        if (!Stompable || Core.NpcData.Friendly)
         {
             return;
         }
-        var damaged = HurtBy(new DamageEvent(DamageType.Stomp, stomper)
+        HurtBy(new DamageEvent(DamageType.Stomp, stomper)
         {
             DamageToEnemy = stomper.GetRule().StompPower,
             ComboTracker = stomper is Mario { GameRule.ComboOnStomp: true } m ? m.StompComboTracker : null,
         });
-        if (damaged && stomper is Mario mario)
+        if (stomper is Mario mario)
         {
             var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;
             mario.CallDeferred(Mario.MethodName.Jump, strength);

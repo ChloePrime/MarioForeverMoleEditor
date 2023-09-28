@@ -37,4 +37,7 @@ rect = Rect2(-16, -16, 32, 32)
 [node name="Enemy Core" parent="." instance=ExtResource("3_ketea")]
 MyNpcData = null
 
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+Stompable = true
+
 [editable path="Enemy Core"]

@@ -17,6 +17,7 @@ DoNotMove = false
 NpcData = SubResource("Resource_q3ngr")
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
+Stompable = false
 AcceptedDamageTypes = 126
 OneHitDamageTypes = 126
 
