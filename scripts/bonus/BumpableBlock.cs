@@ -98,6 +98,7 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
         foreach (var result in GetWorld2D().DirectSpaceState.IntersectShapeTyped(query))
         {
             if (result.Collider is not EnemyHurtDetector ehd) continue;
+            if (ehd.Core.Root == bumper || ehd == bumper) continue;
             if (ehd.Core.Root is IGrabbable { IsGrabbed: true }) continue;
             if (ehd.Core.Root is not CharacterBody2D body || body.IsOnFloor())
             {

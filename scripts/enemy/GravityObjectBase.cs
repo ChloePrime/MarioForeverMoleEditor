@@ -111,9 +111,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			hitSomething = true;
 		}
 
-		if (!WasThrown) return;
-
-		if (!IsOnFloor())
+		if (WillHurtOthers && !IsOnFloorOnly())
 		{
 			foreach (var collision in this.GetSlideCollisions())
 			{
@@ -124,6 +122,8 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 				}
 			}
 		}
+
+		if (!WasThrown) return;
 		if (IsOnFloor() && LastYSpeed > 50)
 		{
 			YSpeed = -LastYSpeed / 4;
