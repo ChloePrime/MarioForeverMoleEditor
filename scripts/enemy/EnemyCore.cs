@@ -83,15 +83,7 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             return;
         }
 
-        var isInWall = myGob.Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
-        {
-            CollideWithAreas = false,
-            CollideWithBodies = true,
-            CollisionMask = MaFo.CollisionMask.Solid | MaFo.CollisionMask.SolidEnemyOnly,
-            Exclude = new Array<Rid> { myGob.GetRid() },
-        }).Any();
-
-        if (isInWall)
+        if (TestIsInWall(myGob))
         {
             myEhd.Kill(new DamageEvent
             {
@@ -103,6 +95,36 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             });
         }
     }
+
+    private static bool TestIsInWall(GravityObjectBase myGob)
+    {
+        var state = myGob.GetWorld2D().DirectSpaceState;
+        var param = new PhysicsShapeQueryParameters2D
+        {
+            Shape = myGob.Shape.Shape,
+            CollideWithAreas = false,
+            CollideWithBodies = true,
+            CollisionMask = MaFo.CollisionMask.Solid | MaFo.CollisionMask.SolidEnemyOnly,
+            Exclude = new Array<Rid> { myGob.GetRid() },
+        };
+        return TestInWallOffsetList.All(offset =>
+        {
+            param.Transform = myGob.GlobalTransform.TranslatedLocal(offset);
+            return state.IntersectShapeTyped(param).Any();
+        });
+    }
+
+    private static readonly Vector2[] TestInWallOffsetList =
+    {
+        8 * Vector2.Right,
+        8 * Vector2.Up,
+        8 * Vector2.Left,
+        8 * Vector2.Down,
+        8 * Vector2.Right.Rotated(Mathf.Pi / 4),
+        8 * Vector2.Up.Rotated(Mathf.Pi / 4),
+        8 * Vector2.Left.Rotated(Mathf.Pi / 4),
+        8 * Vector2.Down.Rotated(Mathf.Pi / 4),
+    };
 
     private void OnHitOthers(EnemyCore it, bool isKiss, EnemyHurtDetector myHurtDetector)
     {
