@@ -33,7 +33,6 @@ animations = [{
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 script = ExtResource("3_sw373")
 StompedCorpse = ExtResource("5_deyan")
-Stompable = true
 OneHitDamageTypes = 127
 HurtSound = ExtResource("7_msb3l")
 
