@@ -148,14 +148,14 @@ public partial class Mario
         }
         if (any)
         {
+            OnHeadHit(predict);
             YSpeed = 0;
-            OnHeadHit();
         }
     }
 
-    private void OnHeadHit()
+    private void OnHeadHit(float predict = 0)
     {
-        foreach (var result in TestBump(MaFo.CollisionMask.Solid, 0, BumpWidthPolicy.UseIdealWidth))
+        foreach (var result in TestBump(MaFo.CollisionMask.Solid, predict, BumpWidthPolicy.UseIdealWidth))
         {
             if (result.Collider is IBumpable bumpable)
             {
