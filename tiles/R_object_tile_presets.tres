@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="ObjectTilePresetList" load_steps=5 format=3 uid="uid://0spcwwwagtpi"]
+[gd_resource type="Resource" script_class="ObjectTilePresetList" load_steps=7 format=3 uid="uid://0spcwwwagtpi"]
 
 [ext_resource type="Script" path="res://scripts/level/ObjectTilePreset.cs" id="1_47fvo"]
 [ext_resource type="Script" path="res://scripts/bonus/BumpableBlock.cs" id="1_a0i6s"]
 [ext_resource type="Script" path="res://scripts/level/ObjectTilePresetList.cs" id="1_sriky"]
+[ext_resource type="Script" path="res://scripts/enemy/Turtle.cs" id="3_6l0on"]
 
 [sub_resource type="Resource" id="Resource_damnt"]
 script = ExtResource("1_47fvo")
@@ -11,6 +12,21 @@ PropertiesById = Array[Dictionary]([{
 "Hidden": true
 }])
 
+[sub_resource type="Resource" id="Resource_g1sur"]
+script = ExtResource("1_47fvo")
+BaseClass = ExtResource("3_6l0on")
+PropertiesById = Array[Dictionary]([{
+"State": 0
+}, {
+"State": 1
+}, {
+"State": 2
+}, {
+"State": 3
+}, {
+"State": 4
+}])
+
 [resource]
 script = ExtResource("1_sriky")
-Presets = Array[Object]([SubResource("Resource_damnt")])
+Presets = Array[Object]([SubResource("Resource_damnt"), SubResource("Resource_g1sur")])

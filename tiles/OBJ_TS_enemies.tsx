@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="OBJ_TS_enemies" tilewidth="32" tileheight="32" tilecount="3" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="OBJ_TS_enemies" tilewidth="32" tileheight="49" tilecount="30" columns="0" objectalignment="bottom">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" x="0" y="0" width="31" height="32" type="instance">
   <properties>
@@ -18,5 +18,174 @@
    <property name="res_path" type="file" value="res://objects/enemies/O_mole_smb3.tscn"/>
   </properties>
   <image width="96" height="64" source="../resources/enemies/T_mole_smb3.png"/>
+ </tile>
+ <tile id="3">
+  <image width="32" height="32" source="../resources/enemies/T_mole_jumping.png"/>
+ </tile>
+ <tile id="4">
+  <image width="32" height="32" source="../resources/enemies/T_mole_jumping.png"/>
+ </tile>
+ <tile id="5" x="2" y="98" width="32" height="49" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_green.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="6" x="2" y="0" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_green.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="7" x="2" y="49" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="2"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_green.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="8" x="2" y="343" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="4"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_green.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="9" x="2" y="196" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="5"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_green.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="10" x="2" y="490" width="32" height="49" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_red.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="11" x="2" y="392" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_red.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="12" x="2" y="441" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="2"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_red.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="13" x="2" y="735" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="4"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_red.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="14" x="2" y="588" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="5"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_red.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="15" x="2" y="882" width="32" height="49" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_blue.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="16" x="2" y="784" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_blue.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="17" x="2" y="833" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="2"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_blue.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="18" x="2" y="1127" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="4"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_blue.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="19" x="2" y="980" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="5"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_blue.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="20" x="2" y="1274" width="32" height="49" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_golden.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="21" x="2" y="1176" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_golden.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="22" x="2" y="1225" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="2"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_golden.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="23" x="2" y="1519" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="4"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_golden.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="24" x="2" y="1372" width="32" height="49" type="instance">
+  <properties>
+   <property name="preset" type="int" value="5"/>
+   <property name="res_path" type="file" value="res://objects/enemies/O_turtle_golden.tscn"/>
+  </properties>
+  <image width="42" height="1960" source="../resources/enemies/T_turtle.png"/>
+ </tile>
+ <tile id="25" x="0" y="0" width="32" height="32" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_hedgehog_red.tscn"/>
+  </properties>
+  <image width="33" height="256" source="../resources/enemies/T_hedgehog.png"/>
+ </tile>
+ <tile id="26" x="0" y="64" width="32" height="32" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_hedgehog_grey.tscn"/>
+  </properties>
+  <image width="33" height="256" source="../resources/enemies/T_hedgehog.png"/>
+ </tile>
+ <tile id="27" x="0" y="128" width="32" height="32" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_hedgehog_blue.tscn"/>
+  </properties>
+  <image width="33" height="256" source="../resources/enemies/T_hedgehog.png"/>
+ </tile>
+ <tile id="28" x="0" y="192" width="32" height="32" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_hedgehog_sonic.tscn"/>
+  </properties>
+  <image width="33" height="256" source="../resources/enemies/T_hedgehog.png"/>
+ </tile>
+ <tile id="29">
+  <image width="32" height="32" source="../resources/enemies/T_mole_jumping.png"/>
  </tile>
 </tileset>
