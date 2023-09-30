@@ -43,6 +43,18 @@ public partial class Turtle : WalkableNpc
     {
         XDirection = -Math.Sign(ToLocal(kicker.GlobalPosition).X);
     }
+
+    public override float AnimationDirection => State == TurtleState.Flying
+        ? GetAnimDirectionFollow()
+        : base.AnimationDirection;
+
+    private float GetAnimDirectionFollow()
+    {
+        if (!IsInstanceValid(_mario)) _mario = null;
+        _mario ??= GetTree()?.GetFirstNodeInGroup(MaFo.Groups.Player) as Node2D;
+        if (!IsInstanceValid(_mario)) return base.AnimationDirection;
+        return Math.Sign(ToLocal(_mario!.GlobalPosition).X);
+    }
     
     public override bool WillHurtOthers => State is TurtleState.MovingShell || base.WillHurtOthers;
 
@@ -178,4 +190,5 @@ public partial class Turtle : WalkableNpc
     private float _jumpStrengthBackup;
     private TurtleFlyMovementComponent _flyMovement;
     private ComboTracker _tracker;
+    private Node2D _mario;
 }

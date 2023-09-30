@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=25 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -21,12 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
-[ext_resource type="PackedScene" uid="uid://bbe1qjvwn88mw" path="res://objects/enemies/O_hedgehog_red.tscn" id="22_gj1bk"]
-[ext_resource type="PackedScene" uid="uid://bh0rc8rlbhfpl" path="res://objects/enemies/O_hedgehog_grey.tscn" id="23_o6nin"]
-[ext_resource type="PackedScene" uid="uid://naiq184h1ib3" path="res://objects/enemies/O_hedgehog_blue.tscn" id="24_k7p3s"]
-[ext_resource type="PackedScene" uid="uid://dvk3d12frsrl8" path="res://objects/enemies/O_hedgehog_sonic.tscn" id="25_l5xsm"]
 [ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
 [ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="27_38piv"]
+[ext_resource type="PackedScene" uid="uid://cdt4frwl8syt3" path="res://objects/enemies/O_golden_turtle_ring.tscn" id="28_bhj6u"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -63,7 +60,7 @@ position = Vector2(128, 24)
 position = Vector2(128, 0)
 
 [node name="RotoDisc Core" parent="." instance=ExtResource("13_y308r")]
-position = Vector2(336, 144)
+position = Vector2(1456, 144)
 
 [node name="Mole" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 128)
@@ -132,20 +129,11 @@ position = Vector2(-32, 0)
 position = Vector2(0, 160)
 State = 0
 
-[node name="Red Hedgehog" parent="." instance=ExtResource("22_gj1bk")]
-position = Vector2(496, 208)
-
-[node name="Grey Hedgehog" parent="." instance=ExtResource("23_o6nin")]
-position = Vector2(544, 208)
-
-[node name="Blue Hedgehog" parent="." instance=ExtResource("24_k7p3s")]
-position = Vector2(592, 208)
-
-[node name="Sonic" parent="." instance=ExtResource("25_l5xsm")]
-position = Vector2(640, 208)
-
 [node name="Blue Turtle" parent="." instance=ExtResource("26_8um7j")]
 position = Vector2(104, 400)
 
 [node name="Red Turtle" parent="." instance=ExtResource("27_38piv")]
 position = Vector2(96, 248)
+
+[node name="Golden Turtle Ring" parent="." instance=ExtResource("28_bhj6u")]
+position = Vector2(336, 144)

@@ -18,26 +18,46 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
 
     [Export] public bool ModifyChildrenRotation { get; set; }
 
+    [Export]
+    public bool CoreVisible
+    {
+        get => _coreVisible;
+        set => SetCoreVisible(value);
+    }
+
     [Export] public MarioForeverNpcData NpcData { get; private set; }
     
     public override void _Ready()
     {
         base._Ready();
         this.GetNode(out _sprite, NpSprite);
+        _sprite.Visible = CoreVisible;
         NpcData = NpcData.ForceLocalToScene();
 
         _entering = false;
-        ChildData.EnsureCapacity(GetChildCount());
-        this.Children().ForEach(OnChildEnteredTree);
+        _InitChildren();
         ChildEnteredTree += OnChildEnteredTree;
         ChildExitingTree += OnChildExitingTree;
+    }
+    
+    private bool SetCoreVisible(bool value)
+    {
+        _coreVisible = value;
+        if (_sprite is { } sprite) sprite.Visible = value;
+        return value;
+    }
+
+    public virtual void _InitChildren()
+    {
+        ChildData.EnsureCapacity(GetChildCount());
+        this.Children().ForEach(OnChildEnteredTree);
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
         var count = GetChildCount();
-        var deltaAngle = Units.AngularSpeed.CtfToGd(RotationSpeed) * (float)delta;
+        var deltaAngle = -Units.AngularSpeed.CtfToGd(RotationSpeed) * (float)delta;
         for (int i = 0; i < count; i++)
         {
             var child = GetChild(i);
@@ -123,4 +143,5 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
     private Sprite2D _sprite;
     private bool _entering;
     private bool _exiting;
+    private bool _coreVisible;
 }
