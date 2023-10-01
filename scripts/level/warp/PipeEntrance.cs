@@ -12,6 +12,9 @@ public partial class PipeEntrance : WarpObject
 
     public const float EnteringSpeed = 100;
     public const float EnterDistance = 64;
+    public const float ShrinkSpeed = 100;
+    public const float ShrinkMin = 0F;
+    public const float MaxShrink = 16;
     
     public enum PassDirection
     {
@@ -82,7 +85,7 @@ public partial class PipeEntrance : WarpObject
         _phase = Phase.Positioning;
         mario.PipeForceAnimation = Direction switch
         {
-            PassDirection.Up => Mario.Constants.AnimJumping,
+            PassDirection.Up => mario.IsGrabbing ? Mario.Constants.AnimGrabJump : Mario.Constants.AnimJumping,
             _ => null,
         };
         if (Direction != PassDirection.Down)
@@ -111,6 +114,7 @@ public partial class PipeEntrance : WarpObject
                 EnterSound?.Play();
                 _phase = Phase.Entering;
                 _distanceLeft = EnterDistance;
+                _shrink = MaxShrink;
                 if (_waitTimer is { } timer && timer.IsStopped())
                 {
                     timer.Start();
@@ -124,12 +128,16 @@ public partial class PipeEntrance : WarpObject
                 }
                 var mov = _distanceLeft.MoveToward(0, EnteringSpeed * delta);
                 mario.GlobalPosition += (Direction.GetNormal() * new Vector2(-mov, -mov)).Rotated(GlobalRotation);
+                _shrink.MoveToward(0, ShrinkSpeed * delta);
+                mario.PipeGrabbedObjectXOffsetShrink = Mathf.Lerp(ShrinkMin, 1F, _shrink / MaxShrink);
                 break;
             }
             case Phase.Exiting:
             {
                 var mov = _distanceLeft.MoveToward(0, EnteringSpeed * delta);
                 mario.GlobalPosition += (Direction.GetNormal() * new Vector2(-mov, -mov)).Rotated(GlobalRotation);
+                var shrink = Mathf.Clamp(_distanceLeft / 16F, 0, 1);
+                mario.PipeGrabbedObjectXOffsetShrink = Mathf.Lerp(1F, ShrinkMin, shrink);
                 if (Mathf.IsZeroApprox(_distanceLeft))
                 {
                     MarioExitPipe(mario);
@@ -183,9 +191,10 @@ public partial class PipeEntrance : WarpObject
         _distanceLeft = Direction.GetAxis() == Vector2.Axis.X 
             ? mario.CurrentSize.GetIdealWidth() 
             : mario.CurrentSize.GetIdealHeight() - 4;
+        _shrink = MaxShrink;
         mario.PipeForceAnimation = Direction switch
         {
-            PassDirection.Down => Mario.Constants.AnimJumping,
+            PassDirection.Down => mario.IsGrabbing ? Mario.Constants.AnimGrabJump : Mario.Constants.AnimJumping,
             _ => null,
         };
     }
@@ -229,6 +238,7 @@ public partial class PipeEntrance : WarpObject
     private Sprite2D _editor;
     private Timer _waitTimer;
     private Phase _phase = Phase.Deactivated;
+    private float _shrink;
     private float _distanceLeft;
 }
 

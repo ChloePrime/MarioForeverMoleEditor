@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -203,12 +204,16 @@ public partial class Mario : CharacterBody2D
     public override void _PhysicsProcess(double deltaD)
     {
         base._PhysicsProcess(deltaD);
-        if (PipeState is not MarioPipeState.NotInPipe)
+        if (PipeState is not MarioPipeState.NotInPipe || _internalTrackedInPipe)
         {
-            UpdatePipe((float)deltaD);
-            ProcessAnimation();
-            return;
+            ProcessPipe((float)deltaD);
+            if (_internalTrackedInPipe)
+            {
+                ProcessAnimation();
+                return;
+            }
         }
+        
         if (_deathStack > 0)
         {
             Kill(new DamageEvent
@@ -625,12 +630,11 @@ public partial class Mario : CharacterBody2D
             }
             SpriteNodes[status] = sprite;
         }
-        foreach (var grabMuzzle in GrabMuzzleBySize)
+        for (var i = 0; i < GrabMuzzleBySize.Count; i++)
         {
-            // grabMuzzle.SyncTarget = _grabRoot;
-            // grabMuzzle.ProcessMode = ProcessModeEnum.Disabled;
+            _grabMuzzleOriginalXBySize[i] = GrabMuzzleBySize[i].Position.X;
         }
-        
+
         RpgReady();
         Translate(new Vector2(0, -SafeMargin / 2));
     }
@@ -687,6 +691,7 @@ public partial class Mario : CharacterBody2D
     /// </summary>
     private MarioSize _standingSize;
 
+    private readonly float[] _grabMuzzleOriginalXBySize = new float[Enum.GetValues<MarioSize>().Length];
     private readonly HashSet<StringName> _optionalAnimations = new();
     private System.Collections.Generic.Dictionary<MarioStatus, IAnimatedSprite> SpriteNodes { get; } = new();
 }
