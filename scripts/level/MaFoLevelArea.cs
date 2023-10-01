@@ -37,7 +37,6 @@ public partial class MaFoLevelArea : Node2D
         if (AreaMusic is { } bgm)
         {
             BackgroundMusic.Music = bgm;
-            BackgroundMusic.Speed = 1;
         }
         if (Level.FindCamera() is { } camera)
         {

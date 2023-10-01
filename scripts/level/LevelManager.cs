@@ -49,6 +49,7 @@ public partial class LevelManager : Control
             Hud.CurrentLevel = null;
             Hud.Visible = false;
         }
+        BackgroundMusic.Speed = 1;
     }
     
     public void RestartGame()
