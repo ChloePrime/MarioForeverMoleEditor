@@ -196,12 +196,7 @@ public partial class Mario : CharacterBody2D
     public override void _Process(double delta)
     {
         base._Process(delta);
-        _camera = GetViewport().GetCamera2D() ?? _camera;
-        if (_camera != null)
-        {
-            var pos = GlobalPosition;
-            _camera.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
-        }
+        MoveCamera();
         ProcessFlashing((float)delta);
     }
 
@@ -252,6 +247,7 @@ public partial class Mario : CharacterBody2D
         ProcessCrouch();
         ProcessPositionAutoSave();
         ProcessAnimation();
+        MoveCamera();
 
         var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (_crouching && XSpeed > 0));
         if (_skidding != shouldSkid)
@@ -274,6 +270,20 @@ public partial class Mario : CharacterBody2D
         {
             _firePreInput -= delta;
             TryFire();
+        }
+    }
+
+    private void MoveCamera()
+    {
+        var cam = _camera;
+        if (!IsInstanceValid(cam) || !cam.IsInsideTree())
+        {
+            cam = _camera = GetViewport().GetCamera2D();
+        }
+        if (IsInstanceValid(cam) || !cam.IsInsideTree())
+        {
+            var pos = GlobalPosition;
+            cam.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
         }
     }
 
