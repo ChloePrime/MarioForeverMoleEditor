@@ -114,7 +114,7 @@ public partial class Mario
                 {
                     DamageLo = GameRule.HitPointProtectsDeathCostLo,
                     DamageHi = GameRule.HitPointProtectsDeathCostHi,
-                    EventFlags = DamageEvent.Flags.DeathProtection,
+                    EventFlags = e.EventFlags | DamageEvent.Flags.DeathProtection,
                 };
                 Hurt(event2);
                 if (e.DirectSource == _slipperyGas && _posQueue.TryPeek(out var safePos))
@@ -220,7 +220,7 @@ public partial class Mario
         // 无敌
         if (_invulnerable)
         {
-            _invulnerableFlashPhase = (_invulnerableFlashPhase + InvulnerabilityFlashSpeed * (float)delta) % 1;
+            _invulnerableFlashPhase = (_invulnerableFlashPhase + InvulnerabilityFlashSpeed * delta) % 1;
             var alpha = Mathf.Cos(2 * Mathf.Pi * _invulnerableFlashPhase);
             _spriteRoot.Modulate = new Color(Colors.White, alpha);
         }
