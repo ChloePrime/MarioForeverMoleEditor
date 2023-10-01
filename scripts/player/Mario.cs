@@ -140,6 +140,8 @@ public partial class Mario : CharacterBody2D
     /// 受下蹲影响
     /// </summary>
     public MarioSize CurrentSize { get; private set; }
+
+    public bool IsCrouching => _crouching;
     
     public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }

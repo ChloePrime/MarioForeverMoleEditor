@@ -86,6 +86,7 @@ public partial class PipeEntrance : WarpObject
         mario.PipeForceAnimation = Direction switch
         {
             PassDirection.Up => mario.IsGrabbing ? Mario.Constants.AnimGrabJump : Mario.Constants.AnimJumping,
+            PassDirection.Down => mario.IsGrabbing ? null : Mario.Constants.AnimCrouching,
             _ => null,
         };
         if (Direction != PassDirection.Down)
@@ -190,11 +191,13 @@ public partial class PipeEntrance : WarpObject
         }
         _distanceLeft = Direction.GetAxis() == Vector2.Axis.X 
             ? mario.CurrentSize.GetIdealWidth() 
-            : mario.CurrentSize.GetIdealHeight() - 4;
+            : mario.CurrentSize.GetIdealHeight() - (Direction == PassDirection.Down ? 4 : 0);
         _shrink = MaxShrink;
         mario.PipeForceAnimation = Direction switch
         {
-            PassDirection.Down => mario.IsGrabbing ? Mario.Constants.AnimGrabJump : Mario.Constants.AnimJumping,
+            PassDirection.Down or PassDirection.Up => mario.IsGrabbing
+                ? Mario.Constants.AnimGrabJump
+                : Mario.Constants.AnimJumping,
             _ => null,
         };
     }

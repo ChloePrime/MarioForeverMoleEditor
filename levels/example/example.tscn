@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=34 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
-[ext_resource type="PackedScene" uid="uid://cyfkkop4obfhw" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
+[ext_resource type="PackedScene" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
 [ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="27_38piv"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://cdt4frwl8syt3" path="res://objects/enemies/O_golden_turtle_ring.tscn" id="28_bhj6u"]
@@ -31,6 +31,8 @@
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
 [ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://objects/background/O_bg_underground.tscn" id="29_g2m7a"]
+[ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
+[ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -154,10 +156,14 @@ position = Vector2(576, 320)
 Target = NodePath("../../Bonus Room/Bonus Room Entrance")
 
 [node name="Bonus Room Exit" parent="Overworld" instance=ExtResource("28_iu26d")]
-position = Vector2(576, 64)
+position = Vector2(576, 160)
 
 [node name="Fire Flower" parent="Overworld" instance=ExtResource("28_ewyo7")]
 position = Vector2(368, 400)
+
+[node name="Bonus Room Rev Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("32_p6x3p")]
+position = Vector2(576, 224)
+Target = NodePath("../../Bonus Room/Bonus Room Rev Entrance")
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)
@@ -176,3 +182,6 @@ Target = NodePath("../../Overworld/Bonus Room Exit")
 
 [node name="Background" parent="Bonus Room" instance=ExtResource("29_g2m7a")]
 position = Vector2(256, 240)
+
+[node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
+position = Vector2(512, 416)
