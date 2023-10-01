@@ -22,6 +22,7 @@ public partial class Mario
 
     public void Hurt(DamageEvent e)
     {
+        if (PipeState != MarioPipeState.NotInPipe) return;
         if ((!e.BypassInvulnerable && IsInvulnerable()) || _currentStatus == null)
         {
             return;

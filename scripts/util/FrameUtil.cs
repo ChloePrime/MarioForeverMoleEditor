@@ -25,6 +25,11 @@ public static class FrameUtil
             return frames.GetFrameTexture(sprite.Animation, sprite.Frame)?.GetSize() ?? Vector2.Zero;
         }
     }
+    
+    public static MaFoLevelArea? GetArea(this Node node)
+    {
+        return node.FindParentOfType<MaFoLevelArea>();
+    }
 
     public static MaFoLevel? GetLevel(this Node node)
     {

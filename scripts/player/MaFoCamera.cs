@@ -5,8 +5,6 @@ namespace ChloePrime.MarioForever.Player;
 [GlobalClass]
 public partial class MaFoCamera : Camera2D
 {
-	private Rect2 _border = new(new Vector2(320, 240), new Vector2(640, 480));
-
 	[Export]
 	public Rect2 Border
 	{
@@ -22,4 +20,6 @@ public partial class MaFoCamera : Camera2D
 		LimitRight = (int)rect.End.X;
 		LimitBottom = (int)rect.End.Y;
 	}
+	
+	private Rect2 _border = new(new Vector2(320, 240), new Vector2(640, 480));
 }

@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=32 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://tiles/R_object_tile_presets.tres" id="3_ad6k1"]
+[ext_resource type="Script" path="res://scripts/level/MaFoLevelArea.cs" id="3_gyt0a"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
@@ -22,118 +23,156 @@
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
+[ext_resource type="PackedScene" uid="uid://cyfkkop4obfhw" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
 [ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="27_38piv"]
+[ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://cdt4frwl8syt3" path="res://objects/enemies/O_golden_turtle_ring.tscn" id="28_bhj6u"]
+[ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
+[ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
+[ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
+[ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://objects/background/O_bg_underground.tscn" id="29_g2m7a"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
 LevelName = "Mole Editor
 可口可乐了了"
-LevelMusic = ExtResource("2_4kt55")
 TileLoadingPreset = ExtResource("3_ad6k1")
-
-[node name="Tiles" parent="." instance=ExtResource("1_xiix0")]
-
-[node name="Mario" parent="." instance=ExtResource("3_5usbp")]
-position = Vector2(272, 408)
-FastRetry = true
 
 [node name="MaFoCamera" type="Camera2D" parent="."]
 position = Vector2(320, 240)
 script = ExtResource("4_jc67v")
-Border = Rect2(0, 0, 2560, 480)
+Border = Rect2(0, 0, 640, 480)
 
-[node name="Music Changer" parent="." instance=ExtResource("6_5ta4l")]
+[node name="Overworld" type="Node2D" parent="."]
+script = ExtResource("3_gyt0a")
+Border = Rect2(0, 0, 2560, 480)
+AreaMusic = ExtResource("2_4kt55")
+
+[node name="Tiles" parent="Overworld" instance=ExtResource("1_xiix0")]
+
+[node name="Mario" parent="Overworld" instance=ExtResource("3_5usbp")]
+position = Vector2(272, 408)
+FastRetry = true
+
+[node name="Music Changer" parent="Overworld" instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
 TargetMusic = ExtResource("7_a81sv")
 
-[node name="Background" parent="." instance=ExtResource("11_nfc1d")]
+[node name="Background" parent="Overworld" instance=ExtResource("11_nfc1d")]
 position = Vector2(256, 240)
 
-[node name="Background Gradient" parent="." instance=ExtResource("13_o71m4")]
+[node name="Background Gradient" parent="Overworld" instance=ExtResource("13_o71m4")]
 position = Vector2(320, 240)
 
-[node name="Cloud (Background)" parent="." instance=ExtResource("13_6x2u0")]
+[node name="Cloud (Background)" parent="Overworld" instance=ExtResource("13_6x2u0")]
 position = Vector2(128, 24)
 
-[node name="Cloud (Foreground)" parent="." instance=ExtResource("14_1osfy")]
+[node name="Cloud (Foreground)" parent="Overworld" instance=ExtResource("14_1osfy")]
 position = Vector2(128, 0)
 
-[node name="RotoDisc Core" parent="." instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld" instance=ExtResource("13_y308r")]
 position = Vector2(1456, 144)
 
-[node name="Mole" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 128)
 
-[node name="Mole2" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole2" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 64)
 
-[node name="Mole3" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole3" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 96)
 
-[node name="Mole4" parent="RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole4" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 32)
 
-[node name="Mole (SMB3)" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -32)
 
-[node name="Mole (SMB3)2" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)2" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -64)
 
-[node name="Mole (SMB3)3" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)3" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -96)
 
-[node name="Mole (SMB3)4" parent="RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)4" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -128)
 
-[node name="RotoDisc Core" parent="RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(128, 0)
 RotationSpeed = -2.0
 ModifyChildrenRotation = true
 
-[node name="Spike (I Wanna, Up)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("17_foy4y")]
+[node name="Spike (I Wanna, Up)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("17_foy4y")]
 position = Vector2(0, -32)
 
-[node name="Spike (I Wanna, Down)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("18_lsifq")]
+[node name="Spike (I Wanna, Down)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("18_lsifq")]
 position = Vector2(0, 32)
 
-[node name="Spike (I Wanna, Left)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("19_veeqw")]
+[node name="Spike (I Wanna, Left)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("19_veeqw")]
 position = Vector2(-32, 0)
 
-[node name="Spike (I Wanna, Right)" parent="RotoDisc Core/RotoDisc Core" instance=ExtResource("20_tvwyx")]
+[node name="Spike (I Wanna, Right)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("20_tvwyx")]
 position = Vector2(32, 0)
 
-[node name="RotoDisc Core 2" parent="RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core 2" parent="Overworld/RotoDisc Core" instance=ExtResource("13_y308r")]
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2" instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="Goomba" parent="RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
+[node name="Goomba" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
 
-[node name="Golden Turtle" parent="RotoDisc Core" instance=ExtResource("21_0d0u4")]
+[node name="Golden Turtle" parent="Overworld/RotoDisc Core" instance=ExtResource("21_0d0u4")]
 position = Vector2(0, 160)
 State = 0
 
-[node name="Blue Turtle" parent="." instance=ExtResource("26_8um7j")]
+[node name="Blue Turtle" parent="Overworld" instance=ExtResource("26_8um7j")]
 position = Vector2(104, 400)
 
-[node name="Red Turtle" parent="." instance=ExtResource("27_38piv")]
+[node name="Red Turtle" parent="Overworld" instance=ExtResource("27_38piv")]
 position = Vector2(96, 248)
 
-[node name="Golden Turtle Ring" parent="." instance=ExtResource("28_bhj6u")]
+[node name="Golden Turtle Ring" parent="Overworld" instance=ExtResource("28_bhj6u")]
 position = Vector2(336, 144)
+
+[node name="Bonus Room Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
+position = Vector2(576, 320)
+Target = NodePath("../../Bonus Room/Bonus Room Entrance")
+
+[node name="Bonus Room Exit" parent="Overworld" instance=ExtResource("28_iu26d")]
+position = Vector2(576, 64)
+
+[node name="Fire Flower" parent="Overworld" instance=ExtResource("28_ewyo7")]
+position = Vector2(368, 400)
+
+[node name="Bonus Room" type="Node2D" parent="."]
+position = Vector2(0, 480)
+script = ExtResource("3_gyt0a")
+Border = Rect2(0, 480, 640, 480)
+AreaMusic = ExtResource("28_r5h0v")
+
+[node name="Tiles" parent="Bonus Room" instance=ExtResource("26_d5aqm")]
+
+[node name="Bonus Room Entrance" parent="Bonus Room" instance=ExtResource("28_iu26d")]
+position = Vector2(128, 128)
+
+[node name="Bonus Room Exit" parent="Bonus Room" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
+position = Vector2(512, 352)
+Target = NodePath("../../Overworld/Bonus Room Exit")
+
+[node name="Background" parent="Bonus Room" instance=ExtResource("29_g2m7a")]
+position = Vector2(256, 240)

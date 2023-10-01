@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cabraxfm8hpy0"]
+
+[ext_resource type="Script" path="res://scripts/level/warp/PipeEntrance.cs" id="1_etalt"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="2_escge"]
+
+[node name="Pipe Exit Base" type="Node2D"]
+script = ExtResource("1_etalt")
+
+[node name="Editor Display" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("2_escge")

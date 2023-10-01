@@ -178,7 +178,7 @@ public partial class Mario
         var marioSize = CurrentCollisionShape.Shape.GetRect().Size;
         var width = widthPolicy switch
         {
-            BumpWidthPolicy.UseIdealWidth => _currentSize.GetIdealWidth(),
+            BumpWidthPolicy.UseIdealWidth => CurrentSize.GetIdealWidth(),
             BumpWidthPolicy.UseHitboxWidth or _ => marioSize.X,
         };
         BumpDetector.Size = new Vector2(width, 8);
