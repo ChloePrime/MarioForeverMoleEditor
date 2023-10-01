@@ -89,7 +89,8 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
 
     private void OnChildEnteredTree(Node child)
     {
-        if (!_entering && child is IGrabbable grabbable)
+        if (_entering) return;
+        if (child is IGrabbable grabbable)
         {
             grabbable.Grabber = this;
             grabbable.GrabNotify(new Mario.GrabEvent(this), null);
@@ -107,8 +108,8 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
 
     public override void _ExitTree()
     {
-        base._ExitTree();
         _exiting = true;
+        base._ExitTree();
     }
 
     private void OnChildExitingTree(Node child)
@@ -119,8 +120,7 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
         }
         else
         {
-            OnChildExitingTree0(child);
-            // CallDeferred(MethodName.OnChildExitingTree0, child);
+            CallDeferred(MethodName.OnChildExitingTree0, child, child.GetIndex());
         }
     }
 
@@ -129,10 +129,11 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
         ChildData.RemoveAt(child.GetIndex());
     }
 
-    private void OnChildExitingTree0(Node child)
+    private void OnChildExitingTree0(Node child, int index)
     {
-        ChildData.RemoveAt(child.GetIndex());
-        if (!_exiting && child is IGrabbable grabbable && grabbable.Grabber == this)
+        if (_exiting) return;
+        ChildData.RemoveAt(index);
+        if (child is IGrabbable grabbable && grabbable.Grabber == this)
         {
             grabbable.GrabNotify(default, new Mario.GrabReleaseEvent(Mario.GrabReleaseFlags.Gently));
             grabbable.Grabber = null;
