@@ -162,12 +162,17 @@ public partial class PipeEntrance : WarpObject
         _phase = Phase.Deactivated;
     }
 
-    private static void MarioExitPipe(Mario mario)
+    private void MarioExitPipe(Mario mario)
     {
         mario.PipeState = MarioPipeState.NotInPipe;
         mario.XSpeed = mario.YSpeed = 0;
         mario.PipeForceAnimation = null;
         mario.ZIndex = 0;
+        mario.GlobalPosition -= new Vector2(0, 1.5F * mario.SafeMargin);
+        if (Direction != PassDirection.Down)
+        {
+            mario.ForceCancelCrouch();
+        }
     }
 
     private void ProcessMoving(Mario mario, float delta, MarioPipeState pipeStateAfter)

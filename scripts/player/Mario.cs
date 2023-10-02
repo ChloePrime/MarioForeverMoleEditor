@@ -192,8 +192,8 @@ public partial class Mario : CharacterBody2D
         {
             return;
         }
-        SetSize(MarioSize.Big, true);
         _crouching = false;
+        SetSize(MarioSize.Big, true);
     }
 
     public override void _Process(double delta)
