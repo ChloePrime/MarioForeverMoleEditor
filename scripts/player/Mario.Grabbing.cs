@@ -1,5 +1,6 @@
 ﻿using System;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -44,7 +45,7 @@ public partial class Mario
         GrabRelease();
         GrabbedObject = obj;
 
-        var oldParent = (obj.AsNode.GetParent() ?? obj.AsNode.GetLevel()) ?? GetTree().Root;
+        var oldParent = (obj.AsNode.GetParent() ?? obj.AsNode.GetArea()) ?? GetTree().Root;
         var newNode = obj.AsNode;
         if (newNode.GetParent() is {} parent)
         {
@@ -99,11 +100,11 @@ public partial class Mario
         Node parent;
         if (_oldParent is { } oldParent && IsInstanceValid(oldParent))
         {
-            parent = oldParent;
+            parent = oldParent.IsInsideTree() ? oldParent : this.GetArea();
         }
         else
         {
-            parent = (GetParent() ?? this.GetLevel()) ?? GetTree().Root;
+            parent = (GetParent() ?? this.GetArea()) ?? GetTree().Root;
         }
         var pos = oldNode.GlobalPosition;
         oldNode.GetParent()?.RemoveChild(oldNode);

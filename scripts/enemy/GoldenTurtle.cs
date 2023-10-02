@@ -20,7 +20,7 @@ public partial class GoldenTurtle : Turtle
         }
         if (State != TurtleState.Flying && this.FindParentOfType<RotoDiscCore>() is {} xfx)
         {
-            var parent = ((Node)this.GetLevel() ?? GetTree().Root) ?? xfx.GetParent();
+            var parent = ((Node)this.GetArea() ?? GetTree().Root) ?? xfx.GetParent();
             var pos = GlobalPosition;
             GetParent()?.RemoveChild(this);
             
