@@ -168,6 +168,7 @@ public partial class PipeEntrance : WarpObject
         mario.XSpeed = mario.YSpeed = 0;
         mario.PipeForceAnimation = null;
         mario.ZIndex = 0;
+        // 防止因为误差导致马里奥传送后被判定为卡在地面里
         mario.GlobalPosition -= new Vector2(0, 1.5F * mario.SafeMargin);
         if (Direction != PassDirection.Down)
         {
