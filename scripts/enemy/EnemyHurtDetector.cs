@@ -109,12 +109,12 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
             {
                 parent.AddChild(score);
-                score.GlobalPosition = Root.ToGlobal(ScorePivot);
+                score.GlobalPosition = ToGlobal(ScorePivot);
             }
             if (CreateCorpse(e) is { } corpse)
             {
                 CustomizeCorpse(e, corpse);
-                CallDeferred(MethodName.AddCorpseLater, parent, corpse, Root.GlobalPosition);
+                CallDeferred(MethodName.AddCorpseLater, parent, corpse, GlobalPosition);
             }
         }
 

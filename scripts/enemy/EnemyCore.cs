@@ -30,7 +30,7 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     [MaybeNull] public EnemyDamageSource DamageSource { get; private set; }
     public AnimatedSprite2D Sprite { get; private set; }
     public AnimationPlayer Animation { get; private set; }
-    public Node2D Root => _root ??= (RootOverride ?? (GetParent() as WalkableNpc)) ?? this;
+    public Node2D Root => _root ??= (RootOverride ?? (GetParent() as Node2D)) ?? this;
     public MarioForeverNpcData NpcData => Root == this ? MyNpcData : (Root as IMarioForeverNpc)?.NpcData ?? MyNpcData ?? MarioForeverNpcData.SafeFallback;
     public IMarioForeverNpc AsNpc => this;
 

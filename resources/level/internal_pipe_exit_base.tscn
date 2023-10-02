@@ -7,5 +7,7 @@
 script = ExtResource("1_etalt")
 
 [node name="Editor Display" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.501961)
+z_index = -10
 position = Vector2(0, -32)
 texture = ExtResource("2_escge")
