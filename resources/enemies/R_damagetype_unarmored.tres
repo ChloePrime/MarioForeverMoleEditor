@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DamageTypePreset" load_steps=2 format=3 uid="uid://v430l16luk5i"]
+
+[ext_resource type="Script" path="res://scripts/rpg/DamageTypePreset.cs" id="1_wgiyv"]
+
+[resource]
+script = ExtResource("1_wgiyv")
+Value = 383

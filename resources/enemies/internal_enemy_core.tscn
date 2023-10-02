@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://shi4xcud2fmv"]
+[gd_scene load_steps=13 format=3 uid="uid://shi4xcud2fmv"]
 
 [ext_resource type="Script" path="res://scripts/enemy/EnemyCore.cs" id="1_7jxk8"]
 [ext_resource type="Script" path="res://scripts/enemy/EnemyHurtDetector.cs" id="2_gllfk"]
 [ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_q5y43"]
 [ext_resource type="Script" path="res://scripts/enemy/EnemyDamageSource.cs" id="3_uvdtv"]
+[ext_resource type="Resource" uid="uid://v430l16luk5i" path="res://resources/enemies/R_damagetype_unarmored.tres" id="4_ib4yf"]
 [ext_resource type="Material" uid="uid://dbpoyoa1dyxb2" path="res://resources/enemies/M_enemy.tres" id="5_sqkyg"]
 
 [sub_resource type="Resource" id="Resource_gupis"]
@@ -68,6 +69,8 @@ MyNpcData = SubResource("Resource_gupis")
 collision_layer = 131072
 collision_mask = 65536
 script = ExtResource("2_gllfk")
+AcceptedDamageTypes = ExtResource("4_ib4yf")
+OneHitDamageTypes = ExtResource("4_ib4yf")
 
 [node name="Collision Shape" type="CollisionShape2D" parent="Hurt Detector"]
 shape = SubResource("RectangleShape2D_r1lqd")

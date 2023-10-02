@@ -12,12 +12,8 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 {
     [Export] public bool Stompable { get; set; }
     [Export] public float StompBounceStrength { get; set; } = Units.Speed.CtfToGd(9);
-
-    [Export(MaFo.PropertyHint.LayerDamageType)]
-    public uint AcceptedDamageTypes = (uint)(DamageType.Unarmored | DamageType.Stomp);
-    
-    [Export(MaFo.PropertyHint.LayerDamageType)]
-    public uint OneHitDamageTypes = (uint)(DamageType.Armored | DamageType.Stomp);
+    [Export] public DamageTypePreset AcceptedDamageTypes { get; set; }
+    [Export] public DamageTypePreset OneHitDamageTypes { get; set; }
 
 
     [Export, MaybeNull]

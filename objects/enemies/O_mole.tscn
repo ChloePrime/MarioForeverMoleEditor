@@ -32,9 +32,6 @@ MaxSpeed = 150.0
 ScaleAnimationSpeed = true
 ControlAcceleration = 125.0
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
-OneHitDamageTypes = 127
-
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_ff6h6")
 autoplay = "default"
