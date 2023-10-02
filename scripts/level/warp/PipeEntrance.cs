@@ -11,7 +11,8 @@ public partial class PipeEntrance : WarpObject
     [Export] public AudioStream EnterSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_pipe.ogg");
 
     public const float EnteringSpeed = 100;
-    public const float EnterDistance = 64;
+    public const float EnterDistanceH = 28;
+    public const float EnterDistanceV = 64;
     public const float ShrinkSpeed = 100;
     public const float ShrinkMin = 0F;
     public const float MaxShrink = 16;
@@ -87,7 +88,7 @@ public partial class PipeEntrance : WarpObject
         {
             PassDirection.Up => mario.IsGrabbing ? Mario.Constants.AnimGrabJump : Mario.Constants.AnimJumping,
             PassDirection.Down => mario.IsGrabbing ? null : Mario.Constants.AnimCrouching,
-            _ => null,
+            _ => Mario.Constants.AnimWalking,
         };
         if (Direction != PassDirection.Down)
         {
@@ -111,10 +112,13 @@ public partial class PipeEntrance : WarpObject
                 mario.GlobalPosition += new Vector2(movement, 0).Rotated(GlobalRotation);
                 return;
             }
+            case Phase.Positioning when Direction is PassDirection.Left or PassDirection.Right:
+                mario.GlobalPosition = mario.GlobalPosition with { Y = GlobalPosition.Y };
+                goto case Phase.Positioning;
             case Phase.Positioning:
                 EnterSound?.Play();
                 _phase = Phase.Entering;
-                _distanceLeft = EnterDistance;
+                _distanceLeft = Direction.GetAxis() == Vector2.Axis.X ? EnterDistanceH : EnterDistanceV;
                 _shrink = MaxShrink;
                 if (_waitTimer is { } timer && timer.IsStopped())
                 {
@@ -198,7 +202,7 @@ public partial class PipeEntrance : WarpObject
             PassDirection.Down or PassDirection.Up => mario.IsGrabbing
                 ? Mario.Constants.AnimGrabJump
                 : Mario.Constants.AnimJumping,
-            _ => null,
+            _ => Mario.Constants.AnimWalking,
         };
     }
 
@@ -220,7 +224,7 @@ public partial class PipeEntrance : WarpObject
             || target.GetArea() is not { } newArea)
         {
             mario.GlobalPosition = GlobalPosition;
-            mario.PipeState = MarioPipeState.NotInPipe;
+            MarioExitPipe(mario);
             return;
         }
         if (oldArea != newArea)

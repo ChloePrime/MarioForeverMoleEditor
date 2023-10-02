@@ -39,9 +39,9 @@ public partial class Mario
         switch (PipeState)
         {
             case MarioPipeState.TransitionBegin:
+                PipeState = MarioPipeState.TransitionEnd;
                 RequireTeleport?.Invoke();
                 RequireTeleport = null;
-                PipeState = MarioPipeState.TransitionEnd;
                 break;
             case MarioPipeState.TransitionEnd:
                 PipeState = MarioPipeState.Exiting;

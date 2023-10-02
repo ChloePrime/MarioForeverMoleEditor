@@ -23,6 +23,7 @@ public partial class MaFoLevel
         foreach (var area in Areas)
         {
             _ = area.Level;
+            area.Visible = true;
         }
         SetArea(DefaultArea);
     }

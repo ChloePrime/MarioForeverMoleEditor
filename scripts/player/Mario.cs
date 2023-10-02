@@ -572,7 +572,7 @@ public partial class Mario : CharacterBody2D
         FetchInput(ref _upPressed, e, Constants.ActionMoveUp);
         FetchInput(ref _downPressed, e, Constants.ActionMoveDown);
         InputGrab(e);
-        if (!WasJustGrabbing && e.IsActionPressed(Constants.ActionFire))
+        if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing && e.IsActionPressed(Constants.ActionFire))
         {
             _firePreInput = 0.2F;
             TryFire();
