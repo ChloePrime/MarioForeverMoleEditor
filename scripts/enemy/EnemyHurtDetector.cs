@@ -226,11 +226,11 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (Core.Sprite is not {} spr) return;
         cor.Sprite.Position = spr.Position;
         cor.Sprite.SpriteFrames = spr.SpriteFrames;
+        cor.Sprite.Stop();
         cor.Sprite.Animation = spr.Animation;
         cor.Sprite.Frame = spr.Frame;
         cor.Sprite.FlipH = spr.FlipH;
         cor.Sprite.FlipV = spr.FlipV;
-        cor.Sprite.Stop();
     }
     
     // IStompable
