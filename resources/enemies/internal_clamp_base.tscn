@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkop8m3ysird7"]
+[gd_scene load_steps=9 format=3 uid="uid://dkop8m3ysird7"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="1_3n0pw"]
 [ext_resource type="Script" path="res://scripts/enemy/ClampFlower.cs" id="1_m7ojg"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://resources/enemies/T_clamp.png" id="1_sfv5s"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_6g3hj"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://resources/shared/SF_placeholder.tres" id="3_cslh6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fo2x"]
@@ -21,16 +20,6 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="Resource" id="Resource_arnmd"]
-resource_local_to_scene = true
-script = ExtResource("2_6g3hj")
-HitPoint = 50.0
-MaxHitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43am0"]
 size = Vector2(20, 48)
 
@@ -47,7 +36,6 @@ sprite_frames = SubResource("SpriteFrames_dnxv3")
 
 [node name="Enemy Core" parent="." instance=ExtResource("1_3n0pw")]
 position = Vector2(0, -32)
-MyNpcData = SubResource("Resource_arnmd")
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 position = Vector2(0, 8)
@@ -69,5 +57,8 @@ autoplay = "default"
 [node name="Wait Timer" type="Timer" parent="."]
 process_callback = 0
 one_shot = true
+
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -32, 32, 32)
 
 [editable path="Enemy Core"]

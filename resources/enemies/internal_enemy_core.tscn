@@ -7,8 +7,7 @@
 [ext_resource type="Resource" uid="uid://v430l16luk5i" path="res://resources/enemies/R_damagetype_unarmored.tres" id="4_ib4yf"]
 [ext_resource type="Material" uid="uid://dbpoyoa1dyxb2" path="res://resources/enemies/M_enemy.tres" id="5_sqkyg"]
 
-[sub_resource type="Resource" id="Resource_gupis"]
-resource_local_to_scene = true
+[sub_resource type="Resource" id="Resource_uordy"]
 script = ExtResource("2_q5y43")
 HitPoint = 50.0
 MaxHitPoint = 50.0
@@ -63,7 +62,7 @@ _data = {
 
 [node name="Enemy Core" type="Node2D"]
 script = ExtResource("1_7jxk8")
-MyNpcData = SubResource("Resource_gupis")
+MyNpcData = SubResource("Resource_uordy")
 
 [node name="Hurt Detector" type="Area2D" parent="."]
 collision_layer = 131072

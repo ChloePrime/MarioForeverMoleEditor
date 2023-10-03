@@ -62,6 +62,10 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             gob.GrabReleased += e => OnGrabReleased(e, gob, myHurtDetector);
             gob.HitEnemyWhenThrown += (c, isKiss) => OnHitOthers(c, isKiss, myHurtDetector);
         }
+        if (MyNpcData is {} npcData)
+        {
+            MyNpcData = npcData.ForceLocalToScene();
+        }
     }
 
     public override void _Process(double delta)

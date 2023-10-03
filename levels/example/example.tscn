@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=39 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 [ext_resource type="PackedScene" uid="uid://b2l3v5hsqxkrt" path="res://objects/enemies/O_clamp_grey.tscn" id="37_h3wvj"]
+[ext_resource type="PackedScene" uid="uid://b63wm0j1pxr2a" path="res://objects/enemies/O_clamp_pink.tscn" id="38_tm7pj"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -81,27 +82,35 @@ position = Vector2(1456, 144)
 
 [node name="Mole" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 128)
+MaxYSpeed = inf
 
 [node name="Mole2" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 64)
+MaxYSpeed = inf
 
 [node name="Mole3" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 96)
+MaxYSpeed = inf
 
 [node name="Mole4" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
 position = Vector2(0, 32)
+MaxYSpeed = inf
 
 [node name="Mole (SMB3)" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -32)
+MaxYSpeed = inf
 
 [node name="Mole (SMB3)2" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -64)
+MaxYSpeed = inf
 
 [node name="Mole (SMB3)3" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -96)
+MaxYSpeed = inf
 
 [node name="Mole (SMB3)4" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
 position = Vector2(0, -128)
+MaxYSpeed = inf
 
 [node name="RotoDisc Core" parent="Overworld/RotoDisc Core" instance=ExtResource("13_y308r")]
 position = Vector2(128, 0)
@@ -141,13 +150,16 @@ ModifyChildrenRotation = true
 
 [node name="Goomba" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
+MaxYSpeed = inf
 
 [node name="Golden Turtle" parent="Overworld/RotoDisc Core" instance=ExtResource("21_0d0u4")]
 position = Vector2(0, 160)
 State = 0
+MaxYSpeed = inf
 
 [node name="Blue Turtle" parent="Overworld" instance=ExtResource("26_8um7j")]
 position = Vector2(96, 400)
+MaxYSpeed = inf
 
 [node name="Bonus Room Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(576, 320)
@@ -158,6 +170,7 @@ position = Vector2(576, 160)
 
 [node name="Fire Flower" parent="Overworld" instance=ExtResource("28_ewyo7")]
 position = Vector2(368, 400)
+MaxYSpeed = inf
 
 [node name="Bonus Room Rev Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("32_p6x3p")]
 position = Vector2(576, 224)
@@ -179,6 +192,9 @@ position = Vector2(784, 416)
 
 [node name="Clamp (Red)" parent="Overworld" instance=ExtResource("32_i62if")]
 position = Vector2(576, 320)
+
+[node name="Clamp (Pink)" parent="Overworld" instance=ExtResource("38_tm7pj")]
+position = Vector2(1184, 320)
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)

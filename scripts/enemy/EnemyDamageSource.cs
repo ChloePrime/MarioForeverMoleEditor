@@ -73,7 +73,7 @@ public partial class EnemyDamageSource : Area2D
 
     public virtual void HurtMario(Mario mario)
     {
-        var (lo, hi) = Detector.GetDamage();
+        var (lo, hi) = Core.GetDamage();
         mario.Hurt(new DamageEvent
         {
             DamageTypes = DamageType.Enemy,

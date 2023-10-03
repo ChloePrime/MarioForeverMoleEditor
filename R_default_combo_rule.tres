@@ -19,4 +19,3 @@
 script = ExtResource("1_dwkhp")
 ScoreList = Array[PackedScene]([ExtResource("1_armvg"), ExtResource("2_6p804"), ExtResource("3_0di0k"), ExtResource("4_cyv5y"), ExtResource("5_f4xwx"), ExtResource("6_4ulxb"), ExtResource("7_8ttme")])
 SoundList = Array[AudioStream]([ExtResource("8_vfv83"), ExtResource("9_8biyv"), ExtResource("10_r8bbf"), ExtResource("11_h60uq"), ExtResource("12_05uih"), ExtResource("13_tarvu"), null])
-ResetAtLast = false

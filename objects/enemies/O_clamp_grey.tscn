@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2l3v5hsqxkrt"]
+[gd_scene load_steps=9 format=3 uid="uid://b2l3v5hsqxkrt"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://resources/enemies/internal_clamp_base.tscn" id="1_086yn"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_70jvr"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://resources/enemies/T_clamp.png" id="3_rt642"]
 [ext_resource type="Resource" uid="uid://dv0xcfjvxhonj" path="res://resources/enemies/R_damagetype_armored.tres" id="4_vkcng"]
 
@@ -19,16 +18,6 @@ animations = [{
 "name": &"default",
 "speed": 0.0
 }]
-
-[sub_resource type="Resource" id="Resource_8jkxf"]
-resource_local_to_scene = true
-script = ExtResource("2_70jvr")
-HitPoint = 50.0
-MaxHitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dc1rp"]
 atlas = ExtResource("3_rt642")
@@ -56,9 +45,6 @@ animations = [{
 
 [node name="Stem" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_xcgw3")
-
-[node name="Enemy Core" parent="." index="1"]
-MyNpcData = SubResource("Resource_8jkxf")
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 AcceptedDamageTypes = ExtResource("4_vkcng")

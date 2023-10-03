@@ -8,11 +8,8 @@ namespace ChloePrime.MarioForever.Enemy;
 [Icon("res://resources/shared/T_fireball.tres")]
 public partial class Fireball : WalkableObjectBase
 {
-    [Export]
-    public AudioStream DefaultExplodeSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_fireball_hit.wav");
-
-    [Export]
-    public PackedScene ExplodeResult { get; set; } = GD.Load<PackedScene>("res://objects/effect/O_explosion_s.tscn");
+    [Export] public AudioStream DefaultExplodeSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_fireball_hit.wav");
+    [Export] public PackedScene ExplodeResult { get; set; } = GD.Load<PackedScene>("res://objects/effect/O_explosion_s.tscn");
     
     public Node2D Shooter { get; set; }
     
@@ -29,7 +26,7 @@ public partial class Fireball : WalkableObjectBase
     {
         if ((flags & ExplodeFlags.WithDefaultSound) != 0)
         {
-            this.PlaySound(DefaultExplodeSound);
+            DefaultExplodeSound?.Play();
         }
 
         if (ExplodeResult is { } explosionPrefab&& GetParent() is {} parent)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://brptwuqcyd8xr"]
+
+[ext_resource type="PackedScene" uid="uid://bh7p8gsfxvui8" path="res://resources/shared/fireball_base.tscn" id="1_1wbw0"]
+[ext_resource type="Script" path="res://scripts/enemy/ClampFireball.cs" id="2_m4isc"]
+[ext_resource type="Script" path="res://scripts/enemy/EnemyFireballActionZone.cs" id="3_58eao"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mdky4"]
+radius = 6.0
+
+[node name="Fireball Fired by Clamps" instance=ExtResource("1_1wbw0")]
+script = ExtResource("2_m4isc")
+JumpStrength = 0.0
+TargetSpeed = 0.0
+Gravity = 500.0
+
+[node name="Action Zone" parent="." index="2"]
+collision_mask = 65536
+script = ExtResource("3_58eao")
+
+[node name="Collision Shape" parent="Action Zone" index="0"]
+shape = SubResource("CircleShape2D_mdky4")
+
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." index="3"]
+rect = Rect2(-16, -480, 32, 496)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="queue_free"]

@@ -65,6 +65,18 @@ public partial class GameRule : Resource
     [ExportSubgroup("Shell Combo")]
     [Export] public ComboRule DefaultComboRule { get; set; }
     [Export] public bool ComboOnStomp { get; set; } = true;
+
+    /// <summary>
+    /// 开启后夹子在屏幕外面时将不会缩回去。
+    /// 在夹子进入屏幕后才会开始缩回。
+    /// </summary>
+    [ExportSubgroup("Clamps")]
+    [Export] public bool W10EClampOffScreenPolicy { get; set; } = true;
+    
+    /// <summary>
+    /// 开启后夹子的子弹撞到实心会爆炸
+    /// </summary>
+    [Export] public bool ClampFireballExplodeOnWallHit { get; set; } = true;
     
         
     [ExportGroup("Simple QoL")]

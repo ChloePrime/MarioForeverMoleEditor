@@ -25,6 +25,7 @@ script = ExtResource("1_hflx6")
 NpcData = SubResource("Resource_35v0x")
 ControlAcceleration = 312.5
 TargetSpeed = 50.0
+MaxYSpeed = 500.0
 CollideWithOthers = true
 
 [node name="Collision Shape" type="CollisionShape2D" parent="."]

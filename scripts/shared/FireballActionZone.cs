@@ -3,6 +3,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Shared;
 
+[GlobalClass]
 public partial class FireballActionZone : Area2D
 {
     public Fireball Fireball { get; private set; }

@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using ChloePrime.MarioForever.Player;
-using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
 using Godot;
 using ChloePrime.MarioForever.Util;
@@ -38,7 +37,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	[Export]
 	public float YSpeed { get; set; }
 
-	[Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
+	[Export] public float MaxYSpeed { get; set; } = float.PositiveInfinity;
 	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
 
 	[Export]

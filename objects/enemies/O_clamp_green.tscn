@@ -1,18 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c788col1kh50g"]
+[gd_scene load_steps=6 format=3 uid="uid://c788col1kh50g"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://resources/enemies/internal_clamp_base.tscn" id="1_yybt7"]
-[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_1ixun"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://resources/enemies/T_clamp.png" id="3_aohnd"]
-
-[sub_resource type="Resource" id="Resource_8jkxf"]
-resource_local_to_scene = true
-script = ExtResource("2_1ixun")
-HitPoint = 50.0
-MaxHitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6luc4"]
 atlas = ExtResource("3_aohnd")
@@ -39,7 +28,7 @@ animations = [{
 [node name="Clamp (Green)" instance=ExtResource("1_yybt7")]
 
 [node name="Enemy Core" parent="." index="1"]
-MyNpcData = SubResource("Resource_8jkxf")
+DieWhenThrownAndHitOther = false
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_5dqng")
