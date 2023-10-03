@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -24,9 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
-[ext_resource type="PackedScene" uid="uid://bntc5tgacawy8" path="res://objects/enemies/O_turtle_red.tscn" id="27_38piv"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
-[ext_resource type="PackedScene" uid="uid://cdt4frwl8syt3" path="res://objects/enemies/O_golden_turtle_ring.tscn" id="28_bhj6u"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
@@ -148,13 +146,7 @@ position = Vector2(0, 160)
 State = 0
 
 [node name="Blue Turtle" parent="Overworld" instance=ExtResource("26_8um7j")]
-position = Vector2(104, 400)
-
-[node name="Red Turtle" parent="Overworld" instance=ExtResource("27_38piv")]
-position = Vector2(96, 248)
-
-[node name="Golden Turtle Ring" parent="Overworld" instance=ExtResource("28_bhj6u")]
-position = Vector2(336, 144)
+position = Vector2(96, 400)
 
 [node name="Bonus Room Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(576, 320)

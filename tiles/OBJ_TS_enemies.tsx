@@ -185,7 +185,10 @@
   </properties>
   <image width="33" height="256" source="../resources/enemies/T_hedgehog.png"/>
  </tile>
- <tile id="29">
-  <image width="32" height="32" source="../resources/enemies/T_mole_jumping.png"/>
+ <tile id="29" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_golden_turtle_ring.tscn"/>
+  </properties>
+  <image width="27" height="26" source="../resources/enemies/T_golden_turtle_generator.png"/>
  </tile>
 </tileset>
