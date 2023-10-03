@@ -33,7 +33,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 1.0
+"speed": 10.0
 }]
 
 [node name="Clamp (Red)" instance=ExtResource("1_wvdjp")]
