@@ -20,12 +20,17 @@ public partial class GoldenTurtle : Turtle
         }
         if (State != TurtleState.Flying && this.FindParentOfType<RotoDiscCore>() is {} xfx)
         {
-            var parent = ((Node)this.GetArea() ?? GetTree().Root) ?? xfx.GetParent();
-            var pos = GlobalPosition;
-            GetParent()?.RemoveChild(this);
-            
-            parent.AddChild(this);
-            GlobalPosition = pos;
+            CallDeferred(MethodName.DropFromRotoDiscLater, xfx);
         }
+    }
+
+    private void DropFromRotoDiscLater(Node xfx)
+    {
+        var parent = ((Node)this.GetArea() ?? GetTree().Root) ?? xfx.GetParent();
+        var pos = GlobalPosition;
+        GetParent()?.RemoveChild(this);
+            
+        parent.AddChild(this);
+        GlobalPosition = pos;
     }
 }
