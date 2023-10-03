@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=38 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -29,13 +29,14 @@
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
 [ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://objects/background/O_bg_underground.tscn" id="29_g2m7a"]
+[ext_resource type="PackedScene" uid="uid://cfx20bo55gu8w" path="res://objects/enemies/O_clamp_red.tscn" id="32_i62if"]
 [ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
-[ext_resource type="PackedScene" uid="uid://c788col1kh50g" path="res://objects/enemies/O_clamp_green.tscn" id="34_w0u6g"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
+[ext_resource type="PackedScene" uid="uid://b2l3v5hsqxkrt" path="res://objects/enemies/O_clamp_grey.tscn" id="37_h3wvj"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -176,7 +177,7 @@ Target = NodePath("../Pipe Exit (Left)")
 [node name="Pipe Exit (Left)" parent="Overworld" instance=ExtResource("37_77bxi")]
 position = Vector2(784, 416)
 
-[node name="Clamp (Green)" parent="Overworld" instance=ExtResource("34_w0u6g")]
+[node name="Clamp (Red)" parent="Overworld" instance=ExtResource("32_i62if")]
 position = Vector2(576, 320)
 
 [node name="Bonus Room" type="Node2D" parent="."]
@@ -200,5 +201,5 @@ position = Vector2(256, 240)
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
 
-[node name="Clamp (Green)" parent="Bonus Room" instance=ExtResource("34_w0u6g")]
+[node name="Clamp (Grey)" parent="Bonus Room" instance=ExtResource("37_h3wvj")]
 position = Vector2(512, 352)

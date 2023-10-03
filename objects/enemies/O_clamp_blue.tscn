@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://m3ivqqmxnx21"]
+
+[ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://resources/enemies/internal_clamp_base.tscn" id="1_qtenp"]
+[ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://resources/enemies/T_clamp.png" id="2_v3yhl"]
+[ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="3_0gi15"]
+[ext_resource type="Resource" uid="uid://dv0xcfjvxhonj" path="res://resources/enemies/R_damagetype_armored.tres" id="4_svuoq"]
+
+[sub_resource type="Resource" id="Resource_8jkxf"]
+resource_local_to_scene = true
+script = ExtResource("3_0gi15")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gvto"]
+atlas = ExtResource("2_v3yhl")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moja0"]
+atlas = ExtResource("2_v3yhl")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5dqng"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gvto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_moja0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Clamp (Blue)" instance=ExtResource("1_qtenp")]
+ShyDetectDistance = 0.0
+
+[node name="Enemy Core" parent="." index="1"]
+MyNpcData = SubResource("Resource_8jkxf")
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+AcceptedDamageTypes = ExtResource("4_svuoq")
+OneHitDamageTypes = ExtResource("4_svuoq")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_5dqng")
+
+[editable path="Enemy Core"]

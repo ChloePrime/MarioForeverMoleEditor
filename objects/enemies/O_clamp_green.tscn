@@ -38,7 +38,7 @@ animations = [{
 
 [node name="Clamp (Green)" instance=ExtResource("1_yybt7")]
 
-[node name="Enemy Core" parent="." index="0"]
+[node name="Enemy Core" parent="." index="1"]
 MyNpcData = SubResource("Resource_8jkxf")
 
 [node name="Sprite" parent="Enemy Core" index="2"]
