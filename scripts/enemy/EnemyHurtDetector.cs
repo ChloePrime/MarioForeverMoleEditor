@@ -99,19 +99,16 @@ public partial class EnemyHurtDetector : Area2D, IStompable
             PlayDeathSound(e);
         }
 
-        var parent = this.GetLevel() ?? Root.GetParent();
-        if (parent is not null)
+        var parent = this.GetPreferredRoot();
+        if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
         {
-            if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
-            {
-                parent.AddChild(score);
-                score.GlobalPosition = ToGlobal(ScorePivot);
-            }
-            if (CreateCorpse(e) is { } corpse)
-            {
-                CustomizeCorpse(e, corpse);
-                CallDeferred(MethodName.AddCorpseLater, parent, corpse, GlobalPosition);
-            }
+            parent.AddChild(score);
+            score.GlobalPosition = ToGlobal(ScorePivot);
+        }
+        if (CreateCorpse(e) is { } corpse)
+        {
+            CustomizeCorpse(e, corpse);
+            CallDeferred(MethodName.AddCorpseLater, parent, corpse, GlobalPosition);
         }
 
         Core.EmitSignal(EnemyCore.SignalName.Died);
@@ -236,9 +233,4 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     // IStompable
 
     public Vector2 StompCenter => Root.GlobalPosition;
-
-    public (float, float) GetDamage()
-    {
-        return Root is IMarioForeverNpc npc ? (npc.NpcData.DamageLo, npc.NpcData.DamageHi) : (0, 0);
-    }
 }

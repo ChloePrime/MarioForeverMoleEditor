@@ -37,6 +37,12 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     [return: MaybeNull]
     public virtual ComboTracker GetComboTracker() => null;
 
+    public (float, float) GetDamage()
+    {
+        var npcData = (this as IMarioForeverNpc).NpcData;
+        return (npcData.DamageLo, npcData.DamageHi);
+    }
+
     public override void _Ready()
     {
         base._Ready();
