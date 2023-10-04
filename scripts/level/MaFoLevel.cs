@@ -61,6 +61,19 @@ public partial class MaFoLevel : Node
 		ProcessTimeoutKill();
 	}
 
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		if (!IsQueuedForDeletion()) return;
+		foreach (var area in Areas)
+		{
+			if (area.GetParent() != this)
+			{
+				area.QueueFree();
+			}
+		}
+	}
+
 	private void ProcessTime(double delta)
 	{
 		if (!TimeFlows || _manager is not { } manager) return;
