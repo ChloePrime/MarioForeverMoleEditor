@@ -38,7 +38,7 @@ public partial class ClampFlower : Node2D
         {
             var end = _rev ? 0 : MoveDistance;
             var offset = _moved.MoveToward(end, MoveSpeed * delta);
-            Translate(new Vector2(0, offset));
+            Translate(MoveDirection * offset);
             if (Mathf.IsEqualApprox(_moved, end))
             {
                 EmitMoveEndSignal();
@@ -56,7 +56,7 @@ public partial class ClampFlower : Node2D
             bool isGrowBlocked;
             if (ShyDetectDistance != 0)
             {
-                isGrowBlocked = GetTree().GetNodesInGroup(MaFo.Groups.Player)
+                isGrowBlocked = !_rev && GetTree().GetNodesInGroup(MaFo.Groups.Player)
                     .OfType<Node2D>()
                     .Select(mario => ToLocal(mario.GlobalPosition))
                     .Any(rp => Mathf.Abs(rp.X) < ShyDetectDistance);

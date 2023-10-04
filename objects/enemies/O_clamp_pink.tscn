@@ -44,7 +44,6 @@ animations = [{
 
 [node name="Clamp (Pink)" instance=ExtResource("1_kxuxr")]
 WaitTimeUp = 1.2
-ShyDetectDistance = 40.0
 
 [node name="Stem" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_hooij")
