@@ -20,7 +20,14 @@ public partial class PipeExit : PipeEntrance
 
     private void OnMarioArrivedPipeExit(Mario _)
     {
-        _clamp?.ShrinkAndForceShy();
+        if (IsInstanceValid(_clamp))
+        {
+            _clamp.ShrinkAndForceShy();
+        }
+        else
+        {
+            _clamp = null;
+        }
     }
 
     private void OnClampDetectorAreaEntered(Area2D area)
