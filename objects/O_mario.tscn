@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=77 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -34,6 +34,12 @@ size = Vector2(17, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
 size = Vector2(7, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0sqx"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8fcn"]
+size = Vector2(32, 48)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_myvdk"]
 viewport_path = NodePath("SpriteRoot/Sprite_3D/Viewport")
@@ -448,7 +454,7 @@ disabled = true
 
 [node name="Death Zone" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
-collision_mask = 512
+collision_mask = 16
 input_pickable = false
 script = ExtResource("4_vtk5a")
 ShapeBySize = [NodePath("DeathZone_Small"), NodePath("DeathZone_Big"), NodePath("DeathZone_Mini")]
@@ -466,6 +472,42 @@ shape = SubResource("RectangleShape2D_vd42n")
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
+
+[node name="Water Detector" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("4_vtk5a")
+ShapeBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
+
+[node name="Collision_Big" type="CollisionShape2D" parent="Water Detector"]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_66cuu")
+disabled = true
+
+[node name="Collision_Small" type="CollisionShape2D" parent="Water Detector"]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_ulo8p")
+
+[node name="Collision_Mini" type="CollisionShape2D" parent="Water Detector"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_7d1yp")
+disabled = true
+
+[node name="Water Surface Detector" type="Area2D" parent="."]
+position = Vector2(0, -48)
+collision_layer = 0
+collision_mask = 16
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector"]
+shape = SubResource("RectangleShape2D_i0sqx")
+
+[node name="Water Surface Detector 2" type="Area2D" parent="."]
+position = Vector2(0, -40)
+collision_layer = 0
+collision_mask = 16
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector 2"]
+shape = SubResource("RectangleShape2D_f8fcn")
 
 [node name="SpriteRoot" type="Node2D" parent="."]
 material = ExtResource("7_pl8do")

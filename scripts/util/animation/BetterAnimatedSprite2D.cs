@@ -66,9 +66,9 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D, IAnimat
             offset += GlobalOffset;
             hasOffset = true;
         }
-        if (hasAnimData && frame < data.FrameOffsets.Count)
+        if (hasAnimData && data.FrameOffsets is {} offsets && frame < offsets.Count)
         {
-            offset += data.FrameOffsets[frame];
+            offset += offsets[frame];
             hasOffset = true;
         }
         if (hasOffset)

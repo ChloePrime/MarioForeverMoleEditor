@@ -130,6 +130,8 @@ public partial class Mario : CharacterBody2D
 
     [ExportGroup("")]
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
+
+    [Signal] public delegate void SizeChangedEventHandler();
     
     public Node2D Muzzle => MuzzleBySize[(int)CurrentSize];
     public MarioGrabMuzzle GrabMuzzle => GrabMuzzleBySize[(int)CurrentSize];
@@ -146,26 +148,6 @@ public partial class Mario : CharacterBody2D
     public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }
     public float ExpectedAnimationSpeed { get; private set; }
-
-    public void Jump()
-    {
-        Jump(JumpStrength);
-        _jumpSound.Play();
-    }
-
-    public void Swim(float strength)
-    {
-        Jump(strength);
-        _swimSound.Play();
-    }
-
-    public void Jump(float strength)
-    {
-        var bonus = GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
-        YSpeed = -strength - bonus;
-        _isInAir = true;
-        _wilyJumpTime = -1;
-    }
 
     public AudioStream GetHurtVoice(DamageEvent e)
     {
@@ -316,12 +298,14 @@ public partial class Mario : CharacterBody2D
         {
             return;
         }
-        if (_downPressed && !_crouching && !IsGrabbing)
+        // 水中需要触地才能蹲下
+        var isAirSwimming = (_isInAir && _isInWater);
+        if (_downPressed && !isAirSwimming && !_crouching && !IsGrabbing)
         {
             SetSize(MarioSize.Small);
             _crouching = true;
         }
-        if ((!_downPressed || IsGrabbing) && _crouching)
+        if ((!_downPressed || IsGrabbing || isAirSwimming) && _crouching)
         {
             var bigShape = CollisionBySize[(int)MarioSize.Big];
 
@@ -368,8 +352,7 @@ public partial class Mario : CharacterBody2D
                 _grabRoot.Position = Vector2.Zero;
             }
         }
-        _hurtZone.SetSize(size);
-        _deathZone.SetSize(size);
+        EmitSignal(SignalName.SizeChanged);
         CurrentSize = size;
 
         if (size != MarioSize.Big && _crouching)
@@ -619,6 +602,7 @@ public partial class Mario : CharacterBody2D
         _firePressed = Input.IsActionPressed(Constants.ActionFire);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
         _skidSmokeTimer.Timeout += () => EmitSmoke(Constants.SkidSmoke);
+        WaterReady();
 
         var statuses = StatusList.Count;
         for (var i = 0; i < statuses; i++)
@@ -678,8 +662,6 @@ public partial class Mario : CharacterBody2D
     private ComboTracker _stompComboTracker;
 
     [CtfFlag(2)] private bool _crouching;
-    [CtfFlag(12)] private bool _isInWater;
-    private bool _isNearWaterSurface;
     [CtfFlag(28)] private bool _completedLevel;
     private bool _skidding;
     private float _firePreInput;

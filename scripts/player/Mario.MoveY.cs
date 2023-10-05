@@ -4,6 +4,7 @@ using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -18,6 +19,58 @@ public partial class Mario
         return XSpeed >= MinSpeed ? 0.5F : 0.6F;
     }
     
+    public void Jump()
+    {
+        Jump(JumpStrength);
+        _jumpSound.Play();
+    }
+
+    public void JumpOutOfWater()
+    {
+        Swim(JumpStrengthOutOfWater);
+        _canLeaveOfWater = true;
+    }
+
+    public void Swim()
+    {
+        if (!_isNearWaterSurface)
+        {
+            var (min, max, acc) = (_upPressed, _downPressed) switch
+            {
+                (true, true) or (false, false) => (SwimStrength, int.MaxValue, SwimStrengthAcc),
+                (true, false) => (
+                    MinSwimStrengthWhenFloatingUp,
+                    MaxSwimStrengthWhenFloatingUp,
+                    SwimStrengthAccWhenFloatingUp
+                ),
+                (false, true) => (
+                    MinSwimStrengthWhenSinking,
+                    MaxSwimStrengthWhenSinking,
+                    SwimStrengthAccWhenSinking
+                )
+            };
+            Swim(Mathf.Clamp(-YSpeed + acc, min, max));
+        }
+        else
+        {
+            JumpOutOfWater();
+        }
+    }
+
+    public void Swim(float strength)
+    {
+        Jump(strength);
+        _swimSound.Play();
+    }
+
+    public void Jump(float strength)
+    {
+        var bonus = GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
+        YSpeed = -strength - bonus;
+        _isInAir = true;
+        _wilyJumpTime = -1;
+    }
+    
     private void PhysicsProcessY(float delta)
     {
         MoveY(delta);
@@ -30,6 +83,29 @@ public partial class Mario
             }
             else
             {
+                if (YSpeed < 0 && !_canLeaveOfWater)
+                {
+                    if (!_waterSurfaceDetector2.HasOverlappingAreas() && !_waterSurfaceDetector2.HasOverlappingBodies())
+                    {
+                        if (_upPressed && _jumpPressed)
+                        {
+                            if (!_canLeaveOfWater)
+                            {
+                                JumpOutOfWater();
+                            }
+                        }
+                        else
+                        {
+                            YSpeed = 0;
+                            goto Input;
+                        }
+                    }
+                }
+                if (YSpeed > 0)
+                {
+                    _canLeaveOfWater = false;
+                }
+                
                 var acc = _downPressed ? GravityWhenSinking : GravityInWater;
                 YSpeed += acc * delta;
                 
@@ -43,6 +119,8 @@ public partial class Mario
                 }
             }
         }
+        
+        Input:
 
         if (!_completedLevel)
         {
@@ -198,7 +276,7 @@ public partial class Mario
         StompComboTracker.Reset();
         if (_comboJumpAsked)
         {
-            CallDeferred(MethodName.Jump);
+            CallDeferred(_isInWater ? MethodName.Swim : MethodName.Jump);
             _comboJumpAsked = false;
         }
     }
@@ -230,36 +308,68 @@ public partial class Mario
         // 游泳
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {
-            if (!_isNearWaterSurface)
-            {
-                var (min, max, acc) = (_upPressed, _downPressed) switch
-                {
-                    (true, true) or (false, false) => (SwimStrength, int.MaxValue, SwimStrengthAcc),
-                    (true, false) => (
-                        MinSwimStrengthWhenFloatingUp,
-                        MaxSwimStrengthWhenFloatingUp,
-                        SwimStrengthAccWhenFloatingUp
-                    ),
-                    (false, true) => (
-                        MinSwimStrengthWhenSinking,
-                        MaxSwimStrengthWhenSinking,
-                        SwimStrengthAccWhenSinking
-                    )
-                };
-                Swim(Math.Clamp(min, max, -YSpeed + acc));
-            }
-            else
-            {
-                
-            }
+            Swim();
+        }
+    }
+
+    private void WaterReady()
+    {
+        this.GetNode(out _waterDetector, Constants.NpWaterDetector);
+        this.GetNode(out _waterSurfaceDetector, Constants.NpWaterSurfaceDetector);
+        this.GetNode(out _waterSurfaceDetector2, Constants.NpWaterSurfaceDetector2);
+        _waterDetector.AreaEntered += OnMarioJumpedIntoWater;
+        _waterDetector.BodyEntered += OnMarioJumpedIntoWater;
+        _waterDetector.AreaExited += OnMarioJumpedOutOfWater;
+        _waterDetector.BodyExited += OnMarioJumpedOutOfWater;
+        _waterSurfaceDetector.AreaEntered += OnMarioEnterDeepwater;
+        _waterSurfaceDetector.BodyEntered += OnMarioEnterDeepwater;
+        _waterSurfaceDetector.AreaExited += OnMarioNearWaterSurface;
+        _waterSurfaceDetector.BodyExited += OnMarioNearWaterSurface;
+    }
+
+    private void OnMarioJumpedIntoWater(Node2D _)
+    {
+        _waterStack++;
+        _isInWater = true;
+    }
+    
+    private void OnMarioJumpedOutOfWater(Node2D _)
+    {
+        _waterStack--;
+        if (_waterStack == 0)
+        {
+            _isInWater = false;
+        }
+    }
+
+    private void OnMarioEnterDeepwater(Node2D _)
+    {
+        _deepWaterStack++;
+        _isNearWaterSurface = false;
+    }
+
+    private void OnMarioNearWaterSurface(Node2D _)
+    {
+        _deepWaterStack--;
+        if (_deepWaterStack == 0)
+        {
+            _isNearWaterSurface = true;
         }
     }
 
     private static readonly Vector2 GroundTestVec = 8 * Vector2.Down;
+    private Area2D _waterDetector;
+    private Area2D _waterSurfaceDetector;
+    private Area2D _waterSurfaceDetector2;
     [CtfFlag(11)] private bool _isInAir = true;
+    [CtfFlag(12)] private bool _isInWater;
+    private bool _isNearWaterSurface = true;
+    private bool _canLeaveOfWater;
     private float _wilyJumpTime;
     private bool _jumpPressed;
     private bool _upPressed;
     private bool _downPressed;
     private bool _comboJumpAsked;
+    private int _waterStack;
+    private int _deepWaterStack;
 }

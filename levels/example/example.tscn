@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -35,6 +35,9 @@
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jesgp"]
+size = Vector2(640, 480)
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -186,6 +189,14 @@ Target = NodePath("../Pipe Exit (Left)")
 
 [node name="Pipe Exit (Left)" parent="Overworld" instance=ExtResource("37_77bxi")]
 position = Vector2(784, 416)
+
+[node name="Test Water" type="Area2D" parent="Overworld"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Overworld/Test Water"]
+position = Vector2(896, 560)
+shape = SubResource("RectangleShape2D_jesgp")
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)

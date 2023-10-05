@@ -20,6 +20,7 @@ public partial class MarioCollisionBySize: Area2D
     {
         base._Ready();
         _mario = GetParent<Mario>();
+        _mario.SizeChanged += () => SetSize(_mario.CurrentSize);
     }
 
     private Mario _mario;
