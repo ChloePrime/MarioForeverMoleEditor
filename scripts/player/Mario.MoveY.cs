@@ -51,7 +51,7 @@ public partial class Mario
             };
             Swim(Mathf.Clamp(-YSpeed + acc, min, max));
         }
-        else
+        else if (!_downPressed)
         {
             JumpOutOfWater();
         }
@@ -87,7 +87,7 @@ public partial class Mario
                 {
                     if (!_waterSurfaceDetector2.HasOverlappingAreas() && !_waterSurfaceDetector2.HasOverlappingBodies())
                     {
-                        if (_upPressed && _jumpPressed)
+                        if (_upPressed && !_downPressed)
                         {
                             if (!_canLeaveOfWater)
                             {
