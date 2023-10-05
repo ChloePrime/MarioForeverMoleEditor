@@ -129,6 +129,10 @@ public partial class MaFoLevelArea
 			{
 				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
 			}
+			if (instance is ICustomTileOffsetObject o)
+			{
+				o.CustomOffset();
+			}
 
 			if (presetLayer != -1)
 			{

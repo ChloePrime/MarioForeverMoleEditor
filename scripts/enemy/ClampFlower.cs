@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -7,7 +8,7 @@ namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 [Icon("res://resources/enemies/AT_clamp_icon.tres")]
-public partial class ClampFlower : Node2D
+public partial class ClampFlower : Node2D, ICustomTileOffsetObject
 {
     [Export] public Vector2 MoveDirection { get; private set; } = Vector2.Down;
     [Export] public float MoveDistance { get; private set; } = 56;
@@ -98,4 +99,14 @@ public partial class ClampFlower : Node2D
     private bool _moving = true;
     private float _moved;
     private bool _waitingForMarioToLeave;
+    
+    // ICustomTileOffsetObject implementation
+    
+    public void CustomOffset()
+    {
+        Translate(BasicOffset + DirectionalOffset.Rotated(Rotation));
+    }
+
+    private static readonly Vector2 BasicOffset = new(16, -16);
+    private static readonly Vector2 DirectionalOffset = new(0, 32);
 }

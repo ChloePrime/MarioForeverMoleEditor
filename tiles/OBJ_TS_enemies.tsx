@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="OBJ_TS_enemies" tilewidth="32" tileheight="49" tilecount="30" columns="0" objectalignment="bottom">
+<tileset version="1.10" tiledversion="1.10.2" name="OBJ_TS_enemies" tilewidth="64" tileheight="64" tilecount="36" columns="0" objectalignment="bottom">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" x="0" y="0" width="31" height="32" type="instance">
   <properties>
@@ -190,5 +190,66 @@
    <property name="res_path" type="file" value="res://objects/enemies/O_golden_turtle_ring.tscn"/>
   </properties>
   <image width="27" height="26" source="../resources/enemies/T_golden_turtle_generator.png"/>
+ </tile>
+ <tile id="30" x="0" y="0" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_green.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="31" x="64" y="0" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_pink.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="32" x="128" y="0" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_blue.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="33" x="192" y="0" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_grey.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="34" x="256" y="0" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_red.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="35" x="0" y="64" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_green_down.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ 
+ <tile id="36" x="64" y="64" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_pink_down.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="37" x="128" y="64" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_blue_down.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="38" x="192" y="64" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_grey_down.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
+ </tile>
+ <tile id="39" x="256" y="64" width="64" height="64" type="instance">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/enemies/O_clamp_red_down.tscn"/>
+  </properties>
+  <image width="384" height="64" source="T_clip_editor.png"/>
  </tile>
 </tileset>
