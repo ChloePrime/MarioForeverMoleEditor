@@ -82,7 +82,17 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 	public bool HasHitWall { get; private set; }
 	public bool WasThrown { get; private set; }
 	public bool WasShot { get; private set; }
-	public virtual bool WillHurtOthers => WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
+	public virtual bool WillHurtOthers
+	{
+		get
+		{
+			if (Grabber is Mario { PipeState: not MarioPipeState.NotInPipe })
+			{
+				return false;
+			}
+			return WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
+		}
+	}
 
 	public float LastXSpeed { get; private set; }
 	public float LastYSpeed { get; private set; }
