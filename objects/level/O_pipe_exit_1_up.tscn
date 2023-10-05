@@ -10,3 +10,6 @@ Direction = 1
 texture = ExtResource("2_rfuw7")
 region_enabled = true
 region_rect = Rect2(0, 64, 64, 64)
+
+[node name="Clamp Detector" parent="." index="1"]
+position = Vector2(0, -96)

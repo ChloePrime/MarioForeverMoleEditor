@@ -9,3 +9,6 @@
 texture = ExtResource("2_pjb7q")
 region_enabled = true
 region_rect = Rect2(64, 64, 64, 64)
+
+[node name="Clamp Detector" parent="." index="1"]
+position = Vector2(0, 32)

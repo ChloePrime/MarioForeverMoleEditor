@@ -10,6 +10,7 @@ namespace ChloePrime.MarioForever.Enemy;
 [Icon("res://resources/enemies/AT_clamp_icon.tres")]
 public partial class ClampFlower : Node2D, ICustomTileOffsetObject
 {
+    public const float ForceShyShyDistance = 80;
     [Export] public Vector2 MoveDirection { get; private set; } = Vector2.Down;
     [Export] public float MoveDistance { get; private set; } = 56;
     [Export] public float MoveSpeed { get; set; } = Units.Speed.CtfToGd(2);
@@ -21,6 +22,17 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
     [Signal] public delegate void ClampMovedToBottomEventHandler();
     
     public VisibleOnScreenNotifier2D VisibleOnScreenNotifier => _vosn;
+    
+    public void ShrinkAndForceShy()
+    {
+        if (!_moving)
+        {
+            SwapMovement();
+        }
+        _forceShy = true;
+        _rev = false;
+        Move(MoveDistance);
+    }
 
     public override void _Ready()
     {
@@ -37,16 +49,7 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
         var delta = (float)deltaD;
         if (_moving)
         {
-            var end = _rev ? 0 : MoveDistance;
-            var offset = _moved.MoveToward(end, MoveSpeed * delta);
-            Translate(MoveDirection * offset);
-            if (Mathf.IsEqualApprox(_moved, end))
-            {
-                EmitMoveEndSignal();
-                _waitTimer.WaitTime = _rev ? WaitTimeUp : WaitTimeDown;
-                _waitTimer.Start();
-                _moving = false;
-            }
+            Move(MoveSpeed * delta);
         }
         else if (_waitingForMarioToLeave)
         {
@@ -54,13 +57,14 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
             {
                 return;
             }
+            var shyDistance = _forceShy ? ForceShyShyDistance : ShyDetectDistance;
             bool isGrowBlocked;
-            if (ShyDetectDistance != 0)
+            if (shyDistance != 0)
             {
                 isGrowBlocked = !_rev && GetTree().GetNodesInGroup(MaFo.Groups.Player)
                     .OfType<Node2D>()
                     .Select(mario => ToLocal(mario.GlobalPosition))
-                    .Any(rp => Mathf.Abs(rp.X) < ShyDetectDistance);
+                    .Any(rp => Mathf.Abs(rp.X) < shyDistance);
             }
             else
             {
@@ -69,7 +73,25 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
             if (!isGrowBlocked)
             {
                 SwapMovement();
+                _forceShy = false;
             }
+        }
+    }
+    
+
+    private void Move(float distance)
+    {
+        if (!_moving) return;
+        
+        var end = _rev ? 0 : MoveDistance;
+        var offset = _moved.MoveToward(end, distance);
+        Translate(MoveDirection * offset);
+        if (Mathf.IsEqualApprox(_moved, end))
+        {
+            EmitMoveEndSignal();
+            _waitTimer.WaitTime = _rev ? WaitTimeUp : WaitTimeDown;
+            _waitTimer.Start();
+            _moving = false;
         }
     }
 
@@ -99,6 +121,7 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
     private bool _moving = true;
     private float _moved;
     private bool _waitingForMarioToLeave;
+    private bool _forceShy;
     
     // ICustomTileOffsetObject implementation
     
