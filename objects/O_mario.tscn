@@ -454,7 +454,7 @@ disabled = true
 
 [node name="Death Zone" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
-collision_mask = 16
+collision_mask = 512
 input_pickable = false
 script = ExtResource("4_vtk5a")
 ShapeBySize = [NodePath("DeathZone_Small"), NodePath("DeathZone_Big"), NodePath("DeathZone_Mini")]
