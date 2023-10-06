@@ -10,7 +10,7 @@ public partial class GameRule
     public HitPointMagnitudeType HitPointMagnitude => HitPointPolicy switch
     {
         HitPointPolicyType.Disabled => HitPointMagnitudeType.Disabled,
-        HitPointPolicyType.Mario3D => HitPointMagnitudeType.Low,
+        HitPointPolicyType.Mario3D or HitPointPolicyType.MegaMan => HitPointMagnitudeType.Low,
         HitPointPolicyType.Metroid or HitPointPolicyType.JRPG or _ => HitPointMagnitudeType.High,
     };
 
@@ -21,6 +21,10 @@ public partial class GameRule
         /// 低绝对值血量系统，最多 6~8 点
         /// </summary>
         Mario3D,
+        /// <summary>
+        /// 低绝对值血量系统，最多 40 点左右
+        /// </summary>
+        MegaMan,
         /// <summary>
         /// 将生命值中多于 99 的部分按格子显示
         /// </summary>

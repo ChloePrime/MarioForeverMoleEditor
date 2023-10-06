@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene load_steps=18 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" path="res://scripts/ui/LevelHud.cs" id="1_beqw8"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/ui/ValueWatcherBar.cs" id="7_eo6s5"]
 [ext_resource type="Script" path="res://scripts/ui/WorldName.cs" id="9_k8aoj"]
 [ext_resource type="Theme" uid="uid://dxaw76vg14cno" path="res://resources/ui/Theme_mw.tres" id="9_mwx5i"]
+[ext_resource type="PackedScene" uid="uid://dqjisxub87u1q" path="res://resources/ui/megaman_hp_bar.tscn" id="9_nxqmq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uf38m"]
 atlas = ExtResource("5_lyecc")
@@ -225,6 +226,17 @@ texture = ExtResource("6_rf6hi")
 expand_mode = 1
 stretch_mode = 1
 script = ExtResource("7_eo6s5")
+
+[node name="Mega Man HP" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 32.0
+offset_top = -96.0
+offset_right = 32.0
+offset_bottom = -96.0
+script = ExtResource("2_d76tu")
+
+[node name="Bar" parent="Mega Man HP" instance=ExtResource("9_nxqmq")]
 
 [node name="World" type="Label" parent="."]
 layout_mode = 1

@@ -126,6 +126,7 @@ public partial class GameRule : Resource
     [Export] public float DefaultHitPointHi { get; set; } = 100;
     [Export] public float DefaultTerrainDamageLo { get; set; } = 1;
     [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
+    [Export] public float MegaManHitPointBarLengthScale { get; set; } = 4;
 
     
     [ExportSubgroup("Player Weapon's Power")]

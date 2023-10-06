@@ -34,8 +34,10 @@ public partial class LevelHud : Control
         this.GetNode(out _coinSystem, NpCoinSystem);
         this.GetNode(out _coinCounter, NpCoinCounter);
         this.GetNode(out _hpSystem, NpHpSystem);
+        this.GetNode(out _megaManHpSystem, NpMegaManHpSystem);
         this.GetNode(out _hpCounterL, NpHpCounterL);
         this.GetNode(out _hpCounterR, NpHpCounterR);
+        this.GetNode(out _megaManHpBar, NpMegaManHpBar);
         this.GetNode(out _hpBarMax, NpHpCounterMaxBar);
         this.GetNode(out _hpBar, NpHpCounterBar);
         this.GetNode(out _world, NpWorld);
@@ -50,6 +52,7 @@ public partial class LevelHud : Control
         _scoreSystem.Watcher = () => !_rule.DisableScore;
         _coinSystem.Watcher = () => !_rule.DisableCoin;
         _hpSystem.Watcher = HasHitPoint;
+        _megaManHpSystem.Watcher = () => HasHitPoint() && _rule.HitPointPolicy == GameRule.HitPointPolicyType.MegaMan;
         _world.Watcher = () => _worldName.Text.Length > 0;
         _timeSystem.Watcher = () =>
             _rule.TimePolicy != GameRule.TimePolicyType.Disable && CurrentLevel is { TimeLimit: >= 0 };
@@ -85,6 +88,16 @@ public partial class LevelHud : Control
         };
     }
 
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+        if (_rule?.HitPointPolicy == GameRule.HitPointPolicyType.MegaMan)
+        {
+            _megaManHpBar.Value = (int)(_rule.HitPoint * _rule.MegaManHitPointBarLengthScale + 1e-5);
+            _megaManHpBar.Max = (int)(_rule.MaxHitPoint * _rule.MegaManHitPointBarLengthScale + 1e-5);
+        }
+    }
+
     private bool HasHitPoint()
     {
         return _rule.HitPointPolicy != GameRule.HitPointPolicyType.Disabled && 
@@ -94,6 +107,7 @@ public partial class LevelHud : Control
     private string GetLeftHpDisplay() => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Disabled => "",
+        GameRule.HitPointPolicyType.MegaMan => "",
         GameRule.HitPointPolicyType.Metroid => "E",
         GameRule.HitPointPolicyType.Mario3D or GameRule.HitPointPolicyType.JRPG or _ => "HP",
     };
@@ -101,14 +115,16 @@ public partial class LevelHud : Control
     private string GetRightHpDisplay(float hp) => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Disabled => "",
-        GameRule.HitPointPolicyType.Metroid => $"{GetDisplayHp(hp) % 100:00}",
         GameRule.HitPointPolicyType.Mario3D => "",
+        GameRule.HitPointPolicyType.MegaMan => "",
+        GameRule.HitPointPolicyType.Metroid => $"{GetDisplayHp(hp) % 100:00}",
         GameRule.HitPointPolicyType.JRPG or _ => $"{GetDisplayHp(hp)}/{GetDisplayHp(_rule.MaxHitPoint)}",
     };
 
     public float GetHpBarLength(float hp) => _rule.HitPointPolicy switch
     {
         GameRule.HitPointPolicyType.Mario3D => GetDisplayHp(hp),
+        GameRule.HitPointPolicyType.MegaMan => 0,
         GameRule.HitPointPolicyType.Metroid => GetDisplayHp(hp) / 100,
         GameRule.HitPointPolicyType.Disabled or GameRule.HitPointPolicyType.JRPG or _ => 0,
     };
@@ -149,6 +165,8 @@ public partial class LevelHud : Control
     private static readonly NodePath NpScoreSystem = "Score System";
     private static readonly NodePath NpCoinSystem = "Coin System";
     private static readonly NodePath NpHpSystem = "Hit Point System";
+    private static readonly NodePath NpMegaManHpSystem = "Mega Man HP";
+    private static readonly NodePath NpMegaManHpBar = "Mega Man HP/Bar";
     private static readonly NodePath NpWorld = "World";
     private static readonly NodePath NpWorldName = "World/World Name";
     private static readonly NodePath NpTimeSystem = "Time System";
@@ -168,12 +186,14 @@ public partial class LevelHud : Control
     private SubsystemHud _scoreSystem;
     private SubsystemHud _coinSystem;
     private SubsystemHud _hpSystem;
+    private SubsystemHud _megaManHpSystem;
     private SubsystemHud _world;
     private SubsystemHud _timeSystem;
     private WorldName _worldName;
     private ValueWatcherLabel _lifeCounter;
     private ValueWatcherLabel _scoreCounter;
     private ValueWatcherLabel _coinCounter;
+    private MegaManHpBar _megaManHpBar;
     private ValueWatcherLabel _hpCounterL;
     private ValueWatcherLabel _hpCounterR;
     private ValueWatcherBar _hpBarMax;

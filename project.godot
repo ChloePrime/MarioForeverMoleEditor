@@ -123,4 +123,4 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plu
 
 [rendering]
 
-scaling_3d/mode=1
+anti_aliasing/quality/msaa_2d=1
