@@ -220,13 +220,13 @@ public partial class Mario
 
     private void ProcessBurst(float delta)
     {
-        if (!GameRule.EnableMarioBursting || _isInWater)
+        if (!GameRule.EnableMarioBursting)
         {
             _sprinting = false;
             _burstCharge = 0;
             return;
         }
-        if (_running && !_turning && XSpeed >= MaxSpeedWhenRunning - 1e-3)
+        if (_running && !_turning && !_isInWater && XSpeed >= MaxSpeedWhenRunning - 1e-3)
         {
             if (!_isInAir)
             {
