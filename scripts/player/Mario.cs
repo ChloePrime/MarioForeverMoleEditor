@@ -28,6 +28,8 @@ public partial class Mario : CharacterBody2D
     [Export] public float MaxSpeedWhenWalking { get; set; } = Units.Speed.CtfMovementToGd(35);
     [Export] public float MaxSpeedWhenRunning { get; set; } = Units.Speed.CtfMovementToGd(60);
     [Export] public float MaxSpeedWhenSprinting { get; set; } = Units.Speed.CtfMovementToGd(80);
+    [Export] public float MaxSpeedInWater { get; set; } = Units.Speed.CtfMovementToGd(30);
+    [Export] public float EnterWaterDepulse { get; set; } = Units.Speed.CtfMovementToGd(4);
     [Export] public float MinSpeed { get; set; } = Units.Speed.CtfMovementToGd(8);
     [Export] public float AccelerationWhenWalking { get; set; } = Units.Acceleration.CtfMovementToGd(1);
     [Export] public float AccelerationWhenRunning { get; set; } = Units.Acceleration.CtfMovementToGd(1);
@@ -123,7 +125,9 @@ public partial class Mario : CharacterBody2D
     [Export] public Array<MarioGrabMuzzle> GrabMuzzleBySize { get; private set; }
     [Export] public Array<Node> StatusSpriteNodeList { get; private set; }
 
-    [ExportGroup("Voices")]
+    [ExportGroup("Voices & Sounds")]
+    [Export] public AudioStream JumpIntoWaterSound { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_dive_in.ogg");
+    [Export] public AudioStream JumpOutOfWaterSound { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_dive_out.ogg");
     [Export] public AudioStream HitPointHurtVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_pain.wav");
     [Export] public AudioStream HitPointSevereHurtVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_fire.wav");
     [Export] public AudioStream HitPointSaveSlipperyVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_scream.wav");
@@ -598,6 +602,7 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _grabRoot, NpGrabRoot);
         GameRule = this.GetRule();
 
+        WaterEntered += OnMarioEnterWaterMoveX;
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
         _firePressed = Input.IsActionPressed(Constants.ActionFire);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);

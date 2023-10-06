@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChloePrime.MarioForever.Effect;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
@@ -10,6 +11,9 @@ namespace ChloePrime.MarioForever.Player;
 
 public partial class Mario
 {
+    [Signal] public delegate void WaterEnteredEventHandler();
+    [Signal] public delegate void WaterExitedEventHandler();
+    
     public float GetGravityScale()
     {
         if (!_jumpPressed || YSpeed >= 0)
@@ -334,16 +338,44 @@ public partial class Mario
     private void OnMarioJumpedIntoWater(Node2D _)
     {
         _waterStack++;
-        _isInWater = true;
+        if (!_isInWater)
+        {
+            _isInWater = true;
+            EnterWater();
+        }
+    }
+
+    private void EnterWater()
+    {
+        JumpIntoWaterSound?.Play();
+        PopWaterSplash();
+        EmitSignal(SignalName.WaterEntered);
+    }
+
+    private static readonly PackedScene WaterSplashPrefab = GD.Load<PackedScene>("res://resources/shared/water_splash.tscn");
+    private static readonly Vector2 WaterSplashMuzzle = new(0, -64);
+
+    private void PopWaterSplash()
+    {
+        var splash = WaterSplashPrefab.Instantiate<WaterSplash>();
+        this.GetPreferredRoot().AddChild(splash);
+        splash.GlobalPosition = ToGlobal(WaterSplashMuzzle);
     }
     
     private void OnMarioJumpedOutOfWater(Node2D _)
     {
         _waterStack--;
-        if (_waterStack == 0)
+        if (_waterStack == 0 && _isInWater)
         {
             _isInWater = false;
+            ExitWater();
         }
+    }
+
+    private void ExitWater()
+    {
+        JumpOutOfWaterSound?.Play();
+        EmitSignal(SignalName.WaterExited);
     }
 
     private void OnMarioEnterDeepwater(Node2D _)

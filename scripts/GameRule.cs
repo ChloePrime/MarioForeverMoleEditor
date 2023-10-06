@@ -82,6 +82,9 @@ public partial class GameRule : Resource
     [ExportGroup("Simple QoL")]
     [ExportSubgroup("Direction Calculation")]
     [Export] public MarioDirectionPolicy CharacterDirectionPolicy { get; set; } = MarioDirectionPolicy.FollowXSpeed;
+
+    [ExportSubgroup("Water")]
+    [Export] public bool KeepXSpeedInWater { get; set; }
     
     public enum MarioDirectionPolicy
     {

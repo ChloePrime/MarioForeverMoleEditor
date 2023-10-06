@@ -125,6 +125,10 @@ public partial class Mario
                 max = _sprinting ? MaxSpeedWhenSprinting : MaxSpeedWhenRunning;
                 acc = AccelerationWhenRunning;
             }
+            if (_isInWater && !GameRule.KeepXSpeedInWater)
+            {
+                max = MaxSpeedInWater;
+            }
             
             if (XSpeed < max)
             {
@@ -206,9 +210,17 @@ public partial class Mario
         return Input.GetAxis(Constants.ActionMoveLeft, Constants.ActionMoveRight);
     }
 
+    private void OnMarioEnterWaterMoveX()
+    {
+        if (!GameRule.KeepXSpeedInWater)
+        {
+            XSpeed = Mathf.MoveToward(XSpeed, 0, EnterWaterDepulse);
+        }
+    }
+
     private void ProcessBurst(float delta)
     {
-        if (!GameRule.EnableMarioBursting)
+        if (!GameRule.EnableMarioBursting || _isInWater)
         {
             _sprinting = false;
             _burstCharge = 0;
