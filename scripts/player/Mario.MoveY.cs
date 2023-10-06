@@ -31,7 +31,7 @@ public partial class Mario
 
     public void JumpOutOfWater()
     {
-        Swim(JumpStrengthOutOfWater);
+        Jump(JumpStrengthOutOfWater);
         _canLeaveOfWater = true;
     }
 
