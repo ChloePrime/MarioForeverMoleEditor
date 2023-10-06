@@ -7,6 +7,7 @@ public interface IAnimatedSprite
     public StringName Animation { get; set; }
     public float SpeedScale { get; set; }
     public void Play();
+    public void Reset();
     public Node AsNode() => (Node)this;
     public Node GetParent();
 

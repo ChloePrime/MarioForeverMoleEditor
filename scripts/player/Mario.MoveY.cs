@@ -61,6 +61,10 @@ public partial class Mario
     {
         Jump(strength);
         _swimSound.Play();
+        if (_currentSprite is { } sprite)
+        {
+            sprite.Reset();
+        }
     }
 
     public void Jump(float strength)

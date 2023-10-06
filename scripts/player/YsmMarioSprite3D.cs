@@ -71,6 +71,12 @@ public partial class YsmMarioSprite3D : Node3D, IAnimatedSprite
         Player.Play();
     }
 
+    public void Reset()
+    {
+        Player.Stop();
+        Player.Play();
+    }
+
     public event AnimationPlayer.AnimationFinishedEventHandler AnimationFinished
     {
         add => Player.AnimationFinished += value;

@@ -103,4 +103,10 @@ public partial class BetterAnimatedSprite2D : AnimatedSpriteWithPivot2D, IAnimat
     {
         this.As<AnimatedSprite2D>()!.Play();
     }
+
+    public void Reset()
+    {
+        Frame = 0;
+        _loopCount = 0;
+    }
 }
