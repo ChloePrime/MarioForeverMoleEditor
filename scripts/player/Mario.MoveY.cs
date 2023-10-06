@@ -348,7 +348,7 @@ public partial class Mario
     private void EnterWater()
     {
         JumpIntoWaterSound?.Play();
-        PopWaterSplash();
+        CallDeferred(MethodName.PopWaterSplash);
         EmitSignal(SignalName.WaterEntered);
     }
 
