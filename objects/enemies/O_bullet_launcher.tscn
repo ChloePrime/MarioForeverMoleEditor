@@ -1,0 +1,20 @@
+[gd_scene load_steps=8 format=3 uid="uid://dojyxy3crbyhj"]
+
+[ext_resource type="PackedScene" uid="uid://cwatosp0umcd6" path="res://resources/enemies/internal_launcher_base.tscn" id="1_ns7b2"]
+[ext_resource type="AudioStream" uid="uid://d1dh2yol7xud" path="res://resources/enemies/SE_bullet_launch_1.wav" id="2_jj7it"]
+[ext_resource type="PackedScene" uid="uid://dekph2thmcuyn" path="res://objects/effect/O_explosion_s.tscn" id="2_pcl5e"]
+[ext_resource type="AudioStream" uid="uid://b4vidst0hypu7" path="res://resources/enemies/SE_bullet_launch_2.wav" id="3_8g5cv"]
+[ext_resource type="Texture2D" uid="uid://bajy5onvg0qbr" path="res://resources/enemies/AT_bullet_launcher_up.tres" id="3_nacbd"]
+[ext_resource type="Script" path="res://scripts/util/AudioStreamGroup.cs" id="4_i23cw"]
+
+[sub_resource type="Resource" id="Resource_i3l5h"]
+script = ExtResource("4_i23cw")
+AudioStreamList = Array[AudioStream]([ExtResource("2_jj7it"), ExtResource("3_8g5cv")])
+
+[node name="Bullet Launcher" instance=ExtResource("1_ns7b2")]
+z_index = 1
+MuzzleFlash = ExtResource("2_pcl5e")
+ShootSound = SubResource("Resource_i3l5h")
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource("3_nacbd")

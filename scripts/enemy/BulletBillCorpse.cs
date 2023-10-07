@@ -1,17 +1,12 @@
 ﻿using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
-using ChloePrime.MarioForever.Util.HelperNodes;
 using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
-/// <summary>
-/// 普通的尸体
-/// </summary>
-public partial class GenericCorpse : SimpleNoClipGravityObject, ICorpse
+public partial class BulletBillCorpse : SimpleNoClipGravityObject
 {
     public AnimatedSprite2D Sprite => _sprite ??= GetNode<AnimatedSprite2D>(NpSprite);
-    public Rotator2D Rotator => _rotator ??= GetNode<Rotator2D>(NpRotator);
 
     public override void _Process(double delta)
     {
@@ -19,11 +14,12 @@ public partial class GenericCorpse : SimpleNoClipGravityObject, ICorpse
         if (GlobalPosition.Y >= this.GetFrame().End.Y + Sprite.GetSpriteSize().Y)
         {
             QueueFree();
+            return;
         }
+        var atan2 = Mathf.Atan2(YSpeed, XSpeed);
+        Sprite.Rotation = XDirection >= 0 ? atan2 : -atan2;
     }
 
     private static readonly NodePath NpSprite = "Sprite";
-    private static readonly NodePath NpRotator = "Rotator";
     private AnimatedSprite2D _sprite;
-    private Rotator2D _rotator;
 }

@@ -19,14 +19,19 @@ public partial class PlayerFireballActionZone : FireballActionZone
         {
             return;
         }
-        ehd.HurtBy(new DamageEvent
+        var de = new DamageEvent
         {
             DamageTypes = DamageType.Fireball,
             DamageToEnemy = this.GetRule().FireballPower,
             AttackVector = Fireball.VelocityVector,
             DirectSource = Fireball,
             TrueSource = Fireball.Shooter,
-        });
+        };
+        if (ehd.IgnoreUnsupportedDamageTypes && !ehd.CanBeHurtBy(de))
+        {
+            return;
+        }
+        ehd.HurtBy(de);
         Fireball.Explode();
     }
 }

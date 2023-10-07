@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://m7qxp0utjs8p"]
+
+[ext_resource type="SpriteFrames" uid="uid://ctytmkuqkhred" path="res://resources/enemies/SF_bullet_bill.tres" id="1_3kkgr"]
+[ext_resource type="Script" path="res://scripts/enemy/BulletBillCorpse.cs" id="1_fx0cm"]
+
+[node name="Bullet Bill Corpse" type="Node2D"]
+script = ExtResource("1_fx0cm")
+YSpeed = 60.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_3kkgr")

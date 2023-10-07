@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=3 uid="uid://bd05sqe4qug7h"]
+
+[ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="1_aau2y"]
+[ext_resource type="Script" path="res://scripts/enemy/BulletBill.cs" id="1_do0wn"]
+[ext_resource type="Script" path="res://scripts/enemy/BulletBillHurtDetector.cs" id="3_n4bos"]
+[ext_resource type="Script" path="res://scripts/rpg/DamageTypePreset.cs" id="3_nll52"]
+[ext_resource type="SpriteFrames" uid="uid://ctytmkuqkhred" path="res://resources/enemies/SF_bullet_bill.tres" id="4_70toh"]
+[ext_resource type="PackedScene" uid="uid://m7qxp0utjs8p" path="res://resources/enemies/bullet_bill_corpse.tscn" id="4_mx1x1"]
+
+[sub_resource type="Resource" id="Resource_rebif"]
+script = ExtResource("3_nll52")
+Value = 81
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xlqrl"]
+size = Vector2(32, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0x121"]
+size = Vector2(24, 20)
+
+[node name="Bullet Bill" type="Node2D"]
+script = ExtResource("1_do0wn")
+
+[node name="Enemy Core" parent="." instance=ExtResource("1_aau2y")]
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+script = ExtResource("3_n4bos")
+StompedCorpse = ExtResource("4_mx1x1")
+Stompable = true
+AcceptedDamageTypes = SubResource("Resource_rebif")
+OneHitDamageTypes = SubResource("Resource_rebif")
+IgnoreUnsupportedDamageTypes = true
+
+[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0"]
+shape = SubResource("RectangleShape2D_xlqrl")
+
+[node name="Collision Shape" parent="Enemy Core/Damage Source" index="0"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_0x121")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = ExtResource("4_70toh")
+autoplay = "default"
+
+[editable path="Enemy Core"]

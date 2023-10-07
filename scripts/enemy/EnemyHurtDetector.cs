@@ -14,6 +14,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     [Export] public float StompBounceStrength { get; set; } = Units.Speed.CtfToGd(9);
     [Export] public DamageTypePreset AcceptedDamageTypes { get; set; }
     [Export] public DamageTypePreset OneHitDamageTypes { get; set; }
+    [Export] public bool IgnoreUnsupportedDamageTypes { get; set; }
 
 
     [Export, MaybeNull]
