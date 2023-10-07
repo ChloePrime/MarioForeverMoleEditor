@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=38 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
+[ext_resource type="PackedScene" uid="uid://b06h0dtdg48o2" path="res://objects/enemies/O_bullet_launcher_down.tscn" id="37_xntni"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -190,6 +191,9 @@ position = Vector2(784, 416)
 
 [node name="Bullet Launcher" parent="Overworld" instance=ExtResource("32_bcg4b")]
 position = Vector2(528, 336)
+
+[node name="Bullet Launcher (Down)" parent="Overworld" instance=ExtResource("37_xntni")]
+position = Vector2(528, 368)
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)

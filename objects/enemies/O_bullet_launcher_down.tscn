@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b06h0dtdg48o2"]
+
+[ext_resource type="PackedScene" uid="uid://cwatosp0umcd6" path="res://resources/enemies/internal_launcher_base.tscn" id="1_lccrd"]
+[ext_resource type="Texture2D" uid="uid://bajy5onvg0qbr" path="res://resources/enemies/AT_bullet_launcher_up.tres" id="2_mbqgf"]
+
+[node name="Bullet Launcher (Down)" instance=ExtResource("1_lccrd")]
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource("2_mbqgf")
+flip_v = true
