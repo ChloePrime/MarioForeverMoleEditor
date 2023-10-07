@@ -1,5 +1,5 @@
 ## ![Icon](https://github.com/ChloePrime/MarioForeverMoleEditor/blob/master/resources/enemies/T_mole_jumping.png) Installation:
-* Godot version: 4.1.1 Mono
+* Godot version: 4.1.2 Mono
 * .net version:  7 <br>
 Clone this repository and open in godot. <br>
 **Note: Be sure to clone this repository with git bash (or a git client) <br>**
