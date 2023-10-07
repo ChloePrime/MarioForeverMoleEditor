@@ -11,3 +11,6 @@ Main Scene: `O_level_frame.tscn` <br> <br>
 In order to change current level, <br>
 you need to assign the level prefab to `LevelFrame`'s `Level` property. <br>
 **Otherwise you will not have textured screen borders (and game UI later)**
+
+## Lovely Mole
+![Lovely Monty Mole](https://github.com/ChloePrime/MarioForeverMoleEditor/blob/master/resources/enemies/T_mole_jumping.png)
