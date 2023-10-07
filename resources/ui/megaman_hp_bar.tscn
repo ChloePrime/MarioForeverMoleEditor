@@ -43,7 +43,7 @@ grow_vertical = 0
 texture = ExtResource("3_5b27k")
 
 [node name="Layer 1" type="TextureRect" parent="Value"]
-self_modulate = Color(1, 1, 0.501961, 1)
+self_modulate = Color(0.992157, 0.901961, 0.611765, 1)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
