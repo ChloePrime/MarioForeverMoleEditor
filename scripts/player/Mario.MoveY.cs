@@ -11,8 +11,17 @@ namespace ChloePrime.MarioForever.Player;
 
 public partial class Mario
 {
-    [Signal] public delegate void WaterEnteredEventHandler();
-    [Signal] public delegate void WaterExitedEventHandler();
+    /// <summary>
+    /// 从水管进入水区时不会被触发
+    /// </summary>
+    [Signal]
+    public delegate void JumpedIntoWaterEventHandler();
+
+    /// <summary>
+    /// 从水管离开水区时不会被触发
+    /// </summary>
+    [Signal]
+    public delegate void JumpedOutOfWaterEventHandler();
     
     public float GetGravityScale()
     {
@@ -347,9 +356,10 @@ public partial class Mario
 
     private void EnterWater()
     {
+        if (PipeState != MarioPipeState.NotInPipe) return;
         JumpIntoWaterSound?.Play();
         CallDeferred(MethodName.PopWaterSplash);
-        EmitSignal(SignalName.WaterEntered);
+        EmitSignal(SignalName.JumpedIntoWater);
     }
 
     private static readonly PackedScene WaterSplashPrefab = GD.Load<PackedScene>("res://resources/shared/water_splash.tscn");
@@ -374,8 +384,9 @@ public partial class Mario
 
     private void ExitWater()
     {
+        if (PipeState != MarioPipeState.NotInPipe) return;
         JumpOutOfWaterSound?.Play();
-        EmitSignal(SignalName.WaterExited);
+        EmitSignal(SignalName.JumpedOutOfWater);
     }
 
     private void OnMarioEnterDeepwater(Node2D _)

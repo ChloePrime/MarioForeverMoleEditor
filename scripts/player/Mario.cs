@@ -602,7 +602,7 @@ public partial class Mario : CharacterBody2D
         this.GetNode(out _grabRoot, NpGrabRoot);
         GameRule = this.GetRule();
 
-        WaterEntered += OnMarioEnterWaterMoveX;
+        JumpedIntoWater += OnMarioEnterWaterMoveX;
         _runPressed = Input.IsActionPressed(Constants.ActionRun);
         _firePressed = Input.IsActionPressed(Constants.ActionFire);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
