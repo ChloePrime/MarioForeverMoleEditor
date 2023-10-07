@@ -356,8 +356,8 @@ public partial class Mario : CharacterBody2D
                 _grabRoot.Position = Vector2.Zero;
             }
         }
-        EmitSignal(SignalName.SizeChanged);
         CurrentSize = size;
+        EmitSignal(SignalName.SizeChanged);
 
         if (size != MarioSize.Big && _crouching)
         {
