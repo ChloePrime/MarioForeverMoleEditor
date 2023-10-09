@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MarioForeverMoleEditor.scripts.util;
@@ -46,9 +45,9 @@ public partial class BulletLauncher : BulletLauncherBase
         }
     }
 
-    public void TryShootBullet()
+    public bool TryShootBullet()
     {
-        if (!_vose.IsOnScreen()) return;
+        if (!_vose.IsOnScreen()) return false;
         
         var players = GetTree().GetNodesInGroup(MaFo.Groups.Player);
         using var _ = (Array)players;
@@ -58,12 +57,10 @@ public partial class BulletLauncher : BulletLauncherBase
             .Select(mario => ToLocal(mario.GlobalPosition))
             .Any(rp => Mathf.Abs(rp.X) < ShyDistance);
 
-        if (shy) return;
+        if (shy) return false;
         
         ShootBullet();
-        _waitForShot = false;
-        _timer.WaitTime = GD.RandRange(MinDelay, MaxDelay);
-        _timer.Start();
+        return true;
     }
 
     public override void _Ready()
@@ -76,24 +73,20 @@ public partial class BulletLauncher : BulletLauncherBase
         _timer.Start();
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        base._PhysicsProcess(delta);
-        if (_waitForShot)
-        {
-            TryShootBullet();
-        }
-    }
-
     private void OnTimerTimeout()
     {
-        _waitForShot = true;
         TryShootBullet();
+        ScheduleNextShot();
+    }
+
+    private void ScheduleNextShot()
+    {
+        _timer.WaitTime = GD.RandRange(MinDelay, MaxDelay);
+        _timer.Start();
     }
 
     private static readonly NodePath NpTimer = "Timer";
     private static readonly NodePath NpVose = "VisibleOnScreenEnabler";
     private Timer _timer;
     private VisibleOnScreenEnabler2D _vose;
-    private bool _waitForShot;
 }
