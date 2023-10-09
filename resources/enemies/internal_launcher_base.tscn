@@ -16,6 +16,7 @@ script = ExtResource("7_5yc17")
 AudioStreamList = Array[AudioStream]([ExtResource("5_1d228"), ExtResource("6_dda6g")])
 
 [node name="Launcher Base" instance=ExtResource("1_y5lr8")]
+z_index = 1
 script = ExtResource("2_n42k8")
 FirstShotDelay = 0.5
 MinDelay = 1.5
