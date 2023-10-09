@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4s4yy"]
 size = Vector2(32, 32)
 
-[node name="Launcher Base Base" type="StaticBody2D"]
+[node name="Launcher Component Base" type="StaticBody2D"]
 z_index = 1
 script = ExtResource("1_rl1rt")
 

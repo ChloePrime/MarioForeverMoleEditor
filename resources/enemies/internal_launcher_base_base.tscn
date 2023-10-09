@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2u2y448u58m4"]
+
+[ext_resource type="PackedScene" uid="uid://dbnsb6lkv56gm" path="res://resources/enemies/internal_launcher_component_base.tscn" id="1_j1v5q"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="2_hlnx4"]
+
+[node name="Launcher Base Base" instance=ExtResource("1_j1v5q")]
+
+[node name="Sprite" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_hlnx4")

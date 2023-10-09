@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi4tw8bo7f7cu"]
+
+[ext_resource type="PackedScene" uid="uid://d2u2y448u58m4" path="res://resources/enemies/internal_launcher_base_base.tscn" id="1_5s8mc"]
+[ext_resource type="Texture2D" uid="uid://dgsqt0skchyt6" path="res://tiles/T_tileset_bullet_launcher.png" id="2_s5in4"]
+
+[node name="Launcher Base (Upper Alt)" instance=ExtResource("1_5s8mc")]
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource("2_s5in4")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
