@@ -25,7 +25,18 @@ public partial class BulletBill : Node2D
         base._Process(delta);
         Translate(new Vector2(Speed * XDirection * (float)delta, 0));
     }
-    
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+        var frame = this.GetFrame();
+        var x = GlobalPosition.X;
+        if (x <= frame.Position.X - 1920 || x > frame.End.X + 1920)
+        {
+            QueueFree();
+        }
+    }
+
     private void LookAtMario0()
     {
         if (XDirection != 0 || GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) is not Node2D mario)
