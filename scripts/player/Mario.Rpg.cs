@@ -194,7 +194,7 @@ public partial class Mario
 
     private void PostDeath()
     {
-        GlobalData.Status = MarioStatus.Small;
+        GameRule.ReloadStatus();
         if (!FastRetry)
         {
             BackgroundMusic.Stop();

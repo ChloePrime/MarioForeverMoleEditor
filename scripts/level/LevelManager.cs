@@ -77,6 +77,7 @@ public partial class LevelManager : Control
     public override void _Ready()
     {
         base._Ready();
+        GameRule.ResetGlobalData();
         ReloadLevel();
 #if TOOLS
         if (TestLevel is { } level)

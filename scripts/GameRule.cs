@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using ChloePrime.MarioForever.Level;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using DotNext;
@@ -61,6 +63,9 @@ public partial class GameRule : Resource
     {
         GD.Load<PackedScene>("res://objects/ui/O_1up.tscn")
     };
+    
+    [ExportSubgroup("Mario")]
+    [Export, MaybeNull] public MarioStatus DefaultStatus { get; set; }
     
     [ExportSubgroup("Shell Combo")]
     [Export] public ComboRule DefaultComboRule { get; set; }
@@ -143,7 +148,13 @@ public partial class GameRule : Resource
     public void ResetGlobalData()
     {
         GlobalData.ResetRuleNeutralValues();
+        ReloadStatus();
         ResetHitPoint();
+    }
+
+    public void ReloadStatus()
+    {
+        GlobalData.Status = DefaultStatus ?? MarioStatus.Small;
     }
 
     private static Optional<LevelManager> _manager;
