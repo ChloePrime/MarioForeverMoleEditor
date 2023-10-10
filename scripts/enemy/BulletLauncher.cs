@@ -71,6 +71,12 @@ public partial class BulletLauncher : BulletLauncherBase
         _timer.Timeout += OnTimerTimeout;
         _timer.WaitTime = FirstShotDelay;
         _timer.Start();
+        if (!this.GetRule().BulletLauncherBreakable)
+        {
+            this.GetNode(out EnemyHurtDetector ehd, NpEhd);
+            ehd.Monitorable = ehd.Monitoring = false;
+            ehd.ProcessMode = ProcessModeEnum.Disabled;
+        }
     }
 
     private void OnTimerTimeout()
@@ -87,6 +93,7 @@ public partial class BulletLauncher : BulletLauncherBase
 
     private static readonly NodePath NpTimer = "Timer";
     private static readonly NodePath NpVose = "VisibleOnScreenEnabler";
+    private static readonly NodePath NpEhd = "Enemy Core/Hurt Detector";
     private Timer _timer;
     private VisibleOnScreenEnabler2D _vose;
 }

@@ -85,6 +85,9 @@ public partial class GameRule : Resource
 
     [ExportSubgroup("Water")]
     [Export] public bool KeepXSpeedInWater { get; set; }
+
+    [ExportSubgroup("")] 
+    [Export] public bool BulletLauncherBreakable { get; set; } = true;
     
     public enum MarioDirectionPolicy
     {

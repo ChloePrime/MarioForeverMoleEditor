@@ -22,6 +22,7 @@ W10EClampOffScreenPolicy = true
 ClampFireballExplodeOnWallHit = true
 CharacterDirectionPolicy = 1
 KeepXSpeedInWater = false
+BulletLauncherBreakable = false
 EnableTossFireballUpward = true
 TossFireballUpwardStrength = 400.0
 EnableMarioBursting = true
