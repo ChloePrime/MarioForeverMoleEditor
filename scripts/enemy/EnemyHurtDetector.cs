@@ -159,6 +159,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
         if (Core.Animation is {} animation)
         {
+            animation.Stop();
             animation.Play(AnimHurt);
         }
         if (!e.IsSilent)
