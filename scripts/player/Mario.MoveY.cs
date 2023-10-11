@@ -303,6 +303,7 @@ public partial class Mario
     /// </summary>
     private void ConsumeJumpInput()
     {
+        if (ControlIgnored) return;
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {
             if (!_isInAir || _wilyJumpTime >= 0)
@@ -322,6 +323,7 @@ public partial class Mario
 
     private void ConsumeSwimInput()
     {
+        if (ControlIgnored) return;
         // 游泳
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {

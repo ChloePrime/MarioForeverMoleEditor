@@ -200,6 +200,11 @@ public partial class Mario
     
     private float FetchWalkingInput()
     {
+        if (ControlIgnored)
+        {
+            _leftPressed = _rightPressed = false;
+            return 0;
+        }
         _leftPressed = Input.IsActionPressed(Constants.ActionMoveLeft);
         _rightPressed = Input.IsActionPressed(Constants.ActionMoveRight);
         // 同时按下左 + 右时判定为停止

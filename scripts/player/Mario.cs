@@ -133,6 +133,7 @@ public partial class Mario : CharacterBody2D
     [Export] public AudioStream HitPointSaveSlipperyVoice { get; private set; } = GD.Load<AudioStream>("res://resources/mario/SE_mario_scream.wav");
 
     [ExportGroup("")]
+    [Export] public bool ControlIgnored { get; set; }
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
 
     [Signal] public delegate void SizeChangedEventHandler();
@@ -558,6 +559,8 @@ public partial class Mario : CharacterBody2D
         FetchInput(ref _firePressed, e, Constants.ActionFire);
         FetchInput(ref _upPressed, e, Constants.ActionMoveUp);
         FetchInput(ref _downPressed, e, Constants.ActionMoveDown);
+        if (ControlIgnored) return;
+        
         InputGrab(e);
         if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing && e.IsActionPressed(Constants.ActionFire))
         {
@@ -575,8 +578,13 @@ public partial class Mario : CharacterBody2D
         base.Dispose(disposing);
     }
 
-    private static void FetchInput(ref bool pressed, InputEvent e, StringName action)
+    private void FetchInput(ref bool pressed, InputEvent e, StringName action)
     {
+        if (ControlIgnored)
+        {
+            pressed = false;
+            return;
+        }
         if (e.IsActionReleased(action))
         {
             pressed = false;
