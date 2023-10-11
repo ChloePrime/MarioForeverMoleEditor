@@ -13,6 +13,25 @@ public partial class MegaManHpBar : Control
 
     private static readonly Color DefaultMegaManLayer1Color = Color.Color8(253, 230, 156);
 
+    public void AddHpAnimated(int newValue)
+    {
+        var value = Value;
+        var tween = CreateTween().SetLoops(newValue - value).BindNode(this);
+        tween.TweenCallback(Callable.From(() =>
+        {
+            value++;
+            Value = value;
+            _addHpSoundPlayer.Stop();
+            _addHpSoundPlayer.Play();
+
+            if (value == newValue)
+            {
+                tween.Stop();
+                tween.Dispose();
+            }
+        })).SetDelay(0.04F);
+    }
+
     public override void _Ready()
     {
         base._Ready();
@@ -20,6 +39,7 @@ public partial class MegaManHpBar : Control
         this.GetNode(out _valueBar, "Value");
         this.GetNode(out _valueLayer1, "Value/Layer 1");
         this.GetNode(out _valueLayer2, "Value/Layer 2");
+        this.GetNode(out _addHpSoundPlayer, "Add HP Sound Player");
     }
 
     public override void _Process(double delta)
@@ -62,6 +82,7 @@ public partial class MegaManHpBar : Control
     private Control _valueBar;
     private TextureRect _valueLayer1;
     private TextureRect _valueLayer2;
+    private AudioStreamPlayer _addHpSoundPlayer;
     private Color _checkC1;
     private Color _checkC2;
     private int _checkV = int.MinValue;

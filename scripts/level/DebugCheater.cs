@@ -60,5 +60,12 @@ public partial class DebugCheater : Node
             this.GetLevelManager()?.LevelInstance?.AddChild(mole);
             (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Mario)?.Grab(mole);
         }
+        if (e is InputEventKey { PhysicalKeycode: Key.H } && e.IsPressed())
+        {
+            var bar = ((LevelFrame)this.GetLevelManager()!).Hud.MegaManBossHpBar;
+            bar.Visible = true;
+            bar.Value = 0;
+            bar.AddHpAnimated(32);
+        }
     }
 }

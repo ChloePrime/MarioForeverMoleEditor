@@ -238,6 +238,19 @@ script = ExtResource("2_d76tu")
 
 [node name="Bar" parent="Mega Man HP" instance=ExtResource("9_nxqmq")]
 
+[node name="Mega Man Boss HP" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = -96.0
+offset_right = -48.0
+offset_bottom = -96.0
+grow_horizontal = 0
+
+[node name="Bar" parent="Mega Man Boss HP" instance=ExtResource("9_nxqmq")]
+
 [node name="World" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1

@@ -2,7 +2,6 @@
 using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using Godot;
-using Godot.NativeInterop;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.UI;
@@ -10,6 +9,7 @@ namespace ChloePrime.MarioForever.UI;
 public partial class LevelHud : Control
 {
     public Control GameOverLabel => _go;
+    public MegaManHpBar MegaManBossHpBar => _megaManBossHpBar;
 
     public string WorldName
     {
@@ -38,6 +38,7 @@ public partial class LevelHud : Control
         this.GetNode(out _hpCounterL, NpHpCounterL);
         this.GetNode(out _hpCounterR, NpHpCounterR);
         this.GetNode(out _megaManHpBar, NpMegaManHpBar);
+        this.GetNode(out _megaManBossHpBar, NpMegaManBossHpBar);
         this.GetNode(out _hpBarMax, NpHpCounterMaxBar);
         this.GetNode(out _hpBar, NpHpCounterBar);
         this.GetNode(out _world, NpWorld);
@@ -53,6 +54,7 @@ public partial class LevelHud : Control
         _coinSystem.Watcher = () => !_rule.DisableCoin;
         _hpSystem.Watcher = HasHitPoint;
         _megaManHpSystem.Watcher = () => HasHitPoint() && _rule.HitPointPolicy == GameRule.HitPointPolicyType.MegaMan;
+        _megaManBossHpBar.Visible = false;
         _world.Watcher = () => _worldName.Text.Length > 0;
         _timeSystem.Watcher = () =>
             _rule.TimePolicy != GameRule.TimePolicyType.Disable && CurrentLevel is { TimeLimit: >= 0 };
@@ -167,6 +169,7 @@ public partial class LevelHud : Control
     private static readonly NodePath NpHpSystem = "Hit Point System";
     private static readonly NodePath NpMegaManHpSystem = "Mega Man HP";
     private static readonly NodePath NpMegaManHpBar = "Mega Man HP/Bar";
+    private static readonly NodePath NpMegaManBossHpBar = "Mega Man Boss HP/Bar";
     private static readonly NodePath NpWorld = "World";
     private static readonly NodePath NpWorldName = "World/World Name";
     private static readonly NodePath NpTimeSystem = "Time System";
@@ -194,6 +197,7 @@ public partial class LevelHud : Control
     private ValueWatcherLabel _scoreCounter;
     private ValueWatcherLabel _coinCounter;
     private MegaManHpBar _megaManHpBar;
+    private MegaManHpBar _megaManBossHpBar;
     private ValueWatcherLabel _hpCounterL;
     private ValueWatcherLabel _hpCounterR;
     private ValueWatcherBar _hpBarMax;
