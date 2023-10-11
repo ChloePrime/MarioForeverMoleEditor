@@ -10,6 +10,8 @@ public partial class MegaManHpBar : Control
     [Export] public Color Color1 { get; set; } = DefaultMegaManLayer1Color;
     [Export] public Color Color2 { get; set; } = Colors.White;
     [Export] public int UnitHeightInPixels { get; set; } = 4;
+    
+    [Signal] public delegate void AddHpAnimationFinishedEventHandler();
 
     private static readonly Color DefaultMegaManLayer1Color = Color.Color8(253, 230, 156);
 
@@ -28,6 +30,7 @@ public partial class MegaManHpBar : Control
             {
                 tween.Stop();
                 tween.Dispose();
+                EmitSignal(SignalName.AddHpAnimationFinished);
             }
         })).SetDelay(0.04F);
     }
