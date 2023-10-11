@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
+[ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://objects/facility/O_spring.tscn" id="36_132yy"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 
@@ -207,3 +208,6 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
+
+[node name="Spring" parent="." instance=ExtResource("36_132yy")]
+position = Vector2(208, 400)

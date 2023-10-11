@@ -210,7 +210,7 @@ public partial class Mario
         var query = new PhysicsShapeQueryParameters2D
         {
             Shape = CurrentCollisionShape.Shape,
-            CollisionMask = MaFo.CollisionMask.Enemy,
+            CollisionMask = MaFo.CollisionMask.Solid | MaFo.CollisionMask.SolidMarioOnly | MaFo.CollisionMask.Enemy,
             Transform = trans,
             Exclude = MeInAnArray,
             CollideWithAreas = true,
