@@ -154,14 +154,10 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         }
     }
 
-    private void OnHurt(DamageEvent e)
+    protected virtual void OnHurt(DamageEvent e)
     {
         Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
-        if (Core.Animation is {} animation)
-        {
-            animation.Stop();
-            animation.Play(AnimHurt);
-        }
+        PlayHurtAnimation();
         if (!e.IsSilent)
         {
             PlayHurtSound(e);
@@ -173,6 +169,15 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (e.DamageTypes.ContainsAny(DamageType.Fireball | DamageType.Beetroot))
         {
             DefaultImmuneSound.Play();
+        }
+    }
+
+    public virtual void PlayHurtAnimation()
+    {
+        if (Core.Animation is {} animation)
+        {
+            animation.Stop();
+            animation.Play(AnimHurt);
         }
     }
 
