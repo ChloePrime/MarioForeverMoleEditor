@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dqmafju6sqf6u" path="res://resources/mario/SE_die.wav" id="3_rvya6"]
 
 [node name="Mario Corpse" type="Sprite2D"]
+z_index = 100
 texture = ExtResource("1_1ecom")
 offset = Vector2(0, -16)
 script = ExtResource("2_dy18b")
