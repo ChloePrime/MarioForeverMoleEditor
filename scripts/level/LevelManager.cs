@@ -50,6 +50,7 @@ public partial class LevelManager : Control
             Hud.Visible = false;
         }
         BackgroundMusic.Speed = 1;
+        Hud.MegaManBossHpBar.Visible = false;
     }
     
     public void RestartGame()
