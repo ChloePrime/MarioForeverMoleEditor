@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://csm74sjiajbga"]
+
+[ext_resource type="PackedScene" uid="uid://40iy1yhyf77i" path="res://objects/effect/O_explosion_m_megaman.tscn" id="1_5s2p3"]
+
+[node name="Medium Explosion (Mega Man, With Sound)" instance=ExtResource("1_5s2p3")]
