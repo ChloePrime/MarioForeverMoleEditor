@@ -60,7 +60,11 @@ public partial class MaFoLevelArea
 				switch (type)
 				{
 					case TilemapType.SolidOnly:
+#if GODOT4_2_OR_GREATER
+						tilemap.Modulate = Colors.Transparent;
+#else
 						tilemap.Visible = false;
+#endif
 						break;
 					case TilemapType.None:
 					default:
