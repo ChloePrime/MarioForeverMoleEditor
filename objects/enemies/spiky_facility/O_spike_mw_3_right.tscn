@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwofeq0ntwa0h"]
 
 [ext_resource type="PackedScene" uid="uid://tlcyt55ard8i" path="res://objects/enemies/spiky_facility/O_spike_grey_3_right.tscn" id="1_xkrpf"]
-[ext_resource type="Texture2D" uid="uid://du33xby40jx10" path="res://objects/enemies/spiky_facility/T_spike_mw_left.tres" id="2_raxpd"]
+[ext_resource type="Texture2D" uid="uid://du33xby40jx10" path="res://resources/enemies/spiky_facility/T_spike_mw_left.tres" id="2_raxpd"]
 
 [node name="Spike (MW, Right)" instance=ExtResource("1_xkrpf")]
 

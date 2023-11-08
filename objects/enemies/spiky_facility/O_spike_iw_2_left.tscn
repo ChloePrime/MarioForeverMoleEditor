@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://de3l15m5jcviv"]
 
 [ext_resource type="PackedScene" uid="uid://5fga1kqh71x2" path="res://objects/enemies/spiky_facility/O_spike_grey_2_left.tscn" id="1_i026a"]
-[ext_resource type="Texture2D" uid="uid://dsfcr5030wkp6" path="res://objects/enemies/spiky_facility/T_spike_iw_left.tres" id="2_4a1fc"]
+[ext_resource type="Texture2D" uid="uid://dsfcr5030wkp6" path="res://resources/enemies/spiky_facility/T_spike_iw_left.tres" id="2_4a1fc"]
 
 [node name="Spike (I Wanna, Left)" instance=ExtResource("1_i026a")]
 
