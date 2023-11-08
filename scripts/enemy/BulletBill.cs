@@ -10,6 +10,10 @@ public partial class BulletBill : Node2D
 
     public void LookAtMario()
     {
+        if (!IsInsideTree())
+        {
+            return;
+        }
         LookAtMario0();
         GetNode<AnimatedSprite2D>(NpSprite).FlipH = XDirection < 0;
     }
