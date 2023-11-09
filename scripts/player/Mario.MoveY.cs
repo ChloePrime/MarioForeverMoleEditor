@@ -387,6 +387,7 @@ public partial class Mario
     private void ExitWater()
     {
         if (PipeState != MarioPipeState.NotInPipe) return;
+        if (!IsInstanceValid(this)) return;
         JumpOutOfWaterSound?.Play();
         EmitSignal(SignalName.JumpedOutOfWater);
     }
