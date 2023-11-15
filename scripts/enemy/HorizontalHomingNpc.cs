@@ -1,4 +1,5 @@
 ﻿using System;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
@@ -29,7 +30,7 @@ public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEn
 
     public override void _PhysicsProcess(double delta)
     {
-        Target ??= GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Node2D;
+        Target ??= GetTree().GetPlayer() as Node2D;
         if (Target is not { } target || !IsInstanceValid(target))
         {
             Target = null;

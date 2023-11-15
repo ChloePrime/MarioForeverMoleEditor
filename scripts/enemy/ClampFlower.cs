@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ChloePrime.MarioForever.Level;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
@@ -61,7 +62,7 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
             bool isGrowBlocked;
             if (shyDistance != 0)
             {
-                isGrowBlocked = !_rev && GetTree().GetNodesInGroup(MaFo.Groups.Player)
+                isGrowBlocked = !_rev && GetTree().GetAllPlayers()
                     .OfType<Node2D>()
                     .Select(mario => ToLocal(mario.GlobalPosition))
                     .Any(rp => Mathf.Abs(rp.X) < shyDistance);

@@ -47,7 +47,7 @@ public partial class MaFoLevel : Node
 			if (_manager is not { } manager) return;
 			if (manager.GameRule.TimePolicy == GameRule.TimePolicyType.Classic && GetTree() is {} tree)
 			{
-				_timeoutKillList ??= tree.GetNodesInGroup(MaFo.Groups.Player).OfType<Mario>().ToList();
+				_timeoutKillList ??= tree.GetAllPlayers().OfType<Mario>().ToList();
 			}
 		};
 

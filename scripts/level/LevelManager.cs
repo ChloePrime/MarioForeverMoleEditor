@@ -112,7 +112,7 @@ public partial class LevelManager : Control
     private void AddLives(int count)
     {
         if (GameRule.AddLifeMethod is not { } scores ||
-            GetTree()?.GetFirstNodeInGroup(MaFo.Groups.Player) is not Mario mario ||
+            GetTree()?.GetMario() is not { } mario ||
             mario.GetParent() is not { } level)
         {
             GlobalData.Lives += count;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using MarioForeverMoleEditor.scripts.util;
@@ -37,7 +38,7 @@ public partial class BulletLauncher : BulletLauncherBase
             root.AddChild(flash);
             if (flash is Node2D flash2D)
             {
-                var player = GetTree().GetFirstNodeInGroup(MaFo.Groups.Player);
+                var player = GetTree().GetPlayer();
                 var xDir = player is Node2D mario ? Mathf.Sign(ToLocal(mario.GlobalPosition).X) : 0;
                 flash2D.GlobalPosition = GlobalPosition + new Vector2(16 * xDir, 0);
                 flash2D.ZIndex = ZIndex;
@@ -49,7 +50,7 @@ public partial class BulletLauncher : BulletLauncherBase
     {
         if (!_vose.IsOnScreen()) return false;
         
-        var players = GetTree().GetNodesInGroup(MaFo.Groups.Player);
+        var players = GetTree().GetAllPlayers();
         using var _ = (Array)players;
         
         var shy = players

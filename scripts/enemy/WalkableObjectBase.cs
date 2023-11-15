@@ -68,7 +68,7 @@ public partial class WalkableObjectBase : GravityObjectBase
 
     protected void TryFaceTowardsMario()
     {
-        if (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) is not Node2D mario)
+        if (GetTree().GetPlayer() is not Node2D mario)
         {
             return;
         }

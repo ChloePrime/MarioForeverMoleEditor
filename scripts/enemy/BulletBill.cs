@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Util;
+﻿using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
@@ -43,7 +44,7 @@ public partial class BulletBill : Node2D
 
     private void LookAtMario0()
     {
-        if (XDirection != 0 || GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) is not Node2D mario)
+        if (XDirection != 0 || GetTree().GetPlayer() is not Node2D mario)
         {
             return;
         }

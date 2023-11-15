@@ -51,7 +51,7 @@ public partial class Turtle : WalkableNpc
     private float GetAnimDirectionFollow()
     {
         if (!IsInstanceValid(_mario)) _mario = null;
-        _mario ??= GetTree()?.GetFirstNodeInGroup(MaFo.Groups.Player) as Node2D;
+        _mario ??= GetTree()?.GetPlayer() as Node2D;
         if (!IsInstanceValid(_mario)) return base.AnimationDirection;
         return Math.Sign(ToLocal(_mario!.GlobalPosition).X);
     }

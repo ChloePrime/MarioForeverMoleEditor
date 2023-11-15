@@ -58,7 +58,7 @@ public partial class DebugCheater : Node
         {
             var mole = GD.Load<PackedScene>("res://objects/enemies/O_mole_smb3.tscn").Instantiate<GravityObjectBase>();
             this.GetLevelManager()?.LevelInstance?.AddChild(mole);
-            (GetTree().GetFirstNodeInGroup(MaFo.Groups.Player) as Mario)?.Grab(mole);
+            (GetTree().GetMario())?.Grab(mole);
         }
         if (e is InputEventKey { PhysicalKeycode: Key.H } && e.IsPressed())
         {
