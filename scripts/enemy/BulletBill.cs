@@ -19,10 +19,16 @@ public partial class BulletBill : Node2D
         GetNode<AnimatedSprite2D>(NpSprite).FlipH = XDirection < 0;
     }
 
-    public override void _EnterTree()
+    public override async void _EnterTree()
     {
         base._EnterTree();
         CallDeferred(MethodName.LookAtMario);
+
+        await ToSignal(GetTree().CreateTimer(0.2), SceneTreeTimer.SignalName.Timeout);
+        if (IsInstanceValid(this))
+        {
+            ZIndex += 2;
+        }
     }
 
     public override void _Process(double delta)
