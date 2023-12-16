@@ -18,6 +18,7 @@ size = Vector2(32, 28)
 size = Vector2(24, 20)
 
 [node name="Bullet Bill" type="Node2D"]
+z_index = -1
 script = ExtResource("1_do0wn")
 
 [node name="Enemy Core" parent="." instance=ExtResource("1_aau2y")]
