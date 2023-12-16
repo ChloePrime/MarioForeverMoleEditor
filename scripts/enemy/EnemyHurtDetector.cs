@@ -132,7 +132,13 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (Core.Root is IGrabbable grabbable)
         {
             grabbable.Grabbed += e => _oldParent = e.OldParent;
-            grabbable.GrabReleased += _ => SetDeferred(PropertyName._oldParent, (Node)null);
+            grabbable.GrabReleased += _ =>
+            {
+                if (IsInstanceValid(this))
+                {
+                    SetDeferred(PropertyName._oldParent, (Node)null);
+                }
+            };
         }
     }
 
