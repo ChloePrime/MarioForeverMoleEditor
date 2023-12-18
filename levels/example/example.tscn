@@ -1,7 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=38 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" uid="uid://w3b8r6jr4lf0" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://tiles/R_object_tile_presets.tres" id="3_ad6k1"]
@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
+[ext_resource type="PackedScene" uid="uid://bfl8br7lnbqir" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
 [ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://objects/facility/O_spring.tscn" id="36_132yy"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
+[ext_resource type="PackedScene" uid="uid://c3831yuajjtis" path="res://objects/enemies/O_lakitu.tscn" id="37_6kpky"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 
 [node name="Example" type="Node2D"]
@@ -187,6 +188,9 @@ Target = NodePath("../Pipe Exit (Left)")
 
 [node name="Pipe Exit (Left)" parent="Overworld" instance=ExtResource("37_77bxi")]
 position = Vector2(784, 416)
+
+[node name="Lakitu" parent="Overworld" instance=ExtResource("37_6kpky")]
+position = Vector2(464, 64)
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)
