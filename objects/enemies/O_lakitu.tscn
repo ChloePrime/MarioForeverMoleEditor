@@ -1,13 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3831yuajjtis"]
+[gd_scene load_steps=3 format=3 uid="uid://c3831yuajjtis"]
 
 [ext_resource type="PackedScene" uid="uid://bbmxplfobtgeu" path="res://resources/enemies/internal_lakitu_base.tscn" id="1_oj77y"]
-[ext_resource type="Script" path="res://scripts/enemy/Lakitu.cs" id="2_0pp5s"]
 [ext_resource type="Script" path="res://scripts/enemy/LakituMovementComponent.cs" id="3_uq3ix"]
 
 [node name="Lakitu" instance=ExtResource("1_oj77y")]
 modulate = Color(0.411765, 0.117647, 0.117647, 1)
 scale = Vector2(1, 0.996514)
-script = ExtResource("2_0pp5s")
 
 [node name="Movement Component" type="Node" parent="." index="1"]
 script = ExtResource("3_uq3ix")
