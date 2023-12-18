@@ -90,9 +90,6 @@ public partial class GameRule : Resource
 
     [ExportSubgroup("Water")]
     [Export] public bool KeepXSpeedInWater { get; set; }
-
-    [ExportSubgroup("")] 
-    [Export] public bool BulletLauncherBreakable { get; set; } = true;
     
     public enum MarioDirectionPolicy
     {
@@ -103,6 +100,10 @@ public partial class GameRule : Resource
     [ExportSubgroup("Toss Fireball Upward")]
     [Export] public bool EnableTossFireballUpward { get; set; } = true;
     [Export] public float TossFireballUpwardStrength { get; set; } = 400;
+
+    [ExportGroup("")]
+    [ExportSubgroup("")] 
+    [Export] public bool BulletLauncherBreakable { get; set; } = true;
 
     [ExportGroup("Advanced")] 
     [Export] public bool EnableMarioBursting { get; set; } = true;
