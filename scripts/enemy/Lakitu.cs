@@ -22,6 +22,7 @@ public partial class Lakitu : Node2D
         base._Ready();
         this.GetNode(out _sprite, NpSprite);
         this.GetNode(out _muzzle, NpMuzzle);
+        this.GetNode(out _solidDetector, NpSolidDetector);
         this.GetNode(out _attackTimer, NpAttackTimer);
         this.GetNode(out _vosn, NpVosn);
         ResetAttackTimer();
@@ -42,6 +43,15 @@ public partial class Lakitu : Node2D
         {
             return;
         }
+
+        while (_solidDetector.HasOverlappingBodies())
+        {
+            await this.DelayAsync(0.1F);
+        }
+        if (_sprite.Animation != Anim01AttackIn)
+        {
+            return;
+        }
         
         _sprite.Play(Anim02AttackOut, AttackRecoverTime / StandardAttackRecoverTime);
         await this.DelayAsync(AttackRecoverTime, true, true);
@@ -49,8 +59,11 @@ public partial class Lakitu : Node2D
         {
             return;
         }
-        
-        ThrowSpinyInstantly();
+
+        if (!_solidDetector.HasOverlappingBodies())
+        {
+            ThrowSpinyInstantly();
+        }
     }
 
     public void ThrowSpinyInstantly()
@@ -121,6 +134,7 @@ public partial class Lakitu : Node2D
 
     private static readonly NodePath NpSprite = "Enemy Core/Sprite";
     private static readonly NodePath NpMuzzle = "Muzzle";
+    private static readonly NodePath NpSolidDetector = "%Solid Detector";
     private static readonly NodePath NpAttackTimer = "Attack Timer";
     private static readonly NodePath NpVosn = "VisibleOnScreenNotifier";
     private static readonly StringName Anim00Default = "[00] default";
@@ -131,6 +145,7 @@ public partial class Lakitu : Node2D
 
     private AnimatedSprite2D _sprite;
     private Node2D _muzzle;
+    private Area2D _solidDetector;
     private VisibleOnScreenNotifier2D _vosn;
     private Timer _attackTimer;
 }

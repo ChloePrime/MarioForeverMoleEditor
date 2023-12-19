@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://bbmxplfobtgeu"]
+[gd_scene load_steps=66 format=3 uid="uid://bbmxplfobtgeu"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="1_385ag"]
 [ext_resource type="Script" path="res://scripts/enemy/Lakitu.cs" id="1_auun5"]
@@ -400,6 +400,9 @@ animations = [{
 "speed": 50.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sww0"]
+size = Vector2(32, 32)
+
 [node name="Lakitu Base" type="Node2D"]
 script = ExtResource("1_auun5")
 AttackSound = SubResource("Resource_6f7po")
@@ -425,6 +428,12 @@ autoplay = "[00] default"
 
 [node name="Muzzle" type="Node2D" parent="."]
 position = Vector2(0, -24)
+
+[node name="Solid Detector" type="Area2D" parent="Muzzle"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muzzle/Solid Detector"]
+shape = SubResource("RectangleShape2D_7sww0")
 
 [node name="Movement Component" type="Node" parent="."]
 script = ExtResource("11_gxfa8")

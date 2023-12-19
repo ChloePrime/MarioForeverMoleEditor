@@ -1,7 +1,7 @@
-[gd_scene load_steps=38 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=37 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="PackedScene" uid="uid://w3b8r6jr4lf0" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://tiles/R_object_tile_presets.tres" id="3_ad6k1"]
@@ -22,7 +22,6 @@
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
-[ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="26_8um7j"]
 [ext_resource type="PackedScene" uid="uid://bfl8br7lnbqir" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
@@ -53,6 +52,9 @@ Border = Rect2(0, 0, 640, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("2_4kt55")
+
+[node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
+position = Vector2(208, 400)
 
 [node name="Tiles" parent="Overworld" instance=ExtResource("1_xiix0")]
 
@@ -156,10 +158,6 @@ position = Vector2(0, 160)
 State = 0
 MaxYSpeed = inf
 
-[node name="Blue Turtle" parent="Overworld" instance=ExtResource("26_8um7j")]
-position = Vector2(96, 400)
-MaxYSpeed = inf
-
 [node name="Bonus Room Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(576, 320)
 Target = NodePath("../../Bonus Room/Bonus Room Entrance")
@@ -212,6 +210,3 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
-
-[node name="Spring" parent="." instance=ExtResource("36_132yy")]
-position = Vector2(208, 400)
