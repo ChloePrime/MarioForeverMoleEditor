@@ -1,11 +1,20 @@
-[gd_scene load_steps=59 format=3 uid="uid://bbmxplfobtgeu"]
+[gd_scene load_steps=65 format=3 uid="uid://bbmxplfobtgeu"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="1_385ag"]
 [ext_resource type="Script" path="res://scripts/enemy/Lakitu.cs" id="1_auun5"]
+[ext_resource type="Script" path="res://scripts/util/AudioStreamGroup.cs" id="2_dma71"]
 [ext_resource type="Texture2D" uid="uid://deexchyykxuxv" path="res://resources/enemies/T_lakitu_attack.png" id="2_ka23o"]
+[ext_resource type="AudioStream" uid="uid://dx43y5kpfoblf" path="res://resources/enemies/SE_lakitu_0.ogg" id="2_v1208"]
 [ext_resource type="Texture2D" uid="uid://bkpsy4lh122ah" path="res://resources/enemies/T_lakitu.png" id="3_311bj"]
 [ext_resource type="Texture2D" uid="uid://5o23nmd1qcjp" path="res://resources/enemies/T_lakitu_blink_up.png" id="3_rblrl"]
+[ext_resource type="AudioStream" uid="uid://c75g0xah2657v" path="res://resources/enemies/SE_lakitu_1.ogg" id="3_wsvgu"]
+[ext_resource type="AudioStream" uid="uid://8sub0u6y3l7s" path="res://resources/enemies/SE_lakitu_2.ogg" id="4_8cnae"]
 [ext_resource type="Texture2D" uid="uid://bytpxe7cy22f8" path="res://resources/enemies/T_lakitu_blink_down.png" id="4_s2gqk"]
+[ext_resource type="Script" path="res://scripts/enemy/LakituMovementComponent.cs" id="11_gxfa8"]
+
+[sub_resource type="Resource" id="Resource_6f7po"]
+script = ExtResource("2_dma71")
+AudioStreamList = Array[AudioStream]([ExtResource("2_v1208"), ExtResource("3_wsvgu"), ExtResource("4_8cnae")])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64aav"]
 size = Vector2(32, 47.5)
@@ -393,6 +402,7 @@ animations = [{
 
 [node name="Lakitu Base" type="Node2D"]
 script = ExtResource("1_auun5")
+AttackSound = SubResource("Resource_6f7po")
 
 [node name="Enemy Core" parent="." instance=ExtResource("1_385ag")]
 
@@ -410,15 +420,30 @@ monitorable = false
 [node name="Sprite" parent="Enemy Core" index="2"]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_qa46n")
-animation = &"[01] attack_in"
+animation = &"[00] default"
 autoplay = "[00] default"
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(0, -24)
+
+[node name="Movement Component" type="Node" parent="."]
+script = ExtResource("11_gxfa8")
+
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -8)
+rect = Rect2(-32, -32, 64, 64)
 
 [node name="Animation Update Timer" type="Timer" parent="."]
 process_callback = 0
 wait_time = 0.1
 autostart = true
 
+[node name="Attack Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
 [connection signal="animation_finished" from="Enemy Core/Sprite" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="Animation Update Timer" to="." method="OnAnimationUpdateTimerTimeout"]
+[connection signal="timeout" from="Attack Timer" to="." method="OnAttackTimerTimeout"]
 
 [editable path="Enemy Core"]

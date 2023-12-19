@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqd5ut2wsbi1h"]
+[gd_scene load_steps=7 format=3 uid="uid://cqd5ut2wsbi1h"]
 
 [ext_resource type="Script" path="res://scripts/rpg/WalkableNpc.cs" id="1_hflx6"]
 [ext_resource type="Script" path="res://scripts/rpg/MarioForeverNpcData.cs" id="2_enr0v"]
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="3_ketea"]
+[ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://resources/shared/SF_placeholder.tres" id="4_ayqsa"]
 
 [sub_resource type="Resource" id="Resource_35v0x"]
 script = ExtResource("2_enr0v")
@@ -40,5 +41,8 @@ MyNpcData = null
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 Stompable = true
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = ExtResource("4_ayqsa")
 
 [editable path="Enemy Core"]

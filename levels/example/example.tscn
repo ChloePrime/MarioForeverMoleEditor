@@ -190,7 +190,7 @@ Target = NodePath("../Pipe Exit (Left)")
 position = Vector2(784, 416)
 
 [node name="Lakitu" parent="Overworld" instance=ExtResource("37_6kpky")]
-position = Vector2(464, 64)
+position = Vector2(464, 96)
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)

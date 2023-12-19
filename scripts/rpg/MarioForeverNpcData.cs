@@ -16,4 +16,14 @@ public partial class MarioForeverNpcData : Resource
     [Export] public float DamageHi { get; set; } = 40;
     [Export] public bool Friendly { get; set; }
     [Export] public bool DoNotMove { get; set; }
+
+    public void CopyValueFrom(MarioForeverNpcData other)
+    {
+        HitPoint = other.HitPoint;
+        MaxHitPoint = other.MaxHitPoint ;
+        DamageLo = other.DamageLo;
+        DamageHi = other.DamageHi;
+        Friendly = other.Friendly;
+        DoNotMove = other.DoNotMove;
+    }
 }

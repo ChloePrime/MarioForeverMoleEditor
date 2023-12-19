@@ -1,0 +1,133 @@
+[gd_scene load_steps=21 format=3 uid="uid://b6akv10bkfxp5"]
+
+[ext_resource type="PackedScene" uid="uid://c4agpmklk278b" path="res://resources/enemies/internal_hedgehog_ball_base.tscn" id="1_36h3b"]
+[ext_resource type="Texture2D" uid="uid://bnqo64rhk8vi7" path="res://resources/enemies/T_hedgehog_ball.png" id="2_hsle6"]
+[ext_resource type="PackedScene" uid="uid://bbe1qjvwn88mw" path="res://objects/enemies/O_hedgehog_red.tscn" id="2_j0io1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbp1l"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lacri"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 31, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao05h"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 62, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yvuh"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 93, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adqhj"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 124, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gavcs"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 155, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_li3ie"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 186, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc5dq"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 217, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3d0c"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 248, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pghjj"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 279, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogv1f"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 310, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p73j0"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 341, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3jkp"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 372, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nkyc"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 403, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is3po"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 434, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjmdb"]
+atlas = ExtResource("2_hsle6")
+region = Rect2(0, 465, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5y6no"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbp1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lacri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ao05h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yvuh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adqhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gavcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_li3ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc5dq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3d0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pghjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogv1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p73j0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3jkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nkyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is3po")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjmdb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[node name="Hedgehog Ball (Red)" instance=ExtResource("1_36h3b")]
+Ontology = ExtResource("2_j0io1")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_5y6no")
+
+[editable path="Enemy Core"]
