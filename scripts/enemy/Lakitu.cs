@@ -12,6 +12,8 @@ public partial class Lakitu : Node2D
     [Export] public float AttackCastTime { get; set; } = 0.8F;
     [Export] public float AttackRecoverTime { get; set; } = 0.2F;
     [Export] public float ThrowPower { get; set; } = Units.Speed.CtfToGd(3);
+    [Export] public bool  Revives { get; set; } = true;
+    [Export] public float ReviveDelay { get; set; } = 6;
     [Export] public AudioStreamGroup AttackSound { get; set; }
 
     public const float StandardAttackCastTime = 0.8F;
@@ -129,6 +131,31 @@ public partial class Lakitu : Node2D
         {
             _sprite.Animation = Anim00Default;
             _sprite.Play();
+        }
+    }
+
+    private void OnDied()
+    {
+        ScheduleRevive();
+    }
+
+    private async void ScheduleRevive()
+    {
+        if (!Revives || SceneFilePath is not { Length: > 0 } prefabPath)
+        {
+            return;
+        }
+        var root = GetParent();
+        var y = GlobalPosition.Y;
+        await root.DelayAsync(ReviveDelay);
+        
+        var revived = GD.Load<PackedScene>(prefabPath).Instantiate();
+        root.AddChild(revived);
+        if (revived is Node2D revived2d)
+        {
+            var frame = revived2d.GetFrame();
+            Vector2 revivePos = new(frame.End.X + frame.Size.X, y);
+            revived2d.GlobalPosition = revivePos;
         }
     }
 
