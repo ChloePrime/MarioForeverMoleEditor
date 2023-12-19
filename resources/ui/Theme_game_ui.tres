@@ -1,10 +1,15 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bkn27cfm387i2"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bkn27cfm387i2"]
 
 [ext_resource type="FontFile" uid="uid://uwvnrj5uh3qi" path="res://resources/ui/T_hud_font.png" id="1_0t42s"]
 [ext_resource type="FontFile" uid="uid://e3bknu53gjhm" path="res://resources/ui/maoken_assorted_sans.otf" id="2_o7dhx"]
 
+[sub_resource type="FontVariation" id="FontVariation_ks2xh"]
+base_font = ExtResource("2_o7dhx")
+spacing_glyph = 4
+spacing_space = 8
+
 [sub_resource type="FontVariation" id="FontVariation_imenr"]
-fallbacks = Array[Font]([ExtResource("2_o7dhx")])
+fallbacks = Array[Font]([SubResource("FontVariation_ks2xh")])
 base_font = ExtResource("1_0t42s")
 spacing_glyph = 2
 spacing_space = 8
