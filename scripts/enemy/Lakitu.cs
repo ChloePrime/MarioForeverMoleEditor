@@ -64,12 +64,12 @@ public partial class Lakitu : Node2D
         {
             ThrowSpinyInstantly();
         }
+        _sprite.Play(Anim00Default);
     }
 
     public void ThrowSpinyInstantly()
     {
         AttackSound.Play();
-        _sprite.Play(Anim00Default);
 
         if (Projectile is not { } prefab)
         {
