@@ -3,7 +3,7 @@
 namespace ChloePrime.MarioForever.Level;
 
 [GlobalClass]
-public partial class MovingBackground : LevelBackground
+public partial class LevelMovingBackgroundManager : LevelBackgroundManager
 {
     [Export] public Vector2 Speed { get; set; }
     [Export] public Vector2 Acceleration { get; set; }

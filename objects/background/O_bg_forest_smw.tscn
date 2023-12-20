@@ -5,4 +5,6 @@
 
 [node name="Background" instance=ExtResource("1_cvewi")]
 texture = ExtResource("2_j7q6g")
+
+[node name="LevelBackgroundManager" parent="." index="0"]
 WrapY = true

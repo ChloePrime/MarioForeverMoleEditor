@@ -3,7 +3,7 @@
 namespace ChloePrime.MarioForever.Level;
 
 [GlobalClass]
-public partial class LevelFluid : Node2D
+public partial class AreaFluid : Node2D
 {
     
 }
