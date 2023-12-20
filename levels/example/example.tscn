@@ -36,7 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3831yuajjtis" path="res://objects/enemies/O_lakitu.tscn" id="37_6kpky"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
-[ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://resources/level/fluid/O_area_water.tscn" id="37_mi6cf"]
+[ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://objects/level/fluid/O_area_water.tscn" id="37_mi6cf"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
