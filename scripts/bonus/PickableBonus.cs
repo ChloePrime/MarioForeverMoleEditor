@@ -6,6 +6,7 @@ using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
 
+[GlobalClass]
 public partial class PickableBonus : WalkableObjectBase
 {
     [Export]

@@ -16,11 +16,6 @@ public partial class LevelBackground : Sprite2D
     [Export] public Vector2 ParallaxRatio { get; set; } = Vector2.One;
     [Export] public Vector2 PositionOffset { get; set; }
     
-    public LevelBackground()
-    {
-        ZIndex = -4000;
-    }
-    
     public override void _Ready()
     {
         base._Ready();

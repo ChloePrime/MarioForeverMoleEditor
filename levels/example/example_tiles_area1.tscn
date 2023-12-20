@@ -1,19 +1,19 @@
-[gd_scene load_steps=56 format=3 uid="uid://bfl8br7lnbqir"]
+[gd_scene load_steps=56 format=3]
 
-[ext_resource type="Texture2D" uid="uid://du4v6n064pos4" path="res://tiles/T_0x1pack_2.png" id="1_wcm2j"]
-[ext_resource type="Texture2D" uid="uid://bfa25snf4y571" path="res://tiles/T_pipes.png" id="2_wcd2l"]
-[ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://resources/enemies/T_turtle.png" id="3_vuluy"]
-[ext_resource type="Texture2D" uid="uid://dy4hfgofldsf5" path="res://tiles/T_collision.png" id="4_fmd82"]
-[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://resources/enemies/T_hedgehog.png" id="5_ju030"]
-[ext_resource type="Texture2D" uid="uid://bad5nlt78fc03" path="res://resources/enemies/T_goomba.png" id="6_t4wal"]
-[ext_resource type="Texture2D" uid="uid://bv1h1dajj8k8e" path="res://resources/enemies/T_golden_turtle_generator.png" id="7_lq37j"]
-[ext_resource type="Texture2D" uid="uid://buf1rd2per3jy" path="res://tiles/T_clip_editor.png" id="8_sgqmo"]
-[ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://resources/enemies/T_mole.png" id="9_4xkpv"]
-[ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://resources/enemies/T_mole_smb3.png" id="10_n8we2"]
-[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="11_282g3"]
+[ext_resource type="Texture2D" uid="uid://du4v6n064pos4" path="res://tiles/T_0x1pack_2.png" id="1_e1pro"]
+[ext_resource type="Texture2D" uid="uid://bfa25snf4y571" path="res://tiles/T_pipes.png" id="2_wyyuk"]
+[ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://resources/enemies/T_turtle.png" id="3_nkwi5"]
+[ext_resource type="Texture2D" uid="uid://dy4hfgofldsf5" path="res://tiles/T_collision.png" id="4_8wws1"]
+[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://resources/enemies/T_hedgehog.png" id="5_v5qme"]
+[ext_resource type="Texture2D" uid="uid://bad5nlt78fc03" path="res://resources/enemies/T_goomba.png" id="6_5ls7p"]
+[ext_resource type="Texture2D" uid="uid://bv1h1dajj8k8e" path="res://resources/enemies/T_golden_turtle_generator.png" id="7_s7o5l"]
+[ext_resource type="Texture2D" uid="uid://buf1rd2per3jy" path="res://tiles/T_clip_editor.png" id="8_aowvq"]
+[ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://resources/enemies/T_mole.png" id="9_wh0yr"]
+[ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://resources/enemies/T_mole_smb3.png" id="10_unrhw"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="11_da1p5"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uohe5"]
-texture = ExtResource("1_wcm2j")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_twq05"]
+texture = ExtResource("1_e1pro")
 texture_region_size = Vector2i(32, 32)
 17:1/0 = 0
 17:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -73,8 +73,8 @@ texture_region_size = Vector2i(32, 32)
 19:4/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 19:4/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mo7ri"]
-texture = ExtResource("2_wcd2l")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13pkd"]
+texture = ExtResource("2_wyyuk")
 texture_region_size = Vector2i(32, 32)
 5:1/0 = 0
 5:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -119,9 +119,9 @@ texture_region_size = Vector2i(32, 32)
 6:0/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 6:0/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5t3l4"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d67hi"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 49)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -135,9 +135,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_green.tscn"
 0:0/0/custom_data_1 = 2
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_alink"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mkwst"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 343)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -151,9 +151,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_green.tscn"
 0:0/0/custom_data_1 = 4
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpur"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bl6yw"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 196)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -167,9 +167,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_green.tscn"
 0:0/0/custom_data_1 = 5
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_djb0a"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5fvpk"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 490)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -182,9 +182,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_red.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gh7lm"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqa8k"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 392)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -198,9 +198,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_red.tscn"
 0:0/0/custom_data_1 = 1
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cll32"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cfo7d"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 441)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -214,9 +214,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_red.tscn"
 0:0/0/custom_data_1 = 2
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j6k6q"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dhxfj"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 735)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -230,9 +230,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_red.tscn"
 0:0/0/custom_data_1 = 4
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u2soj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_udaxo"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 588)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -246,9 +246,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_red.tscn"
 0:0/0/custom_data_1 = 5
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a7khq"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kduh6"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 882)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -261,9 +261,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_blue.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocif0"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wf0r1"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 784)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -277,8 +277,8 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_blue.tscn"
 0:0/0/custom_data_1 = 1
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i17bf"]
-texture = ExtResource("4_fmd82")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hk1dj"]
+texture = ExtResource("4_8wws1")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -505,9 +505,9 @@ texture_region_size = Vector2i(32, 32)
 6:5/0/physics_layer_2/angular_velocity = 0.0
 6:5/0/physics_layer_2/polygon_0/points = PackedVector2Array(0, 15, -15, -15, 15, -15)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gok2v"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gub6b"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 833)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -521,9 +521,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_blue.tscn"
 0:0/0/custom_data_1 = 2
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ankj6"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ty4j0"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1127)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -537,9 +537,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_blue.tscn"
 0:0/0/custom_data_1 = 4
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pta0w"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xc323"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 980)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -553,9 +553,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_blue.tscn"
 0:0/0/custom_data_1 = 5
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hrtki"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pat07"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1274)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -568,9 +568,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_golden.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ossvn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nhy2g"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1176)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -584,9 +584,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_golden.tscn"
 0:0/0/custom_data_1 = 1
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f1ry1"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bsuf1"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1225)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -600,9 +600,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_golden.tscn"
 0:0/0/custom_data_1 = 2
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_crsrx"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s0frt"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1519)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -616,9 +616,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_golden.tscn"
 0:0/0/custom_data_1 = 4
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_icr11"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1xc88"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 1372)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -632,9 +632,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_golden.tscn"
 0:0/0/custom_data_1 = 5
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_87b7w"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x08m0"]
 resource_name = "T_hedgehog"
-texture = ExtResource("5_ju030")
+texture = ExtResource("5_v5qme")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -646,9 +646,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_hedgehog_red.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pnepb"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j207n"]
 resource_name = "T_hedgehog"
-texture = ExtResource("5_ju030")
+texture = ExtResource("5_v5qme")
 margins = Vector2i(0, 64)
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -661,9 +661,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_hedgehog_grey.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hixrk"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_map2o"]
 resource_name = "T_goomba"
-texture = ExtResource("6_t4wal")
+texture = ExtResource("6_5ls7p")
 texture_region_size = Vector2i(31, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -675,9 +675,9 @@ texture_region_size = Vector2i(31, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_goomba.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2iyi4"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13lb8"]
 resource_name = "T_hedgehog"
-texture = ExtResource("5_ju030")
+texture = ExtResource("5_v5qme")
 margins = Vector2i(0, 128)
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -690,9 +690,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_hedgehog_blue.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i7qud"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_phy5q"]
 resource_name = "T_hedgehog"
-texture = ExtResource("5_ju030")
+texture = ExtResource("5_v5qme")
 margins = Vector2i(0, 192)
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -705,9 +705,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_hedgehog_sonic.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8b08s"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7rwhr"]
 resource_name = "T_golden_turtle_generator"
-texture = ExtResource("7_lq37j")
+texture = ExtResource("7_s7o5l")
 texture_region_size = Vector2i(27, 26)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -719,9 +719,9 @@ texture_region_size = Vector2i(27, 26)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_golden_turtle_ring.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8nkh0"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7smk2"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -733,9 +733,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_green.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ghes6"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5kl6r"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(64, 0)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -748,9 +748,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_pink.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3hsl6"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r7w3w"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(128, 0)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -763,9 +763,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_blue.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kkkmp"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j12qi"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(192, 0)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -778,9 +778,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_grey.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sxbhy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78dyf"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(256, 0)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -793,9 +793,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_red.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ii80l"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gbgxu"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(0, 64)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -808,9 +808,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_green_down.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u4ayo"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jpccd"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(64, 64)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -823,9 +823,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_pink_down.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_58lpe"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rukw7"]
 resource_name = "T_mole"
-texture = ExtResource("9_4xkpv")
+texture = ExtResource("9_wh0yr")
 margins = Vector2i(32, 0)
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -838,9 +838,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_mole.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mla1v"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xwd2v"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(128, 64)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -853,9 +853,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_blue_down.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d16j2"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_10rq1"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(192, 64)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -868,9 +868,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_grey_down.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1grfq"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i3673"]
 resource_name = "T_clip_editor"
-texture = ExtResource("8_sgqmo")
+texture = ExtResource("8_aowvq")
 margins = Vector2i(256, 64)
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
@@ -883,9 +883,9 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_clamp_red_down.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nqhve"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u8hjs"]
 resource_name = "T_mole_smb3"
-texture = ExtResource("10_n8we2")
+texture = ExtResource("10_unrhw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -897,9 +897,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_mole_smb3.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uswu7"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jpfsy"]
 resource_name = "T_mole_jumping"
-texture = ExtResource("11_282g3")
+texture = ExtResource("11_da1p5")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -910,9 +910,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iqso2"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sqspd"]
 resource_name = "T_mole_jumping"
-texture = ExtResource("11_282g3")
+texture = ExtResource("11_da1p5")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-16, 16)
@@ -923,9 +923,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_2/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r7ffq"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mqe4f"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 98)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -938,9 +938,9 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/physics_layer_2/angular_velocity = 0.0
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_green.tscn"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t0r4i"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex3fy"]
 resource_name = "T_turtle"
-texture = ExtResource("3_vuluy")
+texture = ExtResource("3_nkwi5")
 margins = Vector2i(2, 0)
 texture_region_size = Vector2i(32, 49)
 0:0/0 = 0
@@ -954,7 +954,7 @@ texture_region_size = Vector2i(32, 49)
 0:0/0/custom_data_0 = "res://objects/enemies/O_turtle_green.tscn"
 0:0/0/custom_data_1 = 1
 
-[sub_resource type="TileSet" id="TileSet_6sa3x"]
+[sub_resource type="TileSet" id="TileSet_k7ict"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 256
@@ -965,66 +965,66 @@ custom_data_layer_0/name = "res_path"
 custom_data_layer_0/type = 4
 custom_data_layer_1/name = "preset"
 custom_data_layer_1/type = 2
-sources/0 = SubResource("TileSetAtlasSource_uohe5")
-sources/1 = SubResource("TileSetAtlasSource_mo7ri")
-sources/2 = SubResource("TileSetAtlasSource_i17bf")
-sources/3 = SubResource("TileSetAtlasSource_hixrk")
-sources/4 = SubResource("TileSetAtlasSource_58lpe")
-sources/5 = SubResource("TileSetAtlasSource_nqhve")
-sources/6 = SubResource("TileSetAtlasSource_uswu7")
-sources/7 = SubResource("TileSetAtlasSource_iqso2")
-sources/8 = SubResource("TileSetAtlasSource_r7ffq")
-sources/9 = SubResource("TileSetAtlasSource_t0r4i")
-sources/10 = SubResource("TileSetAtlasSource_5t3l4")
-sources/11 = SubResource("TileSetAtlasSource_alink")
-sources/12 = SubResource("TileSetAtlasSource_tdpur")
-sources/13 = SubResource("TileSetAtlasSource_djb0a")
-sources/14 = SubResource("TileSetAtlasSource_gh7lm")
-sources/15 = SubResource("TileSetAtlasSource_cll32")
-sources/16 = SubResource("TileSetAtlasSource_j6k6q")
-sources/17 = SubResource("TileSetAtlasSource_u2soj")
-sources/18 = SubResource("TileSetAtlasSource_a7khq")
-sources/19 = SubResource("TileSetAtlasSource_ocif0")
-sources/20 = SubResource("TileSetAtlasSource_gok2v")
-sources/21 = SubResource("TileSetAtlasSource_ankj6")
-sources/22 = SubResource("TileSetAtlasSource_pta0w")
-sources/23 = SubResource("TileSetAtlasSource_hrtki")
-sources/24 = SubResource("TileSetAtlasSource_ossvn")
-sources/25 = SubResource("TileSetAtlasSource_f1ry1")
-sources/26 = SubResource("TileSetAtlasSource_crsrx")
-sources/27 = SubResource("TileSetAtlasSource_icr11")
-sources/28 = SubResource("TileSetAtlasSource_87b7w")
-sources/29 = SubResource("TileSetAtlasSource_pnepb")
-sources/30 = SubResource("TileSetAtlasSource_2iyi4")
-sources/31 = SubResource("TileSetAtlasSource_i7qud")
-sources/32 = SubResource("TileSetAtlasSource_8b08s")
-sources/33 = SubResource("TileSetAtlasSource_8nkh0")
-sources/34 = SubResource("TileSetAtlasSource_ghes6")
-sources/35 = SubResource("TileSetAtlasSource_3hsl6")
-sources/36 = SubResource("TileSetAtlasSource_kkkmp")
-sources/37 = SubResource("TileSetAtlasSource_sxbhy")
-sources/38 = SubResource("TileSetAtlasSource_ii80l")
-sources/39 = SubResource("TileSetAtlasSource_u4ayo")
-sources/40 = SubResource("TileSetAtlasSource_mla1v")
-sources/41 = SubResource("TileSetAtlasSource_d16j2")
-sources/42 = SubResource("TileSetAtlasSource_1grfq")
+sources/0 = SubResource("TileSetAtlasSource_twq05")
+sources/1 = SubResource("TileSetAtlasSource_13pkd")
+sources/2 = SubResource("TileSetAtlasSource_hk1dj")
+sources/3 = SubResource("TileSetAtlasSource_map2o")
+sources/4 = SubResource("TileSetAtlasSource_rukw7")
+sources/5 = SubResource("TileSetAtlasSource_u8hjs")
+sources/6 = SubResource("TileSetAtlasSource_jpfsy")
+sources/7 = SubResource("TileSetAtlasSource_sqspd")
+sources/8 = SubResource("TileSetAtlasSource_mqe4f")
+sources/9 = SubResource("TileSetAtlasSource_ex3fy")
+sources/10 = SubResource("TileSetAtlasSource_d67hi")
+sources/11 = SubResource("TileSetAtlasSource_mkwst")
+sources/12 = SubResource("TileSetAtlasSource_bl6yw")
+sources/13 = SubResource("TileSetAtlasSource_5fvpk")
+sources/14 = SubResource("TileSetAtlasSource_vqa8k")
+sources/15 = SubResource("TileSetAtlasSource_cfo7d")
+sources/16 = SubResource("TileSetAtlasSource_dhxfj")
+sources/17 = SubResource("TileSetAtlasSource_udaxo")
+sources/18 = SubResource("TileSetAtlasSource_kduh6")
+sources/19 = SubResource("TileSetAtlasSource_wf0r1")
+sources/20 = SubResource("TileSetAtlasSource_gub6b")
+sources/21 = SubResource("TileSetAtlasSource_ty4j0")
+sources/22 = SubResource("TileSetAtlasSource_xc323")
+sources/23 = SubResource("TileSetAtlasSource_pat07")
+sources/24 = SubResource("TileSetAtlasSource_nhy2g")
+sources/25 = SubResource("TileSetAtlasSource_bsuf1")
+sources/26 = SubResource("TileSetAtlasSource_s0frt")
+sources/27 = SubResource("TileSetAtlasSource_1xc88")
+sources/28 = SubResource("TileSetAtlasSource_x08m0")
+sources/29 = SubResource("TileSetAtlasSource_j207n")
+sources/30 = SubResource("TileSetAtlasSource_13lb8")
+sources/31 = SubResource("TileSetAtlasSource_phy5q")
+sources/32 = SubResource("TileSetAtlasSource_7rwhr")
+sources/33 = SubResource("TileSetAtlasSource_7smk2")
+sources/34 = SubResource("TileSetAtlasSource_5kl6r")
+sources/35 = SubResource("TileSetAtlasSource_r7w3w")
+sources/36 = SubResource("TileSetAtlasSource_j12qi")
+sources/37 = SubResource("TileSetAtlasSource_78dyf")
+sources/38 = SubResource("TileSetAtlasSource_gbgxu")
+sources/39 = SubResource("TileSetAtlasSource_jpccd")
+sources/40 = SubResource("TileSetAtlasSource_xwd2v")
+sources/41 = SubResource("TileSetAtlasSource_10rq1")
+sources/42 = SubResource("TileSetAtlasSource_i3673")
 
 [node name="example_tiles_area1" type="Node2D"]
 
 [node name="PipeFix" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_6sa3x")
+tile_set = SubResource("TileSet_k7ict")
 format = 2
 layer_0/tile_data = PackedInt32Array(65539, 327681, 1, 65540, 393217, 1, 655375, 35, 0, 851983, 327681, 1, 851984, 393217, 1)
 
 [node name="Geometry" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_6sa3x")
+tile_set = SubResource("TileSet_k7ict")
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 1114112, 1, 1, 1114112, 1, 2, 1114112, 1, 3, 1114112, 1, 4, 1114112, 1, 5, 1114112, 1, 6, 1114112, 1, 7, 1114112, 1, 8, 1114112, 1, 9, 1114112, 1, 10, 1114112, 1, 11, 1114112, 1, 12, 1114112, 1, 13, 1114112, 1, 14, 1114112, 1, 15, 1114112, 1, 16, 1114112, 1, 17, 1114112, 1, 18, 1114112, 1, 19, 1114112, 131073, 65536, 1114112, 1, 65537, 1114112, 1, 65538, 1114112, 2, 65539, 1114112, 2, 65540, 1114112, 2, 65541, 1114112, 2, 65542, 1114112, 2, 65543, 1114112, 2, 65544, 1114112, 2, 65545, 1114112, 2, 65546, 1114112, 2, 65547, 1114112, 2, 65548, 1114112, 2, 65549, 1114112, 2, 65550, 1114112, 2, 65551, 1114112, 2, 65552, 1114112, 2, 65553, 1114112, 2, 65554, 1114112, 1, 65555, 1114112, 131073, 131072, 1114112, 1, 131073, 1179648, 1, 131075, 327681, 1, 131076, 393217, 1, 131090, 1048576, 1, 131091, 1114112, 131073, 196608, 1114112, 1, 196609, 1179648, 1, 196611, 327681, 2, 196612, 393217, 2, 196626, 1048576, 1, 196627, 1114112, 131073, 262144, 1114112, 1, 262145, 1179648, 1, 262162, 1048576, 1, 262163, 1114112, 131073, 327680, 1114112, 1, 327681, 1179648, 1, 327698, 1048576, 1, 327699, 1114112, 131073, 393216, 1114112, 1, 393217, 1179648, 1, 393234, 1048576, 1, 393235, 1114112, 131073, 458752, 1114112, 1, 458753, 1179648, 1, 458770, 1048576, 1, 458771, 1114112, 131073, 524288, 1114112, 1, 524289, 1179648, 1, 524306, 1048576, 1, 524307, 1114112, 131073, 589824, 1114112, 1, 589825, 1179648, 1, 589842, 1048576, 1, 589843, 1114112, 131073, 655360, 1114112, 1, 655361, 1179648, 1, 655378, 1048576, 1, 655379, 1114112, 131073, 720896, 1114112, 1, 720897, 1179648, 1, 720911, 327681, 0, 720912, 393217, 0, 720914, 1048576, 1, 720915, 1114112, 131073, 786432, 1114112, 1, 786433, 1179648, 1, 786447, 327681, 1, 786448, 393217, 1, 786450, 1048576, 1, 786451, 1114112, 131073, 851968, 1114112, 1, 851969, 1179648, 4, 851970, 1114112, 0, 851971, 1114112, 0, 851972, 1114112, 0, 851973, 1114112, 0, 851974, 1114112, 0, 851975, 1114112, 0, 851976, 1114112, 0, 851977, 1114112, 0, 851978, 1114112, 0, 851979, 1114112, 0, 851980, 1114112, 0, 851981, 1114112, 0, 851982, 1114112, 0, 851983, 1114112, 0, 851984, 1114112, 0, 851985, 1114112, 0, 851986, 1245184, 4, 851987, 1114112, 1, 917504, 1114112, 1, 917505, 1114112, 1, 917506, 1114112, 1, 917507, 1114112, 1, 917508, 1114112, 1, 917509, 1114112, 1, 917510, 1114112, 1, 917511, 1114112, 1, 917512, 1114112, 1, 917513, 1114112, 1, 917514, 1114112, 1, 917515, 1114112, 1, 917516, 1114112, 1, 917517, 1114112, 1, 917518, 1114112, 1, 917519, 1114112, 1, 917520, 1114112, 1, 917521, 1114112, 1, 917522, 1114112, 1, 917523, 1114112, 1)
 
 [node name="Collision" type="TileMap" parent="."]
 texture_filter = 1
-tile_set = SubResource("TileSet_6sa3x")
+tile_set = SubResource("TileSet_k7ict")
 format = 2
 layer_0/tile_data = PackedInt32Array(65537, 2, 0, 65538, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 65550, 2, 0, 65551, 2, 0, 65552, 2, 0, 65553, 2, 0, 131073, 2, 0, 131075, 2, 0, 131076, 2, 0, 131090, 2, 0, 196609, 2, 0, 196611, 2, 0, 196612, 2, 0, 196626, 2, 0, 262145, 2, 0, 262162, 2, 0, 327681, 2, 0, 327698, 2, 0, 393217, 2, 0, 393234, 2, 0, 458753, 2, 0, 458770, 2, 0, 524289, 2, 0, 524306, 2, 0, 589825, 2, 0, 589842, 2, 0, 655361, 2, 0, 655378, 2, 0, 720897, 2, 0, 720911, 2, 0, 720912, 2, 0, 720914, 2, 0, 786433, 2, 0, 786447, 2, 0, 786448, 2, 0, 786450, 2, 0, 851970, 2, 0, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851978, 2, 0, 851979, 2, 0, 851980, 2, 0, 851981, 2, 0, 851982, 2, 0, 851985, 2, 0)

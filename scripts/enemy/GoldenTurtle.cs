@@ -3,6 +3,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
+[GlobalClass]
 public partial class GoldenTurtle : Turtle
 {
     public override void _Ready()

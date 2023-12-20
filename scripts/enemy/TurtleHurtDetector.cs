@@ -5,6 +5,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
+[GlobalClass]
 public partial class TurtleHurtDetector : EnemyHurtDetector
 {
     [Export] public AudioStream KickSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_kick.wav");

@@ -6,6 +6,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
+[GlobalClass]
 public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEnemy
 {
     [Export] public float MaxSpeed = Units.Speed.CtfToGd(1.5F);

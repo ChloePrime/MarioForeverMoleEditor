@@ -4,6 +4,7 @@ using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
 
+[GlobalClass]
 public partial class PowerUpBonus : PickableBonus
 {
     [Export] public float HitPointNutritionLo { get; set; } = 3;

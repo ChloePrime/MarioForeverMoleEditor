@@ -1,5 +1,8 @@
-﻿namespace ChloePrime.MarioForever.Enemy;
+﻿using Godot;
 
+namespace ChloePrime.MarioForever.Enemy;
+
+[GlobalClass]
 public partial class ClampFireball : Fireball
 {
     protected ClampFireball()
