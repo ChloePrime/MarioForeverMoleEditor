@@ -193,11 +193,11 @@ public partial class Mario : CharacterBody2D
 
     private void ProcessPositionInterpolation(double delta)
     {
-        if (_posBeforePhProcess == _posAfterPhProcess)
+        if (PipeState is not MarioPipeState.NotInPipe)
         {
             return;
         }
-        if (GlobalPosition != _lastGlobalPos)
+        if (_posBeforePhProcess == _posAfterPhProcess || GlobalPosition != _lastGlobalPos)
         {
             _posBeforePhProcess = _posAfterPhProcess = GlobalPosition;
             _lastPhysicsDelta = 0;
