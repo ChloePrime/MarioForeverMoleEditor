@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
@@ -50,6 +51,7 @@ public partial class MaFoLevelArea
 	/// </summary>
 	private void LoadTilemapCore(Node root, Node parent, TilemapType baseType)
 	{
+		var objRoot = this.GetPreferredRoot();
 		foreach (var node in parent.Children())
 		{
 			var typeByName = TypeLookup.GetValueOrDefault(node.Name, TilemapType.None);
@@ -73,7 +75,7 @@ public partial class MaFoLevelArea
 			}
 			else if (node is Sprite2D possibleObject)
 			{
-				LoadObject(root, possibleObject);
+				LoadObject(objRoot, possibleObject);
 			}
 		}
 	}
@@ -106,6 +108,7 @@ public partial class MaFoLevelArea
 		var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
 		var resPathLayer = tilemap.TileSet.GetCustomDataLayerByName("res_path");
 		var presetLayer = tilemap.TileSet.GetCustomDataLayerByName("preset");
+		var root = this.GetPreferredRoot();
 		
 		if (resPathLayer == -1) return;
 		
@@ -124,7 +127,7 @@ public partial class MaFoLevelArea
 			}
 			var instance = prefab.Instantiate();
 			
-			tilemap.AddChild(instance);
+			root.AddChild(instance);
 			if (instance is Node2D node2D)
 			{
 				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
