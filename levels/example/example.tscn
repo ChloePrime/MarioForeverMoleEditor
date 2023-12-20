@@ -191,6 +191,9 @@ position = Vector2(784, 416)
 [node name="Lakitu" parent="Overworld" instance=ExtResource("37_6kpky")]
 position = Vector2(464, 96)
 
+[node name="Area Water" parent="Overworld" instance=ExtResource("37_mi6cf")]
+position = Vector2(32, 448)
+
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)
 script = ExtResource("3_gyt0a")
@@ -211,6 +214,3 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
-
-[node name="Area Water" parent="." instance=ExtResource("37_mi6cf")]
-position = Vector2(32, 448)
