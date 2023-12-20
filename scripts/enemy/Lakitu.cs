@@ -103,7 +103,7 @@ public partial class Lakitu : Node2D
     private void ResetAttackTimer()
     {
         _attackTimer.WaitTime = Mathf.Lerp(MinAttackDelay, MaxAttackDelay, GD.Randf());
-        _attackTimer.Start();
+        _attackTimer.StartSafely();
     }
 
     private void OnAnimationUpdateTimerTimeout()
