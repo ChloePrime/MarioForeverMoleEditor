@@ -186,11 +186,43 @@ public partial class Mario : CharacterBody2D
     public override void _Process(double delta)
     {
         base._Process(delta);
+        ProcessPositionInterpolation((float)delta);
         MoveCamera();
         ProcessFlashing((float)delta);
     }
 
+    private void ProcessPositionInterpolation(double delta)
+    {
+        if (_posBeforePhProcess == _posAfterPhProcess)
+        {
+            return;
+        }
+        if (GlobalPosition != _lastGlobalPos)
+        {
+            _posBeforePhProcess = _posAfterPhProcess = GlobalPosition;
+            _lastPhysicsDelta = 0;
+            return;
+        }
+        GlobalPosition = _lastGlobalPos = _posBeforePhProcess.Lerp(_posAfterPhProcess, (float)_deltaCounter);
+        _deltaCounter += delta;
+    }
+
     public override void _PhysicsProcess(double deltaD)
+    {
+        base._PhysicsProcess(deltaD);
+        if (_posBeforePhProcess != _posAfterPhProcess)
+        {
+            GlobalPosition = _posAfterPhProcess;
+        }
+        _posBeforePhProcess = GlobalPosition;
+        PhysicsProcess0(deltaD);
+        _posAfterPhProcess = GlobalPosition;
+        GlobalPosition = _lastGlobalPos = _posBeforePhProcess;
+        _lastPhysicsDelta = deltaD;
+        _deltaCounter = 0;
+    }
+
+    private void PhysicsProcess0(double deltaD)
     {
         base._PhysicsProcess(deltaD);
         if (PipeState is not MarioPipeState.NotInPipe || _internalTrackedInPipe)
@@ -272,12 +304,13 @@ public partial class Mario : CharacterBody2D
         var cam = _camera;
         if (!IsInstanceValid(cam) || !cam.IsInsideTree())
         {
-            cam = _camera = GetViewport().GetCamera2D();
+            cam = _camera = this.GetLevel()?.FindCamera();
         }
-        if (IsInstanceValid(cam) || !cam.IsInsideTree())
+        if (IsInstanceValid(cam) && cam!.IsInsideTree())
         {
-            var pos = GlobalPosition;
-            cam.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
+            // var pos = GlobalPosition;
+            // cam.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
+            cam.GlobalPosition = GlobalPosition;
         }
     }
 
@@ -673,6 +706,11 @@ public partial class Mario : CharacterBody2D
     private Timer _sprintSmokeTimer;
     private Timer _skidSmokeTimer;
     private ComboTracker _stompComboTracker;
+    private Vector2 _posBeforePhProcess;
+    private Vector2 _posAfterPhProcess;
+    private Vector2 _lastGlobalPos;
+    private double _lastPhysicsDelta;
+    private double _deltaCounter;
 
     [CtfFlag(2)] private bool _crouching;
     [CtfFlag(28)] private bool _completedLevel;
