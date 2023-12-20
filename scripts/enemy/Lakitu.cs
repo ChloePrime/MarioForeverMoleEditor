@@ -145,9 +145,20 @@ public partial class Lakitu : Node2D
         {
             return;
         }
+        
         var root = GetParent();
+        var tree = GetTree();
         var y = GlobalPosition.Y;
         await root.DelayAsync(ReviveDelay);
+
+        while (!root.IsInsideTree())
+        {
+            if (!IsInstanceValid(root) || !IsInstanceValid(tree))
+            {
+                return;
+            }
+            await tree.Root.DelayAsync(0.5F);
+        }
         
         var revived = GD.Load<PackedScene>(prefabPath).Instantiate();
         root.AddChild(revived);
