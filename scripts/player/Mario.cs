@@ -187,8 +187,8 @@ public partial class Mario : CharacterBody2D
     {
         base._Process(delta);
         ProcessPositionInterpolation((float)delta);
-        MoveCamera();
         ProcessFlashing((float)delta);
+        MoveCamera();
     }
 
     private void ProcessPositionInterpolation(double delta)
@@ -273,7 +273,6 @@ public partial class Mario : CharacterBody2D
         ProcessCrouch();
         ProcessPositionAutoSave();
         ProcessAnimation();
-        MoveCamera();
 
         var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (_crouching && XSpeed > 0));
         if (_skidding != shouldSkid)
@@ -308,9 +307,11 @@ public partial class Mario : CharacterBody2D
         }
         if (IsInstanceValid(cam) && cam!.IsInsideTree())
         {
-            // var pos = GlobalPosition;
-            // cam.GlobalPosition = new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
-            cam.GlobalPosition = GlobalPosition;
+            if (cam.GetParent() != this)
+            {
+                cam.Reparent(this);
+                cam.Position = Vector2.Zero;
+            }
         }
     }
 
