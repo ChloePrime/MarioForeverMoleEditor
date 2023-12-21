@@ -165,7 +165,7 @@ public partial class GameRule : Resource
     {
         if (_manager.IsUndefined)
         {
-            _manager = tree?.Root.Walk().OfType<LevelManager>().First();
+            _manager = tree?.Root.Walk().OfType<LevelManager>().FirstOrDefault();
         }
         return _manager.OrDefault();
     }
