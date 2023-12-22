@@ -18,6 +18,7 @@ public partial class Mario
 {
     public MarioPipeState PipeState { get; set; }
     public StringName PipeForceAnimation { get; set; }
+    public int ZIndexBeforePipe { get; set; }
     public float PipeGrabbedObjectXOffsetShrink { get; set; } = 1;
 
     public event Action RequireTeleport;

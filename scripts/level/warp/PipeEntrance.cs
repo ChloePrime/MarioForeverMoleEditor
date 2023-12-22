@@ -82,6 +82,7 @@ public partial class PipeEntrance : WarpObject
     private void MarioEnterPipe(Mario mario)
     {
         mario.PipeState = MarioPipeState.Entering;
+        mario.ZIndexBeforePipe = mario.ZIndex;
         mario.ZIndex = -1;
         _phase = Phase.Positioning;
         mario.PipeForceAnimation = Direction switch
@@ -167,7 +168,7 @@ public partial class PipeEntrance : WarpObject
         mario.PipeState = MarioPipeState.NotInPipe;
         mario.XSpeed = mario.YSpeed = 0;
         mario.PipeForceAnimation = null;
-        mario.ZIndex = 0;
+        mario.ZIndex = mario.ZIndexBeforePipe;
         // 防止因为误差导致马里奥传送后被判定为卡在地面里
         mario.GlobalPosition -= new Vector2(0, 1.5F * mario.SafeMargin);
         if (Direction != PassDirection.Down)
