@@ -17,6 +17,8 @@ namespace ChloePrime.MarioForever.Player;
 [Icon("res://resources/mario/AS_icon.tres")]
 public partial class Mario : CharacterBody2D
 {
+    public static readonly bool InterpolationEnabled = true;
+    
     #region Movement Params
     
     [ExportGroup("Initial Values")]
@@ -193,17 +195,18 @@ public partial class Mario : CharacterBody2D
 
     private void ProcessPositionInterpolation(double delta)
     {
-        if (PipeState is not MarioPipeState.NotInPipe)
+        if (!InterpolationEnabled || PipeState is not MarioPipeState.NotInPipe)
         {
             return;
         }
         if (_posBeforePhProcess == _posAfterPhProcess || GlobalPosition != _lastGlobalPos)
         {
-            _posBeforePhProcess = _posAfterPhProcess = GlobalPosition;
+            _posBeforePhProcess = _posAfterPhProcess = _lastGlobalPos = GlobalPosition;
             _lastPhysicsDelta = 0;
             return;
         }
-        GlobalPosition = _lastGlobalPos = _posBeforePhProcess.Lerp(_posAfterPhProcess, (float)_deltaCounter);
+        // +1 表示预测 1 帧后的位置，来抵消插值带来的 1 帧位置延迟。
+        GlobalPosition = _lastGlobalPos = _posBeforePhProcess.Lerp(_posAfterPhProcess, (float)(_deltaCounter + 1));
         _deltaCounter += delta;
     }
 
@@ -217,9 +220,12 @@ public partial class Mario : CharacterBody2D
         _posBeforePhProcess = GlobalPosition;
         PhysicsProcess0(deltaD);
         _posAfterPhProcess = GlobalPosition;
-        GlobalPosition = _lastGlobalPos = _posBeforePhProcess;
-        _lastPhysicsDelta = deltaD;
-        _deltaCounter = 0;
+        if (InterpolationEnabled)
+        {
+            GlobalPosition = _lastGlobalPos = _posBeforePhProcess;
+            _lastPhysicsDelta = deltaD;
+            _deltaCounter = 0;
+        }
     }
 
     private void PhysicsProcess0(double deltaD)
