@@ -194,6 +194,10 @@ public partial class Mario
 
     private void PostDeath()
     {
+        if (GetViewport().GetCamera2D() is { } camera && camera.GetParent() == this)
+        {
+            camera.Reparent(this.GetLevel() ?? this.GetPreferredRoot());
+        }
         GameRule.ReloadStatus();
         if (!FastRetry)
         {

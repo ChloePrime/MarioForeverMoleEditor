@@ -4,7 +4,7 @@ using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
-namespace ChloePrime.MarioForever.facility;
+namespace ChloePrime.MarioForever.Facility;
 
 public partial class Spring : Area2D, IStompable
 {

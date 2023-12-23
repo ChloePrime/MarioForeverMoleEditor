@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChloePrime.MarioForever.Effect;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Facility;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
@@ -189,12 +190,16 @@ public partial class Mario
         }
         else
         {
-            var collided = MoveAndCollide(GroundTestVec, true) != null;
-            if (collided)
+            var collided = MoveAndCollide(GroundTestVec, true);
+            if (collided != null)
             {
                 YSpeed = 0;
+                if (collided.GetCollider() is IMarioStandable standable)
+                {
+                    standable.ProcessMarioStandOn(this);
+                }
             }
-            _isInAir = !collided;
+            _isInAir = collided == null;
         }
 
         if (!_isInAir)
@@ -293,6 +298,13 @@ public partial class Mario
         StompComboTracker.Reset();
         if (_comboJumpAsked)
         {
+            if (MoveAndCollide(GroundTestVec, true) is {} collision)
+            {
+                if (collision.GetCollider() is IMarioStandable standable)
+                {
+                    standable.ProcessMarioStandOn(this);
+                }
+            }
             CallDeferred(_isInWater ? MethodName.Swim : MethodName.Jump);
             _comboJumpAsked = false;
         }
