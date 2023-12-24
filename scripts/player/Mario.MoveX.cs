@@ -163,24 +163,26 @@ public partial class Mario
         // RE: 马里奥出屏判定
         if (!AllowMoveOutOfScreen)
         {
-            var pos = Position;
+            var pos = GlobalPosition;
             var x = pos.X;
             var frame = this.GetFrame();
             var xLeftFrame = frame.Position.X;
             var xRightFrame = frame.End.X;
-            var leftHitScreen = x - xLeftFrame <= ScreenBorderPadding;
-            var rightHitScreen = xRightFrame - x <= ScreenBorderPadding;
-            if (XDirection < 0 && leftHitScreen)
+            var leftHitScreen = x - xLeftFrame < ScreenBorderPadding;
+            var rightHitScreen = xRightFrame - x < ScreenBorderPadding;
+            var leftAtBorder = Mathf.IsEqualApprox(x - xLeftFrame, ScreenBorderPadding);
+            var rightAtBorder = Mathf.IsEqualApprox(xRightFrame - x, ScreenBorderPadding);
+            if (leftHitScreen || (XDirection < 0 && leftAtBorder))
             {
                 pos.X = xLeftFrame + ScreenBorderPadding;
-                Position = pos;
+                _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
                 XSpeed = 0;
                 return;
             }
-            if (XDirection > 0 && rightHitScreen)
+            if (rightHitScreen || (XDirection > 0 && rightAtBorder))
             {
                 pos.X = xRightFrame - ScreenBorderPadding;
-                Position = pos;
+                _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
                 XSpeed = 0;
                 return;
             }
