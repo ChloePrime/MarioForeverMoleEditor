@@ -22,14 +22,7 @@ public partial class StandardMovingPlatform : MovingPlatform
         _staticSprite.Position = new Vector2(0, size.Y / 2);
         _animatedSprite.Visible = false;
         _animatedSprite.ProcessMode = ProcessModeEnum.Disabled;
-        if (CollisionShape.Shape is not RectangleShape2D shape || !Mathf.IsEqualApprox(shape.Size.X, size.X))
-        {
-            CollisionShape.Shape = new RectangleShape2D()
-            {
-                Size = sprite.GetSize()
-            };
-            CollisionShape.Position = new Vector2(0, size.Y / 2);
-        }
+        CallDeferred(MethodName.UpdateCollisionSize, size);
     }
 
     public void SetSprite(SpriteFrames frames, Vector2 size)
@@ -37,13 +30,28 @@ public partial class StandardMovingPlatform : MovingPlatform
         _animatedSprite.Visible = true;
         _animatedSprite.ProcessMode = ProcessModeEnum.Inherit;
         _animatedSprite.SpriteFrames = frames;
+        _animatedSprite.Play(frames.HasAnimation(AnimDefault) ? AnimDefault : frames.GetAnimationNames()[0]);
         _animatedSprite.Position = new Vector2(0, size.Y / 2);
         _staticSprite.Visible = false;
         _staticSprite.ProcessMode = ProcessModeEnum.Disabled;
+        CallDeferred(MethodName.UpdateCollisionSize, size);
+    }
+
+    private void UpdateCollisionSize(Vector2 size)
+    {
+        if (CollisionShape.Shape is not RectangleShape2D shape || !Mathf.IsEqualApprox(shape.Size.X, size.X))
+        {
+            CollisionShape.Shape = new RectangleShape2D()
+            {
+                Size = size
+            };
+            CollisionShape.Position = new Vector2(0, size.Y / 2);
+        }
     }
 
     private static readonly NodePath NpStaticSprite = "Static Sprite";
     private static readonly NodePath NpAnimatedSprite = "Animated Sprite";
+    private static readonly StringName AnimDefault = "default";
 
     private Sprite2D _staticSprite;
     private AnimatedSprite2D _animatedSprite;
