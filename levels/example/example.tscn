@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=42 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -39,6 +39,8 @@
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 [ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://objects/level/fluid/O_area_water.tscn" id="37_mi6cf"]
 [ext_resource type="PackedScene" uid="uid://cnaj8b4v3ig13" path="res://objects/facility/O_platform_style_mark_cloud.tscn" id="38_y6kiw"]
+[ext_resource type="PackedScene" uid="uid://du1fnspwmuqmw" path="res://objects/facility/O_platform_style_mark_blue.tscn" id="40_8fjok"]
+[ext_resource type="PackedScene" uid="uid://dbse21on8q36x" path="res://objects/facility/O_platform_style_mark_grey.tscn" id="41_ynb1s"]
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_ga1s3")
@@ -231,3 +233,9 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
+
+[node name="Platform Style Mark (Blue)" parent="." instance=ExtResource("40_8fjok")]
+position = Vector2(176, 168)
+
+[node name="Platform Style Mark (Blue)2" parent="." instance=ExtResource("41_ynb1s")]
+position = Vector2(176, 112)
