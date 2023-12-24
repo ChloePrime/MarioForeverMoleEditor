@@ -160,9 +160,12 @@ public partial class Mario
         if (_isInAir)
         {
             Velocity = new Vector2(0, YSpeed);
-            var collided = MoveAndSlide();
+            MoveAndSlide();
+            var onFloor = IsOnFloor();
+            var onCeil = IsOnCeiling();
+            var collidedY = onFloor || onCeil;
 
-            if (!collided)
+            if (!collidedY)
             {
                 if (YSpeed > 0)
                 {
@@ -173,23 +176,25 @@ public partial class Mario
                     TestHiddenBumpables(delta);
                 }
             }
-
-            if (collided && Mathf.IsZeroApprox(Math.Abs(Velocity.Y)))
+            else
             {
-                if (YSpeed >= 0)
+                if (onFloor)
                 {
                     _isInAir = false;
                     OnFallOnGround();
                 }
-                else
+                if (onCeil)
                 {
                     OnHeadHit();
-                    YSpeed = 0;
                 }
+                YSpeed = 0;
             }
         }
-        else
+
+        if (!_isInAir)
         {
+            _wilyJumpTime = JumpTolerateTime;
+            
             var collided = MoveAndCollide(GroundTestVec, true);
             if (collided != null)
             {
@@ -200,11 +205,6 @@ public partial class Mario
                 }
             }
             _isInAir = collided == null;
-        }
-
-        if (!_isInAir)
-        {
-            _wilyJumpTime = JumpTolerateTime;
         }
     }
 
