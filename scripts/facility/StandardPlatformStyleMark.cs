@@ -2,12 +2,12 @@
 
 namespace ChloePrime.MarioForever.Facility;
 
-public partial class StandardPlatformStyleMark: Area2D
+public partial class StandardPlatformStyleMark : MovingPlatformMark
 {
     [Export] public Texture2D StaticSprite { get; set; }
     [Export] public SpriteFrames AnimatedSprite { get; set; }
     [Export] public Vector2 AnimatedSpriteSize { get; set; } = new(96, 16);
-    
+
     public override void _Ready()
     {
         base._Ready();
@@ -25,6 +25,6 @@ public partial class StandardPlatformStyleMark: Area2D
         {
             platform.SetSprite(@as, AnimatedSpriteSize);
         }
-        QueueFree();
+        OnMarkUsed();
     }
 }
