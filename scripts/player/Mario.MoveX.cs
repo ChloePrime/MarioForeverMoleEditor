@@ -172,14 +172,14 @@ public partial class Mario
             var rightHitScreen = xRightFrame - x < ScreenBorderPadding;
             var leftAtBorder = Mathf.IsEqualApprox(x - xLeftFrame, ScreenBorderPadding);
             var rightAtBorder = Mathf.IsEqualApprox(xRightFrame - x, ScreenBorderPadding);
-            if (leftHitScreen || (XDirection < 0 && leftAtBorder))
+            if (leftHitScreen || ((XDirection < 0 || Mathf.IsZeroApprox(XSpeed)) && leftAtBorder))
             {
                 pos.X = xLeftFrame + ScreenBorderPadding;
                 _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
                 XSpeed = 0;
                 return;
             }
-            if (rightHitScreen || (XDirection > 0 && rightAtBorder))
+            if (rightHitScreen || ((XDirection > 0 || Mathf.IsZeroApprox(XSpeed)) && rightAtBorder))
             {
                 pos.X = xRightFrame - ScreenBorderPadding;
                 _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;

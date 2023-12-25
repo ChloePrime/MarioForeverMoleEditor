@@ -209,7 +209,6 @@ position = Vector2(176, 152)
 
 [node name="Standard Moving Platform4" parent="Overworld" instance=ExtResource("33_qi6oy")]
 position = Vector2(177, 96)
-MoveOnlyAfterBeStand = true
 
 [node name="Platform Style Mark (Cloud)" parent="Overworld" instance=ExtResource("38_y6kiw")]
 position = Vector2(176, 304)
