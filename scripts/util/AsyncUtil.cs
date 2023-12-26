@@ -13,28 +13,61 @@ public static class AsyncUtil
         bool processInPhysics = false,
         bool ignoreTimeScale = false)
     {
-        if (!node.IsInsideTree())
+        return WrapCall(node, () =>
         {
-            TaskCompletionSource tsc2 = new();
-            node.TreeEntered += OnNodeEnteredTree;
-            return tsc2.Task;
+            TaskCompletionSource tsc = new();
+            node.GetTree().CreateTimer(time, processAlways, processInPhysics, ignoreTimeScale).Timeout += () =>
+            {
+                if (GodotObject.IsInstanceValid(node))
+                {
+                    tsc.SetResult();
+                }
+            };
+            return tsc.Task;
+        });
+    }
 
-            async void OnNodeEnteredTree()
-            {
-                node.TreeEntered -= OnNodeEnteredTree;
-                await DelayAsync(node, time, processAlways, processInPhysics, ignoreTimeScale);
-                tsc2.SetResult();
-            }
-        }
-        TaskCompletionSource tsc = new();
-        node.GetTree().CreateTimer(time, processAlways, processInPhysics, ignoreTimeScale).Timeout += () =>
+    public static Task WaitForPhysicsProcess(this Node node)
+    {
+        return WrapCall(node, () =>
         {
-            if (GodotObject.IsInstanceValid(node))
+            TaskCompletionSource tsc = new();
+            var tree = node.GetTree();
+
+            tree.PhysicsFrame += OnPhysicsFrame;
+            return tsc.Task;
+
+            void OnPhysicsFrame()
             {
-                tsc.SetResult();
+                if (GodotObject.IsInstanceValid(tree))
+                {
+                    tree.PhysicsFrame -= OnPhysicsFrame;
+                }
+                if (GodotObject.IsInstanceValid(node))
+                {
+                    tsc.SetResult();
+                }
             }
-        };
-        return tsc.Task;
+        });
+    }
+
+    private static Task WrapCall(Node node, Func<Task> call)
+    {
+        if (node.IsInsideTree())
+        {
+            return call.Invoke();
+        }
+        
+        TaskCompletionSource tsc2 = new();
+        node.TreeEntered += OnNodeEnteredTree;
+        return tsc2.Task;
+
+        async void OnNodeEnteredTree()
+        {
+            node.TreeEntered -= OnNodeEnteredTree;
+            await call();
+            tsc2.SetResult();
+        }
     }
 
     public static void StartSafely(this Timer timer, double timeSec = -1D)

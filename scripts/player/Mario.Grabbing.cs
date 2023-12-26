@@ -1,6 +1,5 @@
 ﻿using System;
 using ChloePrime.MarioForever.Enemy;
-using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -40,8 +39,12 @@ public partial class Mario
         Silent = 0x800,
     }
     
-    public bool Grab(IGrabbable obj)
+    public async void Grab(IGrabbable obj)
     {
+        if (!Engine.IsInPhysicsFrame())
+        {
+            await this.WaitForPhysicsProcess();
+        }
         GrabRelease();
         GrabbedObject = obj;
 
@@ -67,14 +70,18 @@ public partial class Mario
 
         obj.Grabber = this;
         obj.GrabNotify(new GrabEvent(oldParent), null);
-        return true;
     }
 
-    public bool GrabRelease() => GrabRelease(GetCurrentReleaseFlags());
+    public void GrabRelease() => GrabRelease(GetCurrentReleaseFlags());
     
-    public bool GrabRelease(GrabReleaseFlags flags)
+    public async void GrabRelease(GrabReleaseFlags flags)
     {
-        if (GrabbedObject is not { } grabbing) return false;
+        if (!Engine.IsInPhysicsFrame())
+        {
+            await this.WaitForPhysicsProcess();
+        }
+        
+        if (GrabbedObject is not { } grabbing) return;
         GrabbedObject = null;
         _grabReleaseCooldown = 0.25F;
         
@@ -83,7 +90,7 @@ public partial class Mario
 
         if (grabbing.AsNode.IsQueuedForDeletion())
         {
-            return true;
+            return;
         }
         
         var gently = flags.HasFlag(GrabReleaseFlags.Gently);
@@ -95,7 +102,7 @@ public partial class Mario
         var oldNode = grabbing.AsNode;
         if (!IsInstanceValid(oldNode))
         {
-            return false;
+            return;
         }
         Node parent;
         if (_oldParent is { } oldParent && IsInstanceValid(oldParent))
@@ -121,8 +128,6 @@ public partial class Mario
             gob.XSpeed = (@throw ? coefficient * GrabReleaseThrowStrength : (tossUp ? 0 : 100)) + XSpeed;
             gob.YSpeed = (tossUp ? coefficient * -GrabReleaseTossUpStrength : 0);
         }
-
-        return true;
     }
 
     private void InputGrab(InputEvent e)
