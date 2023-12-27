@@ -53,6 +53,21 @@ public partial class MovingPlatform : AnimatableBody2D, IMarioStandable
 
     public CollisionShape2D CollisionShape => _collisionShape ??= GetNode<CollisionShape2D>(NpCollisionShape);
 
+    public override void _Ready()
+    {
+        base._Ready();
+        _lastGlobalPos = GlobalPosition;
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (MovementEnabled)
+        {
+            Translate(Velocity * (float)delta);
+        }
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
@@ -62,7 +77,12 @@ public partial class MovingPlatform : AnimatableBody2D, IMarioStandable
         }
         if (MovementEnabled)
         {
+            if ((GlobalPosition - _lastGlobalPos).Abs() is { X: <= 8 } and { Y: <= 8 })
+            {
+                GlobalPosition = _lastGlobalPos;
+            }
             Translate(Velocity * (float)delta);
+            _lastGlobalPos = GlobalPosition;
         }
     }
     
@@ -73,5 +93,6 @@ public partial class MovingPlatform : AnimatableBody2D, IMarioStandable
 
     private static readonly NodePath NpCollisionShape = "Collision Shape";
     private CollisionShape2D _collisionShape;
+    private Vector2 _lastGlobalPos;
     private bool _everGotStand;
 }
