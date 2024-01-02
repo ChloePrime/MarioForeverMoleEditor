@@ -8,13 +8,7 @@ public partial class StandardPlatformStyleMark : MovingPlatformMark
     [Export] public SpriteFrames AnimatedSprite { get; set; }
     [Export] public Vector2 AnimatedSpriteSize { get; set; } = new(96, 16);
 
-    public override void _Ready()
-    {
-        base._Ready();
-        BodyEntered += OnBodyEntered;
-    }
-
-    private void OnBodyEntered(Node2D body)
+    protected override void OnPlatformEntered(MovingPlatform body)
     {
         if (body is not StandardMovingPlatform platform) return;
         if (StaticSprite is { } ss)

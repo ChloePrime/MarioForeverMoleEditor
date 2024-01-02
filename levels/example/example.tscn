@@ -46,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://dtfl0hiysv42t" path="res://objects/facility/O_platform_speed_mark_fast.tscn" id="44_xkvgv"]
 
 [node name="Example" type="Node2D"]
+self_modulate = Color(0.45, 0.9, 0.225, 1)
 script = ExtResource("1_ga1s3")
 LevelName = "Mole Editor
 可口可乐了了"
@@ -66,9 +67,13 @@ position = Vector2(208, 400)
 
 [node name="Tiles" parent="Overworld" instance=ExtResource("1_xiix0")]
 
-[node name="Mario" parent="Overworld" instance=ExtResource("3_5usbp")]
+[node name="Mario" parent="Overworld" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") instance=ExtResource("3_5usbp")]
 position = Vector2(272, 408)
+CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
 FastRetry = true
+MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
+GrabMuzzleBySize = [NodePath("SpriteRoot/Grab Muzzle (Small)"), NodePath("SpriteRoot/Grab Muzzle (Big)"), NodePath("SpriteRoot/Grab Muzzle (Small)")]
+StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
 [node name="Music Changer" parent="Overworld" instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)

@@ -8,15 +8,8 @@ public partial class MovingPlatformSpeedMark : MovingPlatformMark
     [Export] public bool ModifyXVelocity { get; set; } = true;
     [Export] public bool ModifyYVelocity { get; set; } = true;
 
-    public override void _Ready()
+    protected override void OnPlatformEntered(MovingPlatform platform)
     {
-        base._Ready();
-        BodyEntered += OnBodyEntered;
-    }
-
-    private void OnBodyEntered(Node2D body)
-    {
-        if (body is not MovingPlatform platform) return;
         if (ModifyXVelocity && ModifyYVelocity)
         {
             platform.Velocity = TargetVelocity;
