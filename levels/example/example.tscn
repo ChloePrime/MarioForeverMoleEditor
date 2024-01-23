@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=43 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -41,9 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://cnaj8b4v3ig13" path="res://objects/facility/O_platform_style_mark_cloud.tscn" id="38_y6kiw"]
 [ext_resource type="PackedScene" uid="uid://du1fnspwmuqmw" path="res://objects/facility/O_platform_style_mark_blue.tscn" id="40_8fjok"]
 [ext_resource type="PackedScene" uid="uid://dbse21on8q36x" path="res://objects/facility/O_platform_style_mark_grey.tscn" id="41_ynb1s"]
-[ext_resource type="PackedScene" uid="uid://bwx1qja17g4da" path="res://objects/facility/O_platform_speed_mark_slow.tscn" id="42_hfvav"]
-[ext_resource type="PackedScene" uid="uid://c56msmg77bnip" path="res://objects/facility/O_platform_speed_mark_medium.tscn" id="43_3xnmk"]
-[ext_resource type="PackedScene" uid="uid://dtfl0hiysv42t" path="res://objects/facility/O_platform_speed_mark_fast.tscn" id="44_xkvgv"]
+[ext_resource type="PackedScene" uid="uid://bg2dqueyd3rv4" path="res://objects/facility/O_platform_border_mark.tscn" id="45_7rymt"]
 
 [node name="Example" type="Node2D"]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -214,6 +212,7 @@ position = Vector2(176, 152)
 
 [node name="Standard Moving Platform4" parent="Overworld" instance=ExtResource("33_qi6oy")]
 position = Vector2(177, 96)
+Velocity = Vector2(150, 0)
 
 [node name="Platform Style Mark (Cloud)" parent="Overworld" instance=ExtResource("38_y6kiw")]
 position = Vector2(176, 304)
@@ -248,11 +247,8 @@ position = Vector2(176, 168)
 [node name="Platform Style Mark (Blue)2" parent="." instance=ExtResource("41_ynb1s")]
 position = Vector2(176, 112)
 
-[node name="Platform Speed Mark (Slow)" parent="." instance=ExtResource("42_hfvav")]
-position = Vector2(208, 232)
+[node name="Platform Border Mark" parent="." instance=ExtResource("45_7rymt")]
+position = Vector2(336, 112)
 
-[node name="Platform Speed Mark (Medium)" parent="." instance=ExtResource("43_3xnmk")]
-position = Vector2(208, 112)
-
-[node name="Platform Speed Mark (Fast)" parent="." instance=ExtResource("44_xkvgv")]
-position = Vector2(208, 168)
+[node name="Platform Border Mark2" parent="." instance=ExtResource("45_7rymt")]
+position = Vector2(80, 112)
