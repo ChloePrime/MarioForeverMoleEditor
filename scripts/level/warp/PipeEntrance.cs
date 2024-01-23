@@ -114,7 +114,7 @@ public partial class PipeEntrance : WarpObject
                 return;
             }
             case Phase.Positioning when Direction is PassDirection.Left or PassDirection.Right:
-                mario.GlobalPosition = mario.GlobalPosition with { Y = GlobalPosition.Y };
+                mario.GlobalPosition = ToGlobal(ToLocal(mario.GlobalPosition) with { Y = 0 });
                 goto case Phase.Positioning;
             case Phase.Positioning:
                 EnterSound?.Play();
@@ -126,6 +126,9 @@ public partial class PipeEntrance : WarpObject
                     timer.Start();
                 }
                 break;
+            case Phase.Entering when Direction is PassDirection.Left or PassDirection.Right:
+                mario.GlobalPosition = ToGlobal(ToLocal(mario.GlobalPosition) with { Y = 0 });
+                goto case Phase.Entering;
             case Phase.Entering:
             {
                 if (Mathf.IsZeroApprox(_distanceLeft))

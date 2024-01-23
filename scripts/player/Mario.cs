@@ -195,7 +195,7 @@ public partial class Mario : CharacterBody2D
 
     private void ProcessPositionInterpolation(double delta)
     {
-        if (!InterpolationEnabled || PipeState is not MarioPipeState.NotInPipe)
+        if (!InterpolationEnabled || PipeState != MarioPipeState.NotInPipe)
         {
             return;
         }
