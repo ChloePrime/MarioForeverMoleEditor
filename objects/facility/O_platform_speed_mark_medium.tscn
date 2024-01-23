@@ -5,10 +5,10 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4f2fn"]
 atlas = ExtResource("2_46i4f")
-region = Rect2(0, 128, 32, 32)
+region = Rect2(96, 96, 32, 32)
 
 [node name="Platform Speed Mark (Medium)" instance=ExtResource("1_ftrr4")]
-TargetVelocity = Vector2(250, 0)
+TargetVelocity = Vector2(150, 0)
 
 [node name="Sprite" parent="." index="1"]
 texture = SubResource("AtlasTexture_4f2fn")
