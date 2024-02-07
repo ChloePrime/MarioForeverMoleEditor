@@ -7,6 +7,7 @@ public partial class LevelFrame : LevelManager
 {
     public override void _Ready()
     {
+        Main.Init();
         base._Ready();
         this.GetNode(out _la, NpLeftAnimFrame);
         this.GetNode(out _ra, NpRightAnimFrame);

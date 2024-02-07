@@ -1,5 +1,4 @@
 ﻿using System;
-using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;
@@ -42,10 +41,6 @@ public partial class Mario
         {
             case MarioPipeState.TransitionBegin:
                 PipeState = MarioPipeState.TransitionEnd;
-                if (_camera.GetParent() == this)
-                {
-                    _camera.Reparent(this.GetLevel() ?? this.GetPreferredRoot());
-                }
                 RequireTeleport?.Invoke();
                 RequireTeleport = null;
                 break;

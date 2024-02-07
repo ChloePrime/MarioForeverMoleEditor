@@ -261,7 +261,7 @@ public partial class Mario : CharacterBody2D
                 DamageHi = GameRule.DefaultTerrainDamageHi,
             });
         }
-        if (GlobalPosition.Y > this.GetFrame().End.Y + 48)
+        if (_cameraPosInitialized && GlobalPosition.Y > this.GetFrame().End.Y + 48)
         {
             Kill(new DamageEvent
             {
@@ -314,6 +314,7 @@ public partial class Mario : CharacterBody2D
         if (IsInstanceValid(cam) && cam!.IsInsideTree())
         {
             cam.GlobalPosition = GlobalPosition - new Vector2(0, CurrentSize.GetIdealHeight() / 2);
+            _cameraPosInitialized = true;
         }
     }
 
@@ -727,6 +728,7 @@ public partial class Mario : CharacterBody2D
     private MarioStatus _currentStatus;
     private IAnimatedSprite _currentSprite;
     private Camera2D _camera;
+    private bool _cameraPosInitialized;
 
     /// <summary>
     /// 不受是否处于下蹲状态影响
