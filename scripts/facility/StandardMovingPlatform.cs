@@ -22,7 +22,7 @@ public partial class StandardMovingPlatform : MovingPlatform
         _staticSprite.Position = new Vector2(0, size.Y / 2);
         _animatedSprite.Visible = false;
         _animatedSprite.ProcessMode = ProcessModeEnum.Disabled;
-        CallDeferred(MethodName.UpdateCollisionSize, size);
+        Callable.From<Vector2>(UpdateCollisionSize).CallDeferred(size);
     }
 
     public void SetSprite(SpriteFrames frames, Vector2 size)
@@ -34,7 +34,7 @@ public partial class StandardMovingPlatform : MovingPlatform
         _animatedSprite.Position = new Vector2(0, size.Y / 2);
         _staticSprite.Visible = false;
         _staticSprite.ProcessMode = ProcessModeEnum.Disabled;
-        CallDeferred(MethodName.UpdateCollisionSize, size);
+        Callable.From<Vector2>(UpdateCollisionSize).CallDeferred(size);
     }
 
     private void UpdateCollisionSize(Vector2 size)

@@ -22,7 +22,7 @@ public partial class BulletBill : Node2D
     public override async void _EnterTree()
     {
         base._EnterTree();
-        CallDeferred(MethodName.LookAtMario);
+        Callable.From(LookAtMario).CallDeferred();
 
         await ToSignal(GetTree().CreateTimer(0.2), SceneTreeTimer.SignalName.Timeout);
         if (IsInstanceValid(this))

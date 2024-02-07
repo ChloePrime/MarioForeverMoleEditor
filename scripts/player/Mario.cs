@@ -313,11 +313,7 @@ public partial class Mario : CharacterBody2D
         }
         if (IsInstanceValid(cam) && cam!.IsInsideTree())
         {
-            if (cam.GetParent() != this)
-            {
-                cam.Reparent(this);
-                cam.Position = Vector2.Zero;
-            }
+            cam.GlobalPosition = GlobalPosition - new Vector2(0, CurrentSize.GetIdealHeight() / 2);
         }
     }
 
@@ -386,7 +382,8 @@ public partial class Mario : CharacterBody2D
         for (var i = 0; i < CollisionBySize.Count; i++)
         {
             var isActive = i == (int)size;
-            CollisionBySize[i].CallDeferred(CollisionShape2D.MethodName.SetDisabled, !isActive);
+            var shape = CollisionBySize[i];
+            Callable.From(() => shape.Disabled = !isActive).CallDeferred();
             // GrabMuzzleBySize[i].ProcessMode = isActive 
             //     ? ProcessModeEnum.Inherit
             //     : ProcessModeEnum.Disabled;
@@ -542,7 +539,10 @@ public partial class Mario : CharacterBody2D
         {
             foreach (var child in PossibleSprites)
             {
-                child.GetParent()?.CallDeferred(Node.MethodName.RemoveChild, child.AsNode());
+                if (child.GetParent() is { } parent)
+                {
+                    Callable.From<Node>(parent.RemoveChild).CallDeferred(child.AsNode());
+                }
             }
             (sprite is Node3D ? (Node)_sprite3DRoot : _spriteRoot).AddChild(sprite);
         }

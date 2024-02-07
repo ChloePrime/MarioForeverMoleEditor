@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
@@ -120,7 +121,7 @@ public partial class RotoDiscCore : Node2D, IMarioForeverNpc
         }
         else
         {
-            CallDeferred(MethodName.OnChildExitingTree0, child, child.GetIndex());
+            Callable.From<Node, int>(OnChildExitingTree0).CallDeferred(child, child.GetIndex());
         }
     }
 

@@ -26,7 +26,7 @@ public partial class TurtleDamageSource : EnemyDamageSource
     {
         if (_core.Turtle.State == Turtle.TurtleState.StaticShell)
         {
-            CallDeferred(MethodName.KickOrGrab, mario);
+            Callable.From<Mario>(KickOrGrab).CallDeferred(mario);
         }
         else
         {

@@ -25,7 +25,7 @@ public partial class MarioCorpse : Sprite2D
 	public void SetFastRetry(bool fastRetry)
 	{
 		_fastRetry = fastRetry;
-		CallDeferred(MethodName.SetFastRetry0, fastRetry);
+		Callable.From<bool>(SetFastRetry0).CallDeferred(fastRetry);
 	}
 
 	private void SetFastRetry0(bool fastRetry)

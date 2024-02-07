@@ -106,7 +106,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 		if (!Appearing)
 		{
-			CallDeferred(MethodName._ReallyReady);
+			Callable.From(_ReallyReady).CallDeferred();
 		}
 	}
 

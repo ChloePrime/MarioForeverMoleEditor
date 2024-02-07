@@ -37,7 +37,7 @@ public partial class PipeExit : PipeEntrance
             return;
         }
         _clamp = clamp;
-        CallDeferred(MethodName.DisableClampDetector);
+        Callable.From(DisableClampDetector).CallDeferred();
     }
 
     private void DisableClampDetector()

@@ -102,7 +102,7 @@ public partial class LevelBackgroundManager : Node
         _subs = builder.ToArray();
         foreach (var (sub, _) in _subs)
         {
-            MainNode.CallDeferred(Node.MethodName.AddChild, sub);
+            Callable.From(() => MainNode.AddChild(sub)).CallDeferred();
         }
         OnTextureChanged();
     }

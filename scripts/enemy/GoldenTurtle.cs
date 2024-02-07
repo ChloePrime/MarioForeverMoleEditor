@@ -21,7 +21,7 @@ public partial class GoldenTurtle : Turtle
         }
         if (State != TurtleState.Flying && this.FindParentOfType<RotoDiscCore>() is {} xfx)
         {
-            CallDeferred(MethodName.DropFromRotoDiscLater, xfx);
+            Callable.From<Node>(DropFromRotoDiscLater).CallDeferred(xfx);
         }
     }
 

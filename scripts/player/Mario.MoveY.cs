@@ -305,7 +305,7 @@ public partial class Mario
                     standable.ProcessMarioStandOn(this);
                 }
             }
-            CallDeferred(_isInWater ? MethodName.Swim : MethodName.Jump);
+            Callable.From(_isInWater ? Swim : Jump).CallDeferred();
             _comboJumpAsked = false;
         }
     }
@@ -372,7 +372,7 @@ public partial class Mario
     {
         if (PipeState != MarioPipeState.NotInPipe) return;
         JumpIntoWaterSound?.Play();
-        CallDeferred(MethodName.PopWaterSplash);
+        Callable.From(PopWaterSplash).CallDeferred();
         EmitSignal(SignalName.JumpedIntoWater);
     }
 
