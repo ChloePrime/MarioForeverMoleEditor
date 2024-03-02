@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Level;
@@ -23,8 +23,8 @@ public partial class LevelFrame : LevelManager
         var sizeRate = _game.Position.X / this.Size.X;
         _la.AnchorLeft = _ln.AnchorLeft = -sizeRate;
         _ra.AnchorRight = _rn.AnchorRight = 1 + sizeRate;
-        _la.Position = _ln.Position = new Vector2(0, _ra.Position.Y);
-        _ra.Position = _rn.Position = new Vector2(_game.Position.X + _game.Size.X, _ra.Position.Y);
+        _la.Position = _ln.Position = new Vector2(+0.5F, _ra.Position.Y);
+        _ra.Position = _rn.Position = new Vector2(-0.5F + _game.Position.X + _game.Size.X, _ra.Position.Y);
     }
 
     private static readonly NodePath NpLeftNormalFrame = "Frame Curtain/L"; 
