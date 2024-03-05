@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=46 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -44,6 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://bwx1qja17g4da" path="res://objects/facility/O_platform_speed_mark_slow.tscn" id="42_hfvav"]
 [ext_resource type="PackedScene" uid="uid://c56msmg77bnip" path="res://objects/facility/O_platform_speed_mark_medium.tscn" id="43_3xnmk"]
 [ext_resource type="PackedScene" uid="uid://bg2dqueyd3rv4" path="res://objects/facility/O_platform_border_mark.tscn" id="45_7rymt"]
+[ext_resource type="PackedScene" uid="uid://dojyxy3crbyhj" path="res://objects/enemies/O_bullet_launcher.tscn" id="45_w3wtr"]
 
 [node name="Example" type="Node2D"]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -261,3 +262,6 @@ position = Vector2(208, 232)
 
 [node name="Platform Speed Mark (Medium)" parent="." instance=ExtResource("43_3xnmk")]
 position = Vector2(208, 168)
+
+[node name="Bullet Launcher" parent="." instance=ExtResource("45_w3wtr")]
+position = Vector2(528, 336)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace MixelTools.Util.Extensions;
@@ -96,5 +97,37 @@ public static partial class NodeEx
     public static R Clone<R>(this R resource) where R : Resource
     {
         return (R)resource.Duplicate();
+    }
+    
+    /// <summary>
+    /// Add a child, and return the newly created child
+    /// </summary>
+    /// 
+    /// <param name="root">Root Node. We prefer to use <see cref="FrameUtil.GetPreferredRoot"/></param>
+    /// <param name="prefab">The prefab of the child to be created</param>
+    /// <returns>The newly created child node</returns>
+    public static Node SpawnChild(this Node root, PackedScene prefab)
+    {
+        var instance = prefab.Instantiate();
+        root.AddChild(instance);
+        return instance;
+    }
+
+    /// <summary>
+    /// Add a child, and return both parent and child.
+    /// </summary>
+    /// 
+    /// <param name="root">Root Node. We prefer to use <see cref="FrameUtil.GetPreferredRoot"/></param>
+    /// <param name="prefab">The prefab of the child to be created</param>
+    /// <typeparam name="N">Type of the root node</typeparam>
+    /// 
+    /// <returns>
+    /// The parent and the newly created child node,
+    /// so you don't need to declare a variable
+    /// or call <see cref="FrameUtil.GetPreferredRoot"/> twice
+    /// </returns>
+    public static (N root, Node instance) BirthChild<N>(this N root, PackedScene prefab) where N: Node
+    {
+        return (root, root.SpawnChild(prefab));
     }
 }
