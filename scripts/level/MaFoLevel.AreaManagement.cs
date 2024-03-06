@@ -11,8 +11,7 @@ public partial class MaFoLevel
     {
         foreach (var a in Areas)
         {
-            var activate = a == area;
-            a.SetActivated(activate);
+            var activate = a.SetActivated(a == area);
             if (activate) a._AreaActivated();
         }
     }

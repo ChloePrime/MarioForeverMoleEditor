@@ -1,4 +1,4 @@
-﻿using ChloePrime.MarioForever.Player;
+using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -9,6 +9,7 @@ public partial class MaFoLevelArea : Node2D
 {
     [Export] public Rect2 Border { get; private set; } = DefaultBorder;
     [Export] public AudioStream AreaMusic { get; private set; }
+    [Export(PropertyHint.Range, "[0,1]")] public float Darkness { get; set; }
 
     public MaFoLevel Level => _level ??= this.FindParentOfType<MaFoLevel>();
 
@@ -42,6 +43,14 @@ public partial class MaFoLevelArea : Node2D
         {
             camera.Border = Border;
             camera.SetDeferred(MaFoCamera.PropertyName.Border, Border);
+        }
+        if (this.GetLevelManager() is { } manager)
+        {
+            var isDark = manager.DarknessEnabled = Darkness != 0;
+            if (isDark)
+            {
+                manager.DarknessManager.BaseDarkness = Darkness;
+            }
         }
     }
 

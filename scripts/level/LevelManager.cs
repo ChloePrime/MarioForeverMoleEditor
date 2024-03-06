@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using ChloePrime.MarioForever.Level.Darkness;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.UI;
 using ChloePrime.MarioForever.Util;
@@ -15,16 +16,29 @@ public partial class LevelManager : Control
         get => _level;
         set => SetLevel(value);
     }
+    
+    [Export] public PackedScene TestLevel { get; set; }
+    [Export] public AudioStream GameOverJingle { get; set; }
+    [Export] public PackedScene SceneAfterGameOver { get; set; }
 
     public Node LevelInstance { get; private set; }
 
-    [Export] public PackedScene TestLevel { get; set; }
+    public bool DarknessEnabled
+    {
+        get => DarknessManager.Visible;
+        set
+        {
+            DarknessManager.Visible = value;
+            DarknessManager.ProcessMode = value ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+        }
+    }
+
+    [ExportGroup("Advanced")]
+    [Export] public DarknessManager DarknessManager { get; private set; }
     [Export] public SubViewport GameViewport { get; private set; }
     [Export] public LevelHud Hud { get; private set; }
     
     [Export] public GameRule GameRule { get; private set; }
-    [Export] public AudioStream GameOverJingle { get; set; }
-    [Export] public PackedScene SceneAfterGameOver { get; set; }
 
     public void ReloadLevel()
     {

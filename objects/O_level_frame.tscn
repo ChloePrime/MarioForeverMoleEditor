@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene load_steps=11 format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" path="res://scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
@@ -8,9 +8,10 @@
 [ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://R_game_rule.tres" id="3_qymbr"]
 [ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://resources/level/T_frame_anima_right.png" id="4_leriq"]
 [ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://resources/mario/ME_game_over.ogg" id="4_xrsv5"]
+[ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
 [ext_resource type="Script" path="res://scripts/level/DebugCheater.cs" id="6_sxgtr"]
 
-[node name="Level Frame" type="Control" node_paths=PackedStringArray("GameViewport", "Hud")]
+[node name="Level Frame" type="Control" node_paths=PackedStringArray("DarknessManager", "GameViewport", "Hud")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,10 +22,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bhhpe")
 Level = ExtResource("2_bego7")
+GameOverJingle = ExtResource("4_xrsv5")
+DarknessManager = NodePath("Aspect Ratio Container/Control/Darkness Manager")
 GameViewport = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
 Hud = NodePath("Aspect Ratio Container/Control/Game UI")
 GameRule = ExtResource("3_qymbr")
-GameOverJingle = ExtResource("4_xrsv5")
 
 [node name="Aspect Ratio Container" type="AspectRatioContainer" parent="."]
 layout_mode = 1
@@ -71,6 +73,10 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Game UI" parent="Aspect Ratio Container/Control" instance=ExtResource("3_i5s5a")]
+layout_mode = 1
+
+[node name="Darkness Manager" parent="Aspect Ratio Container/Control" instance=ExtResource("6_kh17v")]
+visible = false
 layout_mode = 1
 
 [node name="Frame Curtain" type="Control" parent="."]

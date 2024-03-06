@@ -44,7 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://bwx1qja17g4da" path="res://objects/facility/O_platform_speed_mark_slow.tscn" id="42_hfvav"]
 [ext_resource type="PackedScene" uid="uid://c56msmg77bnip" path="res://objects/facility/O_platform_speed_mark_medium.tscn" id="43_3xnmk"]
 [ext_resource type="PackedScene" uid="uid://bg2dqueyd3rv4" path="res://objects/facility/O_platform_border_mark.tscn" id="45_7rymt"]
-[ext_resource type="PackedScene" uid="uid://dojyxy3crbyhj" path="res://objects/enemies/O_bullet_launcher.tscn" id="45_w3wtr"]
+[ext_resource type="PackedScene" uid="uid://b06h0dtdg48o2" path="res://objects/enemies/O_bullet_launcher_down.tscn" id="45_libls"]
 
 [node name="Example" type="Node2D"]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -62,6 +62,7 @@ Border = Rect2(0, 0, 640, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("2_4kt55")
+Darkness = 0.8
 
 [node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
@@ -229,6 +230,7 @@ position = Vector2(0, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 480, 640, 480)
 AreaMusic = ExtResource("28_r5h0v")
+Darkness = 1.0
 
 [node name="Tiles" parent="Bonus Room" instance=ExtResource("26_d5aqm")]
 
@@ -263,5 +265,5 @@ position = Vector2(208, 232)
 [node name="Platform Speed Mark (Medium)" parent="." instance=ExtResource("43_3xnmk")]
 position = Vector2(208, 168)
 
-[node name="Bullet Launcher" parent="." instance=ExtResource("45_w3wtr")]
+[node name="Bullet Launcher (Down)" parent="." instance=ExtResource("45_libls")]
 position = Vector2(528, 336)

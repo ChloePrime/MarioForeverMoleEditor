@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=78 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dm3igultx8jfo" path="res://resources/mario/T_foot_gas.png" id="10_pqqm3"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://resources/mario/SE_skid.ogg" id="11_lihkt"]
 [ext_resource type="Script" path="res://scripts/shared/ComboTracker.cs" id="16_03bpw"]
+[ext_resource type="PackedScene" uid="uid://qriqbprl1mvt" path="res://objects/level/darkness/O_light_source_spot.tscn" id="17_78fh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
 size = Vector2(19, 52)
@@ -560,6 +561,9 @@ sky_mode = 1
 
 [node name="3D Character Root" type="Node3D" parent="SpriteRoot/Sprite_3D/Viewport"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Light Source" parent="." instance=ExtResource("17_78fh2")]
+position = Vector2(0, -32)
 
 [node name="Slippery Foot Gas" type="AnimatedSprite2D" parent="."]
 visible = false

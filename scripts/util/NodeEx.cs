@@ -15,6 +15,11 @@ public static partial class NodeEx
     {
         target = self.GetNodeOrNull<T>(path);
     }
+
+    public static dynamic GetNodeDynamic(this Node self, NodePath path)
+    {
+        return self.GetNode(path);
+    }
     
     public static bool TryGetNode<T>(this Node self, out T target, NodePath path) where T : class
     {
