@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace ChloePrime.MarioForever.Util;
+namespace ChloePrime.Godot.Util;
 
 public static class Observer
 {

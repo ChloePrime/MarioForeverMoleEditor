@@ -1,4 +1,4 @@
-﻿using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
 using Godot;

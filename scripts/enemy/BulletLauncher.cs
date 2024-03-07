@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
-using MixelTools.Util.Extensions;
 using Array = Godot.Collections.Array;
 
 namespace ChloePrime.MarioForever.Enemy;

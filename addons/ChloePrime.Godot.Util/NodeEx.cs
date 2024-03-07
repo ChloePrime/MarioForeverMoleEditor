@@ -2,7 +2,7 @@
 using ChloePrime.MarioForever.Util;
 using Godot;
 
-namespace MixelTools.Util.Extensions;
+namespace ChloePrime.Godot.Util;
 
 public static partial class NodeEx
 {

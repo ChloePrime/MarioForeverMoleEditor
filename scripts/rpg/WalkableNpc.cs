@@ -1,6 +1,6 @@
-﻿using ChloePrime.MarioForever.Enemy;
+using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Enemy;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.RPG;
 

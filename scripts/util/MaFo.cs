@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace ChloePrime.MarioForever.Util;
 
@@ -37,6 +37,6 @@ public static class MaFo
     
     public static class PropertyHint
     {
-        public const Godot.PropertyHint LayerDamageType = Godot.PropertyHint.Layers3DNavigation;
+        public const global::Godot.PropertyHint LayerDamageType = global::Godot.PropertyHint.Layers3DNavigation;
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
@@ -9,7 +10,6 @@ using ChloePrime.MarioForever.Util;
 using DotNext.Collections.Generic;
 using Godot;
 using Godot.Collections;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Player;
 

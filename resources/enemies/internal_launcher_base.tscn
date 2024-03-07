@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dekph2thmcuyn" path="res://objects/effect/O_explosion_s.tscn" id="4_lg86i"]
 [ext_resource type="AudioStream" uid="uid://d1dh2yol7xud" path="res://resources/enemies/SE_bullet_launch_1.wav" id="5_1d228"]
 [ext_resource type="AudioStream" uid="uid://b4vidst0hypu7" path="res://resources/enemies/SE_bullet_launch_2.wav" id="6_dda6g"]
-[ext_resource type="Script" path="res://scripts/util/AudioStreamGroup.cs" id="7_5yc17"]
+[ext_resource type="Script" path="res://addons/ChloePrime.Godot.Util/AudioStreamGroup.cs" id="7_5yc17"]
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="8_y0esy"]
 [ext_resource type="Resource" uid="uid://dv0xcfjvxhonj" path="res://resources/enemies/R_damagetype_armored.tres" id="9_7nw4y"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://resources/shared/SF_placeholder.tres" id="10_6wbp7"]

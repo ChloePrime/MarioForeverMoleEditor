@@ -1,12 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using Godot.Collections;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Enemy;
 

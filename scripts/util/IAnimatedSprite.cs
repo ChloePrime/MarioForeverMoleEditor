@@ -11,5 +11,5 @@ public interface IAnimatedSprite
     public Node AsNode() => (Node)this;
     public Node GetParent();
 
-    public event AnimationPlayer.AnimationFinishedEventHandler AnimationFinished;
+    public event AnimationMixer.AnimationFinishedEventHandler AnimationFinished;
 }

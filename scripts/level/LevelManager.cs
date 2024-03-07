@@ -1,9 +1,9 @@
 using System;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Level.Darkness;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.UI;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Level;
 

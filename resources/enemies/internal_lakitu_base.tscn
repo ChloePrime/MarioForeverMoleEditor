@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://resources/enemies/internal_enemy_core.tscn" id="1_385ag"]
 [ext_resource type="Script" path="res://scripts/enemy/Lakitu.cs" id="1_auun5"]
-[ext_resource type="Script" path="res://scripts/util/AudioStreamGroup.cs" id="2_dma71"]
+[ext_resource type="Script" path="res://addons/ChloePrime.Godot.Util/AudioStreamGroup.cs" id="2_dma71"]
 [ext_resource type="Texture2D" uid="uid://deexchyykxuxv" path="res://resources/enemies/T_lakitu_attack.png" id="2_ka23o"]
 [ext_resource type="AudioStream" uid="uid://dx43y5kpfoblf" path="res://resources/enemies/SE_lakitu_0.ogg" id="2_v1208"]
 [ext_resource type="Texture2D" uid="uid://bkpsy4lh122ah" path="res://resources/enemies/T_lakitu.png" id="3_311bj"]

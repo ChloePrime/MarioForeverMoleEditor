@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Godot;
 using Godot.Collections;
 
-namespace ChloePrime.MarioForever.Util;
+namespace ChloePrime.Godot.Util;
 
 /// <summary>
 /// 对 <see cref="PhysicsDirectSpaceState3D.IntersectRay"/> 返回结果的强类型封装。

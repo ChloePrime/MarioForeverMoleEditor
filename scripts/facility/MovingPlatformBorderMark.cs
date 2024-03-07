@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Util;
 using Godot;
 

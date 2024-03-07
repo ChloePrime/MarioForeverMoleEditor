@@ -1,8 +1,8 @@
-﻿using ChloePrime.MarioForever.Enemy;
+﻿using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
-using MixelTools.Util.Extensions;
 
 namespace ChloePrime.MarioForever.Bonus;
 

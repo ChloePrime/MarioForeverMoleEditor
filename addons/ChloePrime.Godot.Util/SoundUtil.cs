@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Godot;
 
-namespace ChloePrime.MarioForever.Util;
+namespace ChloePrime.Godot.Util;
 
 public static class SoundUtil
 {

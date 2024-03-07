@@ -1,7 +1,7 @@
 ﻿using Godot;
 using Godot.Collections;
 
-namespace ChloePrime.MarioForever.Util;
+namespace ChloePrime.Godot.Util;
 
 [GlobalClass]
 public partial class AudioStreamGroup : Resource
