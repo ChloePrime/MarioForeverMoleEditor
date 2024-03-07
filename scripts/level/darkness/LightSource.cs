@@ -11,7 +11,7 @@ public partial class LightSource : Node2D
     public float LightSize
     {
         get => _lightSize;
-        set => _lightSize = value;
+        set => SetLightSize(value);
     }
 
     [Export]
