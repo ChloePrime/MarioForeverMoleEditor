@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bh7p8gsfxvui8"]
+[gd_scene load_steps=7 format=3 uid="uid://bh7p8gsfxvui8"]
 
 [ext_resource type="Script" path="res://scripts/enemy/Fireball.cs" id="1_auv4v"]
 [ext_resource type="Texture2D" uid="uid://ckcf62qldbqqx" path="res://resources/shared/T_fireball.png" id="2_y7ff5"]
 [ext_resource type="Script" path="res://scripts/util/helper_nodes/Rotator2D.cs" id="3_57fow"]
+[ext_resource type="PackedScene" uid="uid://qriqbprl1mvt" path="res://objects/level/darkness/O_light_source_spot.tscn" id="4_kjl7p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rd105"]
 radius = 6.0
@@ -33,3 +34,7 @@ collision_mask = 0
 
 [node name="Collision Shape" type="CollisionShape2D" parent="Action Zone"]
 shape = SubResource("CircleShape2D_7m7jk")
+
+[node name="Light Source" parent="." instance=ExtResource("4_kjl7p")]
+LightSize = 0.4
+AnimatedDestroy = true

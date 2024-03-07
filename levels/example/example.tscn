@@ -62,7 +62,6 @@ Border = Rect2(0, 0, 640, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("2_4kt55")
-Darkness = 0.8
 
 [node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)

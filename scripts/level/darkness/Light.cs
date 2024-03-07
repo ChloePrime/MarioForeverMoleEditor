@@ -5,6 +5,7 @@ namespace ChloePrime.MarioForever.Level.Darkness;
 public partial class Light : Sprite2D
 {
 	[Export] public Node2D BoundObject { get; set; }
+	[Export] public bool Animated { get; set; }
 	
 	public DarknessManager DarknessManager { get; internal set; }
 
@@ -16,20 +17,22 @@ public partial class Light : Sprite2D
 		}
 	}
 
+	private bool _destroying;
+
 	public override void _Process(double delta)
 	{
-		if (BoundObject is not { } bound) return;
+		if (_destroying || BoundObject is not { } bound) return;
 		
 		if (!IsInstanceValid(bound))
 		{
-			QueueFree();
+			Destroy();
 			return;
 		}
 		
 		if (bound.IsInsideTree())
 		{
 			Visible = true;
-			UpdatePosition(bound);
+			GlobalPosition = bound.GlobalPosition;
 		}
 		else
 		{
@@ -37,17 +40,19 @@ public partial class Light : Sprite2D
 		}
 	}
 
-	private void UpdatePosition(Node2D bound)
+	private void Destroy()
 	{
-		if (DarknessManager.LevelManager.LevelInstance is { } level &&
-		    level.GetViewport() is { } viewport &&
-		    viewport.GetCamera2D() is { } camera)
+		if (_destroying || !Animated)
 		{
-			GlobalPosition = bound.GlobalPosition;
+			QueueFree();
+			return;
 		}
-		else
-		{
-			GlobalPosition = bound.GlobalPosition;
-		}
+
+		var tween = CreateTween();
+		const float animTime = 0.5F;
+		tween.TweenProperty(this, (string)Node2D.PropertyName.Scale, Vector2.Zero, animTime)
+			.SetTrans(Tween.TransitionType.Quad)
+			.SetEase(Tween.EaseType.Out);
+		tween.TweenCallback(Callable.From(QueueFree)).SetDelay(animTime);
 	}
 }
