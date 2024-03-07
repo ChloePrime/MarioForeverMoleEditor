@@ -45,7 +45,19 @@ public partial class DarknessManager : Control
     {
         base._Ready();
         this.GetNode(out _camera, "Viewport Container/Sub Viewport/Camera");
+        this.GetNode<Timer>("GC Timer").Timeout += OnGcTimeTimeout;
         LightRoot.ChildEnteredTree += OnLightRootChildEnteredTree;
+    }
+
+    private void OnGcTimeTimeout()
+    {
+        foreach (var child in LightRoot.Children())
+        {
+            if (child is Light light)
+            {
+                Callable.From(light.OnLightGC).CallDeferred();
+            }
+        }
     }
 
     private void OnLightRootChildEnteredTree(Node node)

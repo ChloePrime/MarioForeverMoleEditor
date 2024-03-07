@@ -8,6 +8,14 @@ public partial class Light : Sprite2D
 	
 	public DarknessManager DarknessManager { get; internal set; }
 
+	public void OnLightGC()
+	{
+		if (!IsInstanceValid(BoundObject))
+		{
+			QueueFree();
+		}
+	}
+
 	public override void _Process(double delta)
 	{
 		if (BoundObject is not { } bound) return;

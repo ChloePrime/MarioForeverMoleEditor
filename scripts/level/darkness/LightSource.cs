@@ -20,7 +20,7 @@ public partial class LightSource : Node2D
         {
             return;
         }
-        var light = Light.Instantiate();
+        var light = prefab.Instantiate();
         manager.DarknessManager.LightRoot.AddChild(light);
         if (light is Node2D light2d)
         {

@@ -54,3 +54,9 @@ texture = SubResource("GradientTexture1D_h5d1w")
 
 [node name="Camera" type="Camera2D" parent="Viewport Container/Sub Viewport"]
 position = Vector2(320, 240)
+
+[node name="GC Timer" type="Timer" parent="."]
+process_mode = 3
+process_callback = 0
+wait_time = 6.0
+autostart = true

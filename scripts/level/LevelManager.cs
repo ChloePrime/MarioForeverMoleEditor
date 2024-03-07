@@ -2,7 +2,6 @@ using System;
 using ChloePrime.MarioForever.Level.Darkness;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.UI;
-using ChloePrime.MarioForever.Util;
 using Godot;
 using MixelTools.Util.Extensions;
 
