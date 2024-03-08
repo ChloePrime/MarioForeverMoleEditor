@@ -38,3 +38,4 @@ shape = SubResource("CircleShape2D_7m7jk")
 [node name="Light Source" parent="." instance=ExtResource("4_kjl7p")]
 LightSize = 0.4
 AnimatedDestroy = true
+Volatile = true

@@ -20,6 +20,12 @@ public partial class LightSource : Node2D
         get => _animatedDestroy;
         set => SetAnimatedDestroy(value);
     }
+    
+    /// <summary>
+    /// 当当前场景未开启黑暗时不生成灯光。
+    /// 适用于子弹等一次性生成品的光照。
+    /// </summary>
+    [Export] public bool Volatile { get; set; } 
 
     public void SpawnLight()
     {
@@ -27,10 +33,16 @@ public partial class LightSource : Node2D
         {
             return;
         }
+        if (Volatile && !manager.DarknessEnabled)
+        {
+            return;
+        }
+        
         if (_light is { } oldLight)
         {
             oldLight.QueueFree();
         }
+        
         var light = prefab.Instantiate();
         manager.DarknessManager.LightRoot.AddChild(light);
         if (light is Node2D light2d)
