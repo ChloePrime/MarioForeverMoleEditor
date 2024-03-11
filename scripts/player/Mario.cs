@@ -17,7 +17,7 @@ namespace ChloePrime.MarioForever.Player;
 [Icon("res://resources/mario/AS_icon.tres")]
 public partial class Mario : CharacterBody2D
 {
-    public static readonly bool InterpolationEnabled = true;
+    public static readonly bool InterpolationEnabled = false;
     
     #region Movement Params
     
@@ -213,7 +213,7 @@ public partial class Mario : CharacterBody2D
     public override void _PhysicsProcess(double deltaD)
     {
         base._PhysicsProcess(deltaD);
-        if (_posBeforePhProcess != _posAfterPhProcess)
+        if (InterpolationEnabled && _posBeforePhProcess != _posAfterPhProcess)
         {
             GlobalPosition = _posAfterPhProcess;
         }

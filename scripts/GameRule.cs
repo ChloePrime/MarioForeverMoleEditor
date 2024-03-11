@@ -151,6 +151,7 @@ public partial class GameRule : Resource
         GlobalData.ResetRuleNeutralValues();
         ReloadStatus();
         ResetHitPoint();
+        Checkpoint.ClearSaved();
     }
 
     public void ReloadStatus()

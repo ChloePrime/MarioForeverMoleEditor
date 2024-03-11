@@ -564,6 +564,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 
 [node name="Light Source" parent="." instance=ExtResource("17_78fh2")]
 position = Vector2(0, -32)
+AnimatedDestroy = true
 
 [node name="Slippery Foot Gas" type="AnimatedSprite2D" parent="."]
 visible = false

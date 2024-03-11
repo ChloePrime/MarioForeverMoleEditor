@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Level.Darkness;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.UI;
+using DotNext.Collections.Generic;
 using Godot;
 
 namespace ChloePrime.MarioForever.Level;
@@ -80,6 +82,40 @@ public partial class LevelManager : Control
         }
     }
 
+    public void RetryLevel()
+    {
+        if (Checkpoint.SavedLocation is not { } cp)
+        {
+            ReloadLevel();
+            return;
+        }
+        
+        if (cp.Level == this.Level)
+        {
+            ReloadLevel();
+        }
+        else
+        {
+            Level = cp.Level;
+        }
+        
+        var players = GetTree().GetAllPlayers();
+        
+        Callable.From(() =>
+        {
+            if (LevelInstance is MaFoLevel mfl)
+            {
+                var area = mfl.GetAreaById(cp.Area);
+                mfl.SetArea(area);
+                players.ForEach(pl => pl.Reparent(area));
+            }
+            foreach (var player in players.OfType<Node2D>())
+            {
+                player.GlobalPosition = cp.Position;
+            }
+        }).CallDeferred();
+    }
+
     public void GameOver()
     {
         Hud.GameOverLabel.Visible = true;
@@ -92,7 +128,7 @@ public partial class LevelManager : Control
     {
         base._Ready();
         GameRule.ResetGlobalData();
-        ReloadLevel();
+        Callable.From(ReloadLevel).CallDeferred();
 #if TOOLS
         if (TestLevel is { } level)
         {

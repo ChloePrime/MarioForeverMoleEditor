@@ -169,23 +169,27 @@ public partial class Mario
             var frame = this.GetFrame();
             var xLeftFrame = frame.Position.X;
             var xRightFrame = frame.End.X;
-            var leftHitScreen = x - xLeftFrame < ScreenBorderPadding;
-            var rightHitScreen = xRightFrame - x < ScreenBorderPadding;
-            var leftAtBorder = Mathf.IsEqualApprox(x - xLeftFrame, ScreenBorderPadding);
-            var rightAtBorder = Mathf.IsEqualApprox(xRightFrame - x, ScreenBorderPadding);
-            if (leftHitScreen || ((XDirection < 0 || Mathf.IsZeroApprox(XSpeed)) && leftAtBorder))
+            var farOutScreen = x - xLeftFrame < -ScreenBorderPadding || xRightFrame - x < -ScreenBorderPadding;
+            if (!farOutScreen)
             {
-                pos.X = xLeftFrame + ScreenBorderPadding;
-                _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
-                XSpeed = 0;
-                return;
-            }
-            if (rightHitScreen || ((XDirection > 0 || Mathf.IsZeroApprox(XSpeed)) && rightAtBorder))
-            {
-                pos.X = xRightFrame - ScreenBorderPadding;
-                _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
-                XSpeed = 0;
-                return;
+                var leftHitScreen = x - xLeftFrame < ScreenBorderPadding;
+                var rightHitScreen = xRightFrame - x < ScreenBorderPadding;
+                var leftAtBorder = Mathf.IsEqualApprox(x - xLeftFrame, ScreenBorderPadding);
+                var rightAtBorder = Mathf.IsEqualApprox(xRightFrame - x, ScreenBorderPadding);
+                if (leftHitScreen || ((XDirection < 0 || Mathf.IsZeroApprox(XSpeed)) && leftAtBorder))
+                {
+                    pos.X = xLeftFrame + ScreenBorderPadding;
+                    _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
+                    XSpeed = 0;
+                    return;
+                }
+                if (rightHitScreen || ((XDirection > 0 || Mathf.IsZeroApprox(XSpeed)) && rightAtBorder))
+                {
+                    pos.X = xRightFrame - ScreenBorderPadding;
+                    _posBeforePhProcess = _posAfterPhProcess = GlobalPosition = pos;
+                    XSpeed = 0;
+                    return;
+                }
             }
         }
             

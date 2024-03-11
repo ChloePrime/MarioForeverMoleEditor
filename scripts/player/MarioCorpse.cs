@@ -55,7 +55,7 @@ public partial class MarioCorpse : Sprite2D
 		rule.ResetHitPoint();
 		if (this.GetLevelManager() is { } levelManager)
 		{
-			levelManager.ReloadLevel();
+			levelManager.RetryLevel();
 		}
 		else
 		{
