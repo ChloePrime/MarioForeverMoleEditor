@@ -43,7 +43,7 @@ public partial class Mario
     [CtfFlag(10)] private bool _turning;
     private bool _sprinting;
     private float _burstCharge;
-    
+
     /// <summary>
     /// RE: 马里奥移动
     /// </summary>
@@ -66,7 +66,7 @@ public partial class Mario
         {
             _controlDirection = (_leftPressed ? -1 : 0) + (_rightPressed ? 1 : 0);
         }
-        
+
         // RE: Flag10控制转向过程
         if (XDirection * _walkAxis < 0 && XSpeed > 0)
         {
@@ -76,14 +76,14 @@ public partial class Mario
         {
             _turning = false;
         }
-        
+
         // RE: 同时按住左和右会有问题，此处修正
         if (_leftPressed && _rightPressed && XSpeed > MinSpeed)
         {
             var acc = _running ? AccelerationWhenRunning : AccelerationWhenWalking;
             XSpeed = Math.Max(MinSpeed, XSpeed - acc * delta);
         }
-        
+
         // RE: 转向时先减速
         if (_turning)
         {
@@ -111,7 +111,7 @@ public partial class Mario
 
         // ME: 冲刺计算
         ProcessBurst(delta);
-        
+
         // RE: 走/跑
         if (_walking && !_turning)
         {
@@ -130,7 +130,7 @@ public partial class Mario
             {
                 max = MaxSpeedInWater;
             }
-            
+
             if (XSpeed < max)
             {
                 XSpeed = Math.Min(max, XSpeed + acc * delta);
@@ -140,7 +140,7 @@ public partial class Mario
                 XSpeed = Math.Max(max, XSpeed - acc * delta);
             }
         }
-        
+
         var natFriction = NaturalXFriction;
         if (!_walking && XSpeed > 0)
         {
@@ -150,7 +150,7 @@ public partial class Mario
         {
             XSpeed = Math.Max(MaxSpeedWhenWalking, XSpeed - AccelerationWhenRunning * natFriction * delta);
         }
-        
+
         // RE: 初速度
         if (_walking && !_turning && XSpeed < MinSpeed)
         {
@@ -160,7 +160,7 @@ public partial class Mario
         {
             XSpeed += MinSpeed;
         }
-        
+
         // RE: 马里奥出屏判定
         if (!AllowMoveOutOfScreen)
         {
@@ -192,7 +192,7 @@ public partial class Mario
                 }
             }
         }
-            
+
         // 属于 Godot 的实际移动部分
         Velocity = new Vector2(XSpeed * XDirection, 0);
         var collided = MoveAndSlide();
@@ -200,7 +200,7 @@ public partial class Mario
 
         if (collided && XSpeed > 0 && Mathf.IsZeroApprox(Math.Abs(Velocity.X)))
         {
-            if (IsOnFloor() || _xSpeedKeepTimer > 0.08F)
+            if (IsOnFloor() || _xSpeedKeepTimer > 1F / 15)
             {
                 XSpeed = 0;
                 Velocity = Vector2.Zero;
