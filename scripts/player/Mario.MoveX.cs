@@ -200,10 +200,24 @@ public partial class Mario
 
         if (collided && XSpeed > 0 && Mathf.IsZeroApprox(Math.Abs(Velocity.X)))
         {
-            XSpeed = 0;
-            Velocity = Vector2.Zero;
+            if (IsOnFloor() || _xSpeedKeepTimer > 0.08F)
+            {
+                XSpeed = 0;
+                Velocity = Vector2.Zero;
+                _xSpeedKeepTimer = 0;
+            }
+            else
+            {
+                _xSpeedKeepTimer += delta;
+            }
+        }
+        else
+        {
+            _xSpeedKeepTimer = 0;
         }
     }
+
+    private float _xSpeedKeepTimer;
     
     private float FetchWalkingInput()
     {
