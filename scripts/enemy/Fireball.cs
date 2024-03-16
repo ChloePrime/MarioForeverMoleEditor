@@ -1,12 +1,11 @@
 using System;
 using ChloePrime.Godot.Util;
-using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-[Icon("res://resources/shared/T_fireball.tres")]
+[Icon("res://resources/shared/T_fireball.png")]
 public partial class Fireball : WalkableObjectBase
 {
     [Export] public AudioStream DefaultExplodeSound { get; set; } = GD.Load<AudioStream>("res://resources/shared/SE_fireball_hit.wav");

@@ -14,7 +14,7 @@ using Godot.Collections;
 namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
-[Icon("res://resources/mario/AS_icon.tres")]
+[Icon("res://resources/mario/AT_icon.tres")]
 public partial class Mario : CharacterBody2D
 {
     public static readonly bool InterpolationEnabled = false;
