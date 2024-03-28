@@ -383,6 +383,7 @@ public partial class Mario
     private void EnterWater()
     {
         if (PipeState != MarioPipeState.NotInPipe) return;
+        if (!IsInstanceValid(this) || this.GetLevelManager()?.IsSwitchingLevel == true) return;
         JumpIntoWaterSound?.Play();
         Callable.From(PopWaterSplash).CallDeferred();
         EmitSignal(SignalName.JumpedIntoWater);
@@ -411,7 +412,7 @@ public partial class Mario
     private void ExitWater()
     {
         if (PipeState != MarioPipeState.NotInPipe) return;
-        if (!IsInstanceValid(this)) return;
+        if (!IsInstanceValid(this) || this.GetLevelManager()?.IsSwitchingLevel == true) return;
         JumpOutOfWaterSound?.Play();
         EmitSignal(SignalName.JumpedOutOfWater);
     }

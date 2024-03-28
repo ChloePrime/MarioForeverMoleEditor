@@ -41,31 +41,43 @@ public partial class LevelManager : Control
     
     [Export] public GameRule GameRule { get; private set; }
 
-    public void ReloadLevel()
+    public bool IsSwitchingLevel { get; private set; }
+
+    public async void ReloadLevel()
     {
-        foreach (var child in GameViewport.GetChildren())
+        try
         {
-            child.QueueFree();
-        }
-        GameViewport.AddChild(LevelInstance = _level.Instantiate());
-        if (LevelInstance is MaFoLevel mfl)
-        {
-            Hud.WorldName = mfl.LevelName;
-            Hud.CurrentLevel = mfl;
-            Hud.Visible = true;
-            GlobalData.Time = GameRule.TimePolicy switch
+            IsSwitchingLevel = true;
+            foreach (var child in GameViewport.GetChildren())
             {
-                GameRule.TimePolicyType.CountOnly => 0,
-                _ => mfl.TimeLimit,
-            };
+                child.QueueFree();
+            }
+            GameViewport.AddChild(LevelInstance = _level.Instantiate());
+            if (LevelInstance is MaFoLevel mfl)
+            {
+                Hud.WorldName = mfl.LevelName;
+                Hud.CurrentLevel = mfl;
+                Hud.Visible = true;
+                GlobalData.Time = GameRule.TimePolicy switch
+                {
+                    GameRule.TimePolicyType.CountOnly => 0,
+                    _ => mfl.TimeLimit,
+                };
+            }
+            else
+            {
+                Hud.CurrentLevel = null;
+                Hud.Visible = false;
+            }
+            BackgroundMusic.Speed = 1;
+            Hud.MegaManBossHpBar.Visible = false;
         }
-        else
+        finally
         {
-            Hud.CurrentLevel = null;
-            Hud.Visible = false;
+            await this.WaitForPhysicsProcess();
+            await this.WaitForPhysicsProcess();
+            IsSwitchingLevel = false;
         }
-        BackgroundMusic.Speed = 1;
-        Hud.MegaManBossHpBar.Visible = false;
     }
     
     public void RestartGame()
