@@ -2,7 +2,6 @@
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.RPG;
-using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;
@@ -21,7 +20,7 @@ public partial class Mario
 
     public void Hurt(DamageEvent e)
     {
-        if (PipeState != MarioPipeState.NotInPipe) return;
+        if (IsSuperInvulnerable()) return;
         if ((!e.BypassInvulnerable && IsInvulnerable()) || _currentStatus == null)
         {
             return;
@@ -82,7 +81,17 @@ public partial class Mario
 
     public bool IsInvulnerable()
     {
-        return _invulnerable || _completedLevel;
+        return _invulnerable || IsSuperInvulnerable();
+    }
+
+    public bool IsSuperInvulnerable()
+    {
+        return SuperInvulnerable || PipeState != MarioPipeState.NotInPipe || HasCompletedLevel;
+    }
+
+    public bool GetSuperInvulnerableFlag()
+    {
+        return SuperInvulnerable;
     }
 
     public void SetInvulnerable(double time)
@@ -104,6 +113,8 @@ public partial class Mario
     
     private void Kill(DamageEvent e, bool killedByHurt)
     {
+        if (IsSuperInvulnerable()) return;
+        
         if (!killedByHurt)
         {
             if (GameRule.HitPointEnabled &&
@@ -156,7 +167,7 @@ public partial class Mario
 
     private void ProcessPositionAutoSave()
     {
-        if (_isInAir || _crouching)
+        if (_isInAir || IsCrouching)
         {
             return;
         }

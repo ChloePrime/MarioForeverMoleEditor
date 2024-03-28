@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://byh1c1cibv3ot"]
+
+[ext_resource type="Texture2D" uid="uid://2ass1ejyirk4" path="res://resources/level/T_goal_sub.png" id="1_i8s4m"]
+[ext_resource type="Script" path="res://scripts/level/Goal.cs" id="1_wfmd8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eutu"]
+atlas = ExtResource("1_i8s4m")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bedd"]
+atlas = ExtResource("1_i8s4m")
+region = Rect2(0, 32, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34kwj"]
+atlas = ExtResource("1_i8s4m")
+region = Rect2(0, 64, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xeg4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eutu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bedd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34kwj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
+[node name="Goal (Small)" type="Node2D"]
+script = ExtResource("1_wfmd8")
+Type = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-16, -32)
+sprite_frames = SubResource("SpriteFrames_7xeg4")
+autoplay = "default"
+centered = false

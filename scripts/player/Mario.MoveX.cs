@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Numerics;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Util;
 using Godot;
+using Vector2 = Godot.Vector2;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -25,7 +27,7 @@ public partial class Mario
     public int CharacterDirection => GameRule.CharacterDirectionPolicy switch
     {
         GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection,
-        GameRule.MarioDirectionPolicy.FollowXSpeed or _ => XDirection
+        GameRule.MarioDirectionPolicy.FollowXSpeed or _ => XDirection,
     };
 
     public float NaturalXFriction => 1 / Math.Max(1e-4F, Slipperiness + 1);
@@ -51,7 +53,7 @@ public partial class Mario
     {
         _running = _runPressed;
         _walkAxis = FetchWalkingInput();
-        _walkAxis = (_crouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
+        _walkAxis = (IsCrouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
 
         if (XSpeed <= 0 && GameRule.CharacterDirectionPolicy == GameRule.MarioDirectionPolicy.FollowControlDirection)
@@ -104,7 +106,7 @@ public partial class Mario
         }
 
         // RE: 改变方向
-        if (!_turning && !_completedLevel && _walking)
+        if (!_turning && !HasCompletedLevel && _walking)
         {
             XDirection = Math.Sign(_walkAxis);
         }
@@ -156,13 +158,13 @@ public partial class Mario
         {
             XSpeed += MinSpeed;
         }
-        if (_leftPressed && _rightPressed && XSpeed < MinSpeed && !_crouching && !_completedLevel)
+        if (_leftPressed && _rightPressed && XSpeed < MinSpeed && !IsCrouching && !HasCompletedLevel)
         {
             XSpeed += MinSpeed;
         }
 
         // RE: 马里奥出屏判定
-        if (!AllowMoveOutOfScreen)
+        if (!AllowMoveOutOfScreen && !HasCompletedLevel)
         {
             var pos = GlobalPosition;
             var x = pos.X;
@@ -193,6 +195,12 @@ public partial class Mario
             }
         }
 
+        if (HasCompletedLevel)
+        {
+            XDirection = 1;
+            XSpeed = Units.Speed.CtfMovementToGd(20);
+        }
+
         // 属于 Godot 的实际移动部分
         Velocity = new Vector2(XSpeed * XDirection, 0);
         var collided = MoveAndSlide();
@@ -221,6 +229,12 @@ public partial class Mario
     
     private float FetchWalkingInput()
     {
+        if (HasCompletedLevel)
+        {
+            _leftPressed = false;
+            _rightPressed = true;
+            return 1;
+        }
         if (ControlIgnored)
         {
             _leftPressed = _rightPressed = false;

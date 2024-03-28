@@ -150,8 +150,17 @@ public partial class Mario : CharacterBody2D
     /// </summary>
     public MarioSize CurrentSize { get; private set; }
 
-    public bool IsCrouching => _crouching;
-    
+    [CtfFlag(2)]
+    public bool IsCrouching { get; private set; }
+
+    [CtfFlag(28)]
+    public bool HasCompletedLevel { get; set; }
+
+    /// <see cref="IsSuperInvulnerable()"/>
+    /// <see cref="GetSuperInvulnerableFlag()"/>
+    [CtfFlag(29)]
+    public bool SuperInvulnerable { private get; set; }
+
     public GameRule GameRule { get; private set; }
     public StringName ExpectedAnimation { get; private set; }
     public float ExpectedAnimationSpeed { get; private set; }
@@ -181,7 +190,7 @@ public partial class Mario : CharacterBody2D
         {
             return;
         }
-        _crouching = false;
+        IsCrouching = false;
         SetSize(MarioSize.Big, true);
     }
 
@@ -280,7 +289,7 @@ public partial class Mario : CharacterBody2D
         ProcessPositionAutoSave();
         ProcessAnimation();
 
-        var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (_crouching && XSpeed > 0));
+        var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (IsCrouching && XSpeed > 0));
         if (_skidding != shouldSkid)
         {
             _skidding = shouldSkid;
@@ -327,7 +336,7 @@ public partial class Mario : CharacterBody2D
         if (GlobalData.Status.Fire(this))
         {
             _firePreInput = 0;
-            if (!_crouching && _currentSprite is { } sprite && _optionalAnimations.Contains(Constants.AnimLaunching))
+            if (!IsCrouching && _currentSprite is { } sprite && _optionalAnimations.Contains(Constants.AnimLaunching))
             {
                 sprite.Animation = Constants.AnimLaunching;
             }
@@ -342,12 +351,12 @@ public partial class Mario : CharacterBody2D
         }
         // 水中需要触地才能蹲下
         var isAirSwimming = (_isInAir && _isInWater);
-        if (_downPressed && !isAirSwimming && !_crouching && !IsGrabbing)
+        if (_downPressed && !isAirSwimming && !IsCrouching && !IsGrabbing)
         {
             SetSize(MarioSize.Small);
-            _crouching = true;
+            IsCrouching = true;
         }
-        if ((!_downPressed || IsGrabbing || isAirSwimming) && _crouching)
+        if ((!_downPressed || IsGrabbing || isAirSwimming) && IsCrouching)
         {
             var bigShape = CollisionBySize[(int)MarioSize.Big];
 
@@ -369,7 +378,7 @@ public partial class Mario : CharacterBody2D
             if (!willCollide)
             {
                 SetSize(MarioSize.Big);
-                _crouching = false;
+                IsCrouching = false;
             }
         }
     }
@@ -398,9 +407,9 @@ public partial class Mario : CharacterBody2D
         CurrentSize = size;
         EmitSignal(SignalName.SizeChanged);
 
-        if (size != MarioSize.Big && _crouching)
+        if (size != MarioSize.Big && IsCrouching)
         {
-            _crouching = false;
+            IsCrouching = false;
         }
 
         if (!force && size == MarioSize.Big)
@@ -423,7 +432,7 @@ public partial class Mario : CharacterBody2D
         if (GetWorld2D().DirectSpaceState.IntersectShape(query).Count > 0)
         {
             SetSize(MarioSize.Small);
-            _crouching = true;
+            IsCrouching = true;
         }
     }
 
@@ -478,7 +487,7 @@ public partial class Mario : CharacterBody2D
                 return (Constants.AnimGrabStop, speed);
             }
         }
-        if (_crouching && _optionalAnimations.Contains(Constants.AnimCrouching))
+        if (IsCrouching && _optionalAnimations.Contains(Constants.AnimCrouching))
         {
             return (Constants.AnimCrouching, speed);
         }
@@ -586,7 +595,7 @@ public partial class Mario : CharacterBody2D
         }
         
         _standingSize = _currentStatus.Size;
-        if (!(_standingSize == MarioSize.Big && _crouching))
+        if (!(_standingSize == MarioSize.Big && IsCrouching))
         {
             SetSize(_standingSize);
         }
@@ -595,6 +604,8 @@ public partial class Mario : CharacterBody2D
     public override void _Input(InputEvent e)
     {
         base._Input(e);
+        if (HasCompletedLevel) return;
+        
         FetchInput(ref _jumpPressed, e, Constants.ActionJump);
         FetchInput(ref _runPressed, e, Constants.ActionRun);
         FetchInput(ref _firePressed, e, Constants.ActionFire);
@@ -720,8 +731,6 @@ public partial class Mario : CharacterBody2D
     private double _lastPhysicsDelta;
     private double _deltaCounter;
 
-    [CtfFlag(2)] private bool _crouching;
-    [CtfFlag(28)] private bool _completedLevel;
     private bool _skidding;
     private float _firePreInput;
 

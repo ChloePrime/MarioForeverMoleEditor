@@ -12,6 +12,8 @@ namespace ChloePrime.MarioForever.Player;
 
 public partial class Mario
 {
+    public bool ComboJumpAsked { get; private set; }
+    
     /// <summary>
     /// 从水管进入水区时不会被触发
     /// </summary>
@@ -140,7 +142,7 @@ public partial class Mario
         
         Input:
 
-        if (!_completedLevel)
+        if (!HasCompletedLevel)
         {
             if (_isInWater)
             {
@@ -296,17 +298,27 @@ public partial class Mario
     private void OnFallOnGround()
     {
         StompComboTracker.Reset();
-        if (_comboJumpAsked)
+        if (ComboJumpAsked && !HasCompletedLevel)
         {
-            if (MoveAndCollide(GroundTestVec, true) is {} collision)
+            if (MoveAndCollide(GroundTestVec, true) is { } collision)
             {
                 if (collision.GetCollider() is IMarioStandable standable)
                 {
                     standable.ProcessMarioStandOn(this);
                 }
             }
-            Callable.From(_isInWater ? Swim : Jump).CallDeferred();
-            _comboJumpAsked = false;
+            Callable.From(() =>
+            {
+                if (_isInWater)
+                {
+                    Swim();
+                }
+                else
+                {
+                    Jump();
+                }
+                ComboJumpAsked = false;
+            }).CallDeferred();
         }
     }
 
@@ -324,12 +336,12 @@ public partial class Mario
             }
             else
             {
-                _comboJumpAsked = true;
+                ComboJumpAsked = true;
             }
         }
         if (Input.IsActionJustReleased(Constants.ActionJump))
         {
-            _comboJumpAsked = false;
+            ComboJumpAsked = false;
         }
     }
 
@@ -431,7 +443,6 @@ public partial class Mario
     private bool _jumpPressed;
     private bool _upPressed;
     private bool _downPressed;
-    private bool _comboJumpAsked;
     private int _waterStack;
     private int _deepWaterStack;
 }

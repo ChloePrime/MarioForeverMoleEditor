@@ -9,7 +9,7 @@ namespace ChloePrime.MarioForever.Player;
 public partial class Mario
 {
     public IGrabbable GrabbedObject { get; private set; }
-    public bool CanActivelyGrab => !IsGrabbing && !_crouching && GameRule.EnableActiveGrabbing;
+    public bool CanActivelyGrab => !IsGrabbing && !IsCrouching && GameRule.EnableActiveGrabbing;
     public bool WillActivelyGrab => CanActivelyGrab && _runPressed;
     
     public bool IsGrabbing => GrabbedObject is not null;
