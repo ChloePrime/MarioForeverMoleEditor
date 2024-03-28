@@ -26,6 +26,8 @@ public partial class MaFoLevel : Node
 	[Signal]
 	public delegate void TimeoutEventHandler();
 	
+	public bool Completed { get; set; }
+	
 	public MaFoCamera FindCamera()
 	{
 		return this.Children().OfType<MaFoCamera>().FirstOrDefault(cam => cam.Enabled) ??
@@ -76,7 +78,7 @@ public partial class MaFoLevel : Node
 
 	private void ProcessTime(double delta)
 	{
-		if (!TimeFlows || _manager is not { } manager) return;
+		if (!TimeFlows || Completed || _manager is not { } manager) return;
 		switch (manager.GameRule.TimePolicy)
 		{
 			case GameRule.TimePolicyType.Disable:

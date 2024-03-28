@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw8mqse8hnr72"]
+
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://resources/enemies/T_mole_jumping.png" id="1_3hwlm"]
+[ext_resource type="Theme" uid="uid://dxaw76vg14cno" path="res://resources/ui/Theme_mw.tres" id="2_t0c7o"]
+
+[node name="Limbo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[node name="Mole" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hwlm")
+flip_v = true
+
+[node name="Label" type="Label" parent="Mole"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 28.5
+offset_right = 20.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_t0c7o")
+text = "Something is going wrong :("
