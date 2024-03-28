@@ -194,8 +194,8 @@ public partial class MaFoLevelArea
 	private void LoadObject(Node parent, Sprite2D @object)
 	{
 		string resPath;
-		if (!@object.HasMeta("res_path") ||
-		    (resPath = @object.GetMeta("res_path").AsString()).Length == 0 ||
+		if (!@object.HasMeta(ResPathName) ||
+		    (resPath = @object.GetMeta(ResPathName).AsString()).Length == 0 ||
 		    !resPath.StartsWith("res://"))
 		{
 			return;
