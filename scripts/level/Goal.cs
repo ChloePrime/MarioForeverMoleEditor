@@ -159,9 +159,9 @@ public partial class Goal : Node2D
             <= -266 + 30 => Score10000,
             <= -266 + 60 => Score5000,
             <= -266 + 100 => Score2000,
-            <= -266 + 150 => Score500,
-            <= -266 + 200 => Score200,
-            _ => Score100,
+            <= -266 + 150 => Score1000,
+            <= -266 + 200 => Score500,
+            _ => Score200,
         }).Instantiate<Node2D>();
         this.GetPreferredRoot().AddChild(score);
         score.GlobalPosition = _stick.GlobalPosition;
