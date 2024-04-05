@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Util;
 using Godot;

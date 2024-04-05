@@ -1,6 +1,5 @@
 ﻿using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Enemy;
-using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;

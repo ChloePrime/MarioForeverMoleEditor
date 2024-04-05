@@ -1,5 +1,4 @@
-﻿using ChloePrime.MarioForever.Enemy;
-using ChloePrime.MarioForever.Util;
+﻿using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Facility;
