@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/maoken_assorted_sans.otf-1f66457dc23e05c23a00
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
