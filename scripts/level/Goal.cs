@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
-using DotNext.Collections.Generic;
 using Godot;
 
 namespace ChloePrime.MarioForever.Level;
@@ -20,7 +20,7 @@ public enum GoalType
     /// 小通关器
     /// </summary>
     Small,
-    
+
     Max,
 }
 
@@ -32,8 +32,17 @@ public partial class Goal : Node2D
     [ExportSubgroup("Advanced")]
     [Export]
     public GoalType Type { get; set; } = GoalType.Main;
+
+    private static readonly NodePath NpGoalStick = "Stick Path/Path Follower/Goal Stick";
+    private GoalStick _stick;
     
     private static readonly PackedScene Score100 = GD.Load<PackedScene>("res://objects/ui/O_score_100.tscn");
+    private static readonly PackedScene Score200 = GD.Load<PackedScene>("res://objects/ui/O_score_200.tscn");
+    private static readonly PackedScene Score500 = GD.Load<PackedScene>("res://objects/ui/O_score_500.tscn");
+    private static readonly PackedScene Score1000 = GD.Load<PackedScene>("res://objects/ui/O_score_1000.tscn");
+    private static readonly PackedScene Score2000 = GD.Load<PackedScene>("res://objects/ui/O_score_2000.tscn");
+    private static readonly PackedScene Score5000 = GD.Load<PackedScene>("res://objects/ui/O_score_5000.tscn");
+    private static readonly PackedScene Score10000 = GD.Load<PackedScene>("res://objects/ui/O_score_10000.tscn");
     private static readonly AudioStream TimeSettlingSound = GD.Load<AudioStream>("res://resources/level/SE_time_settling.wav");
     private WeakRef _capturedPlayer;
 
@@ -102,7 +111,19 @@ public partial class Goal : Node2D
         Checkpoint.ClearSaved();
         if (this.GetLevelManager() is not { } manager) return;
 
-        manager.Level = ExitTarget ?? GD.Load<PackedScene>("res://resources/level/limbo.tscn");
+        if (ExitTarget is { } target)
+        {
+            manager.Level = target;
+            return;
+        }
+        
+        var targetFromNearby = this.GetPreferredRoot().Walk()
+            .OfType<Goal>()
+            .Where(g => g.ExitTarget != null)
+            .MinBy(g => ToLocal(g.GlobalPosition).LengthSquared())
+            ?.ExitTarget;
+
+        manager.Level = targetFromNearby ?? GD.Load<PackedScene>("res://resources/level/limbo.tscn");
     }
 
     private async void PlayTimeSettlingSound()
@@ -112,6 +133,38 @@ public partial class Goal : Node2D
             TimeSettlingSound.Play();
             await this.DelayAsync(0.1F, false);
         }
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+        if (Type is GoalType.Main)
+        {
+            this.GetNode(out _stick, NpGoalStick);
+            _stick.Activated += OnGoalStickActivated;
+        }
+    }
+    
+    private void OnGoalStickActivated()
+    {
+        PopScoreWhenHitStick();
+        CompleteLevel();
+    }
+
+    public void PopScoreWhenHitStick()
+    {
+        if (Type is not GoalType.Main) return;
+        var score = (ToLocal(_stick.GlobalPosition).Y switch
+        {
+            <= -266 + 30 => Score10000,
+            <= -266 + 60 => Score5000,
+            <= -266 + 100 => Score2000,
+            <= -266 + 150 => Score500,
+            <= -266 + 200 => Score200,
+            _ => Score100,
+        }).Instantiate<Node2D>();
+        this.GetPreferredRoot().AddChild(score);
+        score.GlobalPosition = _stick.GlobalPosition;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -169,19 +222,14 @@ public partial class Goal : Node2D
         }
     }
 
-    private static bool HasCompletedLevel(GodotObject player)
+    public static bool HasCompletedLevel(GodotObject player)
     {
-        if (player is Mario mario)
-        {
-            return mario.HasCompletedLevel;
-        }
-        else
-        {
-            return player.GetMeta(LevelCompletedMetaName) is { VariantType: Variant.Type.Bool } variant && variant.AsBool();
-        }
+        return player is Mario mario
+            ? mario.HasCompletedLevel
+            : player.GetMeta(LevelCompletedMetaName) is { VariantType: Variant.Type.Bool } variant && variant.AsBool();
     }
 
-    private static void SetLevelCompleted(GodotObject player, bool value)
+    public static void SetLevelCompleted(GodotObject player, bool value)
     {
         if (player is Mario mario)
         {
