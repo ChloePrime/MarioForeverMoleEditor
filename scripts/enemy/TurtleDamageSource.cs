@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
 using Godot;

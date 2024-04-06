@@ -1,4 +1,4 @@
-﻿using ChloePrime.MarioForever.RPG;
+using ChloePrime.MarioForever.RPG;
 using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;

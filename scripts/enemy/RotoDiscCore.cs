@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
