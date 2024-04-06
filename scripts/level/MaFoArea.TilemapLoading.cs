@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
 using Array = Godot.Collections.Array;
@@ -125,6 +126,7 @@ public partial class MaFoLevelArea
 				continue;
 			}
 			var instance = prefab.Instantiate();
+			PostInstantiate(instance, coord);
 			
 			root.AddChild(instance);
 			if (instance is Node2D node2D)
@@ -135,6 +137,7 @@ public partial class MaFoLevelArea
 			{
 				o.CustomOffset();
 			}
+			
 
 			if (presetLayer != -1)
 			{
@@ -144,6 +147,7 @@ public partial class MaFoLevelArea
 					LoadPreset(instance, preset);
 				}
 			}
+			
 			
 			tilemap.EraseCell(layer, coord);
 		}
@@ -205,6 +209,7 @@ public partial class MaFoLevelArea
 			return;
 		}
 		var instance = prefab.Instantiate();
+		PostInstantiate(instance, @object.Position);
 		
 		parent.AddChild(instance);
 		if (instance is Node2D node2D)
@@ -242,6 +247,14 @@ public partial class MaFoLevelArea
 		{
 			if (name == ResPathName) continue;
 			dataTarget.Set(name, dataSrc.GetMeta(name));
+		}
+	}
+
+	private static void PostInstantiate(Node @object, Vector2 context)
+	{
+		if (@object is INodeNameIsImportant)
+		{
+			@object.Name = $"{@object.GetClass()}_{context.X}_{context.Y}";
 		}
 	}
 

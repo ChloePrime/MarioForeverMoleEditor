@@ -52,7 +52,7 @@ public partial class LevelManager : Control
             {
                 child.QueueFree();
             }
-            GameViewport.AddChild(LevelInstance = _level.Instantiate());
+            GameViewport.AddChild(LevelInstance = InstantiateLevel(_level));
             if (LevelInstance is MaFoLevel mfl)
             {
                 Hud.WorldName = mfl.LevelName;
@@ -134,6 +134,13 @@ public partial class LevelManager : Control
         BackgroundMusic.Music = GameOverJingle;
         using var timer = GetTree().CreateTimer(6, true, true);
         timer.Timeout += () => _waitingForRestart = true;
+    }
+
+    private static Node InstantiateLevel(PackedScene level)
+    {
+        var instance = level.Instantiate();
+        instance.Name = "Level";
+        return instance;
     }
     
     public override void _Ready()

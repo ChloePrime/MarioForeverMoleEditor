@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Shared;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Level;
 
-public partial class Checkpoint : Area2D
+public partial class Checkpoint : Area2D, ICustomTileOffsetObject, INodeNameIsImportant
 {
     [MaybeNull]
     public static Location SavedLocation { get; set; }
@@ -36,6 +37,7 @@ public partial class Checkpoint : Area2D
     private static readonly NodePath NpSprite = "Sprite";
     private static readonly StringName AnimActivated = "activated";
     private AnimatedSprite2D _sprite;
+    private bool _reallyReady;
 
     public override void _Ready()
     {
@@ -46,10 +48,12 @@ public partial class Checkpoint : Area2D
         {
             _SetActivated();
         }
+        _reallyReady = true;
     }
 
     private void OnCheckpointBodyEntered(Node2D body)
     {
+        if (!_reallyReady) return;
         if (IsActivated) return;
         Activate();
     }
@@ -83,5 +87,10 @@ public partial class Checkpoint : Area2D
     {
         SavedLocation = null;
         ActivatedCheckpoints.Clear();
+    }
+
+    public void CustomOffset()
+    {
+        Translate(new Vector2(0, 16));
     }
 }

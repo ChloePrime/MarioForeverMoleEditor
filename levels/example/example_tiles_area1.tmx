@@ -4,6 +4,7 @@
  <tileset firstgid="301" source="../../tiles/TS_pipes.tsx"/>
  <tileset firstgid="496" source="../../tiles/TS_collision.tsx"/>
  <tileset firstgid="556" source="../../tiles/OBJ_TS_enemies.tsx"/>
+ <tileset firstgid="597" source="../../tiles/OBJ_TS_facility.tsx"/>
  <layer id="3" name="PipeFix" width="20" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -18,7 +19,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,588,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,597,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,321,322,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
