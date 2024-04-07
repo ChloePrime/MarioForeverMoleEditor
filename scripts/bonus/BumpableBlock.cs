@@ -1,4 +1,4 @@
-﻿using ChloePrime.Godot.Util;
+using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.RPG;
@@ -85,7 +85,7 @@ public partial class BumpableBlock : StaticBody2D, IBumpable
         }
     }
 
-    private void KillMobsAbove(Node2D bumper)
+    protected void KillMobsAbove(Node2D bumper)
     {
         var query = new PhysicsShapeQueryParameters2D
         {

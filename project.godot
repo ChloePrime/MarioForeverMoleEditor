@@ -120,6 +120,7 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plu
 2d_physics/layer_12="Platform"
 2d_physics/layer_17="Mario"
 2d_physics/layer_18="Enemy (Turning etc.)"
+2d_physics/layer_19="FX"
 
 [rendering]
 

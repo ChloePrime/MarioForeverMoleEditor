@@ -55,7 +55,7 @@ shape = SubResource("RectangleShape2D_xo1kh")
 texture = ExtResource("2_gaiiu")
 
 [node name="Animation Player" type="AnimationPlayer" parent="."]
-autoplay = "transparency"
 libraries = {
 "": SubResource("AnimationLibrary_5gfch")
 }
+autoplay = "transparency"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=50 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
@@ -47,6 +47,8 @@
 [ext_resource type="PackedScene" uid="uid://bg2dqueyd3rv4" path="res://objects/facility/O_platform_border_mark.tscn" id="45_7rymt"]
 [ext_resource type="PackedScene" uid="uid://b06h0dtdg48o2" path="res://objects/enemies/O_bullet_launcher_down.tscn" id="45_libls"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://objects/level/O_goal_small.tscn" id="46_jmabb"]
+[ext_resource type="PackedScene" uid="uid://cu4j48wogmvd8" path="res://objects/O_brick.tscn" id="48_hskqr"]
+[ext_resource type="PackedScene" uid="uid://ddfik35mapv35" path="res://objects/enemies/O_turtle_blue.tscn" id="49_4753s"]
 
 [node name="Example" type="Node2D"]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -274,3 +276,12 @@ position = Vector2(208, 168)
 
 [node name="Bullet Launcher (Down)" parent="." instance=ExtResource("45_libls")]
 position = Vector2(528, 336)
+
+[node name="Brick" parent="." instance=ExtResource("48_hskqr")]
+position = Vector2(304, 304)
+
+[node name="Brick2" parent="." instance=ExtResource("48_hskqr")]
+position = Vector2(176, 176)
+
+[node name="Blue Turtle" parent="Brick2" instance=ExtResource("49_4753s")]
+position = Vector2(240, 96)

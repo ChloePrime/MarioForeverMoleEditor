@@ -144,11 +144,15 @@ public partial class Mario : CharacterBody2D
     public MarioGrabMuzzle GrabMuzzle => GrabMuzzleBySize[(int)CurrentSize];
     public ComboTracker StompComboTracker => _stompComboTracker;
     
-
     /// <summary>
     /// 受下蹲影响
     /// </summary>
     public MarioSize CurrentSize { get; private set; }
+
+    /// <summary>
+    /// 不受是否处于下蹲状态影响
+    /// </summary>
+    public MarioSize StandingSize { get; private set; }
 
     [CtfFlag(2)]
     public bool IsCrouching { get; private set; }
@@ -186,7 +190,7 @@ public partial class Mario : CharacterBody2D
 
     public void ForceCancelCrouch()
     {
-        if (_standingSize != MarioSize.Big)
+        if (StandingSize != MarioSize.Big)
         {
             return;
         }
@@ -345,7 +349,7 @@ public partial class Mario : CharacterBody2D
 
     private void ProcessCrouch()
     {
-        if (_standingSize != MarioSize.Big)
+        if (StandingSize != MarioSize.Big)
         {
             return;
         }
@@ -594,10 +598,10 @@ public partial class Mario : CharacterBody2D
             sm.SetShaderParameter("outline_width", _currentSprite is Node3D ? 4F : 0F);
         }
         
-        _standingSize = _currentStatus.Size;
-        if (!(_standingSize == MarioSize.Big && IsCrouching))
+        StandingSize = _currentStatus.Size;
+        if (!(StandingSize == MarioSize.Big && IsCrouching))
         {
-            SetSize(_standingSize);
+            SetSize(StandingSize);
         }
     }
 
@@ -738,11 +742,6 @@ public partial class Mario : CharacterBody2D
     private IAnimatedSprite _currentSprite;
     private Camera2D _camera;
     private bool _cameraPosInitialized;
-
-    /// <summary>
-    /// 不受是否处于下蹲状态影响
-    /// </summary>
-    private MarioSize _standingSize;
 
     private readonly float[] _grabMuzzleOriginalXBySize = new float[Enum.GetValues<MarioSize>().Length];
     private readonly HashSet<StringName> _optionalAnimations = new();
