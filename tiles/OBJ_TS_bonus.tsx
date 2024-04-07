@@ -97,4 +97,15 @@
    <property name="res_path" type="file" value="res://objects/bonus/O_qblock_slippery_vn.tscn"/>
   </properties>
  </tile>
+ <tile id="44">
+  <properties>
+   <property name="res_path" type="file" value="res://objects/O_brick.tscn"/>
+  </properties>
+ </tile>
+ <tile id="55">
+  <properties>
+   <property name="preset" type="int" value="1"/>
+   <property name="res_path" type="file" value="res://objects/O_brick.tscn"/>
+  </properties>
+ </tile>
 </tileset>
