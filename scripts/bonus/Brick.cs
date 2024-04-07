@@ -42,7 +42,7 @@ public partial class Brick : BumpableBlock
     // 碎砖
     // ********
 
-    private static readonly PackedScene BrickPiecePrefab = GD.Load<PackedScene>("res://resources/bonus/O_brick_piece.tscn");
+    private static readonly PackedScene BrickPiecePrefab = GD.Load<PackedScene>("res://resources/bonus/brick_piece.tscn");
     private static readonly Vector2[] BrickPieceRelPosTable =
     {
         new (+5, +5),
