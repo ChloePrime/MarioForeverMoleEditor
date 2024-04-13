@@ -228,4 +228,4 @@ animations = [{
 [node name="Sprite_Small" instance=ExtResource("1_n5f4k")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_yua1i")
-animation = &"[05g] grabbing-jump"
+animation = &"[00g] grabbing-stop"

@@ -16,6 +16,8 @@ public static class MaFo
         public const int SolidEnemyOnly = 3;
         public const int HiddenBonus    = 4;
         public const int Water          = 5;
+        public const int ClimbableVert  = 6;
+        public const int Climbable2Dof  = 7;
         public const int DamageSource   = 9;
         public const int DeathSource    = 10;
         public const int Mario          = 17;
@@ -29,6 +31,8 @@ public static class MaFo
         public const uint SolidEnemyOnly = 1U << (CollisionLayers.SolidEnemyOnly - 1);
         public const uint HiddenBonus    = 1U << (CollisionLayers.HiddenBonus - 1);
         public const uint Water          = 1U << (CollisionLayers.Water - 1);
+        public const uint ClimbableVert  = 1U << (CollisionLayers.ClimbableVert - 1);
+        public const uint Climbable2Dof  = 1U << (CollisionLayers.Climbable2Dof - 1);
         public const uint DamageSource   = 1U << (CollisionLayers.DamageSource - 1);
         public const uint DeathSource    = 1U << (CollisionLayers.DeathSource - 1);
         public const uint Mario          = 1U << (CollisionLayers.Mario - 1);
