@@ -52,6 +52,7 @@ public partial class Mario
         public static readonly StringName AnimCrouching = "[07] crouching";
         public static readonly StringName ShaderParamAlpha = "rainbow_alpha";
         [CtfAnimation(12)] public static readonly StringName AnimSwimming = "[12] swimming";
+        public static readonly StringName AnimClimbing = "[13] climbing";
         public static readonly StringName DeprecatedAnimAppearing = "[03] appearing";
 
         public static readonly ImmutableHashSet<StringName> OptionalAnimations = ImmutableHashSet.Create(

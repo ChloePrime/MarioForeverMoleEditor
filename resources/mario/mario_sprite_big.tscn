@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://xk3v8y8h1dpp"]
+[gd_scene load_steps=25 format=3 uid="uid://xk3v8y8h1dpp"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://resources/mario/mario_sprite_prefab.tscn" id="1_3f8m8"]
 [ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://resources/mario/T_mario.png" id="3_rxbyq"]
@@ -78,6 +78,14 @@ region = Rect2(1024, 96, 64, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ds5xk"]
 atlas = ExtResource("3_rxbyq")
 region = Rect2(1216, 96, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxi64"]
+atlas = ExtResource("3_rxbyq")
+region = Rect2(192, 96, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1j4m"]
+atlas = ExtResource("3_rxbyq")
+region = Rect2(256, 96, 64, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_47fc0"]
 animations = [{
@@ -223,9 +231,19 @@ animations = [{
 "loop": true,
 "name": &"[12] swimming",
 "speed": 17.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxi64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1j4m")
+}],
+"loop": true,
+"name": &"[13] climbing",
+"speed": 6.0
 }]
 
 [node name="Sprite_Big" instance=ExtResource("1_3f8m8")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_47fc0")
-animation = &"[00g] grabbing-stop"
