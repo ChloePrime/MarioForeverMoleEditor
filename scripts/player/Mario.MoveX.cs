@@ -50,6 +50,13 @@ public partial class Mario
     /// </summary>
     private void PhysicsProcessX(float delta)
     {
+        if (IsClimbing) return;
+
+        if (MotionMode is not MotionModeEnum.Grounded)
+        {
+            MotionMode = MotionModeEnum.Grounded;
+        }
+        
         _running = _runPressed;
         _walkAxis = FetchWalkingInput();
         _walkAxis = (IsCrouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);

@@ -60,6 +60,9 @@ public partial class Mario : CharacterBody2D
     [Export] public float MaxYSpeedInWater { get; set; } = Units.Speed.CtfToGd(3);
     [Export] public float SwimStrength { get; set; } = Units.Speed.CtfToGd(3);
 
+    [ExportSubgroup("")]
+    [Export] public float ClimbSpeed { get; set; } = Units.Speed.CtfToGd(2);
+
     
     [ExportSubgroup("Swimming (Advanced)")]
     [Export] public float SwimStrengthAcc { get; set; } = Units.Speed.CtfToGd(0.5F);
@@ -286,6 +289,14 @@ public partial class Mario : CharacterBody2D
             return;
         }
         var delta = (float)deltaD;
+        if (IsClimbing)
+        {
+            ProcessClimb(delta);
+        }
+        else
+        {
+            ProcessClimbDetection();
+        }
         PhysicsProcessX(delta);
         PhysicsProcessY(delta);
         ProcessGrab(delta);
@@ -349,12 +360,12 @@ public partial class Mario : CharacterBody2D
 
     private void ProcessCrouch()
     {
-        if (StandingSize != MarioSize.Big)
+        if (IsClimbing || StandingSize != MarioSize.Big)
         {
             return;
         }
         // 水中需要触地才能蹲下
-        var isAirSwimming = (_isInAir && _isInWater);
+        var isAirSwimming = _isInAir && _isInWater;
         if (_downPressed && !isAirSwimming && !IsCrouching && !IsGrabbing)
         {
             SetSize(MarioSize.Small);
@@ -474,6 +485,11 @@ public partial class Mario : CharacterBody2D
         if (inPipe && PipeForceAnimation is { } pipeAnimation)
         {
             return (pipeAnimation, speed);
+        }
+
+        if (IsClimbing)
+        {
+            return (Constants.AnimClimbing, _isClimbMoving ? 1 : 0);
         }
         
         if (IsGrabbing)
@@ -671,6 +687,7 @@ public partial class Mario : CharacterBody2D
         _firePressed = Input.IsActionPressed(Constants.ActionFire);
         _sprintSmokeTimer.Timeout += () => EmitSmoke(Constants.SprintSmoke);
         _skidSmokeTimer.Timeout += () => EmitSmoke(Constants.SkidSmoke);
+        ClimbingReady();
         WaterReady();
 
         var statuses = StatusList.Count;

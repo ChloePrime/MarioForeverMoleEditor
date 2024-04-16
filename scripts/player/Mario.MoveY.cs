@@ -37,7 +37,18 @@ public partial class Mario
     
     public void Jump()
     {
-        Jump(JumpStrength);
+        var isClimbingBefore = IsClimbing;
+        ClimbStatus = MarioClimbStatus.NotClimbing;
+        
+        if (isClimbingBefore && _downPressed)
+        {
+            Jump(0);
+        }
+        else
+        {
+            Jump(JumpStrength);
+        }
+        
         _jumpSound.Play();
     }
 
@@ -85,7 +96,7 @@ public partial class Mario
 
     public void Jump(float strength)
     {
-        var bonus = GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
+        var bonus = strength == 0 ? 0 : GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
         YSpeed = -strength - bonus;
         _isInAir = true;
         _wilyJumpTime = -1;
@@ -93,6 +104,8 @@ public partial class Mario
     
     private void PhysicsProcessY(float delta)
     {
+        if (IsClimbing) goto Input;
+        
         MoveY(delta);
 
         if (_isInAir)
@@ -330,7 +343,7 @@ public partial class Mario
         if (ControlIgnored) return;
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {
-            if (!_isInAir || _wilyJumpTime >= 0)
+            if (!_isInAir || _wilyJumpTime >= 0 || IsClimbing)
             {
                 Jump();
             }

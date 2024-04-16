@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using Godot.Collections;
 
 namespace ChloePrime.MarioForever.Player;
@@ -7,6 +7,7 @@ namespace ChloePrime.MarioForever.Player;
 public partial class MarioCollisionBySize: Area2D
 {
     [Export] public Array<CollisionShape2D> ShapeBySize { get; private set; }
+    public CollisionShape2D CurrentShape => ShapeBySize[(int)_mario.CurrentSize];
 
     public void SetSize(MarioSize size)
     {

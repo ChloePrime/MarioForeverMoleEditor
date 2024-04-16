@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene load_steps=79 format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" path="res://scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://resources/mario/status_small.tres" id="2_4vo13"]
@@ -35,6 +35,9 @@ size = Vector2(17, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asyp1"]
 size = Vector2(7, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_07e11"]
+size = Vector2(24, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0sqx"]
 size = Vector2(32, 32)
@@ -474,6 +477,48 @@ position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
+[node name="Climb Detector (Vert)" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+collision_layer = 0
+collision_mask = 32
+input_pickable = false
+script = ExtResource("4_vtk5a")
+ShapeBySize = [NodePath("ClimbDetector_Small"), NodePath("ClimbDetector_Big"), NodePath("ClimbDetector_Mini")]
+
+[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_07e11")
+disabled = true
+
+[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_07e11")
+
+[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_07e11")
+disabled = true
+
+[node name="Climb Detector (2DOF)" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+collision_layer = 0
+collision_mask = 64
+input_pickable = false
+script = ExtResource("4_vtk5a")
+ShapeBySize = [NodePath("ClimbDetector_Small"), NodePath("ClimbDetector_Big"), NodePath("ClimbDetector_Mini")]
+
+[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_07e11")
+disabled = true
+
+[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_07e11")
+
+[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_07e11")
+disabled = true
+
 [node name="Water Detector" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
 collision_mask = 16
@@ -532,7 +577,6 @@ script = ExtResource("9_ug04s")
 position = Vector2(12, -17)
 
 [node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
-animation = &"[00] stopped"
 
 [node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot"]
 use_parent_material = true
