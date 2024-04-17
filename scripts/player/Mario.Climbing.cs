@@ -26,7 +26,7 @@ public partial class Mario
 
     private void ProcessClimbDetection()
     {
-        if (IsClimbing) return;
+        if (IsClimbing || PipeState != MarioPipeState.NotInPipe) return;
         if (ControlIgnored || !Input.IsActionPressed(Constants.ActionMoveUp)) return;
         
         if (_climbDetectorVert.HasOverlappingBodies())
