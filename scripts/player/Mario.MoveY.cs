@@ -38,6 +38,10 @@ public partial class Mario
     public void Jump()
     {
         var isClimbingBefore = IsClimbing;
+        if (isClimbingBefore)
+        {
+            _climbCdAfterJump = 0.25F;
+        }
         ClimbStatus = MarioClimbStatus.NotClimbing;
         
         if (isClimbingBefore && _downPressed)
@@ -60,6 +64,12 @@ public partial class Mario
 
     public void Swim()
     {
+        if (IsClimbing)
+        {
+            _climbCdAfterJump = 0.25F;
+        }
+        ClimbStatus = MarioClimbStatus.NotClimbing;
+        
         if (!_isNearWaterSurface)
         {
             var (min, max, acc) = (_upPressed, _downPressed) switch

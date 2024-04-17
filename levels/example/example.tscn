@@ -1,7 +1,7 @@
 [gd_scene load_steps=48 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
+[ext_resource type="PackedScene" uid="uid://030rikv3tesj" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://tiles/R_object_tile_presets.tres" id="3_ad6k1"]

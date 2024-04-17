@@ -295,7 +295,7 @@ public partial class Mario : CharacterBody2D
         }
         else
         {
-            ProcessClimbDetection();
+            ProcessClimbDetection(delta);
         }
         PhysicsProcessX(delta);
         PhysicsProcessY(delta);

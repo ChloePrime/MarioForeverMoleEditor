@@ -24,8 +24,14 @@ public partial class Mario
         this.GetNode(out _climbDetector2Dof, NpClimbDetector2Dof);
     }
 
-    private void ProcessClimbDetection()
+    private void ProcessClimbDetection(float delta)
     {
+        if (_climbCdAfterJump > 0)
+        {
+            _climbCdAfterJump -= delta;
+            return;
+        }
+        
         if (IsClimbing || PipeState != MarioPipeState.NotInPipe) return;
         if (ControlIgnored || !Input.IsActionPressed(Constants.ActionMoveUp)) return;
         
@@ -133,9 +139,10 @@ public partial class Mario
                 }
                 else
                 {
+                    var delta2 = Math.Max(delta, 1 / 50F);
                     ClimbStopTestParams.Transform = detector.CurrentShape.GlobalTransform with
                     {
-                        Origin = detector.CurrentShape.ToGlobal(new Vector2(Mathf.Sign(x) * ClimbSpeed / 50F, 0)),
+                        Origin = detector.CurrentShape.ToGlobal(new Vector2(Mathf.Sign(x) * delta2, 0)),
                     };
                     canMoveX = GetWorld2D().DirectSpaceState.IntersectShape(ClimbStopTestParams, 1).Count != 0;
                 }
@@ -181,4 +188,5 @@ public partial class Mario
     private MarioCollisionBySize _climbDetectorVert;
     private MarioCollisionBySize _climbDetector2Dof;
     private bool _isClimbMoving;
+    private float _climbCdAfterJump;
 }
