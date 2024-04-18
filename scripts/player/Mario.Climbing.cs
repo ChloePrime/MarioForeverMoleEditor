@@ -142,7 +142,7 @@ public partial class Mario
                     var delta2 = Math.Max(delta, 1 / 50F);
                     ClimbStopTestParams.Transform = detector.CurrentShape.GlobalTransform with
                     {
-                        Origin = detector.CurrentShape.ToGlobal(new Vector2(Mathf.Sign(x) * delta2, 0)),
+                        Origin = detector.CurrentShape.ToGlobal(new Vector2(Mathf.Sign(x) * ClimbSpeed * delta2, 0)),
                     };
                     canMoveX = GetWorld2D().DirectSpaceState.IntersectShape(ClimbStopTestParams, 1).Count != 0;
                 }
