@@ -23,6 +23,9 @@
 using System;
 using Godot;
 
+namespace YATI;
+
+[Tool]
 public class PostProcessing
 {
     private Error _error = Error.Ok;
@@ -54,8 +57,8 @@ public class PostProcessing
             try
             {
                 var returnedNode = scriptObj.Call("_PostProcess", (Variant)baseNode);
-                if (returnedNode.GetType().IsAssignableTo(typeof(Node2D)))
-                    return (Node2D)returnedNode;
+                if (returnedNode.Obj != null && returnedNode.Obj.GetType().IsAssignableTo(typeof(Node2D)))
+                    return (Node2D)returnedNode.Obj;
                 throw new NullReferenceException();
             }
             catch (NullReferenceException)

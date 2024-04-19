@@ -20,10 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if TOOLS
 using System.Linq;
 using Godot;
 using Godot.Collections;
 
+namespace YATI;
+
+[Tool]
 public static class DictionaryBuilder
 {
     private enum FileType
@@ -50,17 +54,16 @@ public static class DictionaryBuilder
         var extension = sourceFile.GetFile().GetExtension();
         if (new[] { "tmx", "tsx", "xml", "tx" }.Contains(extension))
             type = FileType.Xml;
-        else if (new[] { "tmj", "tsj", "json", "tj" }.Contains(extension))
+        else if (new[] { "tmj", "tsj", "json", "tj", "tiled-project" }.Contains(extension))
             type = FileType.Json;
         else
         {
-            var file = FileAccess.Open(checkedFile, FileAccess.ModeFlags.Read);
+            using var file = FileAccess.Open(checkedFile, FileAccess.ModeFlags.Read);
             var chunk = System.Text.Encoding.UTF8.GetString(file.GetBuffer(12));
             if (chunk.StartsWith("<?xml "))
                 type = FileType.Xml;
             else if (chunk.StartsWith("{ \""))
                 type = FileType.Json;
-            file = null;
         }
 
         switch (type)
@@ -73,7 +76,7 @@ public static class DictionaryBuilder
             case FileType.Json:
             {
                 var json = new Json();
-                var file = FileAccess.Open(checkedFile, FileAccess.ModeFlags.Read);
+                using var file = FileAccess.Open(checkedFile, FileAccess.ModeFlags.Read);
                 if (json.Parse(file.GetAsText()) == Error.Ok)
                     return (Dictionary)json.Data;
                 break;
@@ -86,3 +89,4 @@ public static class DictionaryBuilder
         return null;
     }
 }
+#endif

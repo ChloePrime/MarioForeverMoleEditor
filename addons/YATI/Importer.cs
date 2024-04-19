@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright (c) 2023 Roland Helmerichs
 //
@@ -20,8 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if TOOLS
 using Godot;
 using Godot.Collections;
+
+namespace YATI;
 
 [Tool]
 public partial class Importer: EditorImportPlugin
@@ -32,7 +35,7 @@ public partial class Importer: EditorImportPlugin
 
     public override string[] _GetRecognizedExtensions() => new [] { "tmx", "tmj" };
 
-    public override string _GetResourceType() => "Node2D";
+    public override string _GetResourceType() => "PackedScene";
 
     public override string _GetSaveExtension() => "tscn";
 
@@ -48,7 +51,12 @@ public partial class Importer: EditorImportPlugin
         {
             new() { { "name", "use_tilemap_layers" }, { "default_value", false } },
             new() { { "name", "use_default_filter" }, { "default_value", false } },
+            new() { { "name", "add_class_as_metadata" }, { "default_value", false } },
+            new() { { "name", "add_id_as_metadata" }, { "default_value", false } },
+            new() { { "name", "no_alternative_tiles" }, { "default_value", false } },
             new() { { "name", "map_wangset_to_terrain" }, { "default_value", false } },
+            new() { { "name", "tiled_project_file" }, { "default_value", "" },
+                    { "property_hint", (int)PropertyHint.File }, { "hint_string", "*.tiled-project;Project File" } },
             new() { { "name", "post_processor" }, { "default_value", "" },
                     { "property_hint", (int)PropertyHint.File }, { "hint_string", "*.cs;C# Script" } },
             new() { { "name", "save_tileset_to" }, { "default_value", "" },
@@ -75,13 +83,27 @@ public partial class Importer: EditorImportPlugin
             return Error.FileNotFound;
         }
 
+        CustomTypes ct = null;
         var tilemapCreator = new TilemapCreator();
         if ((string)options["use_tilemap_layers"] == "false")
             tilemapCreator.SetMapLayersToTilemaps(true);
         if ((string)options["use_default_filter"] == "true")
             tilemapCreator.SetUseDefaultFilter(true);
+        if ((string)options["add_class_as_metadata"] == "true")
+            tilemapCreator.SetAddClassAsMetadata(true);
+        if ((string)options["add_id_as_metadata"] == "true")
+            tilemapCreator.SetAddIdAsMetadata(true);
+        if ((string)options["no_alternative_tiles"] == "true")
+            tilemapCreator.SetNoAlternativeTiles(true);
         if ((string)options["map_wangset_to_terrain"] == "true")
             tilemapCreator.SetMapWangsetToTerrain(true);
+        if (options.ContainsKey("tiled_project_file") && (string)options["tiled_project_file"] != "")
+        {
+            ct = new CustomTypes();
+            ct.LoadCustomTypes((string)options["tiled_project_file"]);
+            tilemapCreator.SetCustomTypes(ct);
+        }
+
         var node2D = tilemapCreator.Create(sourceFile);
         if (node2D == null)
             return Error.Failed;
@@ -114,9 +136,10 @@ public partial class Importer: EditorImportPlugin
         //return ResourceSaver.Save(packedScene, $"{sourceFile.GetBaseName()}.{_GetSaveExtension()}");
         var ret = ResourceSaver.Save(packedScene, $"{savePath}.{_GetSaveExtension()}");
         if (ret != Error.Ok) return ret;
-        var dir = DirAccess.Open($"{sourceFile.GetBaseName().GetBaseDir()}");
-        ret = dir.Copy($"{savePath}.{_GetSaveExtension()}", $"{sourceFile.GetBaseName()}.{_GetSaveExtension()}");
-        if (ret != Error.Ok) return ret;
+        // v1.5.3: Copying no longer necessary, leave that to Godot's "Please confirm..." dialog box
+        //var dir = DirAccess.Open($"{sourceFile.GetBaseName().GetBaseDir()}");
+        //ret = dir.Copy($"{savePath}.{_GetSaveExtension()}", $"{sourceFile.GetBaseName()}.{_GetSaveExtension()}");
+        //if (ret != Error.Ok) return ret;
         var finalMessageString = "Import succeeded.";
         if (postProcError)
             finalMessageString = "Import finished.";
@@ -140,6 +163,8 @@ public partial class Importer: EditorImportPlugin
         GD.Print(finalMessageString);
         if (postProcError)
             GD.Print("Postprocessing was skipped due to some error.");
+        ct?.UnloadCustomTypes();
         return ret;
     }
 }
+#endif

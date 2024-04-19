@@ -23,13 +23,15 @@
 #if TOOLS
 using Godot;
 
+namespace YATI;
+
 [Tool]
 public partial class TiledImport : EditorPlugin
 {
 	private EditorImportPlugin _xmlImport;
-
+	
 	public override string _GetPluginName() => "Yet another Tiled importer";
-
+	
 	public override void _EnterTree()
 	{
 		_xmlImport = new Importer();

@@ -1,13 +1,13 @@
-[gd_scene load_steps=48 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=39 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles.tscn" id="1_xiix0"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://objects/O_mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://tiles/R_object_tile_presets.tres" id="3_ad6k1"]
 [ext_resource type="Script" path="res://scripts/level/MaFoLevelArea.cs" id="3_gyt0a"]
 [ext_resource type="Script" path="res://scripts/player/MaFoCamera.cs" id="4_jc67v"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://objects/O_music_changer.tscn" id="6_5ta4l"]
+[ext_resource type="PackedScene" uid="uid://drt0lrsquocxi" path="res://levels/example/example_tiles.tmx" id="6_6hpwf"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
 [ext_resource type="PackedScene" uid="uid://be6r440u75fjg" path="res://objects/background/O_bg_forest_hills.tscn" id="11_nfc1d"]
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
@@ -22,30 +22,21 @@
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://objects/enemies/O_goomba.tscn" id="21_l8ajo"]
-[ext_resource type="PackedScene" path="res://levels/example/example_tiles_area1.tscn" id="26_d5aqm"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
 [ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://objects/background/O_bg_underground.tscn" id="29_g2m7a"]
 [ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
-[ext_resource type="PackedScene" uid="uid://cbjby6d0tq3lk" path="res://objects/facility/O_standard_moving_platform.tscn" id="33_qi6oy"]
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
-[ext_resource type="PackedScene" uid="uid://g2i4xl17ult3" path="res://objects/facility/O_platform_style_mark_castle_long.tscn" id="35_v83nq"]
+[ext_resource type="PackedScene" uid="uid://dvmjb13j7iff" path="res://levels/example/example_tiles_area1.tmx" id="36_3k0x5"]
 [ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://objects/facility/O_spring.tscn" id="36_132yy"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 [ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://objects/level/fluid/O_area_water.tscn" id="37_mi6cf"]
-[ext_resource type="PackedScene" uid="uid://cnaj8b4v3ig13" path="res://objects/facility/O_platform_style_mark_cloud.tscn" id="38_y6kiw"]
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://objects/level/O_goal.tscn" id="38_ypky8"]
-[ext_resource type="PackedScene" uid="uid://du1fnspwmuqmw" path="res://objects/facility/O_platform_style_mark_blue.tscn" id="40_8fjok"]
-[ext_resource type="PackedScene" uid="uid://dbse21on8q36x" path="res://objects/facility/O_platform_style_mark_grey.tscn" id="41_ynb1s"]
-[ext_resource type="PackedScene" uid="uid://bwx1qja17g4da" path="res://objects/facility/O_platform_speed_mark_slow.tscn" id="42_hfvav"]
-[ext_resource type="PackedScene" uid="uid://c56msmg77bnip" path="res://objects/facility/O_platform_speed_mark_medium.tscn" id="43_3xnmk"]
-[ext_resource type="PackedScene" uid="uid://bg2dqueyd3rv4" path="res://objects/facility/O_platform_border_mark.tscn" id="45_7rymt"]
-[ext_resource type="PackedScene" uid="uid://b06h0dtdg48o2" path="res://objects/enemies/O_bullet_launcher_down.tscn" id="45_libls"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://objects/level/O_goal_small.tscn" id="46_jmabb"]
 
 [node name="Example" type="Node2D"]
@@ -65,10 +56,10 @@ script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("2_4kt55")
 
+[node name="Tiles" parent="Overworld" instance=ExtResource("6_6hpwf")]
+
 [node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
-
-[node name="Tiles" parent="Overworld" instance=ExtResource("1_xiix0")]
 
 [node name="Mario" parent="Overworld" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") instance=ExtResource("3_5usbp")]
 position = Vector2(272, 408)
@@ -206,26 +197,6 @@ position = Vector2(784, 416)
 [node name="Area Water" parent="Overworld" instance=ExtResource("37_mi6cf")]
 position = Vector2(32, 448)
 
-[node name="Standard Moving Platform" parent="Overworld" instance=ExtResource("33_qi6oy")]
-position = Vector2(176, 288)
-
-[node name="Standard Moving Platform2" parent="Overworld" instance=ExtResource("33_qi6oy")]
-position = Vector2(176, 224)
-
-[node name="Standard Moving Platform3" parent="Overworld" instance=ExtResource("33_qi6oy")]
-position = Vector2(176, 160)
-
-[node name="Standard Moving Platform4" parent="Overworld" instance=ExtResource("33_qi6oy")]
-position = Vector2(176, 96)
-scale = Vector2(1.01278, 0.841731)
-Velocity = Vector2(300, 0)
-
-[node name="Platform Style Mark (Cloud)" parent="Overworld" instance=ExtResource("38_y6kiw")]
-position = Vector2(176, 304)
-
-[node name="Platform Style Mark (Castle, Long)" parent="Overworld" instance=ExtResource("35_v83nq")]
-position = Vector2(176, 240)
-
 [node name="Goal (Small)" parent="Overworld" instance=ExtResource("46_jmabb")]
 position = Vector2(2320, 416)
 
@@ -239,7 +210,7 @@ Border = Rect2(0, 480, 640, 480)
 AreaMusic = ExtResource("28_r5h0v")
 Darkness = 1.0
 
-[node name="Tiles" parent="Bonus Room" instance=ExtResource("26_d5aqm")]
+[node name="Tiles" parent="Bonus Room" instance=ExtResource("36_3k0x5")]
 
 [node name="Bonus Room Entrance" parent="Bonus Room" instance=ExtResource("28_iu26d")]
 position = Vector2(128, 128)
@@ -253,24 +224,3 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
-
-[node name="Platform Style Mark (Blue)" parent="." instance=ExtResource("40_8fjok")]
-position = Vector2(176, 176)
-
-[node name="Platform Style Mark (Blue)2" parent="." instance=ExtResource("41_ynb1s")]
-position = Vector2(176, 112)
-
-[node name="Platform Border Mark" parent="." instance=ExtResource("45_7rymt")]
-position = Vector2(336, 112)
-
-[node name="Platform Border Mark2" parent="." instance=ExtResource("45_7rymt")]
-position = Vector2(80, 112)
-
-[node name="Platform Speed Mark (Slow)" parent="." instance=ExtResource("42_hfvav")]
-position = Vector2(208, 240)
-
-[node name="Platform Speed Mark (Medium)" parent="." instance=ExtResource("43_3xnmk")]
-position = Vector2(208, 176)
-
-[node name="Bullet Launcher (Down)" parent="." instance=ExtResource("45_libls")]
-position = Vector2(528, 336)

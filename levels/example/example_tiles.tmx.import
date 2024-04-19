@@ -1,7 +1,7 @@
 [remap]
 
 importer="YATI"
-type="Node2D"
+type="PackedScene"
 uid="uid://drt0lrsquocxi"
 path="res://.godot/imported/example_tiles.tmx-bb92b7984644c9a1a6e51b8416803135.tscn"
 
@@ -14,6 +14,10 @@ dest_files=["res://.godot/imported/example_tiles.tmx-bb92b7984644c9a1a6e51b84168
 
 use_tilemap_layers=false
 use_default_filter=false
+add_class_as_metadata=false
+add_id_as_metadata=false
+no_alternative_tiles=false
 map_wangset_to_terrain=false
+tiled_project_file=""
 post_processor=""
 save_tileset_to=""

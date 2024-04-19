@@ -20,15 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if TOOLS
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Godot;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
 using FileAccess = Godot.FileAccess;
+
+namespace YATI;
 
 [Tool]
 public class TilemapCreator
@@ -40,6 +44,10 @@ public class TilemapCreator
     private const string BackgroundColorRectName = "Background Color";
     private const string WarningColor = "Yellow";
     private const string CustomDataInternal = "__internal__";
+    private const string GodotNodeTypeProperty = "godot_node_type";
+    private const string GodotGroupProperty = "godot_group";
+    private const string GodotScriptProperty = "godot_script";
+    private const string DefaultAlignment = "unspecified";
 
     private static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
     private string _mapOrientation;
@@ -57,6 +65,7 @@ public class TilemapCreator
     private float _tilemapOffsetY;
     private TileSet _tileset;
     private string _currentTilesetOrientation;
+    private string _currentObjectAlignment;
     private Node2D _baseNode;
     private ParallaxBackground _parallaxBackground;
     private ColorRect _background;
@@ -69,10 +78,14 @@ public class TilemapCreator
     private bool _mapLayersToTilemaps;
     private int _tmLayerCounter;
     private readonly Array<int> _firstGids = new ();
-    private Array _atlasSources;
+    private List<Dictionary> _atlasSources;
     private bool _useDefaultFilter;
     private bool _mapWangsetToTerrain;
+    private bool _addClassAsMetadata;
+    private bool _addIdAsMetadata;
+    private bool _dontUseAlternativeTiles;
     private Dictionary _objectGroups;
+    private CustomTypes _ct;
 
     private float _isoRot;
     private float _isoSkew;
@@ -80,8 +93,9 @@ public class TilemapCreator
 
     private int _errorCount;
     private int _warningCount;
+    private int _godotVersion;
 
-    private enum ObjectClass
+    private enum GodotType
     {
         Empty,
         Body,
@@ -117,9 +131,29 @@ public class TilemapCreator
         _useDefaultFilter = value;
     }
 
+    public void SetAddClassAsMetadata(bool value)
+    {
+        _addClassAsMetadata = value;
+    }
+
+    public void SetAddIdAsMetadata(bool value)
+    {
+        _addIdAsMetadata = value;
+    }
+
+    public void SetNoAlternativeTiles(bool value)
+    {
+        _dontUseAlternativeTiles = value;
+    }
+    
     public void SetMapWangsetToTerrain(bool value)
     {
         _mapWangsetToTerrain = value;
+    }
+
+    public void SetCustomTypes(CustomTypes ct)
+    {
+        _ct = ct;
     }
 
     public TileSet GetTileset()
@@ -127,8 +161,18 @@ public class TilemapCreator
         return _tileset;
     }
 
+    private static void RecursivelyChangeOwner(Node node, Node newOwner)
+    {
+        if (node != newOwner)
+            node.Owner = newOwner;
+        if (node.GetChildCount() <= 0) return;
+        foreach (var child in node.GetChildren())
+            RecursivelyChangeOwner(child, newOwner);
+    }
+
     public Node2D Create(string sourceFile)
     {
+        _godotVersion = (int)Engine.GetVersionInfo()["hex"];
         _basePath = sourceFile.GetBaseDir();
         var baseDictionary = DictionaryBuilder.GetDictionary(sourceFile);
         _mapOrientation = (string)baseDictionary.GetValueOrDefault("orientation", "orthogonal");
@@ -141,6 +185,8 @@ public class TilemapCreator
         //_parallaxOriginY = (int)baseDictionary.GetValueOrDefault("parallaxoriginy", 0);
         _backgroundColor = (string)baseDictionary.GetValueOrDefault("backgroundcolor", "");
 
+        _ct?.MergeCustomProperties(baseDictionary, "map");
+
         if (baseDictionary.TryGetValue("tilesets", out var tsVal))
         {
             var tileSets = (Array<Dictionary>)tsVal;
@@ -149,12 +195,16 @@ public class TilemapCreator
             var tilesetCreator = new TilesetCreator();
             tilesetCreator.SetBasePath(sourceFile);
             tilesetCreator.SetMapParameters(new Vector2I(_mapTileWidth, _mapTileHeight));
+            if (_ct != null)
+                tilesetCreator.SetCustomTypes(_ct);
             if (_mapWangsetToTerrain)
                 tilesetCreator.MapWangsetToTerrain();
             _tileset = tilesetCreator.CreateFromDictionaryArray(tileSets);
             _errorCount = tilesetCreator.GetErrorCount();
             _warningCount = tilesetCreator.GetWarningCount();
-            _atlasSources = tilesetCreator.GetRegisteredAtlasSources();
+            var unsorted = tilesetCreator.GetRegisteredAtlasSources();
+            if (unsorted != null)
+                _atlasSources = unsorted.OrderBy(x => (int)x["sourceId"]).ToList();
             _objectGroups = tilesetCreator.GetRegisteredObjectGroups();
         }
         // If tileset still null create an empty one
@@ -222,12 +272,13 @@ public class TilemapCreator
         if (_baseNode.GetChildCount() > 1) return _baseNode;
 
         var ret = (Node2D)_baseNode.GetChild(0);
+        RecursivelyChangeOwner(ret, ret);
         if (baseDictionary.TryGetValue("properties", out mapProps))
             HandleProperties(ret, (Array<Dictionary>)mapProps, true);
         ret.Name = _baseName;
         return ret;
     }
-
+    
     private void HandleLayer(Dictionary layer, Node parent)
     {
         //var layerId = (int)layer["id"];
@@ -239,6 +290,8 @@ public class TilemapCreator
         _compression = (string)layer.GetValueOrDefault("compression", "");
         var layertype = (string)layer.GetValueOrDefault("type", "tilelayer");
         var tintColor = (string)layer.GetValueOrDefault("tintcolor", "#ffffff");
+
+        _ct?.MergeCustomProperties(layer, "layer");
 
         // v1.2: Skip layer
         if (GetProperty(layer, "no_import", "bool") == "true")
@@ -256,10 +309,12 @@ public class TilemapCreator
             {
                 if (_mapOrientation == "isometric")
                     layerOffsetX += _mapTileWidth * (_mapHeight / 2.0f - 0.5f);
+                var layerName = (string)layer["name"];
                 if (_mapLayersToTilemaps)
                 {
                     _tilemap = new TileMap();
-                    _tilemap.Name = (string)layer["name"];
+                    if (layerName != "")
+                        _tilemap.Name = layerName;
                     _tilemap.Visible = layerVisible;
                     _tilemap.Position = new Vector2(layerOffsetX, layerOffsetY);
                     if ((layerOpacity < 1.0f) || (tintColor != "#ffffff"))
@@ -277,7 +332,8 @@ public class TilemapCreator
                     if (_tilemap == null)
                     {
                         _tilemap = new TileMap();
-                        _tilemap.Name = (string)layer["name"];
+                        if (layerName != "")
+                            _tilemap.Name = layerName;
                         _tilemap.RemoveLayer(0);
                         HandleParallaxes(parent, _tilemap, layer);
                         _tilemapOffsetX = layerOffsetX;
@@ -286,11 +342,11 @@ public class TilemapCreator
                         if (_mapOrientation is "isometric" or "staggered")
                             _tilemap.YSortEnabled = true;
                     }
-                    else
-                        _tilemap.Name += "|" + (string)layer["name"];
+                    else if (layerName != "")
+                        _tilemap.Name += "|" + layerName;
                     _tilemap.TileSet ??= _tileset;
                     _tilemap.AddLayer(_tmLayerCounter);
-                    _tilemap.SetLayerName(_tmLayerCounter, (string)layer["name"]);
+                    _tilemap.SetLayerName(_tmLayerCounter, layerName);
                     _tilemap.SetLayerEnabled(_tmLayerCounter, layerVisible);
                     if (_mapOrientation is "isometric" or "staggered")
                         _tilemap.SetLayerYSortEnabled(_tmLayerCounter, true);
@@ -559,7 +615,13 @@ public class TilemapCreator
             }
             var navigationPolygon = new NavigationPolygon();
             navigationPolygon.AddOutline(ptsNew);
-            navigationPolygon.MakePolygonsFromOutlines();
+            //navigationPolygon.MakePolygonsFromOutlines();
+            // Replaced in 4.2 deprecated function MakePolygonsFromOutlines
+            navigationPolygon.Vertices = ptsNew;
+            var polygon = new int[navigationPolygon.Vertices.Length];
+            for (var idx = 0; idx < navigationPolygon.Vertices.Length; idx++)
+                polygon[idx] = idx;
+            navigationPolygon.AddPolygon(polygon);
             targetData.SetNavigationPolygon(layerId, navigationPolygon);
         }
 
@@ -604,12 +666,9 @@ public class TilemapCreator
             var cellCoords = new Vector2I(cellCounter % mapWidth + offsetX, cellCounter / mapWidth + offsetY);
 
             var sourceId = GetMatchingSourceId(gid);
-            var tileOffset = GetTileOffset(gid);
-            var firstGidId = GetFirstGidIndex(gid);
-            if (firstGidId > sourceId)
-                sourceId = firstGidId;
             // Should not be the case, but who knows...
             if (sourceId < 0) continue;
+            var tileOffset = GetTileOffset(gid);
 
             TileSetAtlasSource atlasSource;
             if (_tileset.HasSource(sourceId))
@@ -643,58 +702,107 @@ public class TilemapCreator
             var altId = 0;
             if (flippedH || flippedV || flippedD)
             {
-                altId = (flippedH ? 1 : 0) + (flippedV ? 2 : 0) + (flippedD ? 4 : 0);
-                if (!atlasSource.HasAlternativeTile(atlasCoords, altId))
+                if (_dontUseAlternativeTiles && _godotVersion >= 0x40200)
                 {
-                    atlasSource.CreateAlternativeTile(atlasCoords, altId);
-                    var tileData = atlasSource.GetTileData(atlasCoords, altId);
-                    tileData.FlipH = flippedH;
-                    tileData.FlipV = flippedV;
-                    tileData.Transpose = flippedD;
-                    var tileSize = atlasSource.TextureRegionSize;
+                    if (flippedH)
+                        altId |= (int)TileSetAtlasSource.TransformFlipH;
+                    if (flippedV)
+                        altId |= (int)TileSetAtlasSource.TransformFlipV;
                     if (flippedD)
-                        tileSize = new Vector2I(tileSize.Y, tileSize.X);
-                    if (tileSize.X != _mapTileWidth || tileSize.Y != _mapTileHeight)
+                        altId |= (int)TileSetAtlasSource.TransformTranspose;
+                }
+                else
+                {
+                    altId = (flippedH ? 1 : 0) + (flippedV ? 2 : 0) + (flippedD ? 4 : 0);
+                    if (!atlasSource.HasAlternativeTile(atlasCoords, altId))
                     {
-                        var diffX = tileSize.X - _mapTileWidth;
-                        if (diffX % 2 != 0) 
-                            diffX -= 1;
-                        var diffY = tileSize.Y - _mapTileHeight;
-                        if (diffY % 2 != 0)
-                            diffY += 1;
-                        tileData.TextureOrigin = new Vector2I(-diffX/2, diffY/2) - tileOffset;
+                        atlasSource.CreateAlternativeTile(atlasCoords, altId);
+                        var tileData = atlasSource.GetTileData(atlasCoords, altId);
+                        tileData.FlipH = flippedH;
+                        tileData.FlipV = flippedV;
+                        tileData.Transpose = flippedD;
+                        var tileSize = atlasSource.TextureRegionSize;
+                        if (flippedD)
+                            tileSize = new Vector2I(tileSize.Y, tileSize.X);
+                        if (tileSize.X != _mapTileWidth || tileSize.Y != _mapTileHeight)
+                        {
+                            var diffX = tileSize.X - _mapTileWidth;
+                            if (diffX % 2 != 0) 
+                                diffX -= 1;
+                            var diffY = tileSize.Y - _mapTileHeight;
+                            if (diffY % 2 != 0)
+                                diffY += 1;
+                            tileData.TextureOrigin = new Vector2I(-diffX/2, diffY/2) - tileOffset;
+                        }
+                        CreatePolygonsOnAlternativeTiles(atlasSource.GetTileData(atlasCoords, 0), tileData, altId);
                     }
-                    CreatePolygonsOnAlternativeTiles(atlasSource.GetTileData(atlasCoords, 0), tileData, altId);
                 }
             }
             _tilemap.SetCell(_tmLayerCounter, cellCoords, sourceId, atlasCoords, altId);
         }
     }
 
-    private static ObjectClass GetObjectClass(string className)
+    private static GodotType GetGodotType(string godotTypeString)
     {
-        var cn = className.ToLower();
-        return cn switch
+        var gts = godotTypeString.ToLower();
+        return gts switch
         {
-            "" => ObjectClass.Empty,
-            "collision" => ObjectClass.Body,
-            "staticbody" => ObjectClass.Body,
-            "characterbody" => ObjectClass.CBody,
-            "rigidbody" => ObjectClass.RBody,
-            "area" => ObjectClass.Area,
-            "navigation" => ObjectClass.Navigation,
-            "occluder" => ObjectClass.Occluder,
-            "occlusion" => ObjectClass.Occluder,
-            "line" => ObjectClass.Line,
-            "path" => ObjectClass.Path,
-            "polygon" => ObjectClass.Polygon,
-            "instance" => ObjectClass.Instance,
-            _ => ObjectClass.Unknown
+            "" => GodotType.Empty,
+            "collision" => GodotType.Body,
+            "staticbody" => GodotType.Body,
+            "characterbody" => GodotType.CBody,
+            "rigidbody" => GodotType.RBody,
+            "area" => GodotType.Area,
+            "navigation" => GodotType.Navigation,
+            "occluder" => GodotType.Occluder,
+            "occlusion" => GodotType.Occluder,
+            "line" => GodotType.Line,
+            "path" => GodotType.Path,
+            "polygon" => GodotType.Polygon,
+            "instance" => GodotType.Instance,
+            _ => GodotType.Unknown
+        };
+    }
+
+    private static string GetGodotNodeTypeProperty(Dictionary obj, out bool propertyFound)
+    {
+        var ret = "";
+        propertyFound = false;    
+        if (!obj.TryGetValue("properties", out var props)) return ret;
+        foreach (var property in (Array<Dictionary>)props)
+        {
+            var name = (string)property.GetValueOrDefault("name", "");
+            var type = (string)property.GetValueOrDefault("type", "string");
+            var val = (string)property.GetValueOrDefault("value", "");
+            if (name.ToLower() != GodotNodeTypeProperty || type != "string") continue;
+            propertyFound = true;
+            ret = val;
+            break;
+        }
+
+        return ret;
+    }
+
+    private static void SetSpriteOffset(Sprite2D objSprite, float width, float height, string alignment)
+    {
+        objSprite.Offset = alignment switch
+        {
+            "bottomleft" => new Vector2(width / 2.0f, -height / 2.0f),
+            "bottom" => new Vector2(0.0f, -height / 2.0f),
+            "bottomright" => new Vector2(-width / 2.0f, -height / 2.0f),
+            "left" => new Vector2(width / 2.0f, 0.0f),
+            "center" => new Vector2(0.0f, 0.0f),
+            "right" => new Vector2(-width / 2.0f, 0.0f),
+            "topleft" => new Vector2(width / 2.0f, height / 2.0f),
+            "top" => new Vector2(0.0f, height / 2.0f),
+            "topright" => new Vector2(-width / 2.0f, height / 2.0f),
+            _ => objSprite.Offset
         };
     }
 
     private void HandleObject(Dictionary obj, Node layerNode, TileSet tileset, Vector2 offSet)
     {
+        var objId = (int)obj.GetValueOrDefault("id", 0);
         var objX = (float)obj.GetValueOrDefault("x", offSet.X);
         var objY = (float)obj.GetValueOrDefault("y", offSet.Y);
         var objRot = (float)obj.GetValueOrDefault("rotation", 0.0f);
@@ -702,11 +810,32 @@ public class TilemapCreator
         var objHeight = (float)obj.GetValueOrDefault("height", 0.0f);
         var objVisible = (bool)obj.GetValueOrDefault("visible", true);
         var objName = (string)obj.GetValueOrDefault("name", "");
+
+        _ct?.MergeCustomProperties(obj, "object");
+
         var classString = (string)obj.GetValueOrDefault("class", "");
         if (classString == "")
             classString = (string)obj.GetValueOrDefault("type", "");
-        var objClass = GetObjectClass(classString);
+        var godotNodeTypePropertyString = GetGodotNodeTypeProperty(obj, out var godotNodeTypePropFound);
+        if (!godotNodeTypePropFound)
+            godotNodeTypePropertyString = classString;
+        var godotType = GetGodotType(godotNodeTypePropertyString);
 
+        if (godotType == GodotType.Unknown)
+        {
+            if (!_addClassAsMetadata && classString != "" && !godotNodeTypePropFound)
+            {
+                GD.PrintRich($"[color={WarningColor}] -- Unknown class '{classString}'. -> Assuming Default[/color]");
+                _warningCount++;
+            }
+            else if (godotNodeTypePropFound && godotNodeTypePropertyString != "")
+            {
+                GD.PrintRich($"[color={WarningColor}] -- Unknown {GodotNodeTypeProperty} '{godotNodeTypePropertyString}'. -> Assuming Default[/color]");
+                _warningCount++;
+            }
+            godotType = GodotType.Body;
+        }
+        
         if (obj.TryGetValue("template", out var tplVal))
         {
             var templatePath = _basePath.PathJoin((string)tplVal);
@@ -732,13 +861,47 @@ public class TilemapCreator
             {
                 foreach (var templateObj in (Array<Dictionary>)objs)
                 {
+                    templateObj["template_dir_path"] = templatePath.GetBaseDir();
+                    
+                    // v1.5.3 Fix according to Carlo M (dogezen)
+                    // override and merge properties defined in obj with properties defined in template
+                    // since obj may override and define additional properties to those defined in template
+                    if (obj.TryGetValue("properties", out var objProps))
+                    {
+                        if (templateObj.TryGetValue("properties", out var templateProps))
+                        {
+                            // merge obj properties that may have been overridden in the obj instance
+                            // and add any additional properties defined in instanced obj that are 
+                            // not defined in template
+                            foreach (var prop in (Array<Dictionary>)objProps)
+                            {
+                                var found = false;
+                                foreach (var templateProp in (Array<Dictionary>)templateProps)
+                                {
+                                    if ((string)prop["name"] != (string)templateProp["name"]) continue;
+                                    templateProp["value"] = prop["value"];
+                                    found = true;
+                                    break;
+                                }
+                                if (!found)
+                                    ((Array<Dictionary>)templateProps).Add(prop);
+                            }
+                        }
+                        else
+                        {
+                            // template comes without properties, since obj has properties
+                            // then merge them into the template
+                            templateObj["properties"] = objProps;
+                        }
+                    }
+
                     HandleObject(templateObj, layerNode, templateTileSet, new Vector2(objX, objY));
                 }
             }
         }
         
         // v1.2: New class 'instance'
-        if (objClass == ObjectClass.Instance && !obj.ContainsKey("template") && !obj.ContainsKey("text"))
+        if (godotType == GodotType.Instance && !obj.ContainsKey("template") && !obj.ContainsKey("text"))
         {
             var resPath = GetProperty(obj, "res_path", "file");
             if (resPath == "")
@@ -748,6 +911,8 @@ public class TilemapCreator
             }
             else
             {
+                if (obj.TryGetValue("template_dir_path", out var tdPath))
+                    resPath = ((string)tdPath).PathJoin(resPath);
                 var scene = (PackedScene)LoadResourceFromFile(resPath);
                 // Error check
                 if (scene == null) return;
@@ -773,18 +938,25 @@ public class TilemapCreator
             intId &= 0xFFFFFFFF;
             var flippedH = (intId & FlippedHorizontallyFlag) > 0;
             var flippedV = (intId & FlippedVerticallyFlag) > 0;
-            //var flippedD = (intId & FlippedDiagonallyFlag) > 0;
             var gid = (int)(intId & 0x0FFFFFFF);
-
+            
             var sourceId = GetMatchingSourceId(gid);
-            var tileOffset = GetTileOffset(gid);
-            _currentTilesetOrientation = GetTilesetOrientation(gid);
-            var firstGidId = GetFirstGidIndex(gid);
-            if (firstGidId > sourceId)
-                sourceId = firstGidId;
             // Should not be the case, but who knows...
             if (sourceId < 0) return;
+
+            var tileOffset = GetTileOffset(gid);
+            _currentTilesetOrientation = GetTilesetOrientation(gid);
+            _currentObjectAlignment = GetTilesetAlignment(gid);
+            if (_currentObjectAlignment == DefaultAlignment)
+                _currentObjectAlignment = _mapOrientation == "orthogonal" ? "bottomleft" : "bottom";
         
+            if (!tileset.HasSource(sourceId))
+            {
+                GD.PrintErr($"Could not get AtlasSource with id {sourceId}. -> Skipped");
+                _errorCount++;
+                return;
+            }
+
             var gidSource = (TileSetAtlasSource)tileset.GetSource(sourceId);
             var objSprite = new Sprite2D();
             layerNode.AddChild(objSprite);
@@ -821,12 +993,7 @@ public class TilemapCreator
                     objHeight -= 1.0f;
                 }
                 objSprite.RegionRect = new Rect2(pos, regionSize);
-                objSprite.Offset = _mapOrientation switch
-                {
-                    "orthogonal" => new Vector2(regionSize.X / 2.0f, -regionSize.Y / 2.0f),
-                    "isometric" => new Vector2(0.0f, -regionSize.Y / 2.0f),
-                    _ => new Vector2(regionSize.X / 2.0f, -regionSize.Y / 2.0f)
-                };
+                SetSpriteOffset(objSprite, regionSize.X, regionSize.Y, _currentObjectAlignment);
                 if (Math.Abs(regionSize.X - (int)objWidth) > 0.01f || Math.Abs(regionSize.Y - (int)objHeight) > 0.01f)
                 {
                     var scaleX = objWidth / regionSize.X;
@@ -837,14 +1004,15 @@ public class TilemapCreator
             else
             {
                 // Object is single image tile
-                var gidWidth = gidSource.Texture.GetWidth();
-                var gidHeight = gidSource.Texture.GetHeight();
-                objSprite.Offset = _mapOrientation switch
+                var gidWidth = gidSource.TextureRegionSize.X;
+                var gidHeight = gidSource.TextureRegionSize.Y;
+                SetSpriteOffset(objSprite, gidWidth, gidHeight, _currentObjectAlignment);
+                // Tiled sub rects?
+                if (gidWidth != gidSource.Texture.GetWidth() || gidHeight != gidSource.Texture.GetHeight())
                 {
-                    "orthogonal" => new Vector2(gidSource.Texture.GetWidth() / 2.0f, -gidSource.Texture.GetHeight() / 2.0f),
-                    "isometric" => new Vector2(0.0f, -gidSource.Texture.GetHeight() / 2.0f),
-                    _ => new Vector2(gidSource.Texture.GetWidth() / 2.0f, -gidSource.Texture.GetHeight() / 2.0f)
-                };
+                    objSprite.RegionEnabled = true;
+                    objSprite.RegionRect = new Rect2(gidSource.Margins, gidSource.TextureRegionSize);
+                }
                 if ((gidWidth != (int)objWidth) || (gidHeight != (int)objHeight))
                 {
                     var scaleX = objWidth / gidWidth;
@@ -858,12 +1026,12 @@ public class TilemapCreator
             var idx = (int)td.GetCustomData(CustomDataInternal);
             if (idx > 0)
             {
-                CollisionObject2D parent = objClass switch
+                CollisionObject2D parent = godotType switch
                 {
-                    ObjectClass.Area => new Area2D(),
-                    ObjectClass.CBody => new CharacterBody2D(),
-                    ObjectClass.RBody => new RigidBody2D(),
-                    ObjectClass.Body => new StaticBody2D(),
+                    GodotType.Area => new Area2D(),
+                    GodotType.CBody => new CharacterBody2D(),
+                    GodotType.RBody => new RigidBody2D(),
+                    GodotType.Body => new StaticBody2D(),
                     _ => null
                 };
                 if (parent != null)
@@ -886,6 +1054,10 @@ public class TilemapCreator
             objSprite.FlipH = flippedH;
             objSprite.FlipV = flippedV;
 
+            if (_addClassAsMetadata && classString != "")
+                objSprite.SetMeta("class", classString);
+            if (_addIdAsMetadata && objId != 0)
+                objSprite.SetMeta("id", objId);
             if (obj.TryGetValue("properties", out var props2))
                 HandleProperties(objSprite, (Array<Dictionary>)props2);
         }
@@ -935,14 +1107,8 @@ public class TilemapCreator
         }
         else if (!obj.ContainsKey("template"))
         {
-            if (objClass == ObjectClass.Unknown)
-            {
-                GD.PrintRich($"[color={WarningColor}] -- Unknown class '{classString}'. -> Assuming Default[/color]");
-                _warningCount++;
-                objClass = ObjectClass.Body;
-            }
-            if (objClass == ObjectClass.Empty)
-                objClass = ObjectClass.Body;
+            if (godotType == GodotType.Empty)
+                godotType = GodotType.Body;
             
             var objectBaseCoords = TransposeCoords(objX, objY);
 
@@ -955,17 +1121,21 @@ public class TilemapCreator
                 marker.Position = objectBaseCoords;
                 marker.RotationDegrees = objRot;
                 marker.Visible = objVisible;
+                if (_addClassAsMetadata && classString != "")
+                    marker.SetMeta("class", classString);
+                if (_addIdAsMetadata && objId != 0)
+                    marker.SetMeta("id", objId);
                 if (obj.TryGetValue("properties", out var props))
                     HandleProperties(marker, (Array<Dictionary>)props);
             }
             else if (obj.ContainsKey("polygon"))
             {
-                switch (objClass)
+                switch (godotType)
                 {
-                    case ObjectClass.Body or ObjectClass.Area:
+                    case GodotType.Body or GodotType.Area:
                     {
                         CollisionObject2D co;
-                        if (objClass == ObjectClass.Area)
+                        if (godotType == GodotType.Area)
                         {
                             co = new Area2D();
                             layerNode.AddChild(co);
@@ -988,11 +1158,15 @@ public class TilemapCreator
                         polygonShape.Name = (objName != "") ? objName : "Polygon Shape";
                         polygonShape.Position = Vector2.Zero;
                         polygonShape.RotationDegrees = objRot;
+                        if (_addClassAsMetadata && classString != "")
+                            co.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            co.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(co, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Navigation:
+                    case GodotType.Navigation:
                     {
                         var navRegion = new NavigationRegion2D();
                         layerNode.AddChild(navRegion);
@@ -1004,13 +1178,25 @@ public class TilemapCreator
 
                         var navPoly = new NavigationPolygon();
                         navRegion.NavigationPolygon = navPoly;
-                        navPoly.AddOutline(PolygonFromArray((Array<Dictionary>)obj["polygon"]));
-                        navPoly.MakePolygonsFromOutlines();
+                        var pg = PolygonFromArray((Array<Dictionary>)obj["polygon"]);
+                        navPoly.AddOutline(pg);
+                        //navPoly.MakePolygonsFromOutlines();
+                        // Replaced in 4.2 deprecated function MakePolygonsFromOutlines
+                        navPoly.Vertices = pg;
+                        var polygon = new int[navPoly.Vertices.Length];
+                        for (var idx = 0; idx < navPoly.Vertices.Length; idx++)
+                            polygon[idx] = idx;
+                        navPoly.AddPolygon(polygon);
+                        
+                        if (_addClassAsMetadata && classString != "")
+                            navRegion.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            navRegion.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(navRegion, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Occluder:
+                    case GodotType.Occluder:
                     {
                         var lightOcc = new LightOccluder2D();
                         layerNode.AddChild(lightOcc);
@@ -1023,11 +1209,15 @@ public class TilemapCreator
                         var occPoly = new OccluderPolygon2D();
                         lightOcc.Occluder = occPoly;
                         occPoly.Polygon = PolygonFromArray((Array<Dictionary>)obj["polygon"]);
+                        if (_addClassAsMetadata && classString != "")
+                            lightOcc.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            lightOcc.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(lightOcc, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Polygon:
+                    case GodotType.Polygon:
                     {
                         var polygon = new Polygon2D();
                         layerNode.AddChild(polygon);
@@ -1037,7 +1227,10 @@ public class TilemapCreator
                         polygon.RotationDegrees = objRot;
                         polygon.Visible = objVisible;
                         polygon.Polygon = PolygonFromArray((Array<Dictionary>)obj["polygon"]);
-                        
+                        if (_addClassAsMetadata && classString != "")
+                            polygon.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            polygon.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(polygon, (Array<Dictionary>)props);
                         break;
@@ -1046,9 +1239,9 @@ public class TilemapCreator
             }
             else if (obj.ContainsKey("polyline"))
             {
-                switch (objClass)
+                switch (godotType)
                 {
-                    case ObjectClass.Line:
+                    case GodotType.Line:
                     {
                         var line = new Line2D();
                         layerNode.AddChild(line);
@@ -1061,11 +1254,15 @@ public class TilemapCreator
                     
                         line.Points = PolygonFromArray((Array<Dictionary>)obj["polyline"]);
 
+                        if (_addClassAsMetadata && classString != "")
+                            line.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            line.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(line, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Path:
+                    case GodotType.Path:
                     {
                         var path = new Path2D();
                         layerNode.AddChild(path);
@@ -1080,6 +1277,10 @@ public class TilemapCreator
                             curve.AddPoint(new Vector2((float)point["x"], (float)point["y"]));
                         path.Curve = curve;
 
+                        if (_addClassAsMetadata && classString != "")
+                            path.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            path.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(path, (Array<Dictionary>)props);
                         break;
@@ -1087,7 +1288,7 @@ public class TilemapCreator
                     default:
                     {
                         CollisionObject2D co;
-                        if (objClass == ObjectClass.Area)
+                        if (godotType == GodotType.Area)
                         {
                             co = new Area2D();
                             layerNode.AddChild(co);
@@ -1120,6 +1321,10 @@ public class TilemapCreator
                             collisionShape.Name = "Segment Shape";
                         }
 
+                        if (_addClassAsMetadata && classString != "")
+                            co.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            co.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(co, (Array<Dictionary>)props);
                         break;
@@ -1128,12 +1333,12 @@ public class TilemapCreator
             }
             else
             {
-                switch (objClass)
+                switch (godotType)
                 {
-                    case ObjectClass.Body or ObjectClass.Area:
+                    case GodotType.Body or GodotType.Area:
                     {
                         CollisionObject2D co;
-                        if (objClass == ObjectClass.Area)
+                        if (godotType == GodotType.Area)
                         {
                             co = new Area2D();
                             layerNode.AddChild(co);
@@ -1188,15 +1393,19 @@ public class TilemapCreator
 
                         collisionShape.Position = TransposeCoords(objWidth / 2.0f, objHeight / 2.0f, true);
                         collisionShape.RotationDegrees = objRot;
+                        if (_addClassAsMetadata && classString != "")
+                            co.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            co.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(co, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Navigation when obj.ContainsKey("ellipse"):
+                    case GodotType.Navigation when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for NavigationRegion2D. -> Skipped[/color]");
                         _warningCount++;
                         break;
-                    case ObjectClass.Navigation:
+                    case GodotType.Navigation:
                     {
                         var navRegion = new NavigationRegion2D();
                         layerNode.AddChild(navRegion);
@@ -1208,17 +1417,28 @@ public class TilemapCreator
 
                         var navPoly = new NavigationPolygon();
                         navRegion.NavigationPolygon = navPoly;
-                        navPoly.AddOutline(PolygonFromRectangle(objWidth, objHeight));
-                        navPoly.MakePolygonsFromOutlines();
+                        var pg = PolygonFromRectangle(objWidth, objHeight);
+                        navPoly.AddOutline(pg);
+                        //navPoly.MakePolygonsFromOutlines();
+                        // Replaced in 4.2 deprecated function MakePolygonsFromOutlines
+                        navPoly.Vertices = pg;
+                        var polygon = new int[navPoly.Vertices.Length];
+                        for (var idx = 0; idx < navPoly.Vertices.Length; idx++)
+                            polygon[idx] = idx;
+                        navPoly.AddPolygon(polygon);
+                        if (_addClassAsMetadata && classString != "")
+                            navRegion.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            navRegion.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(navRegion, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Occluder when obj.ContainsKey("ellipse"):
+                    case GodotType.Occluder when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for LightOccluder2D. -> Skipped[/color]");
                         _warningCount++;
                         break;
-                    case ObjectClass.Occluder:
+                    case GodotType.Occluder:
                     {
                         var lightOcc = new LightOccluder2D();
                         layerNode.AddChild(lightOcc);
@@ -1231,15 +1451,19 @@ public class TilemapCreator
                         var occPoly = new OccluderPolygon2D();
                         lightOcc.Occluder = occPoly;
                         occPoly.Polygon = PolygonFromRectangle(objWidth, objHeight);
+                        if (_addClassAsMetadata && classString != "")
+                            lightOcc.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            lightOcc.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(lightOcc, (Array<Dictionary>)props);
                         break;
                     }
-                    case ObjectClass.Polygon when obj.ContainsKey("ellipse"):
+                    case GodotType.Polygon when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for Polygon2D. -> Skipped[/color]");
                         _warningCount++;
                         break;
-                    case ObjectClass.Polygon:
+                    case GodotType.Polygon:
                     {
                         var polygon = new Polygon2D();
                         layerNode.AddChild(polygon);
@@ -1250,6 +1474,10 @@ public class TilemapCreator
                         polygon.Visible = objVisible;
                         polygon.Polygon = PolygonFromRectangle(objWidth, objHeight);
                         
+                        if (_addClassAsMetadata && classString != "")
+                            polygon.SetMeta("class", classString);
+                        if (_addIdAsMetadata && objId != 0)
+                            polygon.SetMeta("id", objId);
                         if (obj.TryGetValue("properties", out var props))
                             HandleProperties(polygon, (Array<Dictionary>)props);
                         break;
@@ -1510,68 +1738,66 @@ public class TilemapCreator
 
         return gidIndex;
     }
-    
-    private int GetMatchingSourceId(int gid)
+
+    private int GetAtlasSourceIndex(int gid)
     {
-        var limit = 0;
-        var prevSourceId = -1;
+        var idx = -1;
         if (_atlasSources == null)
             return -1;
-        foreach (Dictionary src in _atlasSources)
+        foreach (var src in _atlasSources)
         {
-            var sourceId = (int)src["sourceId"];
-            limit += (int)src["numTiles"] + sourceId - prevSourceId - 1;
-            if (gid <= limit)
-                return sourceId;
-            prevSourceId = sourceId;
+            idx++;
+            var firstGid = (int)src["firstGid"];
+            var effectiveGid = gid - firstGid + 1;
+            var assignedId = (int)src["assignedId"];
+            if (assignedId < 0)
+            {
+                var limit = (int)src["numTiles"];
+                if (effectiveGid <= limit && firstGid == _firstGids[GetFirstGidIndex(gid)])
+                    return idx;
+            }
+            else if (effectiveGid == (assignedId + 1)) 
+                return idx;
         }
-
         return -1;
+    }
+
+    private int GetMatchingSourceId(int gid)
+    {
+        var idx = GetAtlasSourceIndex(gid);
+        if (idx < 0)
+            return -1;
+        return (int)_atlasSources[idx]["sourceId"];
     }
 
     private Vector2I GetTileOffset(int gid)
     {
-        var limit = 0;
-        var prevSourceId = -1;
-        if (_atlasSources == null)
+        var idx = GetAtlasSourceIndex(gid);
+        if (idx < 0)
             return Vector2I.Zero;
-        foreach (Dictionary src in _atlasSources)
-        {
-            var sourceId = (int)src["sourceId"];
-            limit += (int)src["numTiles"] + sourceId - prevSourceId - 1;
-            if (gid <= limit)
-                return (Vector2I)src["tileOffset"];
-            prevSourceId = sourceId;
-        }
-        
-        return Vector2I.Zero;
+        return (Vector2I)_atlasSources[idx]["tileOffset"];
     }
 
     private string GetTilesetOrientation(int gid)
     {
-        var limit = 0;
-        var prevSourceId = -1;
-        if (_atlasSources == null)
+        var idx = GetAtlasSourceIndex(gid);
+        if (idx < 0)
             return _mapOrientation;
-        foreach (Dictionary src in _atlasSources)
-        {
-            var sourceId = (int)src["sourceId"];
-            limit += (int)src["numTiles"] + sourceId - prevSourceId - 1;
-            if (gid <= limit)
-                return (string)src["tilesetOrientation"];
-            prevSourceId = sourceId;
-        }
-        
-        return _mapOrientation;
+        return (string)_atlasSources[idx]["tilesetOrientation"];
+    }
+
+    private string GetTilesetAlignment(int gid)
+    {
+        var idx = GetAtlasSourceIndex(gid);
+        if (idx < 0)
+            return DefaultAlignment;
+        return (string)_atlasSources[idx]["objectAlignment"];
     }
 
     private int GetNumTilesForSourceId(int sourceId)
     {
-        foreach (Dictionary src in _atlasSources)
-        {
-            if ((int)src["sourceId"] == sourceId)
-                return (int)src["numTiles"];
-        }
+        foreach (var src in _atlasSources.Where(src => (int)src["sourceId"] == sourceId))
+            return (int)src["numTiles"];
 
         return -1;
     }
@@ -1639,7 +1865,7 @@ public class TilemapCreator
                 return int.Parse(val);
             case "color":
             {
-                // If alpha is present it's strangely the first byte, so we have to shift it to the end
+                // If alpha is present it's oddly the first byte, so we have to shift it to the end
                 if (val.Length == 9) val = val[0] + val[3..] + val.Substring(1, 2);
                 return val;
             }
@@ -1660,7 +1886,7 @@ public class TilemapCreator
             var name = (string)property.GetValueOrDefault("name", "");
             var type = (string)property.GetValueOrDefault("type", "string");
             var val = (string)property.GetValueOrDefault("value", "");
-            if (name == "") continue;
+            if (name == "" || name.ToLower() == GodotNodeTypeProperty) continue;
             if (name.StartsWith("__") && hasChildren)
             {
                 var childPropDict = new Dictionary();
@@ -1674,6 +1900,18 @@ public class TilemapCreator
 
             switch (name.ToLower())
             {
+                // Node properties
+                // v1.5.4: godot_group property
+                case GodotGroupProperty when (type == "string"):
+                    foreach (var group in val.Split(','))
+                        targetNode.AddToGroup(group.Trim(), true);
+                    break;
+
+                // v1.6.6: script resource and godot_script property
+                case GodotScriptProperty when (type == "file"):
+                    targetNode.SetScript((Script)ResourceLoader.Load(val, "Script"));
+                    break;
+
                 // CanvasItem properties
                 case "modulate" when (type == "string"):
                     ((CanvasItem)targetNode).Modulate = new Color(val);
@@ -1728,7 +1966,13 @@ public class TilemapCreator
 
                 // TileMap properties
                 case "cell_quadrant_size" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    ((TileMap)targetNode).CellQuadrantSize = int.Parse(val);
+                    if (_godotVersion < 0x40200)
+                        ((TileMap)targetNode).CellQuadrantSize = int.Parse(val);
+                    else
+                        ((TileMap)targetNode).RenderingQuadrantSize = int.Parse(val);
+                    break;
+                case "rendering_quadrant_size" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
+                    ((TileMap)targetNode).RenderingQuadrantSize = int.Parse(val);
                     break;
                 case "collision_animatable" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
                     ((TileMap)targetNode).CollisionAnimatable = bool.Parse(val);
@@ -2059,3 +2303,4 @@ public class TilemapCreator
         }
     }
 }
+#endif

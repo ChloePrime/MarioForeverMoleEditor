@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if TOOLS
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
@@ -27,6 +28,8 @@ using Array = Godot.Collections.Array;
 using FileAccess = Godot.FileAccess;
 using System;
 using System.Globalization;
+
+namespace YATI;
 
 [Tool]
 public class TilesetCreator
@@ -39,7 +42,6 @@ public class TilesetCreator
     private TileSetAtlasSource _currentAtlasSource;
     private int _currentMaxX;
     private int _currentMaxY;
-    private int _atlasSourceCounter;
     private string _basePathMap;
     private string _basePathTileset;
     private int _terrainSetsCounter = -1;
@@ -51,16 +53,19 @@ public class TilesetCreator
     private int _navigationLayerCounter = -1;
     private int _occlusionLayerCounter = -1;
     private bool _append;
-    private Array _atlasSources;
+    private Array<Dictionary> _atlasSources;
     private int _errorCount;
     private int _warningCount;
     private Vector2I _mapTileSize;
     private Vector2I _gridSize;
     private Vector2I _tileOffset;
+    private string _objectAlignment;
     private Dictionary _objectGroups;
     private int _objectGroupsCounter;
     private string _tilesetOrientation;
     private bool _mapWangsetToTerrain;
+    private CustomTypes _ct;
+    private int _currentFirstGid = -1;
 
     private enum LayerType
     {
@@ -90,6 +95,11 @@ public class TilesetCreator
         _mapTileSize = mapTileSize;
     }
 
+    public void SetCustomTypes(CustomTypes ct)
+    {
+        _ct = ct;
+    }
+
     public void MapWangsetToTerrain()
     {
         _mapWangsetToTerrain = true;
@@ -106,20 +116,22 @@ public class TilesetCreator
                 
                 // Catch the AutoMap Rules tileset (is Tiled internal)
                 if (checkedFile.StartsWith(":/automap"))
-                    return _tileset; // This is no error just skip it
+                    continue; // This is no error just skip it
                 
                 if (!FileAccess.FileExists(checkedFile))
                     checkedFile = _basePathMap.PathJoin(checkedFile);
                 _basePathTileset = checkedFile.GetBaseDir();
 
                 tileSetDict = DictionaryBuilder.GetDictionary(checkedFile);
+                if (tileSetDict != null && tileSet.TryGetValue("firstgid", out var firstGid))
+                    tileSetDict["firstgid"] = firstGid;
             }
 
             // Possible error condition
             if (tileSetDict == null)
             {
                 _errorCount++;
-                return null;
+                continue;
             }
 
             CreateOrAppend(tileSetDict);
@@ -136,7 +148,7 @@ public class TilesetCreator
         return _tileset;
     }
 
-    public Array GetRegisteredAtlasSources()
+    public Array<Dictionary> GetRegisteredAtlasSources()
     {
         return _atlasSources;
     }
@@ -149,7 +161,7 @@ public class TilesetCreator
     private void CreateOrAppend(Dictionary tileSet)
     {
         // Catch the AutoMap Rules tileset (is Tiled internal)
-        if (tileSet.ContainsKey("name") && ((string)tileSet["name"] == "AutoMap Rules"))
+        if (tileSet.ContainsKey("name") && (string)tileSet["name"] == "AutoMap Rules")
             return; // This is no error just skip it
 
         if (!_append)
@@ -174,6 +186,9 @@ public class TilesetCreator
         }
         else
             _tileOffset = Vector2I.Zero;
+
+        _currentFirstGid = tileSet.TryGetValue("firstgid", out var firstgid) ? (int)firstgid : -1;
+
         if (tileSet.TryGetValue("grid", out var gridVal))
         {
             var grid = (Dictionary)gridVal;
@@ -183,13 +198,18 @@ public class TilesetCreator
             _gridSize.Y = (int)grid.GetValueOrDefault("height", _tileSize.Y);
         }
 
+        if (tileSet.TryGetValue("objectalignment", out var objAlignment))
+            _objectAlignment = (string)objAlignment;
+        else
+            _objectAlignment = "unspecified";
+        
         if (_append)
             _terrainCounter = 0;
 
         if (tileSet.TryGetValue("image", out var imagePath))
         {
             _currentAtlasSource = new TileSetAtlasSource();
-            _tileset.AddSource(_currentAtlasSource, _atlasSourceCounter);
+            var addedSourceId = _tileset.AddSource(_currentAtlasSource);
             _currentAtlasSource.TextureRegionSize = _tileSize;
             if (tileSet.ContainsKey("margin"))
                 _currentAtlasSource.Margins = new Vector2I((int)tileSet["margin"], (int)tileSet["margin"]);
@@ -200,7 +220,7 @@ public class TilesetCreator
             if (texture == null)
                 // Can't continue without texture
                 return;
-            
+
             _currentAtlasSource.Texture = texture;
  
             if ((_tileCount == 0) || (_columns == 0))
@@ -216,11 +236,10 @@ public class TilesetCreator
                 _columns = imagewidth / _tileSize.X;
                 _tileCount = _columns * imageheight / _tileSize.X;
             }
-            RegisterAtlasSource(_atlasSourceCounter, _tileCount, -1, _tileOffset);
+            RegisterAtlasSource(addedSourceId, _tileCount, -1, _tileOffset);
             var atlasGridSize = _currentAtlasSource.GetAtlasGridSize();
             _currentMaxX = atlasGridSize.X - 1;
             _currentMaxY = atlasGridSize.Y - 1;
-            _atlasSourceCounter++;
         }
         
         if (tileSet.TryGetValue("tiles", out var tiles))
@@ -232,6 +251,9 @@ public class TilesetCreator
             else
                 HandleWangsets((Array<Dictionary>)wangsets);
         }
+        
+        _ct?.MergeCustomProperties(tileSet, "tileset");
+        
         if (tileSet.TryGetValue("properties", out var props))
             HandleTilesetProperties((Array<Dictionary>)props);
     }
@@ -267,13 +289,15 @@ public class TilesetCreator
 
     private void RegisterAtlasSource(int sourceId, int numTiles, int assignedTileId, Vector2I tileOffset)
     {
-        _atlasSources ??= new Array();
+        _atlasSources ??= new Array<Dictionary>();
         var atlasSourceItem = new Dictionary();
         atlasSourceItem.Add("sourceId", sourceId);
         atlasSourceItem.Add("numTiles", numTiles);
         atlasSourceItem.Add("assignedId", assignedTileId);
         atlasSourceItem.Add("tileOffset", tileOffset);
         atlasSourceItem.Add("tilesetOrientation", _tilesetOrientation);
+        atlasSourceItem.Add("objectAlignment", _objectAlignment);
+        atlasSourceItem.Add("firstGid", _currentFirstGid);
         _atlasSources.Add(atlasSourceItem);
     }
 
@@ -317,7 +341,6 @@ public class TilesetCreator
 
     private void HandleTiles(Array<Dictionary> tiles)
     {
-        var lastAtlasSourceCount = _atlasSourceCounter;
         foreach (var tile in tiles)
         {
             var tileId = (int)tile["id"];
@@ -327,9 +350,8 @@ public class TilesetCreator
             {
                 // Tile with it's own image -> separate atlas source
                 _currentAtlasSource = new TileSetAtlasSource();
-                lastAtlasSourceCount = _atlasSourceCounter + tileId + 1;
-                _tileset.AddSource(_currentAtlasSource, lastAtlasSourceCount - 1);
-                RegisterAtlasSource(lastAtlasSourceCount-1, 1, tileId, Vector2I.Zero);
+                var addedSourceId = _tileset.AddSource(_currentAtlasSource);
+                RegisterAtlasSource(addedSourceId, 1, tileId, Vector2I.Zero);
                 
                 var texturePath = (string)tile["image"];
                 _currentAtlasSource.Texture = LoadImage(texturePath);
@@ -376,10 +398,10 @@ public class TilesetCreator
             if (_tileSize.X != _mapTileSize.X || _tileSize.Y != _mapTileSize.Y)
             {
                 var diffX = _tileSize.X - _mapTileSize.X;
-                if (diffX % 2 > 0)
+                if (diffX % 2 != 0)
                     diffX -= 1;
                 var diffY = _tileSize.Y - _mapTileSize.Y;
-                if (diffY % 2 > 0)
+                if (diffY % 2 != 0)
                     diffY += 1;
                 currentTile.TextureOrigin = new Vector2I(-diffX/2, diffY/2) - _tileOffset;
             }
@@ -389,12 +411,12 @@ public class TilesetCreator
             if (tile.TryGetValue("animation", out var animVal))
                 HandleAnimation((Array<Dictionary>)animVal, tileId);
             if (tile.TryGetValue("objectgroup", out var objgrp))
-                HandleObjectgroup((Dictionary)objgrp, currentTile);
+                HandleObjectgroup((Dictionary)objgrp, currentTile, tileId);
+
+            _ct?.MergeCustomProperties(tile, "tile");
             if (tile.TryGetValue("properties", out var props))
                 HandleTileProperties((Array<Dictionary>)props, currentTile);
         }
-
-        _atlasSourceCounter = lastAtlasSourceCount;
     }
 
     private void HandleAnimation(Array<Dictionary> frames, int tileId)
@@ -469,15 +491,15 @@ public class TilesetCreator
         }        
     }
 
-    private void HandleObjectgroup(Dictionary objectGroup, TileData currentTile)
+    private void HandleObjectgroup(Dictionary objectGroup, TileData currentTile, int tileId)
     {
         // v1.2
         _objectGroupsCounter++;
         RegisterObjectGroup(_objectGroupsCounter, objectGroup);
         currentTile.SetCustomData(CustomDataInternal, _objectGroupsCounter);
         
-        var polygonIndex = -1;
         var objects = (Array<Dictionary>)objectGroup["objects"];
+        var polygonIndices = new Dictionary();
         foreach (var obj in objects)
         {
             if (obj.ContainsKey("point") && (bool)obj["point"])
@@ -492,6 +514,8 @@ public class TilesetCreator
                 //_warningCount++;
                 break;
             }
+            
+            _ct?.MergeCustomProperties(obj, "object");
             
             var objectBaseCoords = new Vector2((float)obj["x"], (float)obj["y"]);
             objectBaseCoords = TransposeCoords(objectBaseCoords.X, objectBaseCoords.Y);
@@ -510,9 +534,15 @@ public class TilesetCreator
             var cosA = (float)Math.Cos(rot * Math.PI / 180.0f);
 
             Vector2[] polygon;
-            if (obj.TryGetValue("polygon", out var pts))
+            if (obj.TryGetValue("polygon", out var pts) || obj.TryGetValue("polyline", out pts))
             {
                 var polygonPoints = (Array<Dictionary>)pts;
+                if (polygonPoints.Count < 3)
+                {
+                    GD.PrintRich($"[color={WarningColor}] -- Skipped invalid polygon on tile {tileId} (less than 3 points)[/color]");
+                    _warningCount++;
+                    break;
+                }
                 polygon = new Vector2[polygonPoints.Count];
                 var i = 0;
                 foreach (var pt in polygonPoints)
@@ -529,8 +559,8 @@ public class TilesetCreator
                 polygon = new Vector2[4];
                 polygon[0] = Vector2.Zero;
                 polygon[1].X = polygon[0].X;
-                polygon[1].Y = polygon[0].Y + (float)obj["height"];
-                polygon[2].X = polygon[0].X + (float)obj["width"];
+                polygon[1].Y = polygon[0].Y + (float)obj.GetValueOrDefault("height", 0.0f);
+                polygon[2].X = polygon[0].X + (float)obj.GetValueOrDefault("width", 0.0f);
                 polygon[2].Y = polygon[1].Y;
                 polygon[3].X = polygon[2].X;
                 polygon[3].Y = polygon[0].Y;
@@ -549,7 +579,13 @@ public class TilesetCreator
             {
                 var navP = new NavigationPolygon();
                 navP.AddOutline(polygon);
-                navP.MakePolygonsFromOutlines();
+                //navP.MakePolygonsFromOutlines();
+                // Replaced in 4.2 deprecated function MakePolygonsFromOutlines
+                navP.Vertices = polygon;
+                var pg = new int[navP.Vertices.Length];
+                for (var idx = 0; idx < navP.Vertices.Length; idx++)
+                    pg[idx] = idx;
+                navP.AddPolygon(pg);
                 EnsureLayerExisting(LayerType.Navigation, nav);
                 currentTile.SetNavigationPolygon(nav, navP);
             }
@@ -568,7 +604,8 @@ public class TilesetCreator
             if (phys < 0 && nav < 0 && occ < 0)
                 phys = 0;
             if (phys < 0) continue;
-            polygonIndex++;
+            var polygonIndex = (int)polygonIndices.GetValueOrDefault(phys, 0);
+            polygonIndices[phys] = polygonIndex + 1;
             EnsureLayerExisting(LayerType.Physics, phys);
             currentTile.AddCollisionPolygon(phys);
             currentTile.SetCollisionPolygonPoints(phys, polygonIndex, polygon);
@@ -957,7 +994,7 @@ public class TilesetCreator
             _terrainCounter++;
         }
     }
-    
+
     private void HandleWangsets(Array<Dictionary> wangsets)
     {
         foreach (var wangset in wangsets)
@@ -1045,3 +1082,4 @@ public class TilesetCreator
         }
     }
 }
+#endif

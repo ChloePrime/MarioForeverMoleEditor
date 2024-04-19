@@ -20,12 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if TOOLS
 using System;
 using System.Globalization;
 using System.Linq;
 using Godot;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
+
+namespace YATI;
 
 [Tool]
 public class DictionaryFromXml
@@ -281,3 +284,4 @@ public class DictionaryFromXml
         }
     }
 }
+#endif
