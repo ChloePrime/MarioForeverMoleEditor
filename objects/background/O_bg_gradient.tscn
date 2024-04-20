@@ -14,4 +14,3 @@ fill_to = Vector2(0, 1)
 [node name="Background Gradient" instance=ExtResource("1_8adxg")]
 z_index = -4090
 texture = SubResource("GradientTexture2D_o2jv4")
-WrapY = true
