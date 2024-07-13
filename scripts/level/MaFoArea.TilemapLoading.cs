@@ -126,6 +126,16 @@ public partial class MaFoLevelArea
 				continue;
 			}
 			var instance = prefab.Instantiate();
+
+			if (presetLayer != -1)
+			{
+				var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
+				if (preset > 0)
+				{
+					LoadPreset(instance, preset);
+				}
+			}
+			
 			PostInstantiate(instance, coord);
 			
 			root.AddChild(instance);
@@ -138,15 +148,6 @@ public partial class MaFoLevelArea
 				o.CustomOffset();
 			}
 			
-
-			if (presetLayer != -1)
-			{
-				var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
-				if (preset > 0)
-				{
-					LoadPreset(instance, preset);
-				}
-			}
 			
 			
 			tilemap.EraseCell(layer, coord);
@@ -209,6 +210,7 @@ public partial class MaFoLevelArea
 			return;
 		}
 		var instance = prefab.Instantiate();
+		LoadProperties(@object, instance);
 		PostInstantiate(instance, @object.Position);
 		
 		parent.AddChild(instance);
@@ -216,7 +218,6 @@ public partial class MaFoLevelArea
 		{
 			node2D.GlobalPosition = GetTileObjectRealPosition(@object);
 		}
-		LoadProperties(@object, instance);
 		
 		@object.QueueFree();
 	}
