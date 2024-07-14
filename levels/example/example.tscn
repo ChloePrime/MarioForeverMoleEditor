@@ -61,13 +61,9 @@ AreaMusic = ExtResource("2_4kt55")
 [node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
 
-[node name="Mario" parent="Overworld" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") instance=ExtResource("3_5usbp")]
+[node name="Mario" parent="Overworld" instance=ExtResource("3_5usbp")]
 position = Vector2(272, 408)
-CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
 FastRetry = true
-MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
-GrabMuzzleBySize = [NodePath("SpriteRoot/Grab Muzzle (Small)"), NodePath("SpriteRoot/Grab Muzzle (Big)"), NodePath("SpriteRoot/Grab Muzzle (Small)")]
-StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
 
 [node name="Music Changer" parent="Overworld" instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
