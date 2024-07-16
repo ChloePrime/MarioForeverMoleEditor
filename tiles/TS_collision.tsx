@@ -169,6 +169,34 @@
    </object>
   </objectgroup>
  </tile>
+ <tile id="41">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="32">
+    <polygon points="0,0 32,0 32,-16"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="42">
+  <objectgroup draworder="index" id="3">
+   <object id="3" x="32" y="0">
+    <polygon points="0,0 -32,16 -32,32 0,32"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="43">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0">
+    <polygon points="0,0 32,16 32,32 0,32"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="44">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="32" y="32">
+    <polygon points="0,0 -32,0 -32,-16"/>
+   </object>
+  </objectgroup>
+ </tile>
  <tile id="45">
   <objectgroup draworder="index" id="2">
    <object id="1" x="31" y="1">
@@ -195,6 +223,34 @@
      <property name="physics_layer" type="int" value="2"/>
     </properties>
     <polygon points="0,0 0,30 30,15"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="51">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0">
+    <polygon points="0,0 32,0 32,16"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="52">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="32" y="32">
+    <polygon points="0,0 -32,-16 -32,-32 0,-32"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="53">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="32">
+    <polygon points="0,0 32,-16 32,-32 0,-32"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="54">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="32" y="0">
+    <polygon points="0,0 -32,0 -32,16"/>
    </object>
   </objectgroup>
  </tile>
