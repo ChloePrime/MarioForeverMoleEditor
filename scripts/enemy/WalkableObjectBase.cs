@@ -60,13 +60,13 @@ public partial class WalkableObjectBase : GravityObjectBase
         
         Enabled = true;
         XSpeed = TargetSpeed;
-        if (!Appearing)
+        if (!Appearing && !IsVelocityExplicitSet)
         {
             TryFaceTowardsMario();
         }
     }
 
-    protected void TryFaceTowardsMario()
+    public void TryFaceTowardsMario()
     {
         if (GetTree().GetPlayer() is not Node2D mario)
         {

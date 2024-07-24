@@ -24,7 +24,7 @@ public partial class PickableBonus : WalkableObjectBase
     public override void _ReallyReady()
     {
         base._ReallyReady();
-        if (TargetSpeed > 0)
+        if (TargetSpeed > 0 && !IsVelocityExplicitSet)
         {
             TryFaceTowardsMario();
         }

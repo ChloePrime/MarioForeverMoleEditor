@@ -60,7 +60,14 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	public CollisionShape2D Shape => _shape ??= this.Children().OfType<CollisionShape2D>().First();
 	public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
-	public Vector2 VelocityVector => new(XSpeed * XDirection, YSpeed);
+	public Vector2 VelocityVector
+	{
+		get => new(XSpeed * XDirection, YSpeed);
+		set => SetVelocityVector(value);
+	}
+	
+	protected bool IsVelocityExplicitSet { get; private set; }
+
 	public bool Appearing { get; private set; }
 	public bool ReallyEnabled => Enabled && !Appearing;
 	public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
@@ -104,7 +111,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		GrabReleased += OnGrabReleased;
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
 
-		if (!Appearing)
+		if (!Appearing && !Enabled)
 		{
 			Callable.From(_ReallyReady).CallDeferred();
 		}
@@ -277,6 +284,19 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 			ZIndex = _zIndexBefore;
 			_ReallyReady();
 		}
+	}
+
+	private Vector2 SetVelocityVector(Vector2 value)
+	{
+		IsVelocityExplicitSet = true;
+		XDirection = value.X > 0 ? 1 : -1;
+		XSpeed = TargetSpeed = Mathf.Abs(value.X);
+		YSpeed = value.Y;
+		if (!IsNodeReady())
+		{
+			TargetSpeed = XSpeed;
+		}
+		return value;
 	}
 
 	private static readonly Vector2 DeMargin = new(0, 0.08F);
