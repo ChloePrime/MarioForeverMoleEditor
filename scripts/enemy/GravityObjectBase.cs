@@ -325,7 +325,7 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 		var delta = (float)deltaD;
 		if (!IsOnFloor() || YSpeed < 0)
 		{
-			YSpeed += Gravity * delta;
+			YSpeed = Mathf.Min(MaxYSpeed, YSpeed + Gravity * delta);
 		}
 
 		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
