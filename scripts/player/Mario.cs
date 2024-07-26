@@ -321,6 +321,27 @@ public partial class Mario : CharacterBody2D
             }
         }
 
+        ProcessInput(delta);
+    }
+
+    private void ProcessInput(float delta)
+    {
+        if (HasCompletedLevel) return;
+        
+        FetchInput(out _jumpPressed, Constants.ActionJump);
+        FetchInput(out _runPressed, Constants.ActionRun);
+        FetchInput(out _firePressed, Constants.ActionFire);
+        FetchInput(out _upPressed, Constants.ActionMoveUp);
+        FetchInput(out _downPressed, Constants.ActionMoveDown);
+        if (ControlIgnored) return;
+        
+        InputGrab();
+        if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing && Input.IsActionJustPressed(Constants.ActionFire))
+        {
+            _firePreInput = 0.2F;
+            TryFire();
+        }
+        
         if (_firePreInput > 0)
         {
             _firePreInput -= delta;
@@ -621,26 +642,6 @@ public partial class Mario : CharacterBody2D
         }
     }
 
-    public override void _Input(InputEvent e)
-    {
-        base._Input(e);
-        if (HasCompletedLevel) return;
-        
-        FetchInput(ref _jumpPressed, e, Constants.ActionJump);
-        FetchInput(ref _runPressed, e, Constants.ActionRun);
-        FetchInput(ref _firePressed, e, Constants.ActionFire);
-        FetchInput(ref _upPressed, e, Constants.ActionMoveUp);
-        FetchInput(ref _downPressed, e, Constants.ActionMoveDown);
-        if (ControlIgnored) return;
-        
-        InputGrab(e);
-        if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing && e.IsActionPressed(Constants.ActionFire))
-        {
-            _firePreInput = 0.2F;
-            TryFire();
-        }
-    }
-
     protected override void Dispose(bool disposing)
     {
         foreach (var sprite in SpriteNodes.Values.Cast<Node>().Where(it => IsInstanceValid(it) && it.GetParent() == null))
@@ -650,21 +651,9 @@ public partial class Mario : CharacterBody2D
         base.Dispose(disposing);
     }
 
-    private void FetchInput(ref bool pressed, InputEvent e, StringName action)
+    private void FetchInput(out bool pressed, StringName action)
     {
-        if (ControlIgnored)
-        {
-            pressed = false;
-            return;
-        }
-        if (e.IsActionReleased(action))
-        {
-            pressed = false;
-        }
-        if (e.IsActionPressed(action))
-        {
-            pressed = true;
-        }
+        pressed = !ControlIgnored && Input.IsActionPressed(action);
     }
 
     public override void _Ready()

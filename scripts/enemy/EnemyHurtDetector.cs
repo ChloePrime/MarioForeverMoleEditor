@@ -48,6 +48,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         });
         if (stomper is Mario mario)
         {
+            GamepadHitFeedback(1, 1);
             var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;
             Callable.From<float>(mario.Jump).CallDeferred(strength);
         }

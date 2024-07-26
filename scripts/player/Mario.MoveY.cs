@@ -50,6 +50,7 @@ public partial class Mario
         }
         else
         {
+            GamepadHitFeedback(0.5F, 0);
             Jump(JumpStrength);
         }
         

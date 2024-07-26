@@ -131,9 +131,9 @@ public partial class Mario
         }
     }
 
-    private void InputGrab(InputEvent e)
+    private void InputGrab()
     {
-        if (IsGrabbing && e.IsActionPressed(Constants.ActionUseWeapon))
+        if (IsGrabbing && Input.IsActionJustPressed(Constants.ActionUseWeapon))
         {
             GrabRelease();
         }
