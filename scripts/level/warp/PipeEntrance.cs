@@ -162,7 +162,8 @@ public partial class PipeEntrance : WarpObject
     {
         if (_mario is not {} mario) return;
         mario.RequireTeleport += () => OnMarioRequireTeleport(mario);
-        mario.PipeState = MarioPipeState.TransitionBegin;
+        ApplyTransitionType(mario);
+        mario.BeginWarpTransitionIn();
         _phase = Phase.Deactivated;
     }
 

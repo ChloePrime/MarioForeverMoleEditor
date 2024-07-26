@@ -101,9 +101,15 @@ public partial class GameRule : Resource
     [Export] public bool EnableTossFireballUpward { get; set; } = true;
     [Export] public float TossFireballUpwardStrength { get; set; } = 400;
 
+    [ExportSubgroup("Pipe and Warp")]
+    [Export] public PackedScene DefaultTransitionPrefab { get; set; } =
+        GD.Load<PackedScene>("res://objects/level/O_warp_transition_circle.tscn");
+    
+
     [ExportGroup("")]
     [ExportSubgroup("")] 
     [Export] public bool BulletLauncherBreakable { get; set; } = true;
+    
 
     [ExportGroup("Advanced")] 
     [Export] public bool EnableMarioBursting { get; set; } = true;

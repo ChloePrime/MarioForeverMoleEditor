@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=40 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" path="res://scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="AudioStream" uid="uid://crcemq8f88mcd" path="res://levels/example/BGM_underground.ogg" id="28_r5h0v"]
+[ext_resource type="PackedScene" uid="uid://dhgfn6lf71s2o" path="res://objects/level/O_warp_transition_immediate.tscn" id="29_07wed"]
 [ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://objects/background/O_bg_underground.tscn" id="29_g2m7a"]
 [ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
@@ -179,6 +180,7 @@ Target = NodePath("../../Bonus Room/Bonus Room Rev Entrance")
 [node name="Pipe Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("34_6pyw6")]
 position = Vector2(752, 416)
 Target = NodePath("../Pipe Exit")
+TransitionOverride = ExtResource("29_07wed")
 
 [node name="Pipe Exit" parent="Overworld" instance=ExtResource("35_gflwc")]
 position = Vector2(1008, 416)
@@ -186,6 +188,7 @@ position = Vector2(1008, 416)
 [node name="Pipe Entrance (Left)" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("36_n2tk6")]
 position = Vector2(1040, 416)
 Target = NodePath("../Pipe Exit (Left)")
+TransitionOverride = ExtResource("29_07wed")
 
 [node name="Pipe Exit (Left)" parent="Overworld" instance=ExtResource("37_77bxi")]
 position = Vector2(784, 416)
@@ -204,7 +207,6 @@ position = Vector2(0, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 480, 640, 480)
 AreaMusic = ExtResource("28_r5h0v")
-Darkness = 1.0
 
 [node name="Tiles" parent="Bonus Room" instance=ExtResource("36_3k0x5")]
 
