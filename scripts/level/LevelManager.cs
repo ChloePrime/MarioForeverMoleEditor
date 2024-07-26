@@ -23,6 +23,7 @@ public partial class LevelManager : Control
     [Export] public PackedScene SceneAfterGameOver { get; set; }
 
     public Node LevelInstance { get; private set; }
+    public GamepadManager GamepadManager { get; set; }
 
     public bool DarknessEnabled
     {
@@ -146,6 +147,9 @@ public partial class LevelManager : Control
     public override void _Ready()
     {
         base._Ready();
+        GamepadManager = new GamepadManager();
+        AddChild(GamepadManager);
+        
         GameRule.ResetGlobalData();
         Callable.From(ReloadLevel).CallDeferred();
 #if TOOLS
