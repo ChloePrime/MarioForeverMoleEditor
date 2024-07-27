@@ -64,8 +64,7 @@ public partial class WarpTransitionCircle : WarpTransition
             .SetTrans(TweenType);
 
         tween
-            .TweenCallback(Callable.From(CompleteTransition))
-            .SetDelay(Duration);
+            .TweenCallback(Callable.From(CompleteTransition));
     }
 
     protected override void _EndTransition()
