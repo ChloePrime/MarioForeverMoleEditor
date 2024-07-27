@@ -17,8 +17,8 @@ public partial class WarpTransitionCircle : WarpTransition
     [Export] public float Duration = 0.5F;
     [Export] public Tween.TransitionType TweenType = Tween.TransitionType.Quad;
     
-    private static readonly string NpViewport = "AspectRatioContainer/SubViewportContainer/SubViewport";
-    private static readonly string NpCircle = "AspectRatioContainer/SubViewportContainer/SubViewport/Circle";
+    private static readonly NodePath NpViewport = "AspectRatioContainer/SubViewportContainer/SubViewport";
+    private static readonly NodePath NpCircle = "AspectRatioContainer/SubViewportContainer/SubViewport/Circle";
     private PlayerFinder _player;
     private Sprite2D _circle;
     private Vector2 _originalCirclePos;
@@ -38,8 +38,6 @@ public partial class WarpTransitionCircle : WarpTransition
         var (pos, scale) = _player.TryGet(out var player)
             ? GetScaleOfCircle(player)
             : (null, 1);
-        
-        GD.Print($"pos={pos},scale={scale}");
         
         base._BeginTransition(type);
         _tween?.Free();
@@ -84,7 +82,6 @@ public partial class WarpTransitionCircle : WarpTransition
         var circlePos = ToScreenLocal(camera, centerPos);
         var frame = mario.GetFrame();
         var distance = FurthestDistanceToEndpoint(circlePos, new Rect2(Vector2.Zero, frame.Size));
-        GD.Print($"distance={distance}");
         return (circlePos, (float)(distance / _originalViewportSize));
     }
 
