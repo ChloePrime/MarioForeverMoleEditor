@@ -181,7 +181,7 @@ public partial class Goal : Node2D
 
     private void ProcessSmallGoal(Node2D player)
     {
-        if (player is Mario mario && (mario.ComboJumpAsked || !mario.IsOnFloor()))
+        if (player is Mario mario && (mario.ComboJumpAsked || !mario.IsOnFloor() || Math.Abs(mario.YSpeed) > 1e-4))
         {
             return;
         }
