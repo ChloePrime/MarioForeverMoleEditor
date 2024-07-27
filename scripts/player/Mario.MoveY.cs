@@ -109,7 +109,7 @@ public partial class Mario
     {
         var bonus = strength == 0 ? 0 : GameRule.XSpeedBonus * XSpeed / MaxSpeedWhenRunning + (_sprinting ? GameRule.SprintingBonus : 0);
         YSpeed = -strength - bonus;
-        _isInAir = true;
+        IsInAir = true;
         _wilyJumpTime = -1;
     }
     
@@ -119,9 +119,9 @@ public partial class Mario
         
         MoveY(delta);
 
-        if (_isInAir)
+        if (IsInAir)
         {
-            if (!_isInWater)
+            if (!IsInWater)
             {
                 YSpeed = Math.Min(YSpeed + Gravity * GetGravityScale() * delta, MaxYSpeed);
             }
@@ -168,7 +168,7 @@ public partial class Mario
 
         if (!HasCompletedLevel)
         {
-            if (_isInWater)
+            if (IsInWater)
             {
                 ConsumeSwimInput();
             }
@@ -183,7 +183,7 @@ public partial class Mario
 
     private void MoveY(float delta)
     {
-        if (_isInAir)
+        if (IsInAir)
         {
             Velocity = new Vector2(0, YSpeed);
             MoveAndSlide();
@@ -206,7 +206,7 @@ public partial class Mario
             {
                 if (onFloor)
                 {
-                    _isInAir = false;
+                    IsInAir = false;
                     OnFallOnGround();
                 }
                 if (onCeil)
@@ -217,7 +217,7 @@ public partial class Mario
             }
         }
 
-        if (!_isInAir)
+        if (!IsInAir)
         {
             _wilyJumpTime = JumpTolerateTime;
             
@@ -230,7 +230,7 @@ public partial class Mario
                     standable.ProcessMarioStandOn(this);
                 }
             }
-            _isInAir = collided == null;
+            IsInAir = collided == null;
         }
     }
 
@@ -333,7 +333,7 @@ public partial class Mario
             }
             Callable.From(() =>
             {
-                if (_isInWater)
+                if (IsInWater)
                 {
                     Swim();
                 }
@@ -354,7 +354,7 @@ public partial class Mario
         if (ControlIgnored) return;
         if (Input.IsActionJustPressed(Constants.ActionJump))
         {
-            if (!_isInAir || _wilyJumpTime >= 0 || IsClimbing)
+            if (!IsInAir || _wilyJumpTime >= 0 || IsClimbing)
             {
                 Jump();
             }
@@ -397,9 +397,9 @@ public partial class Mario
     private void OnMarioJumpedIntoWater(Node2D _)
     {
         _waterStack++;
-        if (!_isInWater)
+        if (!IsInWater)
         {
-            _isInWater = true;
+            IsInWater = true;
             EnterWater();
         }
     }
@@ -426,9 +426,9 @@ public partial class Mario
     private void OnMarioJumpedOutOfWater(Node2D _)
     {
         _waterStack--;
-        if (_waterStack == 0 && _isInWater)
+        if (_waterStack == 0 && IsInWater)
         {
-            _isInWater = false;
+            IsInWater = false;
             ExitWater();
         }
     }
@@ -460,8 +460,8 @@ public partial class Mario
     private Area2D _waterDetector;
     private Area2D _waterSurfaceDetector;
     private Area2D _waterSurfaceDetector2;
-    [CtfFlag(11)] private bool _isInAir = true;
-    [CtfFlag(12)] private bool _isInWater;
+    [CtfFlag(11)] public bool IsInAir { get; private set; } = true;
+    [CtfFlag(12)] public bool IsInWater { get; private set; }
     private bool _isNearWaterSurface = true;
     private bool _canLeaveOfWater;
     private float _wilyJumpTime;

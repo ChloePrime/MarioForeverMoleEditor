@@ -59,14 +59,14 @@ public partial class Mario
         
         _running = _runPressed;
         _walkAxis = FetchWalkingInput();
-        _walkAxis = (IsCrouching && !_isInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
+        _walkAxis = (IsCrouching && !IsInAir) ? 0 : (Mathf.IsZeroApprox(_walkAxis) ? 0 : _walkAxis);
         _walking = _walkAxis != 0;
 
         if (XSpeed <= 0 && GameRule.CharacterDirectionPolicy == GameRule.MarioDirectionPolicy.FollowControlDirection)
         {
             XDirection = _controlDirection;
         }
-        if (!_leftPressed && !_rightPressed && !_isInAir && XSpeed > MaxSpeedWhenWalking)
+        if (!_leftPressed && !_rightPressed && !IsInAir && XSpeed > MaxSpeedWhenWalking)
         {
             _controlDirection = XDirection;
         }
@@ -134,7 +134,7 @@ public partial class Mario
                 max = _sprinting ? MaxSpeedWhenSprinting : MaxSpeedWhenRunning;
                 acc = AccelerationWhenRunning;
             }
-            if (_isInWater && !GameRule.KeepXSpeedInWater)
+            if (IsInWater && !GameRule.KeepXSpeedInWater)
             {
                 max = MaxSpeedInWater;
             }
@@ -272,9 +272,9 @@ public partial class Mario
             _burstCharge = 0;
             return;
         }
-        if (_running && !_turning && !_isInWater && XSpeed >= MaxSpeedWhenRunning - 1e-3)
+        if (_running && !_turning && !IsInWater && XSpeed >= MaxSpeedWhenRunning - 1e-3)
         {
-            if (!_isInAir)
+            if (!IsInAir)
             {
                 _burstCharge.MoveToward(SprintChargeTime, delta);
             }

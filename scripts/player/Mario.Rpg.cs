@@ -167,7 +167,7 @@ public partial class Mario
 
     private void ProcessPositionAutoSave()
     {
-        if (_isInAir || IsCrouching)
+        if (IsInAir || IsCrouching)
         {
             return;
         }

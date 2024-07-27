@@ -304,7 +304,7 @@ public partial class Mario : CharacterBody2D
         ProcessPositionAutoSave();
         ProcessAnimation();
 
-        var shouldSkid = (_leftPressed || _rightPressed) && !_isInAir && (_turning || (IsCrouching && XSpeed > 0));
+        var shouldSkid = (_leftPressed || _rightPressed) && !IsInAir && (_turning || (IsCrouching && XSpeed > 0));
         if (_skidding != shouldSkid)
         {
             _skidding = shouldSkid;
@@ -386,7 +386,7 @@ public partial class Mario : CharacterBody2D
             return;
         }
         // 水中需要触地才能蹲下
-        var isAirSwimming = _isInAir && _isInWater;
+        var isAirSwimming = IsInAir && IsInWater;
         if (_downPressed && !isAirSwimming && !IsCrouching && !IsGrabbing)
         {
             SetSize(MarioSize.Small);
@@ -515,7 +515,7 @@ public partial class Mario : CharacterBody2D
         
         if (IsGrabbing)
         {
-            if (_isInAir && _optionalAnimations.Contains(Constants.AnimGrabJump))
+            if (IsInAir && _optionalAnimations.Contains(Constants.AnimGrabJump))
             {
                 return (Constants.AnimGrabJump, speed);
             }
@@ -532,9 +532,9 @@ public partial class Mario : CharacterBody2D
         {
             return (Constants.AnimCrouching, speed);
         }
-        if (_isInAir)
+        if (IsInAir)
         {
-            if (_isInWater)
+            if (IsInWater)
             {
                 anim = Constants.AnimSwimming;
             }
@@ -713,7 +713,7 @@ public partial class Mario : CharacterBody2D
     private void EmitSmoke(PackedScene smoke)
     {
         if (PipeState != MarioPipeState.NotInPipe) return;
-        if (_isInAir || !this.TryGetParent(out Node parent)) return;
+        if (IsInAir || !this.TryGetParent(out Node parent)) return;
         smoke.Instantiate(out Node2D instance);
         
         parent.AddChild(instance);
