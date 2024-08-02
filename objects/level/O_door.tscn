@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cura0qvkompxa"]
+
+[ext_resource type="Texture2D" uid="uid://d0ua6qmo13a4a" path="res://resources/level/T_door.png" id="1_65337"]
+[ext_resource type="Script" path="res://scripts/level/warp/Door.cs" id="1_bfbfj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6k1v"]
+size = Vector2(8, 8)
+
+[node name="Door" type="Node2D"]
+process_physics_priority = -1
+script = ExtResource("1_bfbfj")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("1_65337")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 65536
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_o6k1v")

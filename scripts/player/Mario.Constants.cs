@@ -50,6 +50,9 @@ public partial class Mario
         public static readonly StringName AnimLeaping = "[05ex] leaping";
         public static readonly StringName AnimFalling = "[06] falling";
         public static readonly StringName AnimCrouching = "[07] crouching";
+        public static readonly StringName AnimPipeFront = "[p0] front";
+        public static readonly StringName AnimPipeBack = "[p1] back";
+        public static readonly StringName AnimPipeFrontYeah = "[p2] front_yeah";
         public static readonly StringName ShaderParamAlpha = "rainbow_alpha";
         [CtfAnimation(12)] public static readonly StringName AnimSwimming = "[12] swimming";
         public static readonly StringName AnimClimbing = "[13] climbing";

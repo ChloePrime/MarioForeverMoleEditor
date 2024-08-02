@@ -1,6 +1,5 @@
 ﻿using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Player;
-using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Level.Warp;
@@ -91,6 +90,7 @@ public partial class PipeEntrance : WarpObject
             PassDirection.Down => mario.IsGrabbing ? null : Mario.Constants.AnimCrouching,
             _ => Mario.Constants.AnimWalking,
         };
+        ApplyMarioDirection(mario);
         if (Direction != PassDirection.Down)
         {
             mario.ForceCancelCrouch();
@@ -113,8 +113,11 @@ public partial class PipeEntrance : WarpObject
                 mario.GlobalPosition += new Vector2(movement, 0).Rotated(GlobalRotation);
                 return;
             }
-            case Phase.Positioning when Direction is PassDirection.Left or PassDirection.Right:
-                mario.GlobalPosition = ToGlobal(ToLocal(mario.GlobalPosition) with { Y = 0 });
+            case Phase.Positioning when Direction is PassDirection.Left:
+                mario.GlobalPosition = ToGlobal(new Vector2(-4, 0));
+                goto case Phase.Positioning;
+            case Phase.Positioning when Direction is PassDirection.Right:
+                mario.GlobalPosition = ToGlobal(new Vector2(4, 0));
                 goto case Phase.Positioning;
             case Phase.Positioning:
                 EnterSound?.Play();
@@ -161,6 +164,7 @@ public partial class PipeEntrance : WarpObject
     private void MarioCompleteEnteringPipe()
     {
         if (_mario is not {} mario) return;
+        mario.Visible = false;
         mario.RequireTeleport += () => OnMarioRequireTeleport(mario);
         ApplyTransitionType(mario);
         mario.BeginWarpTransitionIn();
@@ -169,12 +173,7 @@ public partial class PipeEntrance : WarpObject
 
     private void MarioExitPipe(Mario mario)
     {
-        mario.PipeState = MarioPipeState.NotInPipe;
-        mario.XSpeed = mario.YSpeed = 0;
-        mario.PipeForceAnimation = null;
-        mario.ZIndex = mario.ZIndexBeforePipe;
-        // 防止因为误差导致马里奥传送后被判定为卡在地面里
-        mario.GlobalPosition -= new Vector2(0, 1.5F * mario.SafeMargin);
+        MarioExitWarp(mario);
         if (Direction != PassDirection.Down)
         {
             mario.ForceCancelCrouch();
@@ -193,12 +192,21 @@ public partial class PipeEntrance : WarpObject
         }
     }
 
-    protected override void _OnMarioArrived(Mario mario)
+    public override void OnMarioTeleportedToHere(Mario mario)
     {
-        base._OnMarioArrived(mario);
+        base.OnMarioTeleportedToHere(mario);
+        mario.Visible = false;
+    }
+
+    protected override void BeginExitingProcedure(Mario mario)
+    {
+        base.BeginExitingProcedure(mario);
         EnterSound?.Play();
         _mario = mario;
         _phase = Phase.Exiting;
+        
+        mario.Visible = true;
+        mario.ZIndex = -1;
         
         if (Direction != PassDirection.Up)
         {
@@ -215,6 +223,17 @@ public partial class PipeEntrance : WarpObject
                 : Mario.Constants.AnimJumping,
             _ => Mario.Constants.AnimWalking,
         };
+        ApplyMarioDirection(mario);
+    }
+
+    private void ApplyMarioDirection(Mario mario)
+    {
+        mario.CharacterDirection = Direction switch
+        {
+            PassDirection.Left => -1,
+            PassDirection.Right => 1,
+            _ => mario.CharacterDirection,
+        };
     }
 
     private void OnHitboxBodyEntered(Node2D body)
@@ -230,22 +249,16 @@ public partial class PipeEntrance : WarpObject
     private void OnMarioRequireTeleport(Mario mario)
     {
         _mario = null;
-        if (Target is not { } target
-            || this.GetArea() is not {} oldArea
-            || target.GetArea() is not { } newArea)
+        var target = Target;
+        if (mario.TryTeleportTo(target))
+        {
+            target!.OnMarioTeleportedToHere(mario);
+        }
+        else
         {
             mario.GlobalPosition = GlobalPosition;
             MarioExitPipe(mario);
-            return;
         }
-        if (oldArea != newArea)
-        {
-            mario.GetParent()?.RemoveChild(mario);
-            this.GetLevel()!.SetArea(newArea);
-            newArea.AddChild(mario);
-        }
-        mario.GlobalPosition = target.GlobalPosition;
-        target.PrepareMarioExit(mario);
     }
 
     private Mario _mario;

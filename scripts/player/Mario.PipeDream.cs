@@ -1,6 +1,7 @@
 ﻿using System;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Level.Warp;
+using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;
@@ -26,9 +27,27 @@ public partial class Mario
     public event Action RequireTeleport;
     public event Action TransitionCompleted;
 
+    public bool TryTeleportTo(Node2D target)
+    {
+        if (target is null || this.GetArea() is not { } oldArea
+                           || target.GetArea() is not { } newArea)
+        {
+            return false;
+        }
+        
+        if (oldArea != newArea)
+        {
+            var level = this.GetLevel()!;
+            GetParent()?.RemoveChild(this);
+            level.SetArea(newArea);
+            newArea.AddChild(this);
+        }
+        GlobalPosition = target.GlobalPosition;
+        return true;
+    }
+
     public void BeginWarpTransitionIn()
     {
-        Visible = false;
         PipeState = MarioPipeState.TransitionIn;
 
         StartTransition(WarpTransitionType.In, OnTransitionInFinished);
@@ -54,7 +73,6 @@ public partial class Mario
             _transitionInstance = null;
             TransitionCompleted?.Invoke();
             TransitionCompleted = null;
-            Visible = true;
             PipeState = MarioPipeState.Exiting;
         });
     }

@@ -23,11 +23,25 @@ public partial class Mario
     /// <summary>
     /// 角色的横向朝向，不一定等于 X 速度的方向
     /// </summary>
-    public int CharacterDirection => GameRule.CharacterDirectionPolicy switch
+    public int CharacterDirection
     {
-        GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection,
-        GameRule.MarioDirectionPolicy.FollowXSpeed or _ => XDirection,
-    };
+        get => GameRule.CharacterDirectionPolicy switch
+        {
+            GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection,
+            GameRule.MarioDirectionPolicy.FollowXSpeed => XDirection,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+        set
+        {
+            value = value >= 0 ? 1 : -1;
+            _ = GameRule.CharacterDirectionPolicy switch
+            {
+                GameRule.MarioDirectionPolicy.FollowControlDirection => _controlDirection = value,
+                GameRule.MarioDirectionPolicy.FollowXSpeed => XDirection = value,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+        }
+    }
 
     public float NaturalXFriction => 1 / Math.Max(1e-4F, Slipperiness + 1);
 
