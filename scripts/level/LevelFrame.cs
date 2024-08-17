@@ -1,10 +1,26 @@
 using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Util;
 using Godot;
+using static Godot.CanvasItem.TextureFilterEnum;
 
 namespace ChloePrime.MarioForever.Level;
 
 public partial class LevelFrame : LevelManager
 {
+    [Export]
+    public bool UseFilter
+    {
+        get => _useFilter;
+        set => SetUseFilter(value);
+    }
+
+    [Export] 
+    public Material FilterMaterial { get; private set; } = GD.Load<Material>("res://resources/level/super_sai.mtl.tres");
+    
+    
+    [ExportGroup("Advanced")]
+    [Export] private Control LevelContainer { get; set; }
+
     public override void _Ready()
     {
         Main.Init();
@@ -16,6 +32,31 @@ public partial class LevelFrame : LevelManager
         this.GetNode(out _game, NpGameContainer);
         GetWindow().ContentScaleAspect = Window.ContentScaleAspectEnum.Expand;
         GetWindow().SizeChanged += OnResize;
+        _ready.Value = true;
+        SetUseFilter(UseFilter);
+    }
+
+    public override void _Input(InputEvent e)
+    {
+        base._Input(e);
+        if (e is InputEventKey { PhysicalKeycode: Key.F6, Pressed: true })
+        {
+            UseFilter = !UseFilter;
+        }
+    }
+
+    private bool SetUseFilter(bool value)
+    {
+        if (!_ready.Value)
+        {
+            goto ret;
+        }
+
+        LevelContainer.AnchorRight = LevelContainer.AnchorBottom = value ? 0.5F : 1;
+        LevelContainer.Material = value ? FilterMaterial : null; 
+        
+        ret:
+        return _useFilter = value;
     }
 
     private void OnResize()
@@ -35,4 +76,6 @@ public partial class LevelFrame : LevelManager
     private Control _ln, _rn;
     private Control _la, _ra;
     private AspectRatioContainer _game;
+    private UnserializedContainer<bool> _ready;
+    private bool _useFilter;
 }

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dilufs6fxa33y"]
+
+[ext_resource type="Shader" path="res://resources/level/super_sai.gdshader" id="1_smnlj"]
+
+[resource]
+shader = ExtResource("1_smnlj")

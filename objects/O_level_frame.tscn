@@ -1,17 +1,22 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene load_steps=14 format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" path="res://scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://resources/level/T_frame_anima_left.png" id="3_bly6j"]
 [ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://objects/ui/O_game_ui.tscn" id="3_i5s5a"]
+[ext_resource type="PackedScene" uid="uid://ncpsy2e0onio" path="res://16x_testdata.tscn" id="3_iwkim"]
 [ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://resources/level/T_frame_curtain.png" id="3_nh8oc"]
 [ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://R_game_rule.tres" id="3_qymbr"]
 [ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://resources/level/T_frame_anima_right.png" id="4_leriq"]
 [ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://resources/mario/ME_game_over.ogg" id="4_xrsv5"]
+[ext_resource type="Material" uid="uid://dilufs6fxa33y" path="res://resources/level/super_sai.mtl.tres" id="5_cmay7"]
 [ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
 [ext_resource type="Script" path="res://scripts/level/DebugCheater.cs" id="6_sxgtr"]
 
-[node name="Level Frame" type="Control" node_paths=PackedStringArray("DarknessManager", "GameViewport", "Hud")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_5tqpd"]
+viewport_path = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
+
+[node name="Level Frame" type="Control" node_paths=PackedStringArray("LevelContainer", "DarknessManager", "GameViewport", "Hud")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +26,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bhhpe")
+UseFilter = true
+LevelContainer = NodePath("Aspect Ratio Container/Control/Level Container")
 Level = ExtResource("2_bego7")
+TestLevel = ExtResource("3_iwkim")
 GameOverJingle = ExtResource("4_xrsv5")
 DarknessManager = NodePath("Aspect Ratio Container/Control/Darkness Manager")
 GameViewport = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
@@ -46,29 +54,23 @@ ratio = 1.3333
 [node name="Control" type="Control" parent="Aspect Ratio Container"]
 layout_mode = 2
 
-[node name="Level Container" type="SubViewportContainer" parent="Aspect Ratio Container/Control"]
+[node name="Level Container" type="TextureRect" parent="Aspect Ratio Container/Control"]
+texture_filter = 1
+material = ExtResource("5_cmay7")
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
+anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -319.992
-offset_top = -240.0
-offset_right = 1600.01
-offset_bottom = 1200.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.333, 0.333)
-stretch = true
+texture = SubResource("ViewportTexture_5tqpd")
+expand_mode = 1
 
 [node name="Level Viewport" type="SubViewport" parent="Aspect Ratio Container/Control/Level Container"]
 own_world_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1920, 1440)
-size_2d_override = Vector2i(640, 480)
-size_2d_override_stretch = true
+size = Vector2i(320, 240)
 render_target_update_mode = 4
 
 [node name="Game UI" parent="Aspect Ratio Container/Control" instance=ExtResource("3_i5s5a")]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ncpsy2e0onio"]
+
+[ext_resource type="Texture2D" uid="uid://djbvbtl4j328x" path="res://16x_testdata.png" id="1_nhl27"]
+
+[node name="16xExample" type="TextureRect"]
+offset_right = 256.0
+offset_bottom = 224.0
+texture = ExtResource("1_nhl27")
