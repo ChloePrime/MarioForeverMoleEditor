@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbjby6d0tq3lk"]
+
+[ext_resource type="PackedScene" uid="uid://cfh2yaxle81ha" path="res://engine/resources/facility/internal_platform_base.tscn" id="1_e0g80"]
+[ext_resource type="Script" path="res://engine/scripts/facility/StandardMovingPlatform.cs" id="2_iy5jj"]
+[ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="2_s4l6o"]
+[ext_resource type="Texture2D" uid="uid://pvswrex0x8jm" path="res://engine/resources/facility/T_platforms.png" id="3_q2ah4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m8hl7"]
+size = Vector2(96, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c1cm"]
+atlas = ExtResource("3_q2ah4")
+region = Rect2(0, 0, 96, 16)
+
+[node name="Standard Moving Platform" instance=ExtResource("1_e0g80")]
+script = ExtResource("2_iy5jj")
+
+[node name="Collision Shape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_m8hl7")
+
+[node name="Static Sprite" type="Sprite2D" parent="." index="1"]
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_7c1cm")
+
+[node name="Animated Sprite" type="AnimatedSprite2D" parent="." index="2"]
+visible = false
+position = Vector2(0, 16)
+sprite_frames = ExtResource("2_s4l6o")

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dcead8w5fwxvk"]
+
+[ext_resource type="Texture2D" uid="uid://dgsqt0skchyt6" path="res://engine/tiles/T_tileset_bullet_launcher.png" id="1_hhasv"]
+
+[resource]
+atlas = ExtResource("1_hhasv")
+region = Rect2(0, 128, 32, 32)

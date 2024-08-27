@@ -5,4 +5,5 @@
 .vs/
 .vscode/
 
+# MFME Specific
 *.tiled-session

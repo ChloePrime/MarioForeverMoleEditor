@@ -1,0 +1,106 @@
+[gd_scene load_steps=15 format=3 uid="uid://cdos7gesbnvy1"]
+
+[ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://engine/resources/enemies/internal_turtle_base.tscn" id="1_o710u"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/GoldenTurtle.cs" id="2_82ykn"]
+[ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://engine/resources/enemies/T_turtle.png" id="2_pq0qb"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleStaticFlyMovementComponent.cs" id="4_1itbx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onxwm"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1274, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orkwp"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1323, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qq2ma"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1176, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6uyx"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1225, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4q4d2"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1519, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2w6d"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1372, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ye37"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1421, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5pul"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1470, 42, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eun2m"]
+atlas = ExtResource("2_pq0qb")
+region = Rect2(0, 1519, 42, 49)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_el5ea"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onxwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orkwp")
+}],
+"loop": true,
+"name": &"0_walking",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qq2ma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6uyx")
+}],
+"loop": true,
+"name": &"1_flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4q4d2")
+}],
+"loop": true,
+"name": &"3_shell_static",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2w6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ye37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5pul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eun2m")
+}],
+"loop": true,
+"name": &"4_shell_moving",
+"speed": 67.0
+}]
+
+[node name="Golden Turtle" instance=ExtResource("1_o710u")]
+script = ExtResource("2_82ykn")
+JumpStrength = 550.0
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+position = Vector2(4, -7)
+sprite_frames = SubResource("SpriteFrames_el5ea")
+animation = &"0_walking"
+
+[node name="Fly Movement" parent="." index="4"]
+script = ExtResource("4_1itbx")
+
+[editable path="Enemy Core"]

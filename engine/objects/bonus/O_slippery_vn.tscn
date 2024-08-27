@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt7gj1s88k04l"]
+
+[ext_resource type="PackedScene" uid="uid://c4t8mbtjglpky" path="res://engine/objects/bonus/O_poisonous_vn.tscn" id="1_manpy"]
+[ext_resource type="Script" path="res://engine/scripts/bonus/SlipperyVn.cs" id="2_pvsg0"]
+[ext_resource type="AudioStream" uid="uid://bqrjks83br828" path="res://engine/resources/bonus/SE_weird_food.wav" id="3_wqacn"]
+
+[node name="Slippery VN" instance=ExtResource("1_manpy")]
+script = ExtResource("2_pvsg0")
+Power = 7.0
+PickSound = ExtResource("3_wqacn")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+autoplay = "default"
+
+[editable path="Enemy Core"]

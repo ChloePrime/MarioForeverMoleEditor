@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://587ftbwb62xg"]
-
-[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://resources/background/background_base.tscn" id="1_5e01g"]
-[ext_resource type="Texture2D" uid="uid://b8wjw7u4jjw3m" path="res://resources/background/T_bg_snow_overworld.png" id="2_2coue"]
-
-[node name="Background" instance=ExtResource("1_5e01g")]
-texture = ExtResource("2_2coue")

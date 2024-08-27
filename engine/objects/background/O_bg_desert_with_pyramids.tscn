@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2pqoqmfkwwjt"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_v52ab"]
+[ext_resource type="Texture2D" uid="uid://brp2atae4agys" path="res://engine/resources/background/T_bg_desert_with_pyramids.png" id="2_2bt8g"]
+
+[node name="Background" instance=ExtResource("1_v52ab")]
+texture = ExtResource("2_2bt8g")

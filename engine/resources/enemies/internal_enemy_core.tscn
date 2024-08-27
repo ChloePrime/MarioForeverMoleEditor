@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://shi4xcud2fmv"]
+
+[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyCore.cs" id="1_7jxk8"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyHurtDetector.cs" id="2_gllfk"]
+[ext_resource type="Script" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_q5y43"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyDamageSource.cs" id="3_uvdtv"]
+[ext_resource type="Resource" uid="uid://v430l16luk5i" path="res://engine/resources/enemies/R_damagetype_unarmored.tres" id="4_ib4yf"]
+[ext_resource type="Material" uid="uid://dbpoyoa1dyxb2" path="res://engine/resources/enemies/M_enemy.tres" id="5_sqkyg"]
+
+[sub_resource type="Resource" id="Resource_uordy"]
+script = ExtResource("2_q5y43")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1lqd"]
+size = Vector2(32, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awmux"]
+size = Vector2(24, 30)
+
+[sub_resource type="Animation" id="Animation_8t8nw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/tint_alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5n7bs"]
+resource_name = "hurt"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/tint_alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mn46t"]
+_data = {
+"RESET": SubResource("Animation_8t8nw"),
+"hurt": SubResource("Animation_5n7bs")
+}
+
+[node name="Enemy Core" type="Node2D"]
+script = ExtResource("1_7jxk8")
+MyNpcData = SubResource("Resource_uordy")
+
+[node name="Hurt Detector" type="Area2D" parent="."]
+collision_layer = 131072
+collision_mask = 65536
+script = ExtResource("2_gllfk")
+AcceptedDamageTypes = ExtResource("4_ib4yf")
+OneHitDamageTypes = ExtResource("4_ib4yf")
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Hurt Detector"]
+shape = SubResource("RectangleShape2D_r1lqd")
+
+[node name="Damage Source" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 65536
+script = ExtResource("3_uvdtv")
+
+[node name="Collision Shape" type="CollisionShape2D" parent="Damage Source"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_awmux")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+material = ExtResource("5_sqkyg")
+
+[node name="Animation Player" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_mn46t")
+}

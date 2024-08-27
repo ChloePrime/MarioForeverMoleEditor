@@ -11,17 +11,17 @@ config_version=5
 [application]
 
 config/name="MarioForeverMoleEditor"
-run/main_scene="res://objects/O_level_frame.tscn"
+run/main_scene="res://engine/objects/O_level_frame.tscn"
 config/features=PackedStringArray("4.3", "C#")
 config/icon="res://icon.svg"
 
 [audio]
 
-buses/default_bus_layout="res://R_audio_bus_layout.tres"
+buses/default_bus_layout="res://engine/R_audio_bus_layout.tres"
 
 [autoload]
 
-BackgroundMusic="*res://scripts/level/BackgroundMusic.cs"
+BackgroundMusic="*res://engine/scripts/level/BackgroundMusic.cs"
 
 [dialogic]
 

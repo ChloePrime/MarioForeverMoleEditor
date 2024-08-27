@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c124dyiqssl3h"]
+
+[ext_resource type="PackedScene" uid="uid://blwx4hmks2qf0" path="res://engine/objects/enemies/spiky_facility/O_spike_grey_1_down.tscn" id="1_5bvhn"]
+[ext_resource type="Texture2D" uid="uid://d382a2m3t8xys" path="res://engine/resources/enemies/spiky_facility/T_spike_tank_up.tres" id="2_4h4kc"]
+
+[node name="Spike (Tank, Down)" instance=ExtResource("1_5bvhn")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_4h4kc")

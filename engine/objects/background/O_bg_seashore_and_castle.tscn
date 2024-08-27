@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://jnm07ehihxar"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_1mcrj"]
+[ext_resource type="Texture2D" uid="uid://bxdi8tlg4ecb3" path="res://engine/resources/background/T_bg_seashore_and_castle.png" id="2_k82sl"]
+
+[node name="Background" instance=ExtResource("1_1mcrj")]
+texture = ExtResource("2_k82sl")

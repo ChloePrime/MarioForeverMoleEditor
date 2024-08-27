@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://yirnxxc024q5"]
+
+[ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_wpyv6"]
+[ext_resource type="PackedScene" uid="uid://dnfiyq8iuoad2" path="res://engine/objects/bonus/O_leaping_coin.tscn" id="2_f7lqx"]
+[ext_resource type="AudioStream" uid="uid://djilf81e2h5mk" path="res://engine/resources/bonus/SE_coin.ogg" id="3_2lktf"]
+[ext_resource type="Texture2D" uid="uid://kagdt0x8t7xl" path="res://engine/resources/bonus/T_coin.png" id="3_km4w1"]
+
+[node name="Question Block (Coin)" instance=ExtResource("1_wpyv6")]
+Content = ExtResource("2_f7lqx")
+ContentOffset = Vector2(0, -32)
+SmallMarioOverride = null
+BumpSound = ExtResource("3_2lktf")
+
+[node name="Editor Display" parent="." index="3"]
+texture = ExtResource("3_km4w1")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)

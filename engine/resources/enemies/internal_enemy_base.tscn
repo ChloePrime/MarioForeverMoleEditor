@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqd5ut2wsbi1h"]
+
+[ext_resource type="Script" path="res://engine/scripts/rpg/WalkableNpc.cs" id="1_hflx6"]
+[ext_resource type="Script" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_enr0v"]
+[ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="3_ketea"]
+[ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="4_ayqsa"]
+
+[sub_resource type="Resource" id="Resource_35v0x"]
+script = ExtResource("2_enr0v")
+HitPoint = 50.0
+MaxHitPoint = 50.0
+DamageLo = 2.0
+DamageHi = 40.0
+Friendly = false
+DoNotMove = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8kmp8"]
+size = Vector2(30, 30)
+
+[node name="Internal Npc Base" type="CharacterBody2D"]
+collision_layer = 131072
+collision_mask = 131077
+floor_max_angle = 0.794125
+floor_snap_length = 8.0
+script = ExtResource("1_hflx6")
+NpcData = SubResource("Resource_35v0x")
+ControlAcceleration = 312.5
+TargetSpeed = 50.0
+MaxYSpeed = 500.0
+CollideWithOthers = true
+
+[node name="Collision Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_8kmp8")
+
+[node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -16, 32, 32)
+
+[node name="Enemy Core" parent="." instance=ExtResource("3_ketea")]
+MyNpcData = null
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+Stompable = true
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = ExtResource("4_ayqsa")
+
+[editable path="Enemy Core"]

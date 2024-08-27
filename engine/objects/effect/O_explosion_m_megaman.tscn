@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://40iy1yhyf77i"]
+
+[ext_resource type="Texture2D" uid="uid://tg5v3mo1ncte" path="res://engine/resources/effect/T_explosion_m_megaman.png" id="1_j6ncu"]
+[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/SelfDestroyingEffect.cs" id="2_8jh45"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqwre"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcf1n"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gd2oo"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg48q"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8hqx"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mggm3"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xxq0"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug3hy"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rw7y"]
+atlas = ExtResource("1_j6ncu")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kmure"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqwre")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcf1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gd2oo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg48q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8hqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mggm3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xxq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ug3hy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rw7y")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 25.0
+}]
+
+[node name="Medium Explosion (Mega Man)" type="AnimatedSprite2D"]
+z_index = 500
+sprite_frames = SubResource("SpriteFrames_kmure")
+autoplay = "default"
+frame_progress = 1.0
+script = ExtResource("2_8jh45")

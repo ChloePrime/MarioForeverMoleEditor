@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://2m8nrs0f4o4t"]
+
+[ext_resource type="Texture2D" uid="uid://07414bexo8ep" path="res://engine/resources/ui/T_hp_bar_megaman.png" id="1_8bl4u"]
+
+[resource]
+atlas = ExtResource("1_8bl4u")
+region = Rect2(16, 0, 16, 256)

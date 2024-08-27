@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3831yuajjtis"]
+
+[ext_resource type="PackedScene" uid="uid://bbmxplfobtgeu" path="res://engine/resources/enemies/internal_lakitu_base.tscn" id="1_oj77y"]
+[ext_resource type="PackedScene" uid="uid://b6akv10bkfxp5" path="res://engine/objects/enemies/O_hedgehog_ball_red.tscn" id="2_ujs6e"]
+
+[node name="Lakitu" instance=ExtResource("1_oj77y")]
+modulate = Color(0.411765, 0.117647, 0.117647, 1)
+scale = Vector2(1, 0.996514)
+Projectile = ExtResource("2_ujs6e")
+
+[connection signal="Died" from="Enemy Core" to="." method="OnDied"]
+
+[editable path="Enemy Core"]

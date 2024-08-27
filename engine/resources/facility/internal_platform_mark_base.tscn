@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhu84is5vldgf"]
+
+[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/EditorOnlyComponent.cs" id="1_5epcq"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="1_uihff"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxhsn"]
+size = Vector2(32, 32)
+
+[node name="Internal Platform Mark Base" type="Area2D"]
+collision_layer = 0
+collision_mask = 2048
+
+[node name="Collision Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nxhsn")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_uihff")
+
+[node name="EditorOnlyComponent" type="Node" parent="Sprite"]
+script = ExtResource("1_5epcq")

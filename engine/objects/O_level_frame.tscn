@@ -1,0 +1,204 @@
+[gd_scene load_steps=14 format=3 uid="uid://dwanfr0onc8vt"]
+
+[ext_resource type="Script" path="res://engine/scripts/level/LevelFrame.cs" id="1_bhhpe"]
+[ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
+[ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://engine/resources/level/T_frame_anima_left.png" id="3_bly6j"]
+[ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://engine/objects/ui/O_game_ui.tscn" id="3_i5s5a"]
+[ext_resource type="PackedScene" uid="uid://ncpsy2e0onio" path="res://engine/16x_testdata.tscn" id="3_iwkim"]
+[ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://engine/resources/level/T_frame_curtain.png" id="3_nh8oc"]
+[ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://engine/R_game_rule.tres" id="3_qymbr"]
+[ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://engine/resources/level/T_frame_anima_right.png" id="4_leriq"]
+[ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://engine/resources/mario/ME_game_over.ogg" id="4_xrsv5"]
+[ext_resource type="Material" uid="uid://dilufs6fxa33y" path="res://engine/resources/level/super_sai.mtl.tres" id="5_cmay7"]
+[ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://engine/resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
+[ext_resource type="Script" path="res://engine/scripts/level/DebugCheater.cs" id="6_sxgtr"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5tqpd"]
+viewport_path = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
+
+[node name="Level Frame" type="Control" node_paths=PackedStringArray("LevelContainer", "DarknessManager", "GameViewport", "Hud")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_bhhpe")
+UseFilter = true
+LevelContainer = NodePath("Aspect Ratio Container/Control/Level Container")
+Level = ExtResource("2_bego7")
+TestLevel = ExtResource("3_iwkim")
+GameOverJingle = ExtResource("4_xrsv5")
+DarknessManager = NodePath("Aspect Ratio Container/Control/Darkness Manager")
+GameViewport = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
+Hud = NodePath("Aspect Ratio Container/Control/Game UI")
+GameRule = ExtResource("3_qymbr")
+
+[node name="Aspect Ratio Container" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.3333
+
+[node name="Control" type="Control" parent="Aspect Ratio Container"]
+layout_mode = 2
+
+[node name="Level Container" type="TextureRect" parent="Aspect Ratio Container/Control"]
+texture_filter = 1
+material = ExtResource("5_cmay7")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_5tqpd")
+expand_mode = 1
+
+[node name="Level Viewport" type="SubViewport" parent="Aspect Ratio Container/Control/Level Container"]
+own_world_3d = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+
+[node name="Game UI" parent="Aspect Ratio Container/Control" instance=ExtResource("3_i5s5a")]
+layout_mode = 1
+
+[node name="Darkness Manager" parent="Aspect Ratio Container/Control" instance=ExtResource("6_kh17v")]
+visible = false
+layout_mode = 1
+
+[node name="Frame Curtain" type="Control" parent="."]
+visible = false
+modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="L" type="Control" parent="Frame Curtain"]
+layout_mode = 1
+anchor_left = -0.125
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Image" type="TextureRect" parent="Frame Curtain/L"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -388.0
+offset_top = -240.0
+offset_bottom = 240.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_nh8oc")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="R" type="Control" parent="Frame Curtain"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.125
+anchor_bottom = 1.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Image" type="TextureRect" parent="Frame Curtain/R"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -240.0
+offset_right = 388.0
+offset_bottom = 240.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_nh8oc")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Frame Anime" type="Control" parent="."]
+modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="L" type="Control" parent="Frame Anime"]
+clip_contents = true
+layout_mode = 1
+anchor_left = -0.125
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Image" type="TextureRect" parent="Frame Anime/L"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -240.0
+offset_right = 80.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_bly6j")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="R" type="Control" parent="Frame Anime"]
+clip_contents = true
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.125
+anchor_bottom = 1.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Image" type="TextureRect" parent="Frame Anime/R"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -240.0
+offset_right = 80.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_leriq")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Debug Cheater" type="Node" parent="."]
+script = ExtResource("6_sxgtr")

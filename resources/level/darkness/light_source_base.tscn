@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd1okgvhe6myg"]
-
-[ext_resource type="Script" path="res://scripts/level/darkness/LightSource.cs" id="1_6n2fl"]
-
-[node name="Light Source" type="Node2D"]
-script = ExtResource("1_6n2fl")

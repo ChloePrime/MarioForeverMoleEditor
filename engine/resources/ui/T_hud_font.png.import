@@ -1,0 +1,17 @@
+[remap]
+
+importer="dt.abfi"
+type="FontFile"
+uid="uid://uwvnrj5uh3qi"
+path="res://.godot/imported/T_hud_font.png-429a6d97a11c40fe718bff2ead770b51.fontdata"
+
+[deps]
+
+source_file="res://engine/resources/ui/T_hud_font.png"
+dest_files=["res://.godot/imported/T_hud_font.png-429a6d97a11c40fe718bff2ead770b51.fontdata"]
+
+[params]
+
+ranges=PackedStringArray(" ", "!", "\"", "#", "$", "%", "&", "\'", "(", "*", ")", "+", ",", "-", ".", "/", "0-9", ":", ";", "<", "=", ">", "_", "^", "?", "[", "\\", "]", "@", "`", "A-Z", "a-z", "×")
+letter_spacing=0
+mipmaps=false

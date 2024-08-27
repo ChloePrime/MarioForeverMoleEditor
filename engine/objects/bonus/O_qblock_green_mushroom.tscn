@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci5i2q5qj21n6"]
+
+[ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_y6t4t"]
+[ext_resource type="PackedScene" uid="uid://d0pmmjb7l4rps" path="res://engine/objects/bonus/O_green_mushroom.tscn" id="2_ve2kn"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="3_l1lva"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbdrq"]
+atlas = ExtResource("3_l1lva")
+region = Rect2(96, 0, 32, 32)
+
+[node name="Question Block (Green Mushroom)" instance=ExtResource("1_y6t4t")]
+Content = ExtResource("2_ve2kn")
+SmallMarioOverride = null
+
+[node name="Editor Display" parent="." index="3"]
+texture = SubResource("AtlasTexture_rbdrq")

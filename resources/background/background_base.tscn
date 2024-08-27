@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgs5e7grimv6"]
-
-[ext_resource type="Script" path="res://scripts/level/LevelBackgroundManager.cs" id="2_gkf84"]
-
-[node name="Background" type="Sprite2D"]
-z_index = -4000
-
-[node name="LevelBackgroundManager" type="Node" parent="."]
-script = ExtResource("2_gkf84")

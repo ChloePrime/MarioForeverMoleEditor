@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://5qil325ycwfx"]
+
+[ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_87vtd"]
+[ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://engine/objects/bonus/O_red_mushroom.tscn" id="2_458uu"]
+[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/T_mario.png" id="2_nbltu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1xdw"]
+atlas = ExtResource("2_nbltu")
+region = Rect2(2127, 160, 33, 32)
+
+[node name="Question Block (Red Mushroom)" instance=ExtResource("1_87vtd")]
+Content = ExtResource("2_458uu")
+SmallMarioOverride = null
+
+[node name="Editor Display" parent="." index="3"]
+texture = SubResource("AtlasTexture_l1xdw")

@@ -1,8 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dbpoyoa1dyxb2"]
-
-[ext_resource type="Shader" path="res://resources/enemies/S_enemy.gdshader" id="1_81ral"]
-
-[resource]
-shader = ExtResource("1_81ral")
-shader_parameter/tint_color = Color(1, 0, 0, 1)
-shader_parameter/tint_alpha = 0.0

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioStreamGroup" load_steps=5 format=3 uid="uid://d1fof0rb5lifn"]
+
+[ext_resource type="AudioStream" uid="uid://bsk43jci1pau0" path="res://engine/resources/shared/SE_explosion_weak_1.wav" id="1_dja4d"]
+[ext_resource type="Script" path="res://addons/ChloePrime.Godot.Util/AudioStreamGroup.cs" id="1_vcy4m"]
+[ext_resource type="AudioStream" uid="uid://coi1b1urf4w4e" path="res://engine/resources/shared/SE_explosion_weak_2.wav" id="2_hkgu2"]
+[ext_resource type="AudioStream" uid="uid://cdcjfwjdjsxh3" path="res://engine/resources/shared/SE_explosion_weak_3.wav" id="3_bwtla"]
+
+[resource]
+script = ExtResource("1_vcy4m")
+AudioStreamList = Array[AudioStream]([ExtResource("1_dja4d"), ExtResource("2_hkgu2"), ExtResource("3_bwtla")])

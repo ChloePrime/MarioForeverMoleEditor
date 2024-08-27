@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://gi86my0pjg6q"]
+
+[ext_resource type="PackedScene" uid="uid://b25x5u3i360p1" path="res://engine/resources/mario/chloe.glb" id="1_71pae"]
+[ext_resource type="Script" path="res://engine/scripts/player/YsmMarioSprite3D.cs" id="2_peu6d"]
+
+[node name="3D Mario Example" instance=ExtResource("1_71pae")]
+script = ExtResource("2_peu6d")

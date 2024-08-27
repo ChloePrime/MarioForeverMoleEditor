@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbe1qjvwn88mw"]
+
+[ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_w6ouc"]
+[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://engine/resources/enemies/T_hedgehog.png" id="2_ymkig"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inqem"]
+atlas = ExtResource("2_ymkig")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guh7k"]
+atlas = ExtResource("2_ymkig")
+region = Rect2(0, 32, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa165"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inqem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guh7k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Red Hedgehog" instance=ExtResource("1_w6ouc")]
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_sa165")
+
+[editable path="Enemy Core"]

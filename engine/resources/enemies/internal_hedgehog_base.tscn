@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://boio8lcsy30r7"]
+
+[ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_ax0a5"]
+
+[node name="Internal Hedgehog Base" instance=ExtResource("1_ax0a5")]
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+Stompable = false
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+autoplay = "default"
+
+[editable path="Enemy Core"]

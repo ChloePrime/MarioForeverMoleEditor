@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccqxn7t61xoyn"]
+
+[ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_xkatw"]
+[ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/T_fire_flower.png" id="2_0dx43"]
+[ext_resource type="Resource" uid="uid://6ijibb8vqa75" path="res://engine/resources/mario/status_fire.tres" id="2_e04y1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jthme"]
+atlas = ExtResource("2_0dx43")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdew6"]
+atlas = ExtResource("2_0dx43")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwf63"]
+atlas = ExtResource("2_0dx43")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rgnm"]
+atlas = ExtResource("2_0dx43")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7lhs3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jthme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdew6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwf63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rgnm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 13.5
+}]
+
+[node name="Fire Flower" instance=ExtResource("1_xkatw")]
+TargetStatus = ExtResource("2_e04y1")
+ControlAcceleration = 0.0
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_7lhs3")
+autoplay = "default"
+
+[editable path="Enemy Core"]

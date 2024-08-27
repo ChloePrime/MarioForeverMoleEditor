@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dht8opdpeyyd6"]
+
+[ext_resource type="PackedScene" uid="uid://cabraxfm8hpy0" path="res://engine/resources/level/internal_pipe_exit_base.tscn" id="1_qo3ho"]
+[ext_resource type="Texture2D" uid="uid://mm0taedhy73o" path="res://engine/resources/level/T_pipe_warps.png" id="2_rfuw7"]
+
+[node name="Pipe Exit (Up)" instance=ExtResource("1_qo3ho")]
+Direction = 1
+
+[node name="Editor Display" parent="." index="0"]
+texture = ExtResource("2_rfuw7")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
+
+[node name="Clamp Detector" parent="." index="1"]
+position = Vector2(0, -96)

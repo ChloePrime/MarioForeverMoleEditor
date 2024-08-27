@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckldi4wnwmyhv"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_nljgn"]
+[ext_resource type="Texture2D" uid="uid://0qjaym57oc2r" path="res://engine/resources/background/T_bg_underwaterground.png" id="2_kt8su"]
+
+[node name="Background" instance=ExtResource("1_nljgn")]
+texture = ExtResource("2_kt8su")

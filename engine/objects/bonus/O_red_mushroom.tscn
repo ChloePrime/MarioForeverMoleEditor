@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4f28jot3dg5i"]
+
+[ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_pn022"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="2_ci2a8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qs8n"]
+atlas = ExtResource("2_ci2a8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uo5pb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qs8n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Red Mushroom" instance=ExtResource("1_pn022")]
+TargetSpeed = 100.0
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_uo5pb")
+autoplay = "default"
+
+[editable path="Enemy Core"]

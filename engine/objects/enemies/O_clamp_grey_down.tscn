@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxgkix0s5yw"]
+
+[ext_resource type="PackedScene" uid="uid://b2l3v5hsqxkrt" path="res://engine/objects/enemies/O_clamp_grey.tscn" id="1_on8iu"]
+
+[node name="Clamp (Grey, Down)" instance=ExtResource("1_on8iu")]
+rotation = 3.14159
+MoveDirection = Vector2(0, -1)
+
+[editable path="Enemy Core"]

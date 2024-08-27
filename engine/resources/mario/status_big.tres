@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bmteyw5cbqi3e"]
+
+[ext_resource type="Script" path="res://engine/scripts/player/MarioStatusBasic.cs" id="1_3i0e8"]
+[ext_resource type="PackedScene" uid="uid://xk3v8y8h1dpp" path="res://engine/resources/mario/mario_sprite_big.tscn" id="1_kc4cc"]
+[ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://engine/resources/mario/status_small.tres" id="2_s2cjm"]
+
+[resource]
+script = ExtResource("1_3i0e8")
+Id = &"big"
+Size = 1
+HurtResult = ExtResource("2_s2cjm")
+AnimationNode = ExtResource("1_kc4cc")

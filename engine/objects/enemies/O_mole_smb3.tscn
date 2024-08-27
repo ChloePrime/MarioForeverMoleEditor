@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://ryf2r5cmt4w7"]
+
+[ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://engine/objects/enemies/O_mole.tscn" id="1_g2n2e"]
+[ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://engine/resources/enemies/T_mole_smb3.png" id="3_i7j4d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b2vm"]
+atlas = ExtResource("3_i7j4d")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr7g5"]
+atlas = ExtResource("3_i7j4d")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w5mh4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0b2vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr7g5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[node name="Mole (SMB3)" instance=ExtResource("1_g2n2e")]
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_w5mh4")
+
+[editable path="Enemy Core"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://naiq184h1ib3"]
+
+[ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_xlwdt"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/HorizontalHomingNpc.cs" id="2_dg5s1"]
+[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://engine/resources/enemies/T_hedgehog.png" id="2_v1b3m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg7fi"]
+atlas = ExtResource("2_v1b3m")
+region = Rect2(0, 128, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rnxv"]
+atlas = ExtResource("2_v1b3m")
+region = Rect2(0, 160, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa165"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg7fi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rnxv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Blue Hedgehog" instance=ExtResource("1_xlwdt")]
+script = ExtResource("2_dg5s1")
+MaxSpeed = 50.0
+ScaleAnimationSpeed = false
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_sa165")
+
+[editable path="Enemy Core"]

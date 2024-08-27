@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://d0r3qbfj6bgkh"]
+
+[ext_resource type="Texture2D" uid="uid://bad5nlt78fc03" path="res://engine/resources/enemies/T_goomba.png" id="1_ol60k"]
+
+[resource]
+atlas = ExtResource("1_ol60k")
+region = Rect2(0, 0, 31, 32)

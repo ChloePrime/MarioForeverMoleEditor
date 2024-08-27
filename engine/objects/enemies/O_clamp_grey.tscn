@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://b2l3v5hsqxkrt"]
+
+[ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_086yn"]
+[ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="3_rt642"]
+[ext_resource type="Resource" uid="uid://dv0xcfjvxhonj" path="res://engine/resources/enemies/R_damagetype_armored.tres" id="4_vkcng"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78sn0"]
+atlas = ExtResource("3_rt642")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xcgw3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78sn0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc1rp"]
+atlas = ExtResource("3_rt642")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbnqt"]
+atlas = ExtResource("3_rt642")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5dqng"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc1rp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbnqt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Clamp (Grey)" instance=ExtResource("1_086yn")]
+
+[node name="Stem" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_xcgw3")
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+AcceptedDamageTypes = ExtResource("4_vkcng")
+OneHitDamageTypes = ExtResource("4_vkcng")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_5dqng")
+frame_progress = 0.158033
+
+[editable path="Enemy Core"]

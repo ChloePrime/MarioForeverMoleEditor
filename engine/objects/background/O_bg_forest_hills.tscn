@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://be6r440u75fjg"]
+
+[ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_osfn7"]
+[ext_resource type="Texture2D" uid="uid://b742dtbx11r86" path="res://engine/resources/background/T_bg_forest_hills.png" id="2_c0umj"]
+
+[node name="Background" instance=ExtResource("1_osfn7")]
+texture = ExtResource("2_c0umj")

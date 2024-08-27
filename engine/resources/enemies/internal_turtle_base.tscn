@@ -1,0 +1,110 @@
+[gd_scene load_steps=18 format=3 uid="uid://dsc1uriffc8l"]
+
+[ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/Turtle.cs" id="2_aaayt"]
+[ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://engine/resources/enemies/T_mole.png" id="3_hmuuo"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleEnemyCore.cs" id="3_spfq6"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleHurtDetector.cs" id="4_1ofhp"]
+[ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="4_kpfo4"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleDamageSource.cs" id="5_2gxph"]
+[ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://engine/resources/enemies/T_mole_smb3.png" id="5_dj5y6"]
+[ext_resource type="AudioStream" uid="uid://dy0wtj1ymm2hs" path="res://engine/resources/shared/SE_kick.wav" id="5_f8588"]
+[ext_resource type="Script" path="res://engine/scripts/shared/ComboTracker.cs" id="10_0o35x"]
+[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleTrigonometricFlyMovementComponent.cs" id="11_t5ep7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkc31"]
+atlas = ExtResource("3_hmuuo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6imq"]
+atlas = ExtResource("3_hmuuo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4sii"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_284cn"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yv4t"]
+atlas = ExtResource("5_dj5y6")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fqhyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkc31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6imq")
+}],
+"loop": true,
+"name": &"0_walking",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kpfo4")
+}],
+"loop": true,
+"name": &"1_flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4sii")
+}],
+"loop": true,
+"name": &"3_shell_static",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kpfo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_284cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yv4t")
+}],
+"loop": true,
+"name": &"4_shell_moving",
+"speed": 67.0
+}]
+
+[node name="Turtle Base" instance=ExtResource("1_puf1u")]
+script = ExtResource("2_aaayt")
+WalkSpeed = 50.0
+RollSpeed = 250.0
+ShellTurnAtCliff = false
+State = 2
+JumpStrength = 400.0
+
+[node name="Enemy Core" parent="." index="2"]
+script = ExtResource("3_spfq6")
+DieWhenThrownAndHitOther = false
+
+[node name="Hurt Detector" parent="Enemy Core" index="0"]
+script = ExtResource("4_1ofhp")
+KickSound = ExtResource("5_f8588")
+
+[node name="Damage Source" parent="Enemy Core" index="1"]
+script = ExtResource("5_2gxph")
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_fqhyd")
+animation = &"4_shell_moving"
+autoplay = "0_walking"
+
+[node name="Combo Tracker" type="Node" parent="." index="3"]
+script = ExtResource("10_0o35x")
+ResetAtLast = true
+
+[node name="Fly Movement" type="Node" parent="." index="4"]
+script = ExtResource("11_t5ep7")
+
+[editable path="Enemy Core"]

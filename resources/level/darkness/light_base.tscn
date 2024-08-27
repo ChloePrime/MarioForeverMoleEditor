@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://h2jlwfwm5800"]
-
-[ext_resource type="Script" path="res://scripts/level/darkness/Light.cs" id="1_lk1i1"]
-
-[node name="Light Base" type="Sprite2D"]
-process_priority = 5
-script = ExtResource("1_lk1i1")

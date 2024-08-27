@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://6ijibb8vqa75"]
+
+[ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://engine/resources/mario/status_big.tres" id="1_08ane"]
+[ext_resource type="Script" path="res://engine/scripts/player/MarioStatusFire.cs" id="1_oco3b"]
+[ext_resource type="PackedScene" uid="uid://c2cqpgt3klu63" path="res://engine/resources/mario/mario_sprite_fire.tscn" id="1_ubuub"]
+[ext_resource type="AudioStream" uid="uid://dpdrfh863rt07" path="res://engine/resources/shared/SE_fireball.wav" id="2_qxcpa"]
+[ext_resource type="PackedScene" uid="uid://8iq3fcddygub" path="res://engine/resources/mario/fireball_mario.tscn" id="3_hpgot"]
+
+[resource]
+script = ExtResource("1_oco3b")
+Fireball = ExtResource("3_hpgot")
+FireSound = ExtResource("2_qxcpa")
+MaxFireballs = 2
+Size = 1
+HurtResult = ExtResource("1_08ane")
+AnimationNode = ExtResource("1_ubuub")

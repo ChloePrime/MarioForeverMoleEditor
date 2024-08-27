@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhgfn6lf71s2o"]
-
-[ext_resource type="Script" path="res://scripts/level/warp/WarpTransitionImmediate.cs" id="1_fidkk"]
-
-[node name="Warp Transition (Immediate)" type="CanvasLayer"]
-layer = -128
-script = ExtResource("1_fidkk")

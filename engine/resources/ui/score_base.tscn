@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8s8guay3ciu1"]
+
+[ext_resource type="Texture2D" uid="uid://c5q5lrrtqmrbr" path="res://engine/resources/ui/T_score.png" id="1_54a3e"]
+[ext_resource type="Script" path="res://engine/scripts/ui/Score.cs" id="2_ehqr6"]
+
+[sub_resource type="Animation" id="Animation_5x2en"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lhqw4"]
+resource_name = "disappearing"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.4, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rrtyl"]
+_data = {
+"RESET": SubResource("Animation_5x2en"),
+"disappearing": SubResource("Animation_lhqw4")
+}
+
+[node name="Score Base" type="Sprite2D"]
+z_index = 1000
+texture = ExtResource("1_54a3e")
+region_enabled = true
+region_rect = Rect2(0, 0, 42, 16)
+script = ExtResource("2_ehqr6")
+Amount = 0
+
+[node name="Animation Player" type="AnimationPlayer" parent="."]
+autoplay = "disappearing"
+libraries = {
+"": SubResource("AnimationLibrary_rrtyl")
+}

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://u3mnx4topf7v"]
+
+[ext_resource type="Script" path="res://engine/scripts/util/animation/BetterAnimatedSprite2D.cs" id="3_d672b"]
+[ext_resource type="Resource" uid="uid://dd7bxjcwac518" path="res://engine/resources/mario/AnimData_swimming_common.tres" id="4_cdue1"]
+[ext_resource type="Resource" uid="uid://cto35s0xckg5p" path="res://engine/resources/mario/AnimData_apperaing_common.tres" id="4_m175q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ku3jn"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"[00] stopped",
+"speed": 5.0
+}]
+
+[node name="Sprite_Prefab" type="AnimatedSprite2D"]
+use_parent_material = true
+position = Vector2(0, -29)
+sprite_frames = SubResource("SpriteFrames_ku3jn")
+animation = &"[00] stopped"
+autoplay = "[00] stopped"
+script = ExtResource("3_d672b")
+AnimationData = {
+"[03] appearing": ExtResource("4_m175q"),
+"[12] swimming": ExtResource("4_cdue1")
+}
+Pivot = 8

@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="LevelFluidPreset" load_steps=3 format=3 uid="uid://ou3xhk61f7en"]
-
-[ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://objects/level/fluid/O_area_water.tscn" id="1_f6f16"]
-[ext_resource type="Script" path="res://scripts/level/AreaFluidPreset.cs" id="1_jwq3k"]
-
-[resource]
-script = ExtResource("1_jwq3k")
-Fluid = ExtResource("1_f6f16")

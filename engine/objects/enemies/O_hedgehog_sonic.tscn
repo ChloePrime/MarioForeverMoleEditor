@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvk3d12frsrl8"]
+
+[ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_kdvf8"]
+[ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://engine/resources/enemies/T_hedgehog.png" id="2_ci5bm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fksb4"]
+atlas = ExtResource("2_ci5bm")
+region = Rect2(0, 192, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b76n"]
+atlas = ExtResource("2_ci5bm")
+region = Rect2(0, 224, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa165"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fksb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b76n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Sonic" instance=ExtResource("1_kdvf8")]
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_sa165")
+
+[editable path="Enemy Core"]

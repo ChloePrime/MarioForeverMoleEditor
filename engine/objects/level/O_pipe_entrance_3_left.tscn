@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx1heogl41wtf"]
+
+[ext_resource type="PackedScene" uid="uid://be23nigkrkxcw" path="res://engine/resources/level/internal_pipe_entrance_base.tscn" id="1_6hlsx"]
+[ext_resource type="Texture2D" uid="uid://mm0taedhy73o" path="res://engine/resources/level/T_pipe_warps.png" id="2_5icoi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjuc2"]
+size = Vector2(4, 12)
+
+[node name="Pipe Entrance (Left)" instance=ExtResource("1_6hlsx")]
+Direction = 2
+
+[node name="Editor Display" parent="." index="0"]
+position = Vector2(16, -32)
+texture = ExtResource("2_5icoi")
+region_enabled = true
+region_rect = Rect2(128, 0, 64, 64)
+
+[node name="Hitbox" parent="." index="1"]
+position = Vector2(-14, -6)
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_hjuc2")
+
+[node name="Enter Wait Timer" type="Timer" parent="." index="2"]
+process_callback = 0
+one_shot = true

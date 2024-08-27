@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bej8rs8xrapgb"]
-
-[ext_resource type="PackedScene" uid="uid://5fga1kqh71x2" path="res://objects/enemies/spiky_facility/O_spike_grey_2_left.tscn" id="1_qn7n1"]
-[ext_resource type="Texture2D" uid="uid://du33xby40jx10" path="res://resources/enemies/spiky_facility/T_spike_mw_left.tres" id="2_mgq0u"]
-
-[node name="Spike (MW, Left)" instance=ExtResource("1_qn7n1")]
-
-[node name="Sprite" parent="." index="0"]
-texture = ExtResource("2_mgq0u")

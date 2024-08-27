@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimationData" load_steps=2 format=3 uid="uid://cto35s0xckg5p"]
+
+[ext_resource type="Script" path="res://engine/scripts/util/animation/AnimationData.cs" id="1_eain8"]
+
+[resource]
+script = ExtResource("1_eain8")
+LoopStarts = 0
+LoopCount = 10
+FramePivots = null
+FramePivotVectors = null

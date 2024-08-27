@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://c788col1kh50g"]
+
+[ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_yybt7"]
+[ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="3_aohnd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6luc4"]
+atlas = ExtResource("3_aohnd")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rr2f"]
+atlas = ExtResource("3_aohnd")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5dqng"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6luc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rr2f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Clamp (Green)" instance=ExtResource("1_yybt7")]
+
+[node name="Enemy Core" parent="." index="1"]
+DieWhenThrownAndHitOther = false
+
+[node name="Sprite" parent="Enemy Core" index="2"]
+sprite_frames = SubResource("SpriteFrames_5dqng")
+frame_progress = 0.158033
+
+[editable path="Enemy Core"]

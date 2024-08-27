@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://cnaj8b4v3ig13"]
+
+[ext_resource type="PackedScene" uid="uid://d4nciym8w2k6p" path="res://engine/resources/facility/internal_platform_style_mark_base.tscn" id="1_yrwpd"]
+[ext_resource type="Texture2D" uid="uid://pvswrex0x8jm" path="res://engine/resources/facility/T_platforms.png" id="2_ofcu1"]
+[ext_resource type="Texture2D" uid="uid://cur7n7076utq7" path="res://engine/resources/facility/T_platform_marks.png" id="3_4qxwl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jps40"]
+atlas = ExtResource("2_ofcu1")
+region = Rect2(0, 96, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoggi"]
+atlas = ExtResource("2_ofcu1")
+region = Rect2(0, 128, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xymk2"]
+atlas = ExtResource("2_ofcu1")
+region = Rect2(0, 160, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j34do"]
+atlas = ExtResource("2_ofcu1")
+region = Rect2(0, 192, 128, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0n425"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jps40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hoggi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xymk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j34do")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yld1"]
+atlas = ExtResource("3_4qxwl")
+region = Rect2(64, 0, 32, 32)
+
+[node name="Platform Style Mark (Cloud)" instance=ExtResource("1_yrwpd")]
+AnimatedSprite = SubResource("SpriteFrames_0n425")
+AnimatedSpriteSize = Vector2(128, 32)
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource("AtlasTexture_8yld1")
