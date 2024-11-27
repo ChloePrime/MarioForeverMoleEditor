@@ -136,4 +136,3 @@ void fragment () {
 		pos.y
 	);
 }
-

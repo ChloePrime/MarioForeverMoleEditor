@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bvlmc75n1oo82"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/Goal.cs" id="1_d5xjt"]
+[ext_resource type="Script" uid="uid://dbrmw68xbqogd" path="res://engine/scripts/level/Goal.cs" id="1_d5xjt"]
 [ext_resource type="Texture2D" uid="uid://cxml2i81tm5b7" path="res://engine/resources/level/T_goal.png" id="2_l2htv"]
 [ext_resource type="PackedScene" uid="uid://bk7ad77x2jpcb" path="res://engine/resources/level/goal_stick.tscn" id="3_jybxj"]
-[ext_resource type="Script" path="res://engine/scripts/shared/path_movement.gd" id="4_wcggd"]
+[ext_resource type="Script" uid="uid://crbtte401y2el" path="res://engine/scripts/shared/path_movement.gd" id="4_wcggd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhgtg"]
 atlas = ExtResource("2_l2htv")

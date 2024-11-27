@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bk7ad77x2jpcb"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/GoalStick.cs" id="1_c7jgv"]
+[ext_resource type="Script" uid="uid://bjckliuver1fr" path="res://engine/scripts/level/GoalStick.cs" id="1_c7jgv"]
 [ext_resource type="Texture2D" uid="uid://dpccmadysyfbc" path="res://engine/resources/level/T_goal_stick.png" id="2_njpbb"]
-[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/Rotator2D.cs" id="2_xment"]
+[ext_resource type="Script" uid="uid://dmp63o51omded" path="res://engine/scripts/util/helper_nodes/Rotator2D.cs" id="2_xment"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oyr2s"]
 radius = 7.0

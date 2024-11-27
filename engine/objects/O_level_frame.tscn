@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dwanfr0onc8vt"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/LevelFrame.cs" id="1_bhhpe"]
+[ext_resource type="Script" uid="uid://bopixaidmpi2h" path="res://engine/scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
 [ext_resource type="Material" uid="uid://crggeaaw58u7c" path="res://engine/resources/level/xbrz.mtl.tres" id="2_howmm"]
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://engine/resources/level/T_frame_anima_left.png" id="3_bly6j"]
@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://engine/resources/mario/ME_game_over.ogg" id="4_xrsv5"]
 [ext_resource type="Material" uid="uid://dilufs6fxa33y" path="res://engine/resources/level/super_sai.mtl.tres" id="5_cmay7"]
 [ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://engine/resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
-[ext_resource type="Script" path="res://engine/scripts/level/DebugCheater.cs" id="6_sxgtr"]
+[ext_resource type="Script" uid="uid://craq0f570q5q2" path="res://engine/scripts/level/DebugCheater.cs" id="6_sxgtr"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_5tqpd"]
 viewport_path = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")

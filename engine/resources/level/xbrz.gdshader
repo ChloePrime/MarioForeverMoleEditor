@@ -10,7 +10,7 @@ varying vec4 t[8];
 void vertex() {
 	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x, 1.0 / TEXTURE_PIXEL_SIZE.y);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
-	
+
 	vec2 ps = vec2(source_size.z, source_size.w);
 	float dx = ps.x;
 	float dy = ps.y;
@@ -58,7 +58,7 @@ bool IsBlendingNeeded(ivec4 blend) {
 void fragment() {
 	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x, 1.0 / TEXTURE_PIXEL_SIZE.y);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
-	
+
 	vec2 f = fract(UV * source_size.xy);
 	vec3 src[25];
 	src[21] = texture(TEXTURE, t[1].xw).rgb;
@@ -82,7 +82,7 @@ void fragment() {
 	src[9] = texture(TEXTURE, t[7].xy).rgb;
 	src[10] = texture(TEXTURE, t[7].xz).rgb;
 	src[11] = texture(TEXTURE, t[7].xw).rgb;
-	
+
 	float v[9];
 	v[0] = reduce(src[0]);
 	v[1] = reduce(src[1]);
@@ -93,7 +93,7 @@ void fragment() {
 	v[6] = reduce(src[6]);
 	v[7] = reduce(src[7]);
 	v[8] = reduce(src[8]);
-	
+
 	ivec4 blendResult = ivec4(BLEND_NONE, BLEND_NONE, BLEND_NONE, BLEND_NONE);
 
 	if (((v[0] == v[1] && v[3] == v[2]) || (v[0] == v[3] && v[1] == v[2])) == false)
@@ -127,7 +127,7 @@ void fragment() {
 		bool dominantGradient = (DOMINANT_DIRECTION_THRESHOLD * dist_05_07) < dist_06_00;
 		blendResult[0] = ((dist_05_07 < dist_06_00) && (v[0] != v[5]) && (v[0] != v[7])) ? ((dominantGradient) ? BLEND_DOMINANT : BLEND_NORMAL) : BLEND_NONE;
 	}
-	
+
 	vec3 dst[16];
 	dst[0] = src[0];
 	dst[1] = src[0];
@@ -145,7 +145,7 @@ void fragment() {
 	dst[13] = src[0];
 	dst[14] = src[0];
 	dst[15] = src[0];
-	
+
 	if (IsBlendingNeeded(blendResult) == true) {
 		float dist_01_04 = DistYCbCr(src[1], src[4]);
 		float dist_03_08 = DistYCbCr(src[3], src[8]);
@@ -234,6 +234,6 @@ void fragment() {
 		mix(mix(mix(dst[4], dst[3], step(0.25, f.x)), mix(dst[2], dst[11], step(0.75, f.x)), step(0.50, f.x)),
 			mix(mix(dst[15], dst[14], step(0.25, f.x)), mix(dst[13], dst[12], step(0.75, f.x)), step(0.50, f.x)), step(0.75, f.y)),
 		step(0.50, f.y));
-	
+
 	COLOR = vec4(res.rgb, 1.0);
 }

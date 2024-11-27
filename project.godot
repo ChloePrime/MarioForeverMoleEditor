@@ -12,7 +12,7 @@ config_version=5
 
 config/name="MarioForeverMoleEditor"
 run/main_scene="res://engine/objects/O_level_frame.tscn"
-config/features=PackedStringArray("4.3", "C#")
+config/features=PackedStringArray("4.4", "C#")
 config/icon="res://icon.svg"
 
 [audio]

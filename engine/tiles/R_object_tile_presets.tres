@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ObjectTilePresetList" load_steps=7 format=3 uid="uid://0spcwwwagtpi"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/ObjectTilePreset.cs" id="1_47fvo"]
-[ext_resource type="Script" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_a0i6s"]
-[ext_resource type="Script" path="res://engine/scripts/level/ObjectTilePresetList.cs" id="1_sriky"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/Turtle.cs" id="3_6l0on"]
+[ext_resource type="Script" uid="uid://b35qt8rknu4c1" path="res://engine/scripts/level/ObjectTilePreset.cs" id="1_47fvo"]
+[ext_resource type="Script" uid="uid://b32v6dwpciq6l" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_a0i6s"]
+[ext_resource type="Script" uid="uid://b4yk28tvu5xk5" path="res://engine/scripts/level/ObjectTilePresetList.cs" id="1_sriky"]
+[ext_resource type="Script" uid="uid://dhd3bpggxi60e" path="res://engine/scripts/enemy/Turtle.cs" id="3_6l0on"]
 
 [sub_resource type="Resource" id="Resource_damnt"]
 script = ExtResource("1_47fvo")
