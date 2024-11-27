@@ -19,6 +19,9 @@ public partial class LevelFrame : LevelManager
     
     [ExportGroup("Advanced")]
     [Export] private Control LevelContainer { get; set; }
+    [Export] private SubViewport LevelViewport { get; set; }
+    
+    private Vector2I LevelViewportInitialSize { get; set; }
 
     public override void _Ready()
     {
@@ -32,6 +35,7 @@ public partial class LevelFrame : LevelManager
         GetWindow().ContentScaleAspect = Window.ContentScaleAspectEnum.Expand;
         GetWindow().SizeChanged += OnResize;
         _ready.Value = true;
+        LevelViewportInitialSize = LevelViewport.Size;
         SetUseFilter(UseFilter);
     }
 
@@ -51,8 +55,8 @@ public partial class LevelFrame : LevelManager
             goto ret;
         }
 
-        LevelContainer.AnchorRight = LevelContainer.AnchorBottom = value ? 0.5F : 1;
-        LevelContainer.Material = value ? FilterMaterial : null; 
+        LevelContainer.Material = value ? FilterMaterial : null;
+        LevelViewport.Size = value ? LevelViewportInitialSize / 2 : LevelViewportInitialSize;
         
         ret:
         return _useFilter = value;

@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://crggeaaw58u7c"]
+
+[ext_resource type="Shader" path="res://engine/resources/level/xbrz.gdshader" id="1_6e3g2"]
+
+[resource]
+shader = ExtResource("1_6e3g2")
+shader_parameter/LUMINANCE_WEIGHT = 1.0
+shader_parameter/EQUAL_COLOR_TOLERANCE = 0.05
+shader_parameter/STEEP_DIRECTION_THRESHOLD = 2.0
+shader_parameter/DOMINANT_DIRECTION_THRESHOLD = 3.5
