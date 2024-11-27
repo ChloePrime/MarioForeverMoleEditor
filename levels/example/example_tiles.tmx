@@ -3,21 +3,21 @@
  <editorsettings>
   <export target="example_tiles.tscn" format="tscn"/>
  </editorsettings>
- <tileset firstgid="1" source="../../tiles/TS_grass_green.tsx"/>
- <tileset firstgid="19" source="../../tiles/TS_collision.tsx"/>
- <tileset firstgid="79" source="../../tiles/TS_0x1pack_2.tsx"/>
- <tileset firstgid="379" source="../../tiles/TS_0x1pack_5.tsx"/>
- <tileset firstgid="607" source="../../tiles/TS_0x1pack_6.tsx"/>
- <tileset firstgid="823" source="../../tiles/TS_functional.tsx"/>
- <tileset firstgid="895" source="../../tiles/TS_0x1pack_3.tsx"/>
- <tileset firstgid="1175" source="../../tiles/OBJ_TS_enemies.tsx"/>
- <tileset firstgid="1216" source="../../tiles/OBJ_TS_bonus.tsx"/>
- <tileset firstgid="1293" source="../../tiles/TS_pipes.tsx"/>
- <tileset firstgid="1488" source="../../tiles/TS_water.tsx"/>
- <tileset firstgid="1500" source="../../tiles/OBJ_TS_bullet_launcher.tsx"/>
- <tileset firstgid="1510" source="../../tiles/TS_0x1pack_1.tsx"/>
- <tileset firstgid="1702" source="../../tiles/OBJ_TS_facility.tsx"/>
- <tileset firstgid="1703" source="../../tiles/TS_scenery.tsx"/>
+ <tileset firstgid="1" source="../../engine/tiles/TS_grass_green.tsx"/>
+ <tileset firstgid="19" source="../../engine/tiles/TS_collision.tsx"/>
+ <tileset firstgid="79" source="../../engine/tiles/TS_0x1pack_2.tsx"/>
+ <tileset firstgid="379" source="../../engine/tiles/TS_0x1pack_5.tsx"/>
+ <tileset firstgid="607" source="../../engine/tiles/TS_0x1pack_6.tsx"/>
+ <tileset firstgid="823" source="../../engine/tiles/TS_functional.tsx"/>
+ <tileset firstgid="895" source="../../engine/tiles/TS_0x1pack_3.tsx"/>
+ <tileset firstgid="1175" source="../../engine/tiles/OBJ_TS_enemies.tsx"/>
+ <tileset firstgid="1216" source="../../engine/tiles/OBJ_TS_bonus.tsx"/>
+ <tileset firstgid="1293" source="../../engine/tiles/TS_pipes.tsx"/>
+ <tileset firstgid="1488" source="../../engine/tiles/TS_water.tsx"/>
+ <tileset firstgid="1500" source="../../engine/tiles/OBJ_TS_bullet_launcher.tsx"/>
+ <tileset firstgid="1510" source="../../engine/tiles/TS_0x1pack_1.tsx"/>
+ <tileset firstgid="1702" source="../../engine/tiles/OBJ_TS_facility.tsx"/>
+ <tileset firstgid="1703" source="../../engine/tiles/TS_scenery.tsx"/>
  <objectgroup id="9" name="Objects"/>
  <layer id="10" name="Back Geometry" width="80" height="15">
   <properties>

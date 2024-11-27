@@ -1,10 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bk7ad77x2jpcb"]
 
 [ext_resource type="Script" path="res://engine/scripts/level/GoalStick.cs" id="1_c7jgv"]
+[ext_resource type="Texture2D" uid="uid://dpccmadysyfbc" path="res://engine/resources/level/T_goal_stick.png" id="2_njpbb"]
 [ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/Rotator2D.cs" id="2_xment"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cyofk"]
-load_path = "res://.godot/imported/T_goal_stick.png-313a4f9f07398faa5fb875e926d562a9.ctex"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oyr2s"]
 radius = 7.0
@@ -16,7 +14,7 @@ collision_mask = 65536
 script = ExtResource("1_c7jgv")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = SubResource("CompressedTexture2D_cyofk")
+texture = ExtResource("2_njpbb")
 
 [node name="Rotator" type="Node" parent="Sprite"]
 process_mode = 4

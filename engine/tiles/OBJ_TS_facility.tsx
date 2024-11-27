@@ -3,7 +3,7 @@
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" x="0" y="0" width="107" height="112" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/level/O_checkpoint.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/level/O_checkpoint.tscn"/>
   </properties>
   <image width="107" height="336" source="../resources/level/T_checkpoint.png"/>
  </tile>

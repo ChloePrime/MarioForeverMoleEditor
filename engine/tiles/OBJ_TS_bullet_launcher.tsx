@@ -3,38 +3,38 @@
  <image source="T_tileset_bullet_launcher.png" width="64" height="160"/>
  <tile id="0" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_bullet_launcher.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_bullet_launcher.tscn"/>
   </properties>
  </tile>
  <tile id="2" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_launcher_base_1.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_launcher_base_1.tscn"/>
   </properties>
  </tile>
  <tile id="3" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_launcher_base_0.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_launcher_base_0.tscn"/>
   </properties>
  </tile>
  <tile id="4" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_launcher_base_2.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_launcher_base_2.tscn"/>
   </properties>
  </tile>
  <tile id="5" type="instance"/>
  <tile id="6" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_launcher_base_3.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_launcher_base_3.tscn"/>
   </properties>
  </tile>
  <tile id="7" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_launcher_base_4.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_launcher_base_4.tscn"/>
   </properties>
  </tile>
  <tile id="8" type="instance">
   <properties>
-   <property name="res_path" type="file" value="res://objects/enemies/O_bullet_launcher_down.tscn"/>
+   <property name="res_path" type="file" value="res://engine/objects/enemies/O_bullet_launcher_down.tscn"/>
   </properties>
  </tile>
 </tileset>
