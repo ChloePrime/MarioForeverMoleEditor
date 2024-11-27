@@ -595,12 +595,15 @@ public partial class Mario : CharacterBody2D
                     Callable.From<Node>(parent.RemoveChild).CallDeferred(child.AsNode());
                 }
             }
-            (sprite is Node3D ? (Node)_sprite3DRoot : _spriteRoot).AddChild(sprite);
+            (sprite is Node3D ? (Node)_sprite3DRoot : _spriteParent).AddChild(sprite);
         }
     }
 
     private IEnumerable<IAnimatedSprite> PossibleSprites =>
-        _spriteRoot.Children().Concat(_sprite3DRoot.Children()).OfType<IAnimatedSprite>();
+        _spriteRoot.Children()
+            .Concat(_sprite3DRoot.Children())
+            .Concat(_spriteParent.Children())
+            .OfType<IAnimatedSprite>();
 
     private void PostSwitchStatusSprite()
     {
@@ -661,6 +664,7 @@ public partial class Mario : CharacterBody2D
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
         this.GetNode(out _sprite3DRoot, Constants.NpSprite3DRoot);
+        this.GetNode(out _spriteParent, Constants.NpSpriteParent);
         this.GetNode(out _jumpSound, Constants.NpJumpSound);
         this.GetNode(out _swimSound, Constants.NpSwimSound);
         this.GetNode(out _hurtSound, Constants.NpHurtSound);
@@ -728,6 +732,7 @@ public partial class Mario : CharacterBody2D
 
     private Node2D _spriteRoot;
     private Node3D _sprite3DRoot;
+    private Node2D _spriteParent;
     private AudioStreamPlayer _jumpSound;
     private AudioStreamPlayer _swimSound;
     private AudioStreamPlayer _hurtSound;

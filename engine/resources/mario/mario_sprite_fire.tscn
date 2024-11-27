@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://c2cqpgt3klu63"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://engine/resources/mario/mario_sprite_prefab.tscn" id="1_3c1jm"]
-[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/T_mario.png" id="2_ghkeo"]
+[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/mario.png" id="2_ghkeo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hurfc"]
 atlas = ExtResource("2_ghkeo")

@@ -1,6 +1,6 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bjcfis5cig415"]
 
-[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/T_mario.png" id="1_uwdk5"]
+[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/mario.png" id="1_uwdk5"]
 
 [resource]
 atlas = ExtResource("1_uwdk5")

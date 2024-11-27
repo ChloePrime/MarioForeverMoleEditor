@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4n0jeehuj4go"
-path="res://.godot/imported/T_mario.png-da6e73ba6b58c5f3b8f71b62364f5ea0.ctex"
+path="res://.godot/imported/mario.png-b67ce7123d514fc6a55e888b546af17e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/resources/mario/T_mario.png"
-dest_files=["res://.godot/imported/T_mario.png-da6e73ba6b58c5f3b8f71b62364f5ea0.ctex"]
+source_file="res://engine/resources/mario/mario.png"
+dest_files=["res://.godot/imported/mario.png-b67ce7123d514fc6a55e888b546af17e.ctex"]
 
 [params]
 

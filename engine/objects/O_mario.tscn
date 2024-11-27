@@ -1,21 +1,21 @@
 [gd_scene load_steps=79 format=3 uid="uid://cfywv6a3w5n52"]
 
-[ext_resource type="Script" path="res://engine/scripts/player/Mario.cs" id="1_slc8u"]
+[ext_resource type="Script" uid="uid://c4t21qddxci6e" path="res://engine/scripts/player/Mario.cs" id="1_slc8u"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://engine/resources/mario/status_small.tres" id="2_4vo13"]
 [ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://engine/resources/mario/mario_sprite_small.tscn" id="3_1usva"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://engine/resources/mario/status_big.tres" id="3_60q2k"]
-[ext_resource type="Script" path="res://engine/scripts/player/MarioHurtZone.cs" id="4_63ovs"]
+[ext_resource type="Script" uid="uid://w3tpo52pmx18" path="res://engine/scripts/player/MarioHurtZone.cs" id="4_63ovs"]
 [ext_resource type="Resource" uid="uid://6ijibb8vqa75" path="res://engine/resources/mario/status_fire.tres" id="4_eji8b"]
 [ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://engine/resources/mario/SE_jump.wav" id="4_irhyt"]
-[ext_resource type="Script" path="res://engine/scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
+[ext_resource type="Script" uid="uid://ce71ss0psxybw" path="res://engine/scripts/player/MarioCollisionBySize.cs" id="4_vtk5a"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://engine/resources/mario/SE_swim.wav" id="5_e7o5n"]
 [ext_resource type="Resource" uid="uid://bodhgx6bdjudy" path="res://engine/resources/mario/status_chloe_3d.tres" id="5_v43mo"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://engine/resources/mario/SE_hurt.wav" id="7_oqh4d"]
 [ext_resource type="Material" uid="uid://myh55fdcpwtl" path="res://engine/resources/mario/M_mario_main.tres" id="7_pl8do"]
-[ext_resource type="Script" path="res://engine/scripts/player/MarioGrabMuzzle.cs" id="9_ug04s"]
+[ext_resource type="Script" uid="uid://t8fot6ogq3gi" path="res://engine/scripts/player/MarioGrabMuzzle.cs" id="9_ug04s"]
 [ext_resource type="Texture2D" uid="uid://dm3igultx8jfo" path="res://engine/resources/mario/T_foot_gas.png" id="10_pqqm3"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://engine/resources/mario/SE_skid.ogg" id="11_lihkt"]
-[ext_resource type="Script" path="res://engine/scripts/shared/ComboTracker.cs" id="16_03bpw"]
+[ext_resource type="Script" uid="uid://dkvlr22th6odl" path="res://engine/scripts/shared/ComboTracker.cs" id="16_03bpw"]
 [ext_resource type="PackedScene" uid="uid://qriqbprl1mvt" path="res://engine/objects/level/darkness/O_light_source_spot.tscn" id="17_78fh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66cuu"]
@@ -418,7 +418,7 @@ CollisionBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodeP
 StatusList = Array[Resource]([ExtResource("2_4vo13"), ExtResource("3_60q2k"), ExtResource("4_eji8b"), ExtResource("5_v43mo")])
 MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/Muzzle"), NodePath("SpriteRoot/Muzzle (Crouching)")]
 GrabMuzzleBySize = [NodePath("SpriteRoot/Grab Muzzle (Small)"), NodePath("SpriteRoot/Grab Muzzle (Big)"), NodePath("SpriteRoot/Grab Muzzle (Small)")]
-StatusSpriteNodeList = [NodePath("SpriteRoot/Sprite_Small")]
+StatusSpriteNodeList = [NodePath("SpriteRoot/SpriteParent/Sprite_Small")]
 
 [node name="Collision_Big" type="CollisionShape2D" parent="."]
 position = Vector2(0, -26)
@@ -576,7 +576,12 @@ script = ExtResource("9_ug04s")
 [node name="Grab Root" type="Node2D" parent="SpriteRoot"]
 position = Vector2(12, -17)
 
-[node name="Sprite_Small" parent="SpriteRoot" instance=ExtResource("3_1usva")]
+[node name="SpriteParent" type="Node2D" parent="SpriteRoot"]
+use_parent_material = true
+position = Vector2(0, 8)
+
+[node name="Sprite_Small" parent="SpriteRoot/SpriteParent" instance=ExtResource("3_1usva")]
+texture_filter = 0
 
 [node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot"]
 use_parent_material = true

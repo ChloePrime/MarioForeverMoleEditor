@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_87vtd"]
 [ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://engine/objects/bonus/O_red_mushroom.tscn" id="2_458uu"]
-[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/T_mario.png" id="2_nbltu"]
+[ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/mario.png" id="2_nbltu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1xdw"]
 atlas = ExtResource("2_nbltu")
