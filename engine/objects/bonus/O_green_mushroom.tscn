@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://engine/resources/bonus/internal_bonus_base.tscn" id="1_tc5vs"]
 [ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://engine/objects/ui/O_1up.tscn" id="2_bdxsb"]
-[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="2_puicr"]
-[ext_resource type="Script" path="res://engine/scripts/bonus/GreenMushroom.cs" id="2_qohbl"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="2_puicr"]
+[ext_resource type="Script" uid="uid://d3eqfy5tscm72" path="res://engine/scripts/bonus/GreenMushroom.cs" id="2_qohbl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcn50"]
 atlas = ExtResource("2_puicr")

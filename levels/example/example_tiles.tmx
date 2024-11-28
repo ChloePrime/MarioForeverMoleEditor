@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="11">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="11">
  <editorsettings>
   <export target="example_tiles.tscn" format="tscn"/>
  </editorsettings>
- <tileset firstgid="1" source="../../engine/tiles/TS_grass_green.tsx"/>
- <tileset firstgid="19" source="../../engine/tiles/TS_collision.tsx"/>
- <tileset firstgid="79" source="../../engine/tiles/TS_0x1pack_2.tsx"/>
- <tileset firstgid="379" source="../../engine/tiles/TS_0x1pack_5.tsx"/>
- <tileset firstgid="607" source="../../engine/tiles/TS_0x1pack_6.tsx"/>
- <tileset firstgid="823" source="../../engine/tiles/TS_functional.tsx"/>
- <tileset firstgid="895" source="../../engine/tiles/TS_0x1pack_3.tsx"/>
- <tileset firstgid="1175" source="../../engine/tiles/OBJ_TS_enemies.tsx"/>
- <tileset firstgid="1216" source="../../engine/tiles/OBJ_TS_bonus.tsx"/>
- <tileset firstgid="1293" source="../../engine/tiles/TS_pipes.tsx"/>
- <tileset firstgid="1488" source="../../engine/tiles/TS_water.tsx"/>
- <tileset firstgid="1500" source="../../engine/tiles/OBJ_TS_bullet_launcher.tsx"/>
- <tileset firstgid="1510" source="../../engine/tiles/TS_0x1pack_1.tsx"/>
- <tileset firstgid="1702" source="../../engine/tiles/OBJ_TS_facility.tsx"/>
- <tileset firstgid="1703" source="../../engine/tiles/TS_scenery.tsx"/>
+ <tileset firstgid="1" source="../../engine/tiles/grass_green.tsx"/>
+ <tileset firstgid="19" source="../../engine/tiles/collision.tsx"/>
+ <tileset firstgid="79" source="../../engine/tiles/0x1pack_2.tsx"/>
+ <tileset firstgid="379" source="../../engine/tiles/0x1pack_5.tsx"/>
+ <tileset firstgid="607" source="../../engine/tiles/0x1pack_6.tsx"/>
+ <tileset firstgid="823" source="../../engine/tiles/functional.tsx"/>
+ <tileset firstgid="895" source="../../engine/tiles/0x1pack_3.tsx"/>
+ <tileset firstgid="1175" source="../../engine/tiles/enemies.tsx"/>
+ <tileset firstgid="1216" source="../../engine/tiles/bonus.tsx"/>
+ <tileset firstgid="1293" source="../../engine/tiles/pipes.tsx"/>
+ <tileset firstgid="1488" source="../../engine/tiles/water.tsx"/>
+ <tileset firstgid="1512" source="../../engine/tiles/bullet_launcher.tsx"/>
+ <tileset firstgid="1522" source="../../engine/tiles/0x1pack_1.tsx"/>
+ <tileset firstgid="1714" source="../../engine/tiles/facility.tsx"/>
+ <tileset firstgid="1715" source="../../engine/tiles/scenery.tsx"/>
  <objectgroup id="9" name="Objects"/>
  <layer id="10" name="Back Geometry" width="80" height="15">
   <properties>
@@ -53,9 +53,9 @@
 0,0,0,0,0,0,880,881,881,882,0,0,0,0,832,832,832,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,892,893,893,894,0,0,0,0,832,832,832,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1227,1227,1227,1227,1271,0,0,1205,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1206,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1298,1299,0,0,0,0,881,1702,0,0,0,0,0,0,0,0,0,0,0,1298,1299,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1298,1299,0,0,0,0,881,1714,0,0,0,0,0,0,0,0,0,0,0,1298,1299,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1313,1314,0,0,0,0,881,1305,1306,1306,1306,1306,1306,1306,1307,0,0,390,0,1313,1314,0,0,0,384,385,385,385,388,385,385,385,385,385,385,385,388,385,385,385,385,386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1180,1180,0,0,0,1917,1918,1918,1918,1918,1919,0,0,0,0,0,0,1313,1314,0,0,0,589,881,1320,1321,1321,1321,1321,1321,1321,1322,0,0,714,0,1313,1314,0,0,0,403,404,404,404,404,404,404,407,404,404,404,404,404,404,404,407,404,405,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1180,1180,0,0,0,1929,1930,1930,1930,1930,1931,0,0,0,0,0,0,1313,1314,0,0,0,589,881,1320,1321,1321,1321,1321,1321,1321,1322,0,0,714,0,1313,1314,0,0,0,403,404,404,404,404,404,404,407,404,404,404,404,404,404,404,407,404,405,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,268,269,269,269,269,269,269,269,269,269,269,269,269,269,269,269,269,270,0,0,403,404,404,407,404,404,404,404,404,404,407,404,404,404,404,404,404,405,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,
 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,0,0,288,289,289,289,289,289,289,289,289,289,289,289,289,289,289,289,289,290,0,0,403,404,404,404,404,404,404,404,404,404,404,404,404,404,404,404,404,405,0,0,0,0,0,0,0,0,0,0,0,7,8,8,8,8,8,8,8,8,8
 </data>

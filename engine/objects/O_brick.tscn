@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cu4j48wogmvd8"]
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_p2tjr"]
-[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="2_ox1mq"]
-[ext_resource type="Script" path="res://engine/scripts/bonus/Brick.cs" id="2_rji2b"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="2_ox1mq"]
+[ext_resource type="Script" uid="uid://73affvsmgprm" path="res://engine/scripts/bonus/Brick.cs" id="2_rji2b"]
 [ext_resource type="AudioStream" uid="uid://b51xvlqjgmd21" path="res://engine/resources/shared/SE_bump.wav" id="3_8l50f"]
 [ext_resource type="AudioStream" uid="uid://co70cskw05rxu" path="res://engine/resources/bonus/SE_brick_break.wav" id="3_o4lvq"]
 

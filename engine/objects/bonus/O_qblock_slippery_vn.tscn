@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_4045e"]
 [ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://engine/objects/bonus/O_slippery_vn.tscn" id="2_cyc6j"]
-[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="3_2l1gu"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="3_2l1gu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4f2nh"]
 atlas = ExtResource("3_2l1gu")

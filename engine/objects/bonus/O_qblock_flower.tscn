@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_wsvpa"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://engine/objects/bonus/O_fire_flower.tscn" id="2_fravn"]
-[ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/T_fire_flower.png" id="3_50prh"]
+[ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/fire_flower.png" id="3_50prh"]
 
 [node name="Question Block (Flower)" instance=ExtResource("1_wsvpa")]
 Content = ExtResource("2_fravn")

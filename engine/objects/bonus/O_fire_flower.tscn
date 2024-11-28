@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://ccqxn7t61xoyn"]
 
 [ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_xkatw"]
-[ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/T_fire_flower.png" id="2_0dx43"]
+[ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/fire_flower.png" id="2_0dx43"]
 [ext_resource type="Resource" uid="uid://6ijibb8vqa75" path="res://engine/resources/mario/status_fire.tres" id="2_e04y1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jthme"]

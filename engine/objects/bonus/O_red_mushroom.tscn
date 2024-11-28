@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4f28jot3dg5i"]
 
 [ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_pn022"]
-[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/T_tileset_bonus.png" id="2_ci2a8"]
+[ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="2_ci2a8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3qs8n"]
 atlas = ExtResource("2_ci2a8")

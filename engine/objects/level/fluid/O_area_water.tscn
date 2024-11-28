@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://cnff4y14doqop"]
 
 [ext_resource type="Script" uid="uid://bfwk66nqresmq" path="res://engine/scripts/level/AreaFluid.cs" id="1_t57w1"]
-[ext_resource type="Texture2D" uid="uid://bnfrwe6motgc1" path="res://engine/tiles/T_tileset_water.png" id="2_aid8y"]
+[ext_resource type="Texture2D" uid="uid://bnfrwe6motgc1" path="res://engine/tiles/water_tileset.png" id="2_aid8y"]
 [ext_resource type="Script" uid="uid://cbire7e43sxxk" path="res://engine/scripts/level/LevelBackgroundManager.cs" id="3_r2jjr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdwyt"]
