@@ -4,7 +4,7 @@ using Godot;
 namespace ChloePrime.MarioForever.Bonus;
 
 [GlobalClass]
-[Icon("res://engine/resources/bonus/AT_vn_icon.tres")]
+[Icon("res://engine/resources/bonus/vn_icon.tres")]
 public partial class SlipperyVn : PickableBonus
 {
     [Export] public float Power { get; set; } = 7F;

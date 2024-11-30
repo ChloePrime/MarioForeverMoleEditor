@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cu8e6tp4ixcwf"]
 
-[ext_resource type="Texture2D" uid="uid://5qnfls82sxkp" path="res://engine/resources/bonus/T_brick_piece.png" id="1_qspkk"]
+[ext_resource type="Texture2D" uid="uid://5qnfls82sxkp" path="res://engine/resources/bonus/brick_piece.png" id="1_qspkk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4uqyx"]
 size = Vector2(16, 11)
@@ -52,8 +52,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pprbf"]
 _data = {
-"RESET": SubResource("Animation_cruj1"),
-"default": SubResource("Animation_q4ln8")
+&"RESET": SubResource("Animation_cruj1"),
+&"default": SubResource("Animation_q4ln8")
 }
 
 [node name="Brick Piece" type="RigidBody2D"]
@@ -72,6 +72,6 @@ shape = SubResource("RectangleShape2D_4uqyx")
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_pprbf")
+&"": SubResource("AnimationLibrary_pprbf")
 }
 autoplay = "default"

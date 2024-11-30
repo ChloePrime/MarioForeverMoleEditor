@@ -5,7 +5,7 @@ using Godot;
 namespace ChloePrime.MarioForever.Bonus;
 
 [GlobalClass]
-[Icon("res://engine/resources/bonus/AT_vn_icon.tres")]
+[Icon("res://engine/resources/bonus/vn_icon.tres")]
 public partial class PoisonousVn: PickableBonus
 {
     public override void _OnMarioGotMe(Mario mario)

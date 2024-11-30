@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dinl48hffdhy2"]
 
-[ext_resource type="Texture2D" uid="uid://kagdt0x8t7xl" path="res://engine/resources/bonus/T_coin.png" id="1_1olx2"]
+[ext_resource type="Texture2D" uid="uid://kagdt0x8t7xl" path="res://engine/resources/bonus/coin.png" id="1_1olx2"]
 [ext_resource type="Script" uid="uid://dvqlecvvl5s7o" path="res://engine/scripts/bonus/Coin.cs" id="1_a4tqk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0uj80"]
