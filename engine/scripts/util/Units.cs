@@ -1,4 +1,4 @@
-﻿// #define MODERN_16X
+﻿// #define _16X_KINESIOLOGY_
 
 using Godot;
 
@@ -7,7 +7,7 @@ namespace ChloePrime.MarioForever.Util;
 public static class Units
 {
     private const float PixelUnitScale =
-#if MODERN_16X
+#if _16X_KINESIOLOGY_
         0.5F;
 #else
         1F;
