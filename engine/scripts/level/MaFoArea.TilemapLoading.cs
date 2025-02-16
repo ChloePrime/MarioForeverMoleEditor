@@ -14,12 +14,7 @@ public partial class MaFoLevelArea
 {
 	private void LoadTilemaps()
 	{
-		var children = GetChildren();
-		foreach (var tilemap in children.OfType<TileMap>())
-		{
-			LoadTilemapWithLayers(tilemap);
-		}
-		foreach (var tilemapRoot in children.Where(IsPossibleTilemapRoot))
+		foreach (var tilemapRoot in this.Children().Where(IsPossibleTilemapRoot))
 		{
 			LoadTilemapSeperated(tilemapRoot);
 		}
@@ -40,7 +35,7 @@ public partial class MaFoLevelArea
 
 	private static bool IsPossibleTilemapRoot(Node node)
 	{
-		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMap>().Any();
+		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMapLayer>().Any();
 	}
 
 	private void LoadTilemapSeperated(Node root) => LoadTilemapCore(root, root, TilemapType.None);
@@ -56,9 +51,9 @@ public partial class MaFoLevelArea
 		{
 			var typeByName = TypeLookup.GetValueOrDefault(node.Name, TilemapType.None);
 			var type = typeByName == TilemapType.None ? baseType : typeByName;
-			if (node is TileMap tilemap)
+			if (node is TileMapLayer tilemap)
 			{
-				LoadObjectsFromTile(tilemap, 0);
+				LoadObjectsFromTile(tilemap);
 				switch (type)
 				{
 					case TilemapType.SolidOnly:
@@ -80,29 +75,9 @@ public partial class MaFoLevelArea
 		}
 	}
 
-	/// <summary>
-	/// 针对使用 Use Tilemap Layers 的 tmx scene 的处理，
-	/// 不支持伤害层。
-	/// </summary>
-	private void LoadTilemapWithLayers(TileMap tilemap)
+	private void LoadObjectsFromTile(TileMapLayer tilemap)
 	{
-		var count = tilemap.GetLayersCount();
-		for (var i = 0; i < count; i++)
-		{
-			if (tilemap.GetLayerName(i).Contains("Collision", StringComparison.OrdinalIgnoreCase))
-			{
-				tilemap.SetLayerModulate(i, Colors.Transparent);
-			}
-			else
-			{
-				LoadObjectsFromTile(tilemap, i);
-			}
-		}
-	}
-
-	private void LoadObjectsFromTile(TileMap tilemap, int layer)
-	{
-		var all = tilemap.GetUsedCells(layer);
+		var all = tilemap.GetUsedCells();
 		using var _ = (Array)all;
 		var tileSize = tilemap.TileSet.TileSize;
 		var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
@@ -114,7 +89,7 @@ public partial class MaFoLevelArea
 		
 		foreach (var coord in all)
 		{
-			if (tilemap.GetCellTileData(layer, coord) is not { } tileData)
+			if (tilemap.GetCellTileData(coord) is not { } tileData)
 			{
 				continue;
 			}
@@ -148,9 +123,7 @@ public partial class MaFoLevelArea
 				o.CustomOffset();
 			}
 			
-			
-			
-			tilemap.EraseCell(layer, coord);
+			tilemap.EraseCell(coord);
 		}
 	}
 

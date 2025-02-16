@@ -69,6 +69,20 @@ enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plu
 
 fonts/dynamic_fonts/use_oversampling=false
 
+[importer_defaults]
+
+YATI={
+"add_class_as_metadata": false,
+"add_id_as_metadata": false,
+"custom_data_prefix": "",
+"map_wangset_to_terrain": false,
+"no_alternative_tiles": false,
+"post_processor": "",
+"save_tileset_to": "",
+"tiled_project_file": "",
+"use_default_filter": false
+}
+
 [input]
 
 "[moving] up"={

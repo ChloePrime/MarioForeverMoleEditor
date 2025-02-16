@@ -175,7 +175,7 @@ public partial class Mario
         bool safe;
         if (TestMove(GlobalTransform, GroundTestVec, collision))
         {
-            safe = collision.GetCollider() is TileMap or StaticBody2D;
+            safe = collision.GetCollider() is TileMapLayer or StaticBody2D;
         }
         else
         {

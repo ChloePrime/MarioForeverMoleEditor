@@ -62,7 +62,7 @@ public partial class Mario
         {
             GlobalPosition = GlobalPosition with { X = ladder2d.GlobalPosition.X };
         }
-        else if (ladder is TileMap tilemap)
+        else if (ladder is TileMapLayer tilemap)
         {
             var tileSize = tilemap.TileSet.TileSize;
             var phState = GetWorld2D().DirectSpaceState;
