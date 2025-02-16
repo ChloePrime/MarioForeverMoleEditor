@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2023 Roland Helmerichs
+// Copyright (c) 2024 Roland Helmerichs
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,20 +28,20 @@ namespace YATI;
 [Tool]
 public partial class TiledImport : EditorPlugin
 {
-	private EditorImportPlugin _xmlImport;
-	
-	public override string _GetPluginName() => "Yet another Tiled importer";
-	
-	public override void _EnterTree()
-	{
-		_xmlImport = new Importer();
-		AddImportPlugin(_xmlImport);
-	}
+    private EditorImportPlugin _xmlImport;
 
-	public override void _ExitTree()
-	{
-		RemoveImportPlugin(_xmlImport);
-		_xmlImport = null;
-	}
+    public override string _GetPluginName() => "Yet another Tiled importer";
+
+    public override void _EnterTree()
+    {
+        _xmlImport = new Importer();
+        AddImportPlugin(_xmlImport);
+    }
+
+    public override void _ExitTree()
+    {
+        RemoveImportPlugin(_xmlImport);
+        _xmlImport = null;
+    }
 }
 #endif

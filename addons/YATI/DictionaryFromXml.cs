@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright (c) 2023 Roland Helmerichs
+// Copyright (c) 2024 Roland Helmerichs
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ public class DictionaryFromXml
 {
     private XmlParserCtrl _xml;
     private string _currentElement;
+    private int _currentGroupLevel;
     private readonly Dictionary _result = new Dictionary();
     private Dictionary _currentDictionary;
     private Array _currentArray;
@@ -43,13 +44,13 @@ public class DictionaryFromXml
     private bool _isMap;
     private bool _inTileset;
     
-    public Dictionary Create(string sourceFileName)
+    public Dictionary Create(byte[] tiledFileContent, string sourceFileName)
     {
         _ci.NumberFormat.NumberDecimalSeparator = ".";
 
         _xml = new XmlParserCtrl();
 
-        var err = _xml.Open(sourceFileName);
+        var err = _xml.Open(tiledFileContent, sourceFileName);
         if (err != Error.Ok) return null;
 
         _currentElement = _xml.NextElement();
@@ -61,17 +62,26 @@ public class DictionaryFromXml
         _isMap = _currentElement == "map";
 
         var baseElement = _currentElement;
-        while ((err == Error.Ok) && ((!_xml.IsEnd() || (_currentElement != baseElement))))
+        var baseGroupLevel = _currentGroupLevel;
+        while ((err == Error.Ok) && ((!_xml.IsEnd() || (_currentElement != baseElement) ||
+                                      (baseElement == "group" && _currentElement == "group" && _currentGroupLevel == baseGroupLevel))))
         {
             _currentElement = _xml.NextElement();
             if (_currentElement == null) { err = Error.ParseError; break; }
-            if (_xml.IsEnd()) continue;
+            if (_xml.IsEnd())
+            {
+                if (_currentElement == "group")
+                    _currentGroupLevel--;
+                continue;
+            }
+            if (_currentElement == "group" && !_xml.IsEmpty())
+                _currentGroupLevel++;
             var cAttributes = _xml.GetAttributes();
             var dictionaryBookmark = _currentDictionary;
             err = _xml.IsEmpty() ? SimpleElement(_currentElement, cAttributes) : NestedElement(_currentElement, cAttributes);
             _currentDictionary = dictionaryBookmark;
         }
-
+       
         if (err == Error.Ok) return _result;
         GD.PrintErr($"Import aborted with {err} error.");
         return null;
@@ -220,30 +230,44 @@ public class DictionaryFromXml
         var arrayBookmark1 = _currentArray;
         var err = SimpleElement(elementName, attributes);
         var baseElement = _currentElement;
-        while ((err == Error.Ok) && ((!_xml.IsEnd() || (_currentElement != baseElement))))
+        var baseGroupLevel = _currentGroupLevel;
+        while ((err == Error.Ok) && ((!_xml.IsEnd() || (_currentElement != baseElement) ||
+                                      (baseElement == "group" && _currentElement == "group" && _currentGroupLevel == baseGroupLevel))))
         {
             _currentElement = _xml.NextElement();
             if (_currentElement == null) return Error.ParseError;
-            if (_xml.IsEnd()) continue;
-            if (_currentElement == "<data>")
+            if (_xml.IsEnd())
             {
-                Variant data = _xml.GetData();
-                if (baseElement is "text" or "property")
-                    _currentDictionary.Add(baseElement, (string)data);
-                else
-                {
-                    data = ((string)data).Trim();
-                    if (_csvEncoded)
-                    {
-                        var arr = new Array();
-                        foreach (var s in ((string)data).Split(',',StringSplitOptions.TrimEntries))
-                            arr.Add(uint.Parse(s));
-                        data = arr;
-                    }
-                    ((Dictionary)_currentArray[^1]).Add("data", data);
-                }
+                if (_currentElement == "group")
+                    _currentGroupLevel--;
                 continue;
             }
+            switch (_currentElement)
+            {
+                case "group" when !_xml.IsEmpty():
+                    _currentGroupLevel++;
+                    break;
+                case "<data>":
+            {
+                    Variant data = _xml.GetData();
+                    if (baseElement is "text" or "property")
+                        _currentDictionary.Add(baseElement, (string)data);
+                    else
+                    {
+                        data = ((string)data).Trim();
+                        if (_csvEncoded)
+                        {
+                            var arr = new Array();
+                            foreach (var s in ((string)data).Split(',',StringSplitOptions.TrimEntries))
+                                arr.Add(uint.Parse(s));
+                            data = arr;
+                        }
+                        ((Dictionary)_currentArray[^1]).Add("data", data);
+                    }
+                    continue;
+                }
+            }
+
             var cAttributes = _xml.GetAttributes();
             var dictionaryBookmark2 = _currentDictionary;
             var arrayBookmark2 = _currentArray;

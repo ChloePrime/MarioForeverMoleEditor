@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright (c) 2023 Roland Helmerichs
+// Copyright (c) 2024 Roland Helmerichs
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ using System.Linq;
 using Godot;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
-using FileAccess = Godot.FileAccess;
 
 namespace YATI;
 
@@ -44,6 +43,7 @@ public class TilemapCreator
     private const string BackgroundColorRectName = "Background Color";
     private const string WarningColor = "Yellow";
     private const string CustomDataInternal = "__internal__";
+    private const string ClassInternal = "class";
     private const string GodotNodeTypeProperty = "godot_node_type";
     private const string GodotGroupProperty = "godot_group";
     private const string GodotScriptProperty = "godot_script";
@@ -60,9 +60,7 @@ public class TilemapCreator
     //private int _parallaxOriginY;
     private string _backgroundColor;
     
-    private TileMap _tilemap;
-    private float _tilemapOffsetX;
-    private float _tilemapOffsetY;
+    private TileMapLayer _tilemapLayer;
     private TileSet _tileset;
     private string _currentTilesetOrientation;
     private string _currentObjectAlignment;
@@ -75,8 +73,6 @@ public class TilemapCreator
     private string _baseName;
     private string _encoding;
     private string _compression;
-    private bool _mapLayersToTilemaps;
-    private int _tmLayerCounter;
     private readonly Array<int> _firstGids = new ();
     private List<Dictionary> _atlasSources;
     private bool _useDefaultFilter;
@@ -84,6 +80,8 @@ public class TilemapCreator
     private bool _addClassAsMetadata;
     private bool _addIdAsMetadata;
     private bool _dontUseAlternativeTiles;
+    private string _customDataPrefix = "";
+    private string _tilesetSavePath = "";
     private Dictionary _objectGroups;
     private CustomTypes _ct;
 
@@ -91,8 +89,6 @@ public class TilemapCreator
     private float _isoSkew;
     private Vector2 _isoScale;
 
-    private int _errorCount;
-    private int _warningCount;
     private int _godotVersion;
 
     private enum GodotType
@@ -109,21 +105,6 @@ public class TilemapCreator
         Polygon,
         Instance,
         Unknown
-    }
-
-    public int GetErrorCount()
-    {
-        return _errorCount;
-    }
-
-    public int GetWarningCount()
-    {
-        return _warningCount;
-    }
-    
-    public void SetMapLayersToTilemaps(bool value)
-    {
-        _mapLayersToTilemaps = value;
     }
 
     public void SetUseDefaultFilter(bool value)
@@ -151,9 +132,19 @@ public class TilemapCreator
         _mapWangsetToTerrain = value;
     }
 
+    public void SetCustomDataPrefix(string value)
+    {
+        _customDataPrefix = value;
+    }
+
     public void SetCustomTypes(CustomTypes ct)
     {
         _ct = ct;
+    }
+
+    public void SetSaveTilesetTo(string path)
+    {
+        _tilesetSavePath = path;
     }
 
     public TileSet GetTileset()
@@ -174,7 +165,13 @@ public class TilemapCreator
     {
         _godotVersion = (int)Engine.GetVersionInfo()["hex"];
         _basePath = sourceFile.GetBaseDir();
-        var baseDictionary = DictionaryBuilder.GetDictionary(sourceFile);
+		var mapContent = DataLoader.GetTiledFileContent(sourceFile, _basePath);
+		if (mapContent == null)
+		{
+			GD.PrintErr($"FATAL ERROR: Tiled map file '{sourceFile}' not found.");
+			return null;
+		}
+		var baseDictionary = DictionaryBuilder.GetDictionary(mapContent, _basePath);
         _mapOrientation = (string)baseDictionary.GetValueOrDefault("orientation", "orthogonal");
         _mapWidth = (int)baseDictionary.GetValueOrDefault("width", 0);
         _mapHeight = (int)baseDictionary.GetValueOrDefault("height", 0);
@@ -199,9 +196,8 @@ public class TilemapCreator
                 tilesetCreator.SetCustomTypes(_ct);
             if (_mapWangsetToTerrain)
                 tilesetCreator.MapWangsetToTerrain();
+            tilesetCreator.SetCustomDataPrefix(_customDataPrefix);
             _tileset = tilesetCreator.CreateFromDictionaryArray(tileSets);
-            _errorCount = tilesetCreator.GetErrorCount();
-            _warningCount = tilesetCreator.GetWarningCount();
             var unsorted = tilesetCreator.GetRegisteredAtlasSources();
             if (unsorted != null)
                 _atlasSources = unsorted.OrderBy(x => (int)x["sourceId"]).ToList();
@@ -236,8 +232,6 @@ public class TilemapCreator
             }
         }
         
-        _tmLayerCounter = 0;
-        
         _baseNode = new Node2D();
         _baseName = sourceFile.GetFile().GetBaseName();
         _baseNode.Name = _baseName;
@@ -258,9 +252,26 @@ public class TilemapCreator
         if (baseDictionary.TryGetValue("layers", out var layers))
             foreach (var layer in (Array<Dictionary>)layers)
                 HandleLayer(layer, _baseNode);
-
+        
+        if (_tilesetSavePath != "")
+        {
+            var saveRet = ResourceSaver.Save(_tileset, _tilesetSavePath);
+            if (saveRet == Error.Ok)
+            {
+                GD.Print($"Successfully saved tileset to '{_tilesetSavePath}'");
+                foreach (var node in _baseNode.FindChildren("*", "TileMapLayer"))
+                    if (node is TileMapLayer tm && tm.TileSet.ResourcePath == "")
+						tm.TileSet = (TileSet)DataLoader.LoadResourceFromFile(_tilesetSavePath, _basePath);
+            }
+            else
+            {
+                GD.PrintErr($"Saving tileset returned error {saveRet}");
+                CommonUtils.ErrorCount++;
+            }
+        }
+        
         if (baseDictionary.TryGetValue("properties", out var mapProps))
-            HandleProperties(_baseNode, (Array<Dictionary>)mapProps, true);
+            HandleProperties(_baseNode, (Array<Dictionary>)mapProps);
         
         if (_parallaxBackground.GetChildCount() == 0)
             _baseNode.RemoveChild(_parallaxBackground);
@@ -274,7 +285,7 @@ public class TilemapCreator
         var ret = (Node2D)_baseNode.GetChild(0);
         RecursivelyChangeOwner(ret, ret);
         if (baseDictionary.TryGetValue("properties", out mapProps))
-            HandleProperties(ret, (Array<Dictionary>)mapProps, true);
+            HandleProperties(ret, (Array<Dictionary>)mapProps);
         ret.Name = _baseName;
         return ret;
     }
@@ -297,12 +308,6 @@ public class TilemapCreator
         if (GetProperty(layer, "no_import", "bool") == "true")
             return;
 
-        if (layertype != "tilelayer" && !_mapLayersToTilemaps)
-        {
-            _tilemap = null;
-            _tmLayerCounter = 0;
-        }
-
         switch (layertype)
         {
             case "tilelayer":
@@ -310,56 +315,21 @@ public class TilemapCreator
                 if (_mapOrientation == "isometric")
                     layerOffsetX += _mapTileWidth * (_mapHeight / 2.0f - 0.5f);
                 var layerName = (string)layer["name"];
-                if (_mapLayersToTilemaps)
-                {
-                    _tilemap = new TileMap();
-                    if (layerName != "")
-                        _tilemap.Name = layerName;
-                    _tilemap.Visible = layerVisible;
-                    _tilemap.Position = new Vector2(layerOffsetX, layerOffsetY);
-                    if ((layerOpacity < 1.0f) || (tintColor != "#ffffff"))
-                        _tilemap.Modulate = new Color(tintColor, layerOpacity);
-                    _tilemap.TileSet = _tileset;
-                    HandleParallaxes(parent, _tilemap, layer);
-                    if (_mapOrientation is "isometric" or "staggered")
-                    {
-                        _tilemap.YSortEnabled = true;
-                        _tilemap.SetLayerYSortEnabled(0, true);
-                    }
-                }
-                else
-                {
-                    if (_tilemap == null)
-                    {
-                        _tilemap = new TileMap();
-                        if (layerName != "")
-                            _tilemap.Name = layerName;
-                        _tilemap.RemoveLayer(0);
-                        HandleParallaxes(parent, _tilemap, layer);
-                        _tilemapOffsetX = layerOffsetX;
-                        _tilemapOffsetY = layerOffsetY;
-                        _tilemap.Position = new Vector2(layerOffsetX, layerOffsetY);
-                        if (_mapOrientation is "isometric" or "staggered")
-                            _tilemap.YSortEnabled = true;
-                    }
-                    else if (layerName != "")
-                        _tilemap.Name += "|" + layerName;
-                    _tilemap.TileSet ??= _tileset;
-                    _tilemap.AddLayer(_tmLayerCounter);
-                    _tilemap.SetLayerName(_tmLayerCounter, layerName);
-                    _tilemap.SetLayerEnabled(_tmLayerCounter, layerVisible);
-                    if (_mapOrientation is "isometric" or "staggered")
-                        _tilemap.SetLayerYSortEnabled(_tmLayerCounter, true);
-                    if (Math.Abs(layerOffsetX - _tilemapOffsetX) > 0.01f || Math.Abs(layerOffsetY - _tilemapOffsetY) > 0.01f)
-                    {
-                        GD.PrintRich($"[color={WarningColor}]Godot 4 has no tilemap layer offsets -> switch off 'use_tilemap_layers'[/color]");
-                        _warningCount++;
-                    }
-                    if ((layerOpacity < 1.0f) || (tintColor != "#ffffff"))
-                        _tilemap.SetLayerModulate(_tmLayerCounter, new Color(tintColor, layerOpacity));
-                }
+
+                _tilemapLayer = new TileMapLayer();
+                if (layerName != "")
+                    _tilemapLayer.Name = layerName;
+                _tilemapLayer.Visible = layerVisible;
+                _tilemapLayer.Position = new Vector2(layerOffsetX, layerOffsetY);
+                if ((layerOpacity < 1.0f) || (tintColor != "#ffffff"))
+                    _tilemapLayer.Modulate = new Color(tintColor, layerOpacity);
+                _tilemapLayer.TileSet = _tileset;
+                HandleParallaxes(parent, _tilemapLayer, layer);
+                if (_mapOrientation is "isometric" or "staggered")
+                    _tilemapLayer.YSortEnabled = true;
+                
                 if (!_useDefaultFilter)
-                    _tilemap.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
+                    _tilemapLayer.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
 
                 if (_infinite && layer.TryGetValue("chunks", out var chunks))
                 {
@@ -382,12 +352,18 @@ public class TilemapCreator
                         CreateMapFromData(data, 0, 0, _mapWidth);
                 }
 
-                if (layer.TryGetValue("properties", out var props))
-                    HandleProperties(_tilemap, (Array<Dictionary>)props);
-              
-                if (!_mapLayersToTilemaps)
-                    _tmLayerCounter++;
+                var classString = (string)layer.GetValueOrDefault("class", "");
+                if (classString == "")
+                    classString = (string)layer.GetValueOrDefault("type", "");
+                if (_addClassAsMetadata && classString != "")
+                    _tilemapLayer.SetMeta("class", classString);
+                var objId = (int)layer.GetValueOrDefault("id", 0);
+                if (_addIdAsMetadata && objId != 0)
+                    _tilemapLayer.SetMeta("id", objId);
 
+                if (layer.TryGetValue("properties", out var props))
+                    HandleProperties(_tilemapLayer, (Array<Dictionary>)props);
+              
                 break;
             }
             case "objectgroup":
@@ -431,8 +407,9 @@ public class TilemapCreator
                 // if (!_useDefaultFilter)
                 //     groupNode.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
 
-                foreach (Dictionary childLayer in (Array)layer["layers"])
-                    HandleLayer(childLayer, groupNode);
+                if (layer.TryGetValue("layers", out var lrs))
+                    foreach (Dictionary childLayer in (Array)lrs)
+                        HandleLayer(childLayer, groupNode);
 
                 if (layer.TryGetValue("properties", out var props))
                     HandleProperties(groupNode, (Array<Dictionary>)props);
@@ -453,29 +430,7 @@ public class TilemapCreator
                 if ((layerOpacity < 1.0f) || (tintColor != "#ffffff"))
                     textureRect.Modulate = new Color(tintColor, layerOpacity);
                 textureRect.Visible = layerVisible;
-
-                // ToDo: Not sure if this first check makes any sense since an image can't be imported properly if not in project tree
-                var texturePath = (string)layer["image"];
-                if (!FileAccess.FileExists(texturePath))
-                    texturePath = _basePath.GetBaseDir().PathJoin((string)layer["image"]);
-                if (!FileAccess.FileExists(texturePath))
-                    texturePath = _basePath.PathJoin((string)layer["image"]);
-                if (FileAccess.FileExists(texturePath))
-                {
-                    var exists = ResourceLoader.Exists(texturePath, "Image");
-                    if (exists)
-                        textureRect.Texture = (Texture2D)ResourceLoader.Load(texturePath, "Image");
-                    else
-                    {
-                        var image = Image.LoadFromFile(texturePath);
-                        textureRect.Texture = ImageTexture.CreateFromImage(image);
-                    }
-                }
-                else
-                {
-                    GD.PrintErr($"ERROR: Image file '{(string)layer["image"]}' not found.");
-                    _errorCount++;
-                }
+                textureRect.Texture = DataLoader.LoadImage((string)layer["image"], _basePath);
 
                 if (layer.TryGetValue("properties", out var props))
                     HandleProperties(textureRect, (Array<Dictionary>)props);
@@ -491,7 +446,12 @@ public class TilemapCreator
         {
             if (!_parallaxLayerExisting)
             {
-                _background?.Reparent(_parallaxBackground);
+                if (_background != null)
+                {
+                    _background.Owner = null;
+                    _background.Reparent(_parallaxBackground);
+                    _background.Owner = _baseNode;
+                }
                 _parallaxLayerExisting = true;
             }
 
@@ -504,13 +464,11 @@ public class TilemapCreator
             parallaxNode.Name = (pxName != "") ? pxName + " (PL)" : "ParallaxLayer";
             parallaxNode.MotionScale = new Vector2(parX, parY);
             parallaxNode.AddChild(layerNode);
-            layerNode.Owner = _baseNode;
         }
         else
-        {
             parent.AddChild(layerNode);
-            layerNode.Owner = _baseNode;
-        }
+
+        layerNode.Owner = _baseNode;
     }
     
     private Array<uint> HandleData(Variant data)
@@ -547,7 +505,7 @@ public class TilemapCreator
                         }
                         default:
                             GD.PrintErr($"Decompression for type '{_compression}' not yet implemented.");
-                            _errorCount++;
+                            CommonUtils.ErrorCount++;
                             return null;
                     }
                     bytes = memoryStreamOutput.ToArray();
@@ -734,11 +692,16 @@ public class TilemapCreator
                                 diffY += 1;
                             tileData.TextureOrigin = new Vector2I(-diffX/2, diffY/2) - tileOffset;
                         }
-                        CreatePolygonsOnAlternativeTiles(atlasSource.GetTileData(atlasCoords, 0), tileData, altId);
+
+                        var srcData = atlasSource.GetTileData(atlasCoords, 0);
+                        CreatePolygonsOnAlternativeTiles(srcData, tileData, altId);
+                        // Copy meta data to alternative tile
+                        foreach (var metaName in srcData.GetMetaList())
+                            tileData.SetMeta(metaName, srcData.GetMeta(metaName));   
                     }
                 }
             }
-            _tilemap.SetCell(_tmLayerCounter, cellCoords, sourceId, atlasCoords, altId);
+            _tilemapLayer.SetCell(cellCoords, sourceId, atlasCoords, altId);
         }
     }
 
@@ -800,6 +763,72 @@ public class TilemapCreator
         };
     }
 
+    private static Vector2 GetInstanceOffset(float width, float height, string alignment)
+    {
+        return alignment switch
+        {
+            "bottomleft" => new Vector2(0.0f, -height),
+            "bottom" => new Vector2(-width / 2.0f, -height),
+            "bottomright" => new Vector2(-width, -height),
+            "left" => new Vector2(0.0f, -height / 2.0f),
+            "center" => new Vector2(-width / 2.0f, -height / 2.0f),
+            "right" => new Vector2(-width, -height / 2.0f),
+            "topleft" => Vector2.Zero,
+            "top" => new Vector2(-width / 2.0f, 0.0f),
+            "topright" => new Vector2(-width, 0.0f),
+            _ => Vector2.Zero
+        };
+    }
+
+    private void ConvertMetaDataToObjProperties(TileData td, Dictionary obj)
+    {
+        var metaList = td.GetMetaList();
+        foreach (var metaName in metaList)
+        {
+            switch (((string)metaName)?.ToLower())
+            {
+                case GodotNodeTypeProperty:
+                case ClassInternal when !_addClassAsMetadata:
+                    continue;
+            }
+
+            var metaVal = td.GetMeta(metaName);
+            var metaType = metaVal.VariantType;
+            var propDict = new Dictionary();
+            propDict.Add("name", metaName);
+            var propType = metaType switch
+            {
+                Variant.Type.Bool => "bool",
+                Variant.Type.Int => "int",
+                Variant.Type.String => "string",
+                Variant.Type.Float => "float",
+                Variant.Type.Color => "color",
+                _ => "string"
+            };
+            // Type "file" assumed and thus forced for these properties 
+            if (((string)metaName)?.ToLower() is "godot_script" or "material" or "physics_material_override")
+                propType = "file";
+                
+            propDict.Add("type", propType);
+            propDict.Add("value", metaVal);
+                
+            if (obj.TryGetValue("properties", out var props))
+            {
+                // Add property only if not already contained in properties
+                var found = false;
+                foreach (var prop in (Array<Dictionary>)props)
+                {
+                    if (string.Equals((string)prop["name"], metaName, StringComparison.CurrentCultureIgnoreCase))
+                        found = true;
+                }
+                if (!found)
+                    ((Array<Dictionary>)props).Add(propDict);
+            }
+            else
+                obj.Add("properties", new Array<Dictionary> { propDict });
+        }
+    }
+
     private void HandleObject(Dictionary obj, Node layerNode, TileSet tileset, Vector2 offSet)
     {
         var objId = (int)obj.GetValueOrDefault("id", 0);
@@ -826,20 +855,31 @@ public class TilemapCreator
             if (!_addClassAsMetadata && classString != "" && !godotNodeTypePropFound)
             {
                 GD.PrintRich($"[color={WarningColor}] -- Unknown class '{classString}'. -> Assuming Default[/color]");
-                _warningCount++;
+                CommonUtils.WarningCount++;
             }
             else if (godotNodeTypePropFound && godotNodeTypePropertyString != "")
             {
                 GD.PrintRich($"[color={WarningColor}] -- Unknown {GodotNodeTypeProperty} '{godotNodeTypePropertyString}'. -> Assuming Default[/color]");
-                _warningCount++;
+                CommonUtils.WarningCount++;
             }
             godotType = GodotType.Body;
         }
         
         if (obj.TryGetValue("template", out var tplVal))
         {
-            var templatePath = _basePath.PathJoin((string)tplVal);
-            var templateDict = DictionaryBuilder.GetDictionary(templatePath);
+			Dictionary templateDict;
+            var templateFile = (string)tplVal;
+            var templatePath = _basePath.PathJoin(templateFile).GetBaseDir();
+			var templateContent = DataLoader.GetTiledFileContent(templateFile, _basePath);
+			if (templateContent == null)
+			{
+				GD.PrintErr($"ERROR: Template file '{templateFile}' not found. -> Continuing but result may be unusable");
+				CommonUtils.ErrorCount++;
+				templateDict = new Dictionary();
+			}
+			else
+				templateDict = DictionaryBuilder.GetDictionary(templateContent, templateFile);
+
             //var templateFirstGids = new Array<int>();
             TileSet templateTileSet = null;
             if (templateDict.TryGetValue("tilesets", out var tsVal))
@@ -853,15 +893,13 @@ public class TilemapCreator
                 if (_mapWangsetToTerrain)
                     tilesetCreator.MapWangsetToTerrain();
                 templateTileSet = tilesetCreator.CreateFromDictionaryArray(tileSets);
-                _errorCount += tilesetCreator.GetErrorCount();
-                _warningCount += tilesetCreator.GetWarningCount();
             }
 
             if (templateDict.TryGetValue("objects", out var objs))
             {
                 foreach (var templateObj in (Array<Dictionary>)objs)
                 {
-                    templateObj["template_dir_path"] = templatePath.GetBaseDir();
+                    templateObj["template_dir_path"] = templatePath;
                     
                     // v1.5.3 Fix according to Carlo M (dogezen)
                     // override and merge properties defined in obj with properties defined in template
@@ -895,25 +933,37 @@ public class TilemapCreator
                         }
                     }
 
+                    // Template obj needs id and obj class/type/name overrides template's class/type/name
+                    templateObj["id"] = objId;
+                    if (obj.TryGetValue("class", out var objClass))
+                        if ((string)objClass != "")
+                            templateObj["class"] = objClass;
+                    if (obj.TryGetValue("type", out var objType))
+                        if ((string)objType != "")
+                            templateObj["type"] = objType;
+                    if (obj.TryGetValue("name", out var objNam))
+                        if ((string)objNam != "")
+                            templateObj["name"] = objNam;
+
                     HandleObject(templateObj, layerNode, templateTileSet, new Vector2(objX, objY));
                 }
             }
         }
         
         // v1.2: New class 'instance'
-        if (godotType == GodotType.Instance && !obj.ContainsKey("template") && !obj.ContainsKey("text"))
+        if (godotType == GodotType.Instance && !obj.ContainsKey("template") && !obj.ContainsKey("text") && !obj.ContainsKey("gid"))
         {
             var resPath = GetProperty(obj, "res_path", "file");
             if (resPath == "")
             {
                 GD.PrintErr("Object of class 'instance': Mandatory file property 'res_path' not found or invalid. -> Skipped");
-                _errorCount++;
+                CommonUtils.ErrorCount++;
             }
             else
             {
                 if (obj.TryGetValue("template_dir_path", out var tdPath))
                     resPath = ((string)tdPath).PathJoin(resPath);
-                var scene = (PackedScene)LoadResourceFromFile(resPath);
+				var scene = (PackedScene)DataLoader.LoadResourceFromFile(resPath, _basePath);
                 // Error check
                 if (scene == null) return;
 
@@ -924,6 +974,10 @@ public class TilemapCreator
                 ((Node2D)instance).Position = TransposeCoords(objX, objY);
                 ((Node2D)instance).RotationDegrees = objRot;
                 ((Node2D)instance).Visible = objVisible;
+                if (_addClassAsMetadata && classString != "")
+                    instance.SetMeta("class", classString);
+                if (_addIdAsMetadata && objId != 0)
+                    instance.SetMeta("id", objId);
                 if (obj.TryGetValue("properties", out var props))
                     HandleProperties(instance, (Array<Dictionary>)props);
             }
@@ -953,7 +1007,7 @@ public class TilemapCreator
             if (!tileset.HasSource(sourceId))
             {
                 GD.PrintErr($"Could not get AtlasSource with id {sourceId}. -> Skipped");
-                _errorCount++;
+                CommonUtils.ErrorCount++;
                 return;
             }
 
@@ -969,7 +1023,7 @@ public class TilemapCreator
             objSprite.RotationDegrees = objRot;
             objSprite.Visible = objVisible;
             TileData td;
-            if (GetNumTilesForSourceId(sourceId) > 1)
+            if (IsPartitionedTileset(sourceId))
             {
                 // Object is tile from partitioned tileset 
                 var atlasWidth = gidSource.GetAtlasGridSize().X;
@@ -984,7 +1038,9 @@ public class TilemapCreator
                 td = gidSource.GetTileData(atlasCoords, 0);
                 objSprite.RegionEnabled = true;
                 var regionSize = (Vector2)gidSource.TextureRegionSize;
-                var pos = atlasCoords * regionSize;
+                var separation = (Vector2)gidSource.Separation;
+                var margins = (Vector2)gidSource.Margins;
+                var pos = atlasCoords * (regionSize + separation) + margins;
                 if (GetProperty(obj, "clip_artifacts", "bool") == "true")
                 {
                     pos += new Vector2(0.5f, 0.5f);   
@@ -1023,6 +1079,66 @@ public class TilemapCreator
                 td = gidSource.GetTileData(Vector2I.Zero, 0);
             }
 
+            // Tile objects may already have been classified as instance in the tileset
+            var objIsInstance = godotType == GodotType.Instance && !obj.ContainsKey("template") && !obj.ContainsKey("text");
+            var tileClass = "";
+            if (td.HasMeta(ClassInternal))
+            {
+                tileClass = (string)td.GetMeta(ClassInternal);
+                classString = tileClass;
+            }
+            if (td.HasMeta(GodotNodeTypeProperty))
+                tileClass = (string)td.GetMeta(GodotNodeTypeProperty);
+
+            if (tileClass.ToLower() == "instance" || objIsInstance)
+            {
+                var resPath = GetProperty(obj, "res_path", "file");
+                if (td.HasMeta("res_path"))
+                {
+                    if (resPath == "")
+                        resPath = (string)td.GetMeta("res_path");
+                }
+                if (resPath == "")
+                {
+                    GD.PrintErr("Object of class 'instance': Mandatory file property 'res_path' not found or invalid. -> Skipped");
+                    CommonUtils.ErrorCount++;
+                }
+                else
+                {
+                    if (obj.TryGetValue("template_dir_path", out var tdPath))
+                        resPath = ((string)tdPath).PathJoin(resPath);
+					var scene = (PackedScene)DataLoader.LoadResourceFromFile(resPath, _basePath);
+                    // Error check
+                    if (scene == null) return;
+
+                    var instance = scene.Instantiate();
+                    objSprite.Owner = null;
+                    layerNode.RemoveChild(objSprite);
+                    layerNode.AddChild(instance);
+                    instance.Owner = _baseNode;
+                    instance.Name = (objName != "") ? objName : resPath.GetFile().GetBaseName();
+                    ((Node2D)instance).Position = TransposeCoords(objX, objY) + GetInstanceOffset(objWidth, objHeight, _currentObjectAlignment);
+                    ((Node2D)instance).RotationDegrees = objRot;
+                    ((Node2D)instance).Visible = objVisible;
+                    ((Node2D)instance).Scale = objSprite.Scale;
+                    ConvertMetaDataToObjProperties(td, obj);
+                    if (_addClassAsMetadata && classString != "")
+                        instance.SetMeta("class", classString);
+                    if (_addIdAsMetadata && objId != 0)
+                        instance.SetMeta("id", objId);
+                    if (obj.TryGetValue("properties", out var props))
+                        HandleProperties(instance, (Array<Dictionary>)props);
+                }
+
+                return;
+            }
+            
+            // Tile objects may already have been classified as ...body in the tileset
+            if (tileClass != "" && godotType == GodotType.Empty)
+                godotType = GetGodotType(tileClass);
+
+            ConvertMetaDataToObjProperties(td, obj);
+
             var idx = (int)td.GetCustomData(CustomDataInternal);
             if (idx > 0)
             {
@@ -1036,6 +1152,7 @@ public class TilemapCreator
                 };
                 if (parent != null)
                 {
+                    objSprite.Owner = null;
                     layerNode.RemoveChild(objSprite);
                     layerNode.AddChild(parent);
                     parent.Owner = _baseNode;
@@ -1045,6 +1162,7 @@ public class TilemapCreator
                     objSprite.Position = Vector2.Zero;
                     objSprite.RotationDegrees = 0;
                     parent.AddChild(objSprite);
+                    objSprite.Owner = _baseNode;
                     AddCollisionShapes(parent, GetObjectGroup(idx), objWidth, objHeight, flippedH, flippedV, objSprite.Scale);
                     if (obj.TryGetValue("properties", out var props))
                         HandleProperties(parent, (Array<Dictionary>)props);
@@ -1058,8 +1176,8 @@ public class TilemapCreator
                 objSprite.SetMeta("class", classString);
             if (_addIdAsMetadata && objId != 0)
                 objSprite.SetMeta("id", objId);
-            if (obj.TryGetValue("properties", out var props2))
-                HandleProperties(objSprite, (Array<Dictionary>)props2);
+            if (obj.TryGetValue("properties", out var props3))
+                HandleProperties(objSprite, (Array<Dictionary>)props3);
         }
         else if (obj.TryGetValue("text", out var txtVal))
         {
@@ -1403,7 +1521,7 @@ public class TilemapCreator
                     }
                     case GodotType.Navigation when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for NavigationRegion2D. -> Skipped[/color]");
-                        _warningCount++;
+                        CommonUtils.WarningCount++;
                         break;
                     case GodotType.Navigation:
                     {
@@ -1436,7 +1554,7 @@ public class TilemapCreator
                     }
                     case GodotType.Occluder when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for LightOccluder2D. -> Skipped[/color]");
-                        _warningCount++;
+                        CommonUtils.WarningCount++;
                         break;
                     case GodotType.Occluder:
                     {
@@ -1461,7 +1579,7 @@ public class TilemapCreator
                     }
                     case GodotType.Polygon when obj.ContainsKey("ellipse"):
                         GD.PrintRich($"[color={WarningColor}] -- Ellipse is unusable for Polygon2D. -> Skipped[/color]");
-                        _warningCount++;
+                        CommonUtils.WarningCount++;
                         break;
                     case GodotType.Polygon:
                     {
@@ -1497,7 +1615,7 @@ public class TilemapCreator
             {
                 GD.PrintRich(
                     $"[color={WarningColor}] -- 'Point' has currently no corresponding collision element in Godot 4. -> Skipped[/color]");
-                _warningCount++;
+                CommonUtils.WarningCount++;
                 break;
             }
 
@@ -1668,8 +1786,8 @@ public class TilemapCreator
     private static string GetProperty(Dictionary obj, string propertyName, string propertyType)
     {
         const string ret = "";
-        if (!obj.ContainsKey("properties")) return ret;
-        foreach (var property in (Array<Dictionary>)obj["properties"])
+        if (!obj.TryGetValue("properties", out var value)) return ret;
+        foreach (var property in (Array<Dictionary>)value)
         {
             var name = (string)property.GetValueOrDefault("name", "");
             var type = (string)property.GetValueOrDefault("type", "string");
@@ -1794,55 +1912,17 @@ public class TilemapCreator
         return (string)_atlasSources[idx]["objectAlignment"];
     }
 
+    private bool IsPartitionedTileset(int sourceId)
+    {
+        return _atlasSources.Where(src => (int)src["sourceId"] == sourceId).Select(src => (int)src["assignedId"] < 0).FirstOrDefault();
+    }
+    
     private int GetNumTilesForSourceId(int sourceId)
     {
         foreach (var src in _atlasSources.Where(src => (int)src["sourceId"] == sourceId))
             return (int)src["numTiles"];
 
         return -1;
-    }
-
-    private Resource LoadResourceFromFile(string path)
-    {
-        var origPath = path;
-        Resource ret = null;
-        // ToDo: Not sure if this first check makes any sense since an image can't be imported properly if not in project tree
-        if (!FileAccess.FileExists(path))
-            path = _basePath.GetBaseDir().PathJoin(origPath);
-        if (!FileAccess.FileExists(path))
-            path = _basePath.PathJoin(origPath);
-        if (FileAccess.FileExists(path))
-            ret = ResourceLoader.Load(path);
-        else
-        {
-            GD.PrintErr($"ERROR: Resource file '{origPath}' not found.");
-            _errorCount++;
-        }
-
-        return ret;
-    }
-
-    private static uint GetBitmaskIntegerFromString(string maskString, int max)
-    {
-        uint ret = 0;
-        var s1Arr = maskString.Split(',', StringSplitOptions.TrimEntries);
-        foreach (var s1 in s1Arr)
-        {
-            if (s1.Contains('-'))
-            {
-                var s2Arr = s1.Split('-', 2, StringSplitOptions.TrimEntries);
-                if (!int.TryParse(s2Arr[0], out var i1) || !int.TryParse(s2Arr[1], out var i2)) continue;
-                if (i1 > i2) continue;
-                for (var i = i1; i <= i2; i++)
-                    if (i <= max)
-                        ret += (uint)Math.Pow(2, i - 1);
-            }
-            else if (int.TryParse(s1, out var i)) 
-                if (i <= max) 
-                    ret += (uint)Math.Pow(2, i - 1);
-        }
-
-        return ret;
     }
 
     private Dictionary GetObjectGroup(int index)
@@ -1852,29 +1932,8 @@ public class TilemapCreator
             ret = (Dictionary)_objectGroups.GetValueOrDefault(index, (Dictionary)null);
         return ret;
     }
-    
-    private static Variant GetRightTypedValue(string type, string val)
-    {
-        switch (type)
-        {
-            case "bool":
-                return bool.Parse(val);
-            case "float":
-                return float.Parse(val, Inv);
-            case "int":
-                return int.Parse(val);
-            case "color":
-            {
-                // If alpha is present it's oddly the first byte, so we have to shift it to the end
-                if (val.Length == 9) val = val[0] + val[3..] + val.Substring(1, 2);
-                return val;
-            }
-            default:
-                return val;
-        }
-    }
 
-    private void HandleProperties(Node targetNode, Array<Dictionary> properties, bool mapProperties = false)
+    private void HandleProperties(Node targetNode, Array<Dictionary> properties)
     {
         var targetNodeClass = targetNode.GetType();
         var hasChildren = false;
@@ -1886,7 +1945,7 @@ public class TilemapCreator
             var name = (string)property.GetValueOrDefault("name", "");
             var type = (string)property.GetValueOrDefault("type", "string");
             var val = (string)property.GetValueOrDefault("value", "");
-            if (name == "" || name.ToLower() == GodotNodeTypeProperty) continue;
+            if (name == "" || name.ToLower() == GodotNodeTypeProperty || name.ToLower() == "res_path") continue;
             if (name.StartsWith("__") && hasChildren)
             {
                 var childPropDict = new Dictionary();
@@ -1911,7 +1970,7 @@ public class TilemapCreator
                 case GodotScriptProperty when (type == "file"):
                     targetNode.SetScript((Script)ResourceLoader.Load(val, "Script"));
                     break;
-
+                
                 // CanvasItem properties
                 case "modulate" when (type == "string"):
                     ((CanvasItem)targetNode).Modulate = new Color(val);
@@ -1930,15 +1989,12 @@ public class TilemapCreator
                         ((CanvasItem)targetNode).ClipChildren = (CanvasItem.ClipChildrenMode)int.Parse(val);
                     break;
                 case "light_mask" when (type == "string"):
-                    ((CanvasItem)targetNode).LightMask = (int)GetBitmaskIntegerFromString(val, 20);
+                    ((CanvasItem)targetNode).LightMask = (int)CommonUtils.GetBitmaskIntegerFromString(val, 20);
                     break;
                 case "visibility_layer" when (type == "string"):
-                    ((CanvasItem)targetNode).VisibilityLayer = GetBitmaskIntegerFromString(val, 20);
+                    ((CanvasItem)targetNode).VisibilityLayer = CommonUtils.GetBitmaskIntegerFromString(val, 20);
                     break;
-                case "z_index" when (type == "int") && (!targetNodeClass.IsAssignableTo(typeof(TileMap)) || mapProperties):
-                    ((CanvasItem)targetNode).ZIndex = int.Parse(val);
-                    break;
-                case "canvas_z_index" when (type == "int"):
+                case "z_index" when (type == "int"):
                     ((CanvasItem)targetNode).ZIndex = int.Parse(val);
                     break;
                 case "z_as_relative" when (type == "bool"):
@@ -1946,8 +2002,6 @@ public class TilemapCreator
                     break;
                 case "y_sort_enabled" when (type == "bool"):
                     ((CanvasItem)targetNode).YSortEnabled = bool.Parse(val);
-                    if (targetNodeClass.IsAssignableTo(typeof(TileMap)))
-                        ((TileMap)targetNode).SetLayerYSortEnabled(_tmLayerCounter, bool.Parse(val));
                     break;
                 case "texture_filter" when (type == "int"):
                     if (int.Parse(val) < (int)CanvasItem.TextureFilterEnum.Max)
@@ -1958,46 +2012,41 @@ public class TilemapCreator
                         ((CanvasItem)targetNode).TextureRepeat = (CanvasItem.TextureRepeatEnum)int.Parse(val);
                     break;
                 case "material" when (type == "file"):
-                    ((CanvasItem)targetNode).Material = (Material)LoadResourceFromFile(val);
+					((CanvasItem)targetNode).Material = (Material)DataLoader.LoadResourceFromFile(val, _basePath);
                     break;
                 case "use_parent_material" when (type == "bool"):
                     ((CanvasItem)targetNode).UseParentMaterial = bool.Parse(val);
                     break;
 
-                // TileMap properties
-                case "cell_quadrant_size" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    if (_godotVersion < 0x40200)
-                        ((TileMap)targetNode).CellQuadrantSize = int.Parse(val);
-                    else
-                        ((TileMap)targetNode).RenderingQuadrantSize = int.Parse(val);
+                // TileMapLayer properties
+                case "tile_set" when type == "file" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+					((TileMapLayer)targetNode).TileSet = (TileSet)DataLoader.LoadResourceFromFile(val, _basePath);
                     break;
-                case "rendering_quadrant_size" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    ((TileMap)targetNode).RenderingQuadrantSize = int.Parse(val);
+                case "y_sort_origin" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).YSortOrigin = int.Parse(val);
                     break;
-                case "collision_animatable" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    ((TileMap)targetNode).CollisionAnimatable = bool.Parse(val);
+                case "x_draw_order_reversed" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).XDrawOrderReversed = bool.Parse(val);
                     break;
-                case "collision_visibility_mode" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
+                case "rendering_quadrant_size" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).RenderingQuadrantSize = int.Parse(val);
+                    break;
+                case "collision_enabled" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).CollisionEnabled = bool.Parse(val);
+                    break;
+                case "use_kinematic_bodies" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).UseKinematicBodies = bool.Parse(val);
+                    break;
+                case "collision_visibility_mode" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
                     if (int.Parse(val) < 3)
-                        ((TileMap)targetNode).CollisionVisibilityMode = (TileMap.VisibilityMode)int.Parse(val);
+                        ((TileMapLayer)targetNode).CollisionVisibilityMode = (TileMapLayer.DebugVisibilityMode)int.Parse(val);
                     break;
-                case "navigation_visibility_mode" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMap)):
+                case "navigation_enabled" when type == "bool" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
+                    ((TileMapLayer)targetNode).NavigationEnabled = bool.Parse(val);
+                    break;
+                case "navigation_visibility_mode" when type == "int" && targetNodeClass.IsAssignableTo(typeof(TileMapLayer)):
                     if (int.Parse(val) < 3)
-                        ((TileMap)targetNode).NavigationVisibilityMode = (TileMap.VisibilityMode)int.Parse(val);
-                    break;
-                
-                // Tilemap Layer properties
-                case "layer_z_index" when (type == "int") && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    ((TileMap)targetNode).SetLayerZIndex(_tmLayerCounter, int.Parse(val));
-                    break;
-                case "z_index" when (type == "int") && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    if (_mapLayersToTilemaps)
-                        ((TileMap)targetNode).ZIndex = int.Parse(val);
-                    else
-                        ((TileMap)targetNode).SetLayerZIndex(_tmLayerCounter, int.Parse(val));
-                    break;
-                case "y_sort_origin" when (type == "int") && targetNodeClass.IsAssignableTo(typeof(TileMap)):
-                    ((TileMap)targetNode).SetLayerYSortOrigin(_tmLayerCounter, int.Parse(val));
+                        ((TileMapLayer)targetNode).NavigationVisibilityMode = (TileMapLayer.DebugVisibilityMode)int.Parse(val);
                     break;
 
                 // CollisionObject2D properties
@@ -2006,10 +2055,10 @@ public class TilemapCreator
                         ((CollisionObject2D)targetNode).DisableMode = (CollisionObject2D.DisableModeEnum)int.Parse(val);
                     break;
                 case "collision_layer" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CollisionObject2D)):
-                    ((CollisionObject2D)targetNode).CollisionLayer = GetBitmaskIntegerFromString(val, 32);
+                    ((CollisionObject2D)targetNode).CollisionLayer = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "collision_mask" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CollisionObject2D)):
-                    ((CollisionObject2D)targetNode).CollisionMask = GetBitmaskIntegerFromString(val, 32);
+                    ((CollisionObject2D)targetNode).CollisionMask = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "collision_priority" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(CollisionObject2D)):
                     ((CollisionObject2D)targetNode).CollisionPriority = float.Parse(val, Inv);
@@ -2107,7 +2156,7 @@ public class TilemapCreator
                 
                 // StaticBody2D properties
                 case "physics_material_override" when (type == "file"):
-                    ((StaticBody2D)targetNode).PhysicsMaterialOverride = (PhysicsMaterial)LoadResourceFromFile(val);
+					((StaticBody2D)targetNode).PhysicsMaterialOverride = (PhysicsMaterial)DataLoader.LoadResourceFromFile(val, _basePath);
                     break;
                 case "constant_linear_velocity_x" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(StaticBody2D)):
                     ((StaticBody2D)targetNode).ConstantLinearVelocity = new Vector2(float.Parse(val, Inv), ((StaticBody2D)targetNode).ConstantLinearVelocity.Y);
@@ -2156,19 +2205,19 @@ public class TilemapCreator
                         ((CharacterBody2D)targetNode).PlatformOnLeave = (CharacterBody2D.PlatformOnLeaveEnum)int.Parse(val);
                     break;
                 case "platform_floor_layers" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
-                    ((CharacterBody2D)targetNode).PlatformFloorLayers = GetBitmaskIntegerFromString(val, 32);
+                    ((CharacterBody2D)targetNode).PlatformFloorLayers = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "platform_wall_layers" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
-                    ((CharacterBody2D)targetNode).PlatformWallLayers = GetBitmaskIntegerFromString(val, 32);
+                    ((CharacterBody2D)targetNode).PlatformWallLayers = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "safe_margin" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
                     ((CharacterBody2D)targetNode).SafeMargin = float.Parse(val, Inv);
                     break;
                 case "collision_layer" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
-                    ((CharacterBody2D)targetNode).CollisionLayer = GetBitmaskIntegerFromString(val, 32);
+                    ((CharacterBody2D)targetNode).CollisionLayer = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "collision_mask" when type == "string" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
-                    ((CharacterBody2D)targetNode).CollisionMask = GetBitmaskIntegerFromString(val, 32);
+                    ((CharacterBody2D)targetNode).CollisionMask = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "collision_priority" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(CharacterBody2D)):
                     ((CharacterBody2D)targetNode).CollisionPriority = float.Parse(val, Inv);
@@ -2186,7 +2235,7 @@ public class TilemapCreator
                         ((RigidBody2D)targetNode).CenterOfMassMode = (RigidBody2D.CenterOfMassModeEnum)int.Parse(val);
                     break;
                 case "physics_material_override" when (type == "file"):
-                    ((StaticBody2D)targetNode).PhysicsMaterialOverride = (PhysicsMaterial)LoadResourceFromFile(val);
+					((StaticBody2D)targetNode).PhysicsMaterialOverride = (PhysicsMaterial)DataLoader.LoadResourceFromFile(val, _basePath);
                     break;
                 case "gravity_scale" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(RigidBody2D)):
                     ((RigidBody2D)targetNode).GravityScale = float.Parse(val, Inv);
@@ -2258,7 +2307,7 @@ public class TilemapCreator
                     ((NavigationRegion2D)targetNode).Enabled = bool.Parse(val);
                     break;
                 case "navigation_layers" when type == "string" && targetNodeClass.IsAssignableTo(typeof(NavigationRegion2D)):
-                    ((NavigationRegion2D)targetNode).NavigationLayers = GetBitmaskIntegerFromString(val, 32);
+                    ((NavigationRegion2D)targetNode).NavigationLayers = CommonUtils.GetBitmaskIntegerFromString(val, 32);
                     break;
                 case "enter_cost" when type is "float" or "int" && targetNodeClass.IsAssignableTo(typeof(NavigationRegion2D)):
                     ((NavigationRegion2D)targetNode).EnterCost = float.Parse(val, Inv);
@@ -2272,7 +2321,7 @@ public class TilemapCreator
                     ((LightOccluder2D)targetNode).SdfCollision = bool.Parse(val);
                     break;
                 case "occluder_light_mask" when type == "string" && targetNodeClass.IsAssignableTo(typeof(LightOccluder2D)):
-                    ((LightOccluder2D)targetNode).OccluderLightMask = (int)GetBitmaskIntegerFromString(val, 20);
+                    ((LightOccluder2D)targetNode).OccluderLightMask = (int)CommonUtils.GetBitmaskIntegerFromString(val, 20);
                     break;
 
                 // Polygon2D properties
@@ -2296,7 +2345,7 @@ public class TilemapCreator
                 // Other properties are added as Metadata
                 default:
                 {
-                    targetNode.SetMeta(name, GetRightTypedValue(type, val));
+                    targetNode.SetMeta(name, CommonUtils.GetRightTypedValue(type, val));
                     break;
                 }
             }

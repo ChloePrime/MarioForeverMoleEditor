@@ -1,6 +1,6 @@
-// MIT License
+﻿// MIT License
 //
-// Copyright (c) 2023 Roland Helmerichs
+// Copyright (c) 2024 Roland Helmerichs
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,14 +33,14 @@ public partial class Importer: EditorImportPlugin
 
     public override string _GetVisibleName() => "Import from Tiled";
 
-    public override string[] _GetRecognizedExtensions() => new [] { "tmx", "tmj" };
+    public override string[] _GetRecognizedExtensions() => new[] { "tmx", "tmj" };
 
     public override string _GetResourceType() => "PackedScene";
 
     public override string _GetSaveExtension() => "tscn";
 
     public override float _GetPriority() => 0.1f;
-    
+
     public override int _GetPresetCount() => 0;
 
     public override string _GetPresetName(int presetIndex) => "";
@@ -49,12 +49,12 @@ public partial class Importer: EditorImportPlugin
     {
         return new Array<Dictionary>()
         {
-            new() { { "name", "use_tilemap_layers" }, { "default_value", false } },
             new() { { "name", "use_default_filter" }, { "default_value", false } },
             new() { { "name", "add_class_as_metadata" }, { "default_value", false } },
             new() { { "name", "add_id_as_metadata" }, { "default_value", false } },
             new() { { "name", "no_alternative_tiles" }, { "default_value", false } },
             new() { { "name", "map_wangset_to_terrain" }, { "default_value", false } },
+            new() { { "name", "custom_data_prefix" }, { "default_value", "data_" } },
             new() { { "name", "tiled_project_file" }, { "default_value", "" },
                     { "property_hint", (int)PropertyHint.File }, { "hint_string", "*.tiled-project;Project File" } },
             new() { { "name", "post_processor" }, { "default_value", "" },
@@ -63,7 +63,7 @@ public partial class Importer: EditorImportPlugin
                     { "property_hint", (int)PropertyHint.SaveFile }, { "hint_string", "*.tres;Resource File" } }
         };
     }
-    
+
     public override int _GetImportOrder() => 99;
 
     public override bool _GetOptionVisibility(string path, StringName optionName, Dictionary options) => true;
@@ -83,10 +83,11 @@ public partial class Importer: EditorImportPlugin
             return Error.FileNotFound;
         }
 
+        CommonUtils.ErrorCount = 0;
+        CommonUtils.WarningCount = 0;
+
         CustomTypes ct = null;
         var tilemapCreator = new TilemapCreator();
-        if ((string)options["use_tilemap_layers"] == "false")
-            tilemapCreator.SetMapLayersToTilemaps(true);
         if ((string)options["use_default_filter"] == "true")
             tilemapCreator.SetUseDefaultFilter(true);
         if ((string)options["add_class_as_metadata"] == "true")
@@ -97,6 +98,8 @@ public partial class Importer: EditorImportPlugin
             tilemapCreator.SetNoAlternativeTiles(true);
         if ((string)options["map_wangset_to_terrain"] == "true")
             tilemapCreator.SetMapWangsetToTerrain(true);
+        if ((string)options["custom_data_prefix"] != "")
+            tilemapCreator.SetCustomDataPrefix((string)options["custom_data_prefix"]);
         if (options.ContainsKey("tiled_project_file") && (string)options["tiled_project_file"] != "")
         {
             ct = new CustomTypes();
@@ -104,24 +107,17 @@ public partial class Importer: EditorImportPlugin
             tilemapCreator.SetCustomTypes(ct);
         }
 
+        if (options.ContainsKey("save_tileset_to") && (string)options["save_tileset_to"] != "")
+        {
+            tilemapCreator.SetSaveTilesetTo((string)options["save_tileset_to"]);
+        }
+
         var node2D = tilemapCreator.Create(sourceFile);
         if (node2D == null)
             return Error.Failed;
 
-        var errors = tilemapCreator.GetErrorCount();
-        var warnings = tilemapCreator.GetWarningCount();
-        if (options.ContainsKey("save_tileset_to") && (string)options["save_tileset_to"] != "")
-        {
-            var tileset = tilemapCreator.GetTileset();
-            var saveRet = ResourceSaver.Save(tileset, (string)options["save_tileset_to"]);
-            if (saveRet == Error.Ok)
-                GD.Print($"Successfully saved tileset to '{(string)options["save_tileset_to"]}'");
-            else
-            {
-                GD.PrintErr($"Saving tileset returned error {saveRet}");
-                errors++;
-            }
-        }
+        var errors = CommonUtils.ErrorCount;
+        var warnings = CommonUtils.WarningCount;
 
         var postProcError = false;
         if (options.ContainsKey("post_processor") && (string)options["post_processor"] != "")
@@ -130,7 +126,7 @@ public partial class Importer: EditorImportPlugin
             node2D = postProc.CallPostProcess(node2D, (string)options["post_processor"]);
             postProcError = postProc.GetError() != Error.Ok;
         }
-        
+
         var packedScene = new PackedScene();
         packedScene.Pack(node2D);
         //return ResourceSaver.Save(packedScene, $"{sourceFile.GetBaseName()}.{_GetSaveExtension()}");
@@ -158,8 +154,10 @@ public partial class Importer: EditorImportPlugin
                 if (warnings > 1)
                     finalMessageString += "s";
             }
+
             finalMessageString += ".";
         }
+
         GD.Print(finalMessageString);
         if (postProcError)
             GD.Print("Postprocessing was skipped due to some error.");
