@@ -578,7 +578,6 @@ position = Vector2(12, -17)
 
 [node name="SpriteParent" type="Node2D" parent="SpriteRoot"]
 use_parent_material = true
-position = Vector2(0, 8)
 
 [node name="Sprite_Small" parent="SpriteRoot/SpriteParent" instance=ExtResource("10_7jaa0")]
 texture_filter = 0
