@@ -13,7 +13,7 @@ namespace ChloePrime.MarioForever;
 
 public partial class GameRule : Resource
 {
-    public static GameRule Default => _default ??= GD.Load<GameRule>("res://R_game_rule.tres");
+    public static GameRule Default => _default ??= GD.Load<GameRule>("res://engine/default_game_rule.tres");
     public static GameRule Get() => GetManager(Engine.GetMainLoop() as SceneTree)?.GameRule ?? Default;
     
     [ExportGroup("Vanilla")]

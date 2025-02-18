@@ -42,23 +42,23 @@ public static partial class NodeEx
         {
             string formatted = Format(self, message, level);
             printer(formatted);
-            debugger(cause is not null ? new object[] { formatted, cause } : new object[] { formatted });
+            debugger(cause is not null ? [formatted, cause] : [formatted]);
         }
         else if (cause is not null)
         {
-            debugger(new object[] { cause });
+            debugger([cause]);
         }
     }
 
     private static string Format(Node node, string message, string? level = null)
     {
-        int id = node.Multiplayer.GetUniqueId();
-        string header = (id, level) switch
+        var id = node.Multiplayer.GetUniqueId();
+        var header = (id, level) switch
         {
             (1, null) => "[Server] ",
-            (1, { })  => $"[Server/{level}] ",
+            (1, not null)  => $"[Server/{level}] ",
             (_, null) => $"[{id}] ",
-            (_, { })  => $"[{id}/{level}] ",
+            (_, not null)  => $"[{id}/{level}] ",
         };
         return header + message;
     }

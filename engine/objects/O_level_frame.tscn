@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://engine/resources/level/T_frame_anima_left.png" id="3_bly6j"]
 [ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://engine/objects/ui/O_game_ui.tscn" id="3_i5s5a"]
 [ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://engine/resources/level/T_frame_curtain.png" id="3_nh8oc"]
-[ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://engine/R_game_rule.tres" id="3_qymbr"]
+[ext_resource type="Resource" uid="uid://cjuysccl1gy5i" path="res://engine/default_game_rule.tres" id="3_qymbr"]
 [ext_resource type="Texture2D" uid="uid://cxg5plsm6epqc" path="res://engine/resources/level/T_frame_anima_right.png" id="4_leriq"]
 [ext_resource type="AudioStream" uid="uid://cq4w7ahvvfay5" path="res://engine/resources/mario/ME_game_over.ogg" id="4_xrsv5"]
 [ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://engine/resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
