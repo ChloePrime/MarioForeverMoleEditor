@@ -51,7 +51,6 @@ window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/run_on_separate_thread=true
-window/snap/snap_2d_vertices_to_pixel=true
 
 [dotnet]
 
