@@ -4,11 +4,12 @@ uniform float LUMINANCE_WEIGHT = 1.0;
 uniform float EQUAL_COLOR_TOLERANCE = 0.05;
 uniform float STEEP_DIRECTION_THRESHOLD = 2.0;
 uniform float DOMINANT_DIRECTION_THRESHOLD = 3.5;
+uniform float REAL_TEXEL_SIZE = 1.0;
 
 varying vec4 t[8];
 
 void vertex() {
-	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x, 1.0 / TEXTURE_PIXEL_SIZE.y);
+	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x / REAL_TEXEL_SIZE, 1.0 / TEXTURE_PIXEL_SIZE.y / REAL_TEXEL_SIZE);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
 
 	vec2 ps = vec2(source_size.z, source_size.w);
@@ -56,7 +57,7 @@ bool IsBlendingNeeded(ivec4 blend) {
 }
 
 void fragment() {
-	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x, 1.0 / TEXTURE_PIXEL_SIZE.y);
+	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x / REAL_TEXEL_SIZE, 1.0 / TEXTURE_PIXEL_SIZE.y / REAL_TEXEL_SIZE);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
 
 	vec2 f = fract(UV * source_size.xy);

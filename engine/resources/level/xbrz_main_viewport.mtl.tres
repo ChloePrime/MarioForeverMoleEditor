@@ -8,3 +8,4 @@ shader_parameter/LUMINANCE_WEIGHT = 1.0
 shader_parameter/EQUAL_COLOR_TOLERANCE = 0.05
 shader_parameter/STEEP_DIRECTION_THRESHOLD = 2.0
 shader_parameter/DOMINANT_DIRECTION_THRESHOLD = 3.5
+shader_parameter/REAL_TEXEL_SIZE = 6.0

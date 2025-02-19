@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene load_steps=13 format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" uid="uid://bopixaidmpi2h" path="res://engine/scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
-[ext_resource type="Material" uid="uid://crggeaaw58u7c" path="res://engine/resources/level/xbrz.mtl.tres" id="2_howmm"]
+[ext_resource type="Material" uid="uid://crggeaaw58u7c" path="res://engine/resources/level/xbrz_main_viewport.mtl.tres" id="2_howmm"]
 [ext_resource type="Texture2D" uid="uid://ddlcmlly06iok" path="res://engine/resources/level/T_frame_anima_left.png" id="3_bly6j"]
 [ext_resource type="PackedScene" uid="uid://cairj0w5jo2nv" path="res://engine/objects/ui/O_game_ui.tscn" id="3_i5s5a"]
 [ext_resource type="Texture2D" uid="uid://kmsakhon53ct" path="res://engine/resources/level/T_frame_curtain.png" id="3_nh8oc"]
@@ -12,11 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://dit32ifngwqgh" path="res://engine/resources/level/darkness/darkness_manager.tscn" id="6_kh17v"]
 [ext_resource type="Script" uid="uid://craq0f570q5q2" path="res://engine/scripts/level/DebugCheater.cs" id="6_sxgtr"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_h4287"]
+viewport_path = NodePath("Aspect Ratio Container/Control/Level Container/Level Viewport")
+
 [node name="Level Frame" type="Control" node_paths=PackedStringArray("LevelViewport", "DarknessManager", "GameViewport", "Hud")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -48,26 +53,24 @@ ratio = 1.3333
 [node name="Control" type="Control" parent="Aspect Ratio Container"]
 layout_mode = 2
 
-[node name="Level Container" type="SubViewportContainer" parent="Aspect Ratio Container/Control"]
-texture_filter = 1
+[node name="Level Container" type="TextureRect" parent="Aspect Ratio Container/Control"]
 material = ExtResource("2_howmm")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.00799561
-offset_right = -0.00799561
 grow_horizontal = 2
 grow_vertical = 2
-stretch = true
+texture = SubResource("ViewportTexture_h4287")
+expand_mode = 1
 
 [node name="Level Viewport" type="SubViewport" parent="Aspect Ratio Container/Control/Level Container"]
 own_world_3d = true
 handle_input_locally = false
-snap_2d_vertices_to_pixel = true
 msaa_2d = 2
-size = Vector2i(639, 480)
-size_2d_override = Vector2i(640, 480)
+canvas_item_default_texture_filter = 0
+size = Vector2i(1920, 1440)
+size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
