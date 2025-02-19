@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://engine/resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
-[ext_resource type="Script" path="res://engine/scripts/ui/LevelHud.cs" id="1_beqw8"]
-[ext_resource type="Script" path="res://engine/scripts/ui/SubsystemHud.cs" id="2_d76tu"]
-[ext_resource type="Script" path="res://engine/scripts/ui/ValueWatcherLabel.cs" id="4_qh2x4"]
+[ext_resource type="Script" uid="uid://5ehstv75tlu7" path="res://engine/scripts/ui/LevelHud.cs" id="1_beqw8"]
+[ext_resource type="Script" uid="uid://bd4qfha730ut1" path="res://engine/scripts/ui/SubsystemHud.cs" id="2_d76tu"]
+[ext_resource type="Script" uid="uid://b8g3ln2gxw0n7" path="res://engine/scripts/ui/ValueWatcherLabel.cs" id="4_qh2x4"]
 [ext_resource type="Texture2D" uid="uid://b5pf7euoxkyay" path="res://engine/resources/ui/T_hud_coinx.png" id="5_lyecc"]
 [ext_resource type="Texture2D" uid="uid://bf7ixav1r8u0o" path="res://engine/resources/ui/T_hp_bar_player_bg.png" id="6_bobtx"]
 [ext_resource type="Texture2D" uid="uid://ci527bnq5nh5q" path="res://engine/resources/ui/T_hp_bar_player.png" id="6_rf6hi"]
-[ext_resource type="Script" path="res://engine/scripts/ui/ValueWatcherBar.cs" id="7_eo6s5"]
-[ext_resource type="Script" path="res://engine/scripts/ui/WorldName.cs" id="9_k8aoj"]
+[ext_resource type="Script" uid="uid://bo7xyr8bvmaxa" path="res://engine/scripts/ui/ValueWatcherBar.cs" id="7_eo6s5"]
+[ext_resource type="Script" uid="uid://5vx7s41fxaah" path="res://engine/scripts/ui/WorldName.cs" id="9_k8aoj"]
 [ext_resource type="Theme" uid="uid://dxaw76vg14cno" path="res://engine/resources/ui/Theme_mw.tres" id="9_mwx5i"]
 [ext_resource type="PackedScene" uid="uid://dqjisxub87u1q" path="res://engine/resources/ui/megaman_hp_bar.tscn" id="9_nxqmq"]
 
@@ -72,7 +72,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0a140"]
 _data = {
-"default": SubResource("Animation_qood3")
+&"default": SubResource("Animation_qood3")
 }
 
 [node name="Game UI" type="Control"]
@@ -81,6 +81,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -326,7 +328,7 @@ script = ExtResource("4_qh2x4")
 [node name="Timeout Hint Animation" type="AnimationPlayer" parent="Time System"]
 root_node = NodePath("../TIME")
 libraries = {
-"": SubResource("AnimationLibrary_0a140")
+&"": SubResource("AnimationLibrary_0a140")
 }
 
 [node name="GO" type="Label" parent="."]
