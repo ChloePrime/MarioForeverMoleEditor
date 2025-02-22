@@ -56,33 +56,43 @@ bool IsBlendingNeeded(ivec4 blend) {
 	return any(notEqual(blend, ivec4(BLEND_NONE, BLEND_NONE, BLEND_NONE, BLEND_NONE)));
 }
 
-void fragment() {
-	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x / REAL_TEXEL_SIZE, 1.0 / TEXTURE_PIXEL_SIZE.y / REAL_TEXEL_SIZE);
+vec3 select_channels(vec4 color, bool is_alpha) {
+	if (is_alpha) {
+		return vec3(color.a, color.a, color.a);
+	}
+	if (color.a <= 0.001) {
+		return vec3(0.0, 0.0, 0.0);
+	}
+	return color.xyz;
+}
+
+vec3 xbrz(vec2 uv, vec2 tex_pixel_size, sampler2D tex, bool is_alpha) {
+	vec2 source_wh = vec2(1.0 / tex_pixel_size.x / REAL_TEXEL_SIZE, 1.0 / tex_pixel_size.y / REAL_TEXEL_SIZE);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
 
-	vec2 f = fract(UV * source_size.xy);
+	vec2 f = fract(uv * source_size.xy);
 	vec3 src[25];
-	src[21] = texture(TEXTURE, t[1].xw).rgb;
-	src[22] = texture(TEXTURE, t[1].yw).rgb;
-	src[23] = texture(TEXTURE, t[1].zw).rgb;
-	src[6] = texture(TEXTURE, t[2].xw).rgb;
-	src[7] = texture(TEXTURE, t[2].yw).rgb;
-	src[8] = texture(TEXTURE, t[2].zw).rgb;
-	src[5] = texture(TEXTURE, t[3].xw).rgb;
-	src[0] = texture(TEXTURE, t[3].yw).rgb;
-	src[1] = texture(TEXTURE, t[3].zw).rgb;
-	src[4] = texture(TEXTURE, t[4].xw).rgb;
-	src[3] = texture(TEXTURE, t[4].yw).rgb;
-	src[2] = texture(TEXTURE, t[4].zw).rgb;
-	src[15] = texture(TEXTURE, t[5].xw).rgb;
-	src[14] = texture(TEXTURE, t[5].yw).rgb;
-	src[13] = texture(TEXTURE, t[5].zw).rgb;
-	src[19] = texture(TEXTURE, t[6].xy).rgb;
-	src[18] = texture(TEXTURE, t[6].xz).rgb;
-	src[17] = texture(TEXTURE, t[6].xw).rgb;
-	src[9] = texture(TEXTURE, t[7].xy).rgb;
-	src[10] = texture(TEXTURE, t[7].xz).rgb;
-	src[11] = texture(TEXTURE, t[7].xw).rgb;
+	src[21] = select_channels(texture(tex, t[1].xw), is_alpha);
+	src[22] = select_channels(texture(tex, t[1].yw), is_alpha);
+	src[23] = select_channels(texture(tex, t[1].zw), is_alpha);
+	src[6] = select_channels(texture(tex, t[2].xw), is_alpha);
+	src[7] = select_channels(texture(tex, t[2].yw), is_alpha);
+	src[8] = select_channels(texture(tex, t[2].zw), is_alpha);
+	src[5] = select_channels(texture(tex, t[3].xw), is_alpha);
+	src[0] = select_channels(texture(tex, t[3].yw), is_alpha);
+	src[1] = select_channels(texture(tex, t[3].zw), is_alpha);
+	src[4] = select_channels(texture(tex, t[4].xw), is_alpha);
+	src[3] = select_channels(texture(tex, t[4].yw), is_alpha);
+	src[2] = select_channels(texture(tex, t[4].zw), is_alpha);
+	src[15] = select_channels(texture(tex, t[5].xw), is_alpha);
+	src[14] = select_channels(texture(tex, t[5].yw), is_alpha);
+	src[13] = select_channels(texture(tex, t[5].zw), is_alpha);
+	src[19] = select_channels(texture(tex, t[6].xy), is_alpha);
+	src[18] = select_channels(texture(tex, t[6].xz), is_alpha);
+	src[17] = select_channels(texture(tex, t[6].xw), is_alpha);
+	src[9] = select_channels(texture(tex, t[7].xy), is_alpha);
+	src[10] = select_channels(texture(tex, t[7].xz), is_alpha);
+	src[11] = select_channels(texture(tex, t[7].xw), is_alpha);
 
 	float v[9];
 	v[0] = reduce(src[0]);
@@ -235,6 +245,12 @@ void fragment() {
 		mix(mix(mix(dst[4], dst[3], step(0.25, f.x)), mix(dst[2], dst[11], step(0.75, f.x)), step(0.50, f.x)),
 			mix(mix(dst[15], dst[14], step(0.25, f.x)), mix(dst[13], dst[12], step(0.75, f.x)), step(0.50, f.x)), step(0.75, f.y)),
 		step(0.50, f.y));
+		
+	return res;
+}
 
-	COLOR = vec4(res.rgb, 1.0);
+void fragment() {
+	vec3 rgb = xbrz(UV, TEXTURE_PIXEL_SIZE, TEXTURE, false);
+	vec3 alphas = xbrz(UV, TEXTURE_PIXEL_SIZE, TEXTURE, true);
+	COLOR = vec4(rgb, alphas.r);
 }
