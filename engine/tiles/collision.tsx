@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="collision" tilewidth="32" tileheight="32" tilecount="60" columns="10">
+<tileset version="1.10" tiledversion="1.11.0" name="collision" tilewidth="32" tileheight="32" tilecount="60" columns="10">
  <properties>
   <property name="collision_layer_1" value="9"/>
   <property name="collision_layer_2" value="10"/>

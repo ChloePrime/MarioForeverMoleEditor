@@ -157,6 +157,8 @@ ModifyChildrenRotation = true
 [node name="Goomba" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
 MaxYSpeed = inf
+Gravity = 500.0
+AppearSpeed = 25.0
 
 [node name="Golden Turtle" parent="Overworld/RotoDisc Core" instance=ExtResource("21_0d0u4")]
 position = Vector2(0, 160)
