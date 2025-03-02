@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddwwaim23wyr6"]
+
+[ext_resource type="PackedScene" uid="uid://qmfgn6jgqh78" path="res://engine/resources/ui/image_resizer_base.tscn" id="1_7fdy5"]
+[ext_resource type="Script" uid="uid://dpfp4asx0fyiq" path="res://engine/scripts/tool/SpriteImageResizer.cs" id="2_db4rr"]
+[ext_resource type="Texture2D" uid="uid://g4vxpb7si8rc" path="res://engine/resources/shared/16x_jumping_mole.png" id="3_tw202"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_db4rr"]
+viewport_path = NodePath("Frame Buffer")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tw202"]
+viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
+
+[node name="Sprite Image Resizer" node_paths=PackedStringArray("ResultFrameBuffer", "PixelizedContent", "Sprite") instance=ExtResource("1_7fdy5")]
+texture = SubResource("ViewportTexture_db4rr")
+script = ExtResource("2_db4rr")
+ResultFrameBuffer = NodePath("Frame Buffer")
+PixelizedContent = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
+Sprite = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content/Sprite")
+
+[node name="XBRz Viewport" parent="Frame Buffer" index="0"]
+texture = SubResource("ViewportTexture_tw202")
+
+[node name="Sprite" parent="Frame Buffer/XBRz Viewport/16x Pixelized Content" index="0"]
+position = Vector2(160, 120)
+texture = ExtResource("3_tw202")
+centered = true

@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://qmfgn6jgqh78"]
+
+[ext_resource type="Shader" uid="uid://dschk11426rof" path="res://engine/resources/level/xbrz.gdshader" id="1_jwqv0"]
+[ext_resource type="Script" uid="uid://cexvlpqpvwd73" path="res://engine/scripts/tool/ImageResizerBase.cs" id="2_cnhte"]
+[ext_resource type="Texture2D" uid="uid://djbvbtl4j328x" path="res://engine/16x_testdata.png" id="3_jwqv0"]
+[ext_resource type="AudioStream" uid="uid://clojlxhrofwmh" path="res://engine/resources/shared/correct.se.wav" id="3_kv1rb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0atp"]
+shader = ExtResource("1_jwqv0")
+shader_parameter/LUMINANCE_WEIGHT = 1.0
+shader_parameter/EQUAL_COLOR_TOLERANCE = 0.05
+shader_parameter/STEEP_DIRECTION_THRESHOLD = 2.0
+shader_parameter/DOMINANT_DIRECTION_THRESHOLD = 3.5
+shader_parameter/REAL_TEXEL_SIZE = 1.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_djmrj"]
+viewport_path = NodePath("Frame Buffer")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qx14l"]
+shader = ExtResource("1_jwqv0")
+shader_parameter/LUMINANCE_WEIGHT = 1.0
+shader_parameter/EQUAL_COLOR_TOLERANCE = 0.05
+shader_parameter/STEEP_DIRECTION_THRESHOLD = 2.0
+shader_parameter/DOMINANT_DIRECTION_THRESHOLD = 3.5
+shader_parameter/REAL_TEXEL_SIZE = 1.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4jdoc"]
+viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
+
+[node name="Image Resizer" type="Sprite2D" node_paths=PackedStringArray("NameInput")]
+texture_filter = 1
+material = SubResource("ShaderMaterial_h0atp")
+texture = SubResource("ViewportTexture_djmrj")
+centered = false
+script = ExtResource("2_cnhte")
+NameInput = NodePath("Name Input")
+SuccessSound = ExtResource("3_kv1rb")
+
+[node name="Name Input" type="TextEdit" parent="."]
+offset_right = 192.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 14
+text = "my_awesome_tileset"
+placeholder_text = "Tile Name"
+
+[node name="Frame Buffer" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 480)
+
+[node name="XBRz Viewport" type="Sprite2D" parent="Frame Buffer"]
+material = SubResource("ShaderMaterial_qx14l")
+scale = Vector2(2, 2)
+texture = SubResource("ViewportTexture_4jdoc")
+centered = false
+
+[node name="16x Pixelized Content" type="SubViewport" parent="Frame Buffer/XBRz Viewport"]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 480)
+size_2d_override = Vector2i(320, 240)
+
+[node name="Sprite" type="Sprite2D" parent="Frame Buffer/XBRz Viewport/16x Pixelized Content"]
+texture = ExtResource("3_jwqv0")
+centered = false
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(320, 240)
