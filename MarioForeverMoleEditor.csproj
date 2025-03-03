@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.4.0-beta.4">
+<Project Sdk="Godot.NET.Sdk/4.4.0-rc.2">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -8,5 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="engine\scripts\tool\" />
   </ItemGroup>
 </Project>

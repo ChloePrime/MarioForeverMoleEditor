@@ -1,4 +1,4 @@
-using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using ChloePrime.Godot.Util;
 using Godot;
@@ -12,6 +12,26 @@ public partial class SpriteImageResizer : ImageResizerBase
     [Export] public SubViewport ResultFrameBuffer { get; set; }
     [Export] public SubViewport PixelizedContent { get; set; }
     [Export] public Sprite2D Sprite { get; set; }
+
+    public override void _Ready()
+    {
+        base._Ready();
+        GetWindow().FilesDropped += OnWindowFileDropped;
+    }
+
+    private async void OnWindowFileDropped(string[] files)
+    {
+        foreach (var file in files)
+        {
+            if (Image.LoadFromFile(file) is not { } image)
+            {
+                continue;
+            }
+            Sprite.Texture = ImageTexture.CreateFromImage(image);
+            var fd = new FileInfo(file);
+            SaveImage(await CaptureImage(), fd.Directory + "/" + fd.Name.TrimSuffix(fd.Extension) + "_2x.png");
+        }
+    }
 
     protected override async ValueTask<Image> CaptureImage()
     {

@@ -23,12 +23,17 @@ public partial class ImageResizerBase : Sprite2D
         return ValueTask.FromResult(Texture.GetImage());
     }
 
-    private void SaveImage(Image image)
+    protected void SaveImage(Image image, string path)
     {
-        var result = image.SavePng($"./{NameInput?.Text}_2x.png");
+        var result = image.SavePng(path);
         if (result is Error.Ok)
         {
             SuccessSound?.Play();
         }
+    }
+
+    private void SaveImage(Image image)
+    {
+        SaveImage(image, $"./{NameInput?.Text}_2x.png");
     }
 }
