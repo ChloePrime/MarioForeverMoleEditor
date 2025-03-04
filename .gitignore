@@ -5,5 +5,7 @@
 .vs/
 .vscode/
 
+MarioForeverMoleEditor.sln.DotSettings.user
+
 # MFME Specific
 *.tiled-session
