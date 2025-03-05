@@ -9,7 +9,4 @@
   <ItemGroup>
     <Content Include="README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="engine\scripts\tool\" />
-  </ItemGroup>
 </Project>
