@@ -27,7 +27,7 @@ shader_parameter/REAL_TEXEL_SIZE = 1.0
 [sub_resource type="ViewportTexture" id="ViewportTexture_4jdoc"]
 viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 
-[node name="Image Resizer" type="Sprite2D" node_paths=PackedStringArray("NameInput")]
+[node name="Image Resizer" type="Sprite2D" node_paths=PackedStringArray("NameInput", "SourceSprite")]
 texture_filter = 1
 material = SubResource("ShaderMaterial_h0atp")
 texture = SubResource("ViewportTexture_djmrj")
@@ -35,6 +35,7 @@ centered = false
 script = ExtResource("2_cnhte")
 NameInput = NodePath("Name Input")
 SuccessSound = ExtResource("3_kv1rb")
+SourceSprite = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content/Sprite")
 
 [node name="Name Input" type="TextEdit" parent="."]
 offset_right = 192.0

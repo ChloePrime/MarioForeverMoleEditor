@@ -10,12 +10,11 @@ viewport_path = NodePath("Frame Buffer")
 [sub_resource type="ViewportTexture" id="ViewportTexture_tw202"]
 viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 
-[node name="Sprite Image Resizer" node_paths=PackedStringArray("ResultFrameBuffer", "PixelizedContent", "Sprite") instance=ExtResource("1_7fdy5")]
+[node name="Sprite Image Resizer" node_paths=PackedStringArray("ResultFrameBuffer", "PixelizedContent") instance=ExtResource("1_7fdy5")]
 texture = SubResource("ViewportTexture_db4rr")
 script = ExtResource("2_db4rr")
 ResultFrameBuffer = NodePath("Frame Buffer")
 PixelizedContent = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
-Sprite = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content/Sprite")
 
 [node name="XBRz Viewport" parent="Frame Buffer" index="0"]
 texture = SubResource("ViewportTexture_tw202")

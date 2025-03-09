@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cj47cduluq25m"]
+
+[ext_resource type="Script" uid="uid://cf1sc3v3ksxst" path="res://engine/scripts/tool/TileImageResizerFormat.cs" id="1_vcwt1"]
+
+[resource]
+script = ExtResource("1_vcwt1")
+RemapTable = Dictionary[Vector2i, Vector2i]({})

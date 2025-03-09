@@ -9,6 +9,9 @@ public partial class ImageResizerBase : Sprite2D
     [Export] public TextEdit NameInput { get; private set; }
     [Export] public AudioStream SuccessSound { get; private set; }
     
+    [ExportGroup("Advanced")]
+    [Export] public Sprite2D SourceSprite { get; private set; }
+    
     public override async void _Input(InputEvent @event)
     {
         base._Input(@event);

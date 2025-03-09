@@ -11,7 +11,6 @@ public partial class SpriteImageResizer : ImageResizerBase
     
     [Export] public SubViewport ResultFrameBuffer { get; set; }
     [Export] public SubViewport PixelizedContent { get; set; }
-    [Export] public Sprite2D Sprite { get; set; }
 
     public override void _Ready()
     {
@@ -27,7 +26,7 @@ public partial class SpriteImageResizer : ImageResizerBase
             {
                 continue;
             }
-            Sprite.Texture = ImageTexture.CreateFromImage(image);
+            SourceSprite.Texture = ImageTexture.CreateFromImage(image);
             var fd = new FileInfo(file);
             SaveImage(await CaptureImage(), fd.Directory + "/" + fd.Name.TrimSuffix(fd.Extension) + "_2x.png");
         }
@@ -35,8 +34,8 @@ public partial class SpriteImageResizer : ImageResizerBase
 
     protected override async ValueTask<Image> CaptureImage()
     {
-        Vector2I size = (Vector2I) Sprite.Texture.GetSize() + new Vector2I(Margin, Margin);
-        Sprite.Position = size / 2;
+        Vector2I size = (Vector2I) SourceSprite.Texture.GetSize() + new Vector2I(Margin, Margin);
+        SourceSprite.Position = size / 2;
         PixelizedContent.Size2DOverride = size;
         PixelizedContent.Size = ResultFrameBuffer.Size = size * 2;
         await this.DelayAsync(0.25F);
