@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://shi4xcud2fmv"]
 
-[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyCore.cs" id="1_7jxk8"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyHurtDetector.cs" id="2_gllfk"]
-[ext_resource type="Script" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_q5y43"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyDamageSource.cs" id="3_uvdtv"]
+[ext_resource type="Script" uid="uid://llsnlwe8qr4d" path="res://engine/scripts/enemy/EnemyCore.cs" id="1_7jxk8"]
+[ext_resource type="Script" uid="uid://cyod0ypjk4dws" path="res://engine/scripts/enemy/EnemyHurtDetector.cs" id="2_gllfk"]
+[ext_resource type="Script" uid="uid://ck0bg0qwlyyyf" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_q5y43"]
+[ext_resource type="Script" uid="uid://dk6wxtgqevgue" path="res://engine/scripts/enemy/EnemyDamageSource.cs" id="3_uvdtv"]
 [ext_resource type="Resource" uid="uid://v430l16luk5i" path="res://engine/resources/enemies/R_damagetype_unarmored.tres" id="4_ib4yf"]
 [ext_resource type="Material" uid="uid://dbpoyoa1dyxb2" path="res://engine/resources/enemies/M_enemy.tres" id="5_sqkyg"]
 
@@ -56,8 +56,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mn46t"]
 _data = {
-"RESET": SubResource("Animation_8t8nw"),
-"hurt": SubResource("Animation_5n7bs")
+&"RESET": SubResource("Animation_8t8nw"),
+&"hurt": SubResource("Animation_5n7bs")
 }
 
 [node name="Enemy Core" type="Node2D"]
@@ -89,5 +89,5 @@ material = ExtResource("5_sqkyg")
 [node name="Animation Player" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
 libraries = {
-"": SubResource("AnimationLibrary_mn46t")
+&"": SubResource("AnimationLibrary_mn46t")
 }

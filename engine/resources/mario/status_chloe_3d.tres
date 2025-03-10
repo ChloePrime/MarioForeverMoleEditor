@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://gi86my0pjg6q" path="res://engine/resources/mario/mario_sprite_3d_example.tscn" id="1_t8070"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://engine/resources/mario/status_big.tres" id="2_bm5mn"]
-[ext_resource type="Script" path="res://engine/scripts/player/MarioStatusBasic.cs" id="3_6y68x"]
+[ext_resource type="Script" uid="uid://bnkbswggnvs0r" path="res://engine/scripts/player/MarioStatusBasic.cs" id="3_6y68x"]
 
 [resource]
 script = ExtResource("3_6y68x")

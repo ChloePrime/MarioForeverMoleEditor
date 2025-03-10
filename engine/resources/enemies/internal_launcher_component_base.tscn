@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dbnsb6lkv56gm"]
 
-[ext_resource type="Script" path="res://engine/scripts/enemy/BulletLauncherBase.cs" id="1_rl1rt"]
+[ext_resource type="Script" uid="uid://bas84v6c7ofie" path="res://engine/scripts/enemy/BulletLauncherBase.cs" id="1_rl1rt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4s4yy"]
 size = Vector2(32, 32)

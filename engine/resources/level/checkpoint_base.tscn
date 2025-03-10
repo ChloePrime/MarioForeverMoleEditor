@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bdasy4bswq853"]
 
 [ext_resource type="Texture2D" uid="uid://dme437bkdw8uo" path="res://engine/resources/level/T_checkpoint.png" id="1_xim3d"]
-[ext_resource type="Script" path="res://engine/scripts/level/Checkpoint.cs" id="2_536gd"]
+[ext_resource type="Script" uid="uid://dj362gpasevdg" path="res://engine/scripts/level/Checkpoint.cs" id="2_536gd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7oy6s"]
 atlas = ExtResource("1_xim3d")

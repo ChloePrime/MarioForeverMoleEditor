@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdt4frwl8syt3"]
 
 [ext_resource type="PackedScene" uid="uid://dblakd5cjfdla" path="res://engine/objects/enemies/O_rotodisc_core.tscn" id="1_vjhc5"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/GoldenTurtleRing.cs" id="2_xppua"]
+[ext_resource type="Script" uid="uid://dxxvmkrwt4kfp" path="res://engine/scripts/enemy/GoldenTurtleRing.cs" id="2_xppua"]
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://engine/objects/enemies/O_turtle_golden.tscn" id="3_6m06r"]
 [ext_resource type="Texture2D" uid="uid://bv1h1dajj8k8e" path="res://engine/resources/enemies/T_golden_turtle_generator.png" id="4_vwc7o"]
 

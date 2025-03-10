@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dekph2thmcuyn"]
 
 [ext_resource type="Texture2D" uid="uid://1i0wh8xinrmo" path="res://engine/resources/shared/T_fireball_explosion.png" id="1_3a7vn"]
-[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/SelfDestroyingEffect.cs" id="2_nhcn6"]
+[ext_resource type="Script" uid="uid://chtx1pc0jxh4c" path="res://engine/scripts/util/helper_nodes/SelfDestroyingEffect.cs" id="2_nhcn6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2fm16"]
 atlas = ExtResource("1_3a7vn")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bqhecjqjc5kim"]
 
-[ext_resource type="Script" path="res://engine/scripts/facility/Spring.cs" id="1_umnn4"]
+[ext_resource type="Script" uid="uid://c36a7b8vwem" path="res://engine/scripts/facility/Spring.cs" id="1_umnn4"]
 [ext_resource type="Texture2D" uid="uid://b4yod6ciuqfcr" path="res://engine/resources/facility/T_spring.png" id="1_vurmf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hailq"]

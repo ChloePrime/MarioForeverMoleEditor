@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://skpl30bmwg2q"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_kvxpk"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/GoombaHurtDetector.cs" id="3_sw373"]
+[ext_resource type="Script" uid="uid://cqyl3oif0fey" path="res://engine/scripts/enemy/GoombaHurtDetector.cs" id="3_sw373"]
 [ext_resource type="PackedScene" uid="uid://cbmforo52axh2" path="res://engine/resources/enemies/goomba_photo.tscn" id="5_deyan"]
 [ext_resource type="Texture2D" uid="uid://bad5nlt78fc03" path="res://engine/resources/enemies/T_goomba.png" id="6_37d8x"]
 [ext_resource type="AudioStream" uid="uid://b2h5ryb7pmtyb" path="res://engine/resources/enemies/SE_hit_goomba.wav" id="7_msb3l"]

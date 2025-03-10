@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqd5ut2wsbi1h"]
 
-[ext_resource type="Script" path="res://engine/scripts/rpg/WalkableNpc.cs" id="1_hflx6"]
-[ext_resource type="Script" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_enr0v"]
+[ext_resource type="Script" uid="uid://co15ngxtfslre" path="res://engine/scripts/rpg/WalkableNpc.cs" id="1_hflx6"]
+[ext_resource type="Script" uid="uid://ck0bg0qwlyyyf" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_enr0v"]
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="3_ketea"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="4_ayqsa"]
 

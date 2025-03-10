@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://be23nigkrkxcw"]
 
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="1_c2nj5"]
-[ext_resource type="Script" path="res://engine/scripts/level/warp/PipeEntrance.cs" id="1_x5q07"]
+[ext_resource type="Script" uid="uid://bo8q6353ck21m" path="res://engine/scripts/level/warp/PipeEntrance.cs" id="1_x5q07"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5qw7"]
 size = Vector2(12, 12)

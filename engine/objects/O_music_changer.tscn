@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b8ny2qhax0b54"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/MusicChanger.cs" id="1_0k7rs"]
+[ext_resource type="Script" uid="uid://bv58ix8qy5ev1" path="res://engine/scripts/level/MusicChanger.cs" id="1_0k7rs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43k4a"]
 size = Vector2(32, 32)

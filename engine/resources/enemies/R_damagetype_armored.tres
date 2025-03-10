@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="DamageTypePreset" load_steps=2 format=3 uid="uid://dv0xcfjvxhonj"]
 
-[ext_resource type="Script" path="res://engine/scripts/rpg/DamageTypePreset.cs" id="1_qp88k"]
+[ext_resource type="Script" uid="uid://dwlqjavkm3fdr" path="res://engine/scripts/rpg/DamageTypePreset.cs" id="1_qp88k"]
 
 [resource]
 script = ExtResource("1_qp88k")

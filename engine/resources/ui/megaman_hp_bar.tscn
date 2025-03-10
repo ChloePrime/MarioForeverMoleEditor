@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqjisxub87u1q"]
 
 [ext_resource type="Texture2D" uid="uid://dolus182yai4y" path="res://engine/resources/ui/AT_megaman_hp_bar_base.tres" id="1_8ytt2"]
-[ext_resource type="Script" path="res://engine/scripts/ui/MegaManHpBar.cs" id="1_27ao2"]
+[ext_resource type="Script" uid="uid://c3d3vfttkmlct" path="res://engine/scripts/ui/MegaManHpBar.cs" id="1_27ao2"]
 [ext_resource type="Texture2D" uid="uid://2m8nrs0f4o4t" path="res://engine/resources/ui/AT_megaman_hp_bar_layer1.tres" id="2_js4se"]
 [ext_resource type="Texture2D" uid="uid://scgd04ogcsyr" path="res://engine/resources/ui/AT_megaman_hp_bar_layer2.tres" id="3_5b27k"]
 [ext_resource type="AudioStream" uid="uid://cw0iqq4ohrrmk" path="res://engine/resources/shared/SE_megaman_heal.wav" id="5_0dvas"]

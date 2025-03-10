@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bg2dqueyd3rv4"]
 
 [ext_resource type="PackedScene" uid="uid://bhu84is5vldgf" path="res://engine/resources/facility/internal_platform_mark_base.tscn" id="1_smogn"]
-[ext_resource type="Script" path="res://engine/scripts/facility/MovingPlatformBorderMark.cs" id="2_030xa"]
+[ext_resource type="Script" uid="uid://dqegyqfoevvog" path="res://engine/scripts/facility/MovingPlatformBorderMark.cs" id="2_030xa"]
 [ext_resource type="Texture2D" uid="uid://cur7n7076utq7" path="res://engine/resources/facility/T_platform_marks.png" id="3_2rp21"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m4ean"]

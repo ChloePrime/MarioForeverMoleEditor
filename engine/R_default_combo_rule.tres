@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ComboRule" load_steps=15 format=3 uid="uid://huoeie2nqfiu"]
 
 [ext_resource type="PackedScene" uid="uid://j04gurtf7ia4" path="res://engine/objects/ui/O_score_100.tscn" id="1_armvg"]
-[ext_resource type="Script" path="res://engine/scripts/shared/ComboRule.cs" id="1_dwkhp"]
+[ext_resource type="Script" uid="uid://c723f0432hp35" path="res://engine/scripts/shared/ComboRule.cs" id="1_dwkhp"]
 [ext_resource type="PackedScene" uid="uid://dapxc0x6y1soc" path="res://engine/objects/ui/O_score_200.tscn" id="2_6p804"]
 [ext_resource type="PackedScene" uid="uid://jy5he83djmim" path="res://engine/objects/ui/O_score_500.tscn" id="3_0di0k"]
 [ext_resource type="PackedScene" uid="uid://cunb52mqbotiq" path="res://engine/objects/ui/O_score_1000.tscn" id="4_cyv5y"]

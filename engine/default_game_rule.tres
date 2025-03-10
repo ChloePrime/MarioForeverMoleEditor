@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://cjuysccl1gy5i"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://cjuysccl1gy5i"]
 
-[ext_resource type="Script" path="res://engine/scripts/GameRule.cs" id="1_fgm1i"]
+[ext_resource type="Script" uid="uid://jat0l4y0kkoy" path="res://engine/scripts/GameRule.cs" id="1_fgm1i"]
 [ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://engine/objects/ui/O_1up.tscn" id="1_ja4j4"]
 [ext_resource type="AudioStream" uid="uid://cgj6twbfl8nf4" path="res://engine/resources/level/ME_timeout.ogg" id="2_llp55"]
 [ext_resource type="Resource" uid="uid://huoeie2nqfiu" path="res://engine/R_default_combo_rule.tres" id="2_mgss1"]
+[ext_resource type="PackedScene" uid="uid://bsa35ip0tv2jn" path="res://engine/objects/level/O_warp_transition_circle.tscn" id="3_3hjj8"]
 
 [resource]
 script = ExtResource("1_fgm1i")
@@ -15,7 +16,7 @@ CostOf1Life = 100
 TimePolicy = 1
 ClassicTimeUnitSize = 0.64
 TimeoutHintSound = ExtResource("2_llp55")
-AddLifeMethod = [ExtResource("1_ja4j4")]
+AddLifeMethod = Array[PackedScene]([ExtResource("1_ja4j4")])
 DefaultComboRule = ExtResource("2_mgss1")
 ComboOnStomp = true
 W10EClampOffScreenPolicy = true
@@ -24,6 +25,7 @@ CharacterDirectionPolicy = 1
 KeepXSpeedInWater = false
 EnableTossFireballUpward = true
 TossFireballUpwardStrength = 400.0
+DefaultTransitionPrefab = ExtResource("3_3hjj8")
 BulletLauncherBreakable = false
 EnableMarioBursting = true
 XSpeedBonus = 50.0

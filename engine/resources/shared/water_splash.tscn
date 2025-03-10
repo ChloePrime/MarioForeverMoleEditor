@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://dmcvas57a0yix"]
 
 [ext_resource type="Texture2D" uid="uid://24ibpu5w8rbg" path="res://engine/resources/shared/T_water_splash.png" id="1_dkh0n"]
-[ext_resource type="Script" path="res://engine/scripts/effect/WaterSplash.cs" id="2_6p3w5"]
+[ext_resource type="Script" uid="uid://du600r57invec" path="res://engine/scripts/effect/WaterSplash.cs" id="2_6p3w5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_52b6a"]
 atlas = ExtResource("1_dkh0n")

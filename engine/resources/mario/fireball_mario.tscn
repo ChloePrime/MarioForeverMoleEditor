@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://8iq3fcddygub"]
 
 [ext_resource type="PackedScene" uid="uid://bh7p8gsfxvui8" path="res://engine/resources/shared/fireball_base.tscn" id="1_dvd7v"]
-[ext_resource type="Script" path="res://engine/scripts/player/PlayerFireballActionZone.cs" id="2_xjfv5"]
+[ext_resource type="Script" uid="uid://hpcnltpijo0w" path="res://engine/scripts/player/PlayerFireballActionZone.cs" id="2_xjfv5"]
 
 [node name="Fireball" instance=ExtResource("1_dvd7v")]
 

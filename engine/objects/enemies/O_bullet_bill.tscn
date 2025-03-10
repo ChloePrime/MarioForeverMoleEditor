@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://bd05sqe4qug7h"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_aau2y"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/BulletBill.cs" id="1_do0wn"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/BulletBillHurtDetector.cs" id="3_n4bos"]
-[ext_resource type="Script" path="res://engine/scripts/rpg/DamageTypePreset.cs" id="3_nll52"]
+[ext_resource type="Script" uid="uid://e0y54ihtk4pw" path="res://engine/scripts/enemy/BulletBill.cs" id="1_do0wn"]
+[ext_resource type="Script" uid="uid://c71rr60lcqbmx" path="res://engine/scripts/enemy/BulletBillHurtDetector.cs" id="3_n4bos"]
+[ext_resource type="Script" uid="uid://dwlqjavkm3fdr" path="res://engine/scripts/rpg/DamageTypePreset.cs" id="3_nll52"]
 [ext_resource type="SpriteFrames" uid="uid://ctytmkuqkhred" path="res://engine/resources/enemies/SF_bullet_bill.tres" id="4_70toh"]
 [ext_resource type="PackedScene" uid="uid://m7qxp0utjs8p" path="res://engine/resources/enemies/bullet_bill_corpse.tscn" id="4_mx1x1"]
 

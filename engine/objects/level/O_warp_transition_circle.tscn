@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bsa35ip0tv2jn"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/warp/WarpTransitionCircle.cs" id="1_64xai"]
-[ext_resource type="Shader" path="res://engine/resources/level/darkness/S_darkness.gdshader" id="1_bi7fu"]
+[ext_resource type="Script" uid="uid://b13ebqusfqgje" path="res://engine/scripts/level/warp/WarpTransitionCircle.cs" id="1_64xai"]
+[ext_resource type="Shader" uid="uid://c5rldfdrm0k2n" path="res://engine/resources/level/darkness/S_darkness.gdshader" id="1_bi7fu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fu3tg"]
 shader = ExtResource("1_bi7fu")

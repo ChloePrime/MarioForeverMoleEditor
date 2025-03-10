@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://engine/resources/enemies/internal_turtle_base.tscn" id="1_aihik"]
 [ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://engine/resources/enemies/T_turtle.png" id="2_h7gvu"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleMarioWorkerFlyMovementComponent.cs" id="3_pux5q"]
+[ext_resource type="Script" uid="uid://oa7bsk6igs1w" path="res://engine/scripts/enemy/TurtleMarioWorkerFlyMovementComponent.cs" id="3_pux5q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u7b6k"]
 atlas = ExtResource("2_h7gvu")

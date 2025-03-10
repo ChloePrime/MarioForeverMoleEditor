@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://dnfiyq8iuoad2"]
 
-[ext_resource type="Script" path="res://engine/scripts/bonus/LeapingCoin.cs" id="1_ycbnh"]
+[ext_resource type="Script" uid="uid://b1do3h875awss" path="res://engine/scripts/bonus/LeapingCoin.cs" id="1_ycbnh"]
 [ext_resource type="Texture2D" uid="uid://jslpfrp6fydt" path="res://engine/resources/bonus/T_leaping_coin.png" id="2_xtqbv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjmhy"]
@@ -176,7 +176,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rvudv"]
 _data = {
-"leaping": SubResource("Animation_v34ur")
+&"leaping": SubResource("Animation_v34ur")
 }
 
 [node name="O_leaping_coin" type="Node2D"]

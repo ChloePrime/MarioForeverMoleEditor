@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhu84is5vldgf"]
 
-[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/EditorOnlyComponent.cs" id="1_5epcq"]
+[ext_resource type="Script" uid="uid://d4iyc86f6lod3" path="res://engine/scripts/util/helper_nodes/EditorOnlyComponent.cs" id="1_5epcq"]
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="1_uihff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxhsn"]

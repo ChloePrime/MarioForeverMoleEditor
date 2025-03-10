@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbmforo52axh2"]
 
-[ext_resource type="Script" path="res://engine/scripts/enemy/GoombaPhoto.cs" id="1_q2ebx"]
+[ext_resource type="Script" uid="uid://dvqpky42rpkvb" path="res://engine/scripts/enemy/GoombaPhoto.cs" id="1_q2ebx"]
 [ext_resource type="Texture2D" uid="uid://bhruamdqjf6kj" path="res://engine/resources/enemies/AT_goomba_photo.tres" id="2_gaiiu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xo1kh"]
@@ -38,7 +38,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5gfch"]
 _data = {
-"transparency": SubResource("Animation_0750y")
+&"transparency": SubResource("Animation_0750y")
 }
 
 [node name="Goomba Photo" type="CharacterBody2D"]

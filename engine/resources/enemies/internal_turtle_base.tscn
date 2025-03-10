@@ -1,16 +1,16 @@
 [gd_scene load_steps=18 format=3 uid="uid://dsc1uriffc8l"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/Turtle.cs" id="2_aaayt"]
+[ext_resource type="Script" uid="uid://dhd3bpggxi60e" path="res://engine/scripts/enemy/Turtle.cs" id="2_aaayt"]
 [ext_resource type="Texture2D" uid="uid://rfee0x8amo4c" path="res://engine/resources/enemies/T_mole.png" id="3_hmuuo"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleEnemyCore.cs" id="3_spfq6"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleHurtDetector.cs" id="4_1ofhp"]
+[ext_resource type="Script" uid="uid://bcmynr6sy0pwu" path="res://engine/scripts/enemy/TurtleEnemyCore.cs" id="3_spfq6"]
+[ext_resource type="Script" uid="uid://b7ydwri4dtxhm" path="res://engine/scripts/enemy/TurtleHurtDetector.cs" id="4_1ofhp"]
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="4_kpfo4"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleDamageSource.cs" id="5_2gxph"]
+[ext_resource type="Script" uid="uid://dtuwhw74hfrke" path="res://engine/scripts/enemy/TurtleDamageSource.cs" id="5_2gxph"]
 [ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://engine/resources/enemies/T_mole_smb3.png" id="5_dj5y6"]
 [ext_resource type="AudioStream" uid="uid://dy0wtj1ymm2hs" path="res://engine/resources/shared/SE_kick.wav" id="5_f8588"]
-[ext_resource type="Script" path="res://engine/scripts/shared/ComboTracker.cs" id="10_0o35x"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/TurtleTrigonometricFlyMovementComponent.cs" id="11_t5ep7"]
+[ext_resource type="Script" uid="uid://dkvlr22th6odl" path="res://engine/scripts/shared/ComboTracker.cs" id="10_0o35x"]
+[ext_resource type="Script" uid="uid://crq13cgjvr4nj" path="res://engine/scripts/enemy/TurtleTrigonometricFlyMovementComponent.cs" id="11_t5ep7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkc31"]
 atlas = ExtResource("3_hmuuo")

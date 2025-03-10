@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cabraxfm8hpy0"]
 
-[ext_resource type="Script" path="res://engine/scripts/level/warp/PipeExit.cs" id="1_ct407"]
+[ext_resource type="Script" uid="uid://df0cfemfekor7" path="res://engine/scripts/level/warp/PipeExit.cs" id="1_ct407"]
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="2_escge"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v866p"]

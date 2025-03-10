@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_lbnix"]
 [ext_resource type="Texture2D" uid="uid://bi73vjmbt27bi" path="res://engine/resources/background/T_cloud_top.png" id="2_5xv32"]
-[ext_resource type="Script" path="res://engine/scripts/level/LevelMovingBackgroundManager.cs" id="4_br84d"]
+[ext_resource type="Script" uid="uid://2s80ouirkb0t" path="res://engine/scripts/level/LevelMovingBackgroundManager.cs" id="4_br84d"]
 
 [node name="Cloud (Background)" instance=ExtResource("1_lbnix")]
 z_index = -3995

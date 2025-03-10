@@ -1,8 +1,8 @@
 [gd_scene load_steps=66 format=3 uid="uid://bbmxplfobtgeu"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_385ag"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/Lakitu.cs" id="1_auun5"]
-[ext_resource type="Script" path="res://addons/ChloePrime.Godot.Util/AudioStreamGroup.cs" id="2_dma71"]
+[ext_resource type="Script" uid="uid://ctgc2qby1d3yj" path="res://engine/scripts/enemy/Lakitu.cs" id="1_auun5"]
+[ext_resource type="Script" uid="uid://ce2tknjd83nw7" path="res://addons/ChloePrime.Godot.Util/AudioStreamGroup.cs" id="2_dma71"]
 [ext_resource type="Texture2D" uid="uid://deexchyykxuxv" path="res://engine/resources/enemies/T_lakitu_attack.png" id="2_ka23o"]
 [ext_resource type="AudioStream" uid="uid://dx43y5kpfoblf" path="res://engine/resources/enemies/SE_lakitu_0.ogg" id="2_v1208"]
 [ext_resource type="Texture2D" uid="uid://bkpsy4lh122ah" path="res://engine/resources/enemies/T_lakitu.png" id="3_311bj"]
@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://c75g0xah2657v" path="res://engine/resources/enemies/SE_lakitu_1.ogg" id="3_wsvgu"]
 [ext_resource type="AudioStream" uid="uid://8sub0u6y3l7s" path="res://engine/resources/enemies/SE_lakitu_2.ogg" id="4_8cnae"]
 [ext_resource type="Texture2D" uid="uid://bytpxe7cy22f8" path="res://engine/resources/enemies/T_lakitu_blink_down.png" id="4_s2gqk"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/LakituMovementComponent.cs" id="11_gxfa8"]
+[ext_resource type="Script" uid="uid://7dt4lmhfxm6f" path="res://engine/scripts/enemy/LakituMovementComponent.cs" id="11_gxfa8"]
 
 [sub_resource type="Resource" id="Resource_6f7po"]
 script = ExtResource("2_dma71")

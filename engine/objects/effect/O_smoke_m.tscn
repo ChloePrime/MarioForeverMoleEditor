@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://dvmjngni7ni2h"]
 
 [ext_resource type="Texture2D" uid="uid://226dtq0d3qby" path="res://engine/resources/shared/T_smoke_m.png" id="1_84l4i"]
-[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/SelfDestroyingBetterAnimatedEffect.cs" id="2_71mjf"]
-[ext_resource type="Script" path="res://engine/scripts/util/animation/AnimationData.cs" id="3_qh5ei"]
+[ext_resource type="Script" uid="uid://byhmsdssfjer" path="res://engine/scripts/util/helper_nodes/SelfDestroyingBetterAnimatedEffect.cs" id="2_71mjf"]
+[ext_resource type="Script" uid="uid://35r6glerqi1b" path="res://engine/scripts/util/animation/AnimationData.cs" id="3_qh5ei"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33log"]
 atlas = ExtResource("1_84l4i")

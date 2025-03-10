@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bk2nauiy0bc81"]
 
-[ext_resource type="Script" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_ws4w7"]
+[ext_resource type="Script" uid="uid://b32v6dwpciq6l" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_ws4w7"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="2_2qoei"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkro"]
@@ -24,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ddyan"]
 _data = {
-"bumped": SubResource("Animation_00s4d")
+&"bumped": SubResource("Animation_00s4d")
 }
 
 [node name="Bumpable Base" type="StaticBody2D"]

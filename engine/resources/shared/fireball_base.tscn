@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bh7p8gsfxvui8"]
 
-[ext_resource type="Script" path="res://engine/scripts/enemy/Fireball.cs" id="1_auv4v"]
+[ext_resource type="Script" uid="uid://bpf6kit6xrlfm" path="res://engine/scripts/enemy/Fireball.cs" id="1_auv4v"]
 [ext_resource type="Texture2D" uid="uid://ckcf62qldbqqx" path="res://engine/resources/shared/T_fireball.png" id="2_y7ff5"]
-[ext_resource type="Script" path="res://engine/scripts/util/helper_nodes/Rotator2D.cs" id="3_57fow"]
+[ext_resource type="Script" uid="uid://dmp63o51omded" path="res://engine/scripts/util/helper_nodes/Rotator2D.cs" id="3_57fow"]
 [ext_resource type="PackedScene" uid="uid://qriqbprl1mvt" path="res://engine/objects/level/darkness/O_light_source_spot.tscn" id="4_kjl7p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rd105"]

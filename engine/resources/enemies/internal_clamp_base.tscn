@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dkop8m3ysird7"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_3n0pw"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/ClampFlower.cs" id="1_m7ojg"]
+[ext_resource type="Script" uid="uid://dsb3li1smd4xh" path="res://engine/scripts/enemy/ClampFlower.cs" id="1_m7ojg"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="1_sfv5s"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="3_cslh6"]
 

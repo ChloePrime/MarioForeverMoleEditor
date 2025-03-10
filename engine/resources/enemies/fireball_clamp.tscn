@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://brptwuqcyd8xr"]
 
 [ext_resource type="PackedScene" uid="uid://bh7p8gsfxvui8" path="res://engine/resources/shared/fireball_base.tscn" id="1_1wbw0"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/ClampFireball.cs" id="2_m4isc"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/EnemyFireballActionZone.cs" id="3_58eao"]
+[ext_resource type="Script" uid="uid://ihe525vnl1d6" path="res://engine/scripts/enemy/ClampFireball.cs" id="2_m4isc"]
+[ext_resource type="Script" uid="uid://clqmxvnwyeoq1" path="res://engine/scripts/enemy/EnemyFireballActionZone.cs" id="3_58eao"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdky4"]
 radius = 6.0
