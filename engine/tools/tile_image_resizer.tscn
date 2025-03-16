@@ -72,7 +72,7 @@ metadata/_custom_type_script = "uid://nx7ujwsc2ej2"
 [sub_resource type="Resource" id="Resource_p2wx1"]
 script = ExtResource("3_jsnoi")
 Comment = "转角"
-RemapTable = Array[Vector4i]([Vector4i(13, 11, 4, 0), Vector4i(14, 11, 5, 0), Vector4i(15, 11, 6, 0), Vector4i(13, 12, 4, 1), Vector4i(14, 12, 5, 1), Vector4i(15, 12, 6, 1), Vector4i(13, 13, 4, 2), Vector4i(14, 13, 5, 2), Vector4i(15, 13, 6, 2)])
+RemapTable = Array[Vector4i]([Vector4i(13, 11, 4, 0), Vector4i(14, 11, 5, 0), Vector4i(15, 11, 6, 0), Vector4i(13, 10, 4, 1), Vector4i(14, 10, 5, 1), Vector4i(15, 10, 6, 1), Vector4i(13, 9, 4, 2), Vector4i(14, 9, 5, 2), Vector4i(15, 9, 6, 2)])
 metadata/_custom_type_script = "uid://nx7ujwsc2ej2"
 
 [sub_resource type="Resource" id="Resource_jsnoi"]
