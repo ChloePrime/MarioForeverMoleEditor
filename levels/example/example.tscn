@@ -1,11 +1,11 @@
 [gd_scene load_steps=40 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" uid="uid://cjlj23jt1h6fk" path="res://engine/scripts/level/MaFoLevel.cs" id="1_ga1s3"]
-[ext_resource type="AudioStream" uid="uid://dt40j7710gwi7" path="res://levels/example/BGM_forest_punk.ogg" id="2_4kt55"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://engine/objects/mario.tscn" id="3_5usbp"]
 [ext_resource type="Resource" uid="uid://0spcwwwagtpi" path="res://engine/tiles/R_object_tile_presets.tres" id="3_ad6k1"]
 [ext_resource type="Script" uid="uid://c2bwoxb1jgie8" path="res://engine/scripts/level/MaFoLevelArea.cs" id="3_gyt0a"]
 [ext_resource type="Script" uid="uid://d3yvoggwfo00c" path="res://engine/scripts/player/MaFoCamera.cs" id="4_jc67v"]
+[ext_resource type="AudioStream" uid="uid://du0de3tlvkg3p" path="res://levels/example/gate.it" id="5_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://engine/objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="PackedScene" uid="uid://drt0lrsquocxi" path="res://levels/example/example_tiles.tmx" id="6_6hpwf"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/BGM_minus5_2.ogg" id="7_a81sv"]
@@ -45,6 +45,7 @@ self_modulate = Color(0.45, 0.9, 0.225, 1)
 script = ExtResource("1_ga1s3")
 LevelName = "Mole Editor
 可口可乐了了"
+TimeLimit = 107.0
 TileLoadingPreset = ExtResource("3_ad6k1")
 
 [node name="MaFoCamera" type="Camera2D" parent="."]
@@ -55,7 +56,7 @@ Border = Rect2(0, 0, 640, 480)
 [node name="Overworld" type="Node2D" parent="."]
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
-AreaMusic = ExtResource("2_4kt55")
+AreaMusic = ExtResource("5_ps4lb")
 
 [node name="Tiles" parent="Overworld" instance=ExtResource("6_6hpwf")]
 

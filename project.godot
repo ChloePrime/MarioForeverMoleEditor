@@ -41,7 +41,7 @@ import/use_multiple_threads=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg")
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
 
 [gui]
 

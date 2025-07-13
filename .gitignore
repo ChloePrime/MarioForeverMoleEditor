@@ -8,4 +8,5 @@
 MarioForeverMoleEditor.sln.DotSettings.user
 
 # MFME Specific
+.build/
 *.tiled-session

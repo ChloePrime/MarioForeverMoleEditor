@@ -1,0 +1,11 @@
+[configuration]
+
+entry_symbol = "godot_openmpt_init"
+compatibility_minimum = "4.2"
+
+[libraries]
+
+windows.debug.x86_64 = "bin/libgdmpt-windows.debug.64.dll"
+windows.release.x86_64 = "bin/libgdmpt-windows.release.64.dll"
+linux.debug.x86_64 = "bin/libgdmpt-linux.debug.64.so"
+linux.release.x86_64 = "bin/libgdmpt-linux.release.64.so"

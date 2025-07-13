@@ -50,7 +50,7 @@ public partial class BackgroundMusic : AudioStreamPlayer
         _bus = AudioServer.GetBusIndex(Bus = "Background Music");
     }
 
-    private static void SetStream(AudioStream music)
+    private new static void SetStream(AudioStream music)
     {
         CheckInstance();
         if (music == Instance.Stream)
@@ -70,6 +70,10 @@ public partial class BackgroundMusic : AudioStreamPlayer
         {
             Instance.Play();
         }
+        
+        // 刷新音乐速度，以修复
+        // 时间小于 100 时在 MPT 音乐与非 MPT 音乐之间切换时播放速度变为倒数的 bug
+        Speed = Speed;
     }
 
     private static void CheckInstance()
@@ -82,7 +86,11 @@ public partial class BackgroundMusic : AudioStreamPlayer
 
     private static void SetSpeed(float speed)
     {
-        Instance.PitchScale = _speed = speed;
+        var isMpt = Music.GetClass() == "AudioStreamMPT";
+
+        _speed = speed;
+        Instance.PitchScale = isMpt ? Math.Clamp(1 / speed, 0, 10_0000) : speed;
+        
         if (AudioServer.GetBusEffect(_bus, 0) is AudioEffectPitchShift effect)
         {
             if (Mathf.IsEqualApprox(speed, 1))
@@ -98,5 +106,5 @@ public partial class BackgroundMusic : AudioStreamPlayer
     }
 
     private static int _bus;
-    private static float _speed;
+    private static float _speed = 1;
 }
