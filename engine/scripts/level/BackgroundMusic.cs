@@ -86,11 +86,15 @@ public partial class BackgroundMusic : AudioStreamPlayer
 
     private static void SetSpeed(float speed)
     {
-        var isMpt = Music.GetClass() == "AudioStreamMPT";
-
         _speed = speed;
-        Instance.PitchScale = isMpt ? Math.Clamp(1 / speed, 0, 10_0000) : speed;
-        
+
+        if (Music.IsMetaStream())
+        {
+            return;
+        }
+
+        Instance.PitchScale = Music.GetClass() == "AudioStreamMPT" ? Math.Clamp(1 / speed, 0, 10_0000) : speed;
+
         if (AudioServer.GetBusEffect(_bus, 0) is AudioEffectPitchShift effect)
         {
             if (Mathf.IsEqualApprox(speed, 1))
