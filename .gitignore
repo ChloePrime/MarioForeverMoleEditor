@@ -1,5 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
+~*.dll
+~*.so
 
 .idea/
 .vs/
