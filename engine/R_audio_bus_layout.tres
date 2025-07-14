@@ -2,7 +2,7 @@
 
 [sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_x4stc"]
 resource_name = "PitchShift"
-oversampling = 32
+oversampling = 16
 fft_size = 2
 
 [resource]
