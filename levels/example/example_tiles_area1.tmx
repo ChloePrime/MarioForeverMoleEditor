@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
- <tileset firstgid="1" source="../../engine/tiles/TS_0x1pack_2.tsx"/>
- <tileset firstgid="301" source="../../engine/tiles/TS_pipes.tsx"/>
- <tileset firstgid="496" source="../../engine/tiles/TS_collision.tsx"/>
- <tileset firstgid="556" source="../../engine/tiles/OBJ_TS_enemies.tsx"/>
- <tileset firstgid="597" source="../../engine/tiles/OBJ_TS_facility.tsx"/>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="../../engine/tiles/0x1pack_2.tsx"/>
+ <tileset firstgid="301" source="../../engine/tiles/pipes.tsx"/>
+ <tileset firstgid="496" source="../../engine/tiles/collision.tsx"/>
+ <tileset firstgid="556" source="../../engine/tiles/enemies.tsx"/>
+ <tileset firstgid="597" source="../../engine/tiles/facility.tsx"/>
  <layer id="3" name="PipeFix" width="20" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
