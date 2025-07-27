@@ -43,10 +43,6 @@ import/use_multiple_threads=false
 
 enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
 
-[gui]
-
-fonts/dynamic_fonts/use_oversampling=false
-
 [importer_defaults]
 
 YATI={
