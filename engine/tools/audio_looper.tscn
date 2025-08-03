@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccy8one0m0nvv"]
+
+[ext_resource type="Script" uid="uid://dl068voj8ujxf" path="res://engine/scripts/tool/AudioLooper.cs" id="1_lmq2b"]
+
+[node name="AudioLooper" type="Control" node_paths=PackedStringArray("QualityInput", "ModeMenu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lmq2b")
+QualityInput = NodePath("VBoxContainer/Quality Input")
+ModeMenu = NodePath("VBoxContainer/Mode Menu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -20.0
+offset_right = 64.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Quality Input" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(128, 36)
+layout_mode = 2
+text = "3"
+placeholder_text = "Q"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Mode Menu" type="OptionButton" parent="VBoxContainer"]
+layout_mode = 2
+selected = 1
+item_count = 2
+popup/item_0/text = "Two Slice"
+popup/item_0/id = 0
+popup/item_1/text = "One Slice With Offset"
+popup/item_1/id = 1
