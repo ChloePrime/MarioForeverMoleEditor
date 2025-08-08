@@ -55,8 +55,7 @@ public partial class Goal : Node2D
             if (Type is GoalType.Small && player is Node2D player2d)
             {
                 var score100 = Score100.Instantiate<Node2D>();
-                player.GetPreferredRoot().AddChild(score100);
-                score100.GlobalPosition = player2d.ToGlobal(new Vector2(0, -32));
+                player.GetPreferredRoot().AddChildAt(score100, player2d.ToGlobal(new Vector2(0, -32)));
             }
         }
 
@@ -162,8 +161,7 @@ public partial class Goal : Node2D
             <= -266 + 200 => Score500,
             _ => Score200,
         }).Instantiate<Node2D>();
-        this.GetPreferredRoot().AddChild(score);
-        score.GlobalPosition = _stick.GlobalPosition;
+        this.GetPreferredRoot().AddChildAt(score, _stick.GlobalPosition);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -213,12 +211,6 @@ public partial class Goal : Node2D
     {
         if (HasCompletedLevel(player)) return;
         CompleteLevel();
-        if (Type is GoalType.Small)
-        {
-            var score100 = Score100.Instantiate<Node2D>();
-            player.GetPreferredRoot().AddChild(score100);
-            score100.GlobalPosition = player.ToGlobal(new Vector2(0, -32));
-        }
     }
 
     public static bool HasCompletedLevel(GodotObject player)

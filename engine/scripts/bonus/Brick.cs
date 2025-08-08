@@ -81,8 +81,8 @@ public partial class Brick : BumpableBlock
         for (int i = 0; i < BrickPieceRelPosTable.Length; i++)
         {
             var brick = BrickPiecePrefab.Instantiate<RigidBody2D>();
-            root.AddChild(brick);
-            brick.GlobalPosition = ToGlobal(BrickPieceRelPosTable[i]);
+            root.AddChildAt(brick, ToGlobal(BrickPieceRelPosTable[i]));
+            brick.DisablePhysicsInterpolationUntilNextFrame();
             brick.Rotation = BrickPieceRotationTable[i];
             brick.LinearVelocity = BrickPieceVelocityTable[i];
             brick.AngularVelocity = BrickPieceAngularVelocityTable[i];

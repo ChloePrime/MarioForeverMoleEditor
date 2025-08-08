@@ -33,6 +33,7 @@ animations = [{
 }]
 
 [node name="Small Explosion" type="AnimatedSprite2D"]
+physics_interpolation_mode = 2
 z_index = 500
 sprite_frames = SubResource("SpriteFrames_kmure")
 autoplay = "default"

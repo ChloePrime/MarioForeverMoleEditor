@@ -51,17 +51,16 @@ public partial class QuestionBlock : BumpableBlock
         var content = GlobalData.Status == MarioStatus.Small ? SmallMarioOverride ?? Content : Content;
         if (content.TryInstantiate(out Node2D instance, out var fallback))
         {
-            parent.AddChild(instance);
             
             if (instance is GravityObjectBase gob)
             {
                 var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y) + ContentOffset;
-                instance.GlobalPosition = GlobalTransform.TranslatedLocal(offset).Origin;
+                parent.AddChildAt(instance, GlobalTransform.TranslatedLocal(offset).Origin);
                 gob.AppearFrom(-GlobalTransform.Y);
             }
             else
             {
-                instance.GlobalPosition = GlobalTransform.TranslatedLocal(ContentOffset).Origin;
+                parent.AddChildAt(instance, GlobalTransform.TranslatedLocal(ContentOffset).Origin);
             }
 
             if (!OneTimeUse)

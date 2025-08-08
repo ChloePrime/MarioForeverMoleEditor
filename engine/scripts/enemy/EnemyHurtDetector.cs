@@ -111,7 +111,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         if (CreateCorpse(e) is { } corpse)
         {
             CustomizeCorpse(e, corpse);
-            CallDeferred(MethodName.AddCorpseLater, parent, corpse, GlobalPosition);
+            Callable.From<Node2D, Vector2>(parent.AddChildAt).CallDeferred(corpse, GlobalPosition);
         }
 
         Core.EmitSignal(EnemyCore.SignalName.Died);
@@ -142,12 +142,6 @@ public partial class EnemyHurtDetector : Area2D, IStompable
                 }
             };
         }
-    }
-
-    private void AddCorpseLater(Node parent, Node2D child, Vector2 globalPosition)
-    {
-        parent.AddChild(child);
-        child.GlobalPosition = globalPosition;
     }
 
     private void OnBodyEntered(Node2D other)

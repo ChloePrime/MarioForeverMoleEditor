@@ -100,8 +100,8 @@ public partial class Mario
             GrabTossSound?.Play();
         }
         
-        var oldNode = grabbing.AsNode;
-        if (!IsInstanceValid(oldNode))
+        var grabbed = grabbing.AsNode;
+        if (!IsInstanceValid(grabbed))
         {
             return;
         }
@@ -114,10 +114,7 @@ public partial class Mario
         {
             parent = (GetParent() ?? this.GetArea()) ?? GetTree().Root;
         }
-        var pos = oldNode.GlobalPosition;
-        oldNode.GetParent()?.RemoveChild(oldNode);
-        parent.AddChild(oldNode);
-        oldNode.GlobalPosition = pos;
+        grabbed.ReparentSafely(parent);
 
         if (grabbing is GravityObjectBase gob)
         {

@@ -55,6 +55,7 @@ _data = {
 }
 
 [node name="Score Base" type="Sprite2D"]
+physics_interpolation_mode = 2
 z_index = 1000
 texture = ExtResource("1_54a3e")
 region_enabled = true
@@ -63,7 +64,7 @@ script = ExtResource("2_ehqr6")
 Amount = 0
 
 [node name="Animation Player" type="AnimationPlayer" parent="."]
-autoplay = "disappearing"
 libraries = {
-"": SubResource("AnimationLibrary_rrtyl")
+&"": SubResource("AnimationLibrary_rrtyl")
 }
+autoplay = "disappearing"

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -34,6 +35,102 @@ public static partial class NodeEx
     public static bool TryGetParent<T>(this Node node, out T parent) where T : class
     {
         return (parent = node.GetParentOrNull<T>()) != null;
+    }
+
+    /// <summary>
+    /// 在指定的全局位置添加子节点。<br/>
+    /// 使用这个方法可以避免在开启物理插值时导致的物体在奇怪的地方闪现。
+    /// </summary>
+    /// <param name="parent">父节点</param>
+    /// <param name="child">待添加的子节点</param>
+    /// <param name="globalPosition">子节点的全局位置</param>
+    public static void AddChildAt(this Node parent, Node child, Vector2 globalPosition)
+    {
+        if (child is Node2D child2d)
+        {
+            parent.AddChildAt(child2d, globalPosition);
+        }
+        else
+        {
+            parent.AddChild(child);
+        }
+    }
+
+    /// <summary>
+    /// 在指定的全局位置添加子节点。<br/>
+    /// 使用这个方法可以避免在开启物理插值时导致的物体在奇怪的地方闪现。
+    /// </summary>
+    /// <param name="parent">父节点</param>
+    /// <param name="child">待添加的子节点</param>
+    /// <param name="globalPosition">子节点的全局位置</param>
+    public static void AddChildAt(this Node parent, Node2D child, Vector2 globalPosition)
+    {
+        var piMode = child.PhysicsInterpolationMode;
+        child.PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off;
+        
+        if (parent is Node2D parent2d)
+        {
+            child.Position = parent2d.ToLocal(globalPosition);
+            parent.AddChild(child);
+        }
+        else
+        {
+            parent.AddChild(child);
+            child.GlobalPosition = globalPosition;
+        }
+
+        child.PhysicsInterpolationMode = piMode;
+    }
+
+    public static void TeleportTo(this Node2D self, Vector2 globalPosition)
+    {
+        var piMode = self.PhysicsInterpolationMode;
+        self.PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off;
+        self.GlobalPosition = globalPosition;
+        self.PhysicsInterpolationMode = piMode;
+    }
+
+    private static readonly ConcurrentDictionary<ulong, bool> DisablingPhItNodes = [];
+
+    public static async void DisablePhysicsInterpolationUntilNextFrame(this Node node)
+    {
+        if (!DisablingPhItNodes.TryAdd(node.GetInstanceId(), true))
+        {
+            return;
+        }
+        
+        var piMode = node.PhysicsInterpolationMode;
+        node.PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off;
+        await node.WaitForPhysicsProcess();
+        
+        if (DisablingPhItNodes.TryRemove(node.GetInstanceId(), out _))
+        {
+            node.PhysicsInterpolationMode = piMode;   
+        }
+    }
+
+    public static void ReparentSafely(this Node self, Node newParent, bool keepGlobalTransform = true)
+    {
+        var piMode = self.PhysicsInterpolationMode;
+        self.PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off;
+
+        if (!GodotObject.IsInstanceValid(self.GetParent()))
+        {
+            if (self is Node2D self2d)
+            {
+                newParent.AddChildAt(self2d, self2d.GlobalPosition);  
+            }
+            else
+            {
+                newParent.AddChild(self);
+            }
+        }
+        else
+        {
+            self.Reparent(newParent, keepGlobalTransform);   
+        }
+        
+        self.PhysicsInterpolationMode = piMode;
     }
 
     public static void Instantiate<T>(this PackedScene prefab, out T instance) where T : class

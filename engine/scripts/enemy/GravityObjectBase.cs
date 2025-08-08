@@ -76,6 +76,8 @@ public partial class GravityObjectBase : CharacterBody2D, IGrabbable
 
 	public void AppearFrom(Vector2 pipeNormal)
 	{
+		this.DisablePhysicsInterpolationUntilNextFrame();
+		
 		var distance = pipeNormal.Abs().MaxAxisIndex() == Vector2.Axis.X ? Size.X : Size.Y;
 		Translate(-pipeNormal * distance);
 

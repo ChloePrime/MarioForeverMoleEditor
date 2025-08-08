@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.Util;
+﻿using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
@@ -33,8 +34,7 @@ public partial class ClampRandomShootComponent : ClampShootComponentBase
         {
             cf.GameRule = _rule;
         }
-        this.GetPreferredRoot().AddChild(fireball);
-        fireball.GlobalPosition = Muzzle.GlobalPosition;
+        this.GetPreferredRoot().AddChildAt(fireball, Muzzle.GlobalPosition);
     }
 
     private GameRule _rule;

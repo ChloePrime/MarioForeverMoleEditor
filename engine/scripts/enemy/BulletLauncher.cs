@@ -24,23 +24,22 @@ public partial class BulletLauncher : BulletLauncherBase
         // 炮弹
         var root = this.GetPreferredRoot()!;
         var bullet = BulletPrefab.Instantiate();
-        root.AddChild(bullet);
-        if (bullet is Node2D bullet2D)
-        {
-            bullet2D.GlobalPosition = GlobalPosition;
-        }
+        root.AddChildAt(bullet, GlobalPosition);
         // 音效
         ShootSound?.Play();
         // 烟花
         if (MuzzleFlash?.Instantiate() is { } flash)
         {
-            root.AddChild(flash);
             if (flash is Node2D flash2D)
             {
                 var player = GetTree().GetPlayer();
                 var xDir = player is Node2D mario ? Mathf.Sign(ToLocal(mario.GlobalPosition).X) : 0;
-                flash2D.GlobalPosition = GlobalPosition + new Vector2(16 * xDir, 0);
                 flash2D.ZIndex = ZIndex;
+                root.AddChildAt(flash, GlobalPosition + new Vector2(16 * xDir, 0));
+            }
+            else
+            {
+                root.AddChild(flash);
             }
         }
     }

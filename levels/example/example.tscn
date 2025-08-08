@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene load_steps=42 format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" uid="uid://cjlj23jt1h6fk" path="res://engine/scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://engine/objects/mario.tscn" id="3_5usbp"]
@@ -9,9 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://engine/objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="PackedScene" uid="uid://drt0lrsquocxi" path="res://levels/example/example_tiles.tmx" id="6_6hpwf"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/minus5_2.ogg" id="7_a81sv"]
-[ext_resource type="PackedScene" uid="uid://be6r440u75fjg" path="res://engine/objects/background/O_bg_forest_hills.tscn" id="11_nfc1d"]
+[ext_resource type="Texture2D" uid="uid://b742dtbx11r86" path="res://engine/resources/background/T_bg_forest_hills.png" id="11_odrgt"]
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://engine/objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
-[ext_resource type="PackedScene" uid="uid://dav5m8obc6byj" path="res://engine/objects/background/O_bg_gradient.tscn" id="13_o71m4"]
 [ext_resource type="PackedScene" uid="uid://dblakd5cjfdla" path="res://engine/objects/enemies/O_rotodisc_core.tscn" id="13_y308r"]
 [ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://engine/objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://engine/objects/enemies/O_mole.tscn" id="14_23duk"]
@@ -30,6 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://engine/objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://engine/objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://engine/objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
+[ext_resource type="PackedScene" uid="uid://dojyxy3crbyhj" path="res://engine/objects/enemies/O_bullet_launcher.tscn" id="35_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://dvmjb13j7iff" path="res://levels/example/example_tiles_area1.tmx" id="36_3k0x5"]
 [ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://engine/objects/facility/O_spring.tscn" id="36_132yy"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://engine/objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
@@ -39,6 +39,15 @@
 [ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://engine/objects/level/fluid/O_area_water.tscn" id="37_mi6cf"]
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://engine/objects/level/O_goal.tscn" id="38_ypky8"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://engine/objects/level/O_goal_small.tscn" id="46_jmabb"]
+
+[sub_resource type="Gradient" id="Gradient_ctip4"]
+colors = PackedColorArray(0.235294, 0.470588, 0.627451, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o2jv4"]
+gradient = SubResource("Gradient_ctip4")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
 
 [node name="Example" type="Node2D"]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -64,23 +73,32 @@ AreaMusic = ExtResource("5_ps4lb")
 position = Vector2(208, 400)
 
 [node name="Mario" parent="Overworld" instance=ExtResource("3_5usbp")]
-position = Vector2(272, 408)
+position = Vector2(272, 416)
 FastRetry = true
 
 [node name="Music Changer" parent="Overworld" instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
 TargetMusic = ExtResource("7_a81sv")
 
-[node name="Background" parent="Overworld" instance=ExtResource("11_nfc1d")]
-position = Vector2(256, 240)
+[node name="Parallax" type="Parallax2D" parent="Overworld"]
+z_index = -4000
+repeat_size = Vector2(512, 0)
+repeat_times = 4
 
-[node name="Background Gradient" parent="Overworld" instance=ExtResource("13_o71m4")]
+[node name="BG Gradient" type="Sprite2D" parent="Overworld/Parallax"]
 position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_o2jv4")
+
+[node name="BG" type="Sprite2D" parent="Overworld/Parallax"]
+position = Vector2(256, 240)
+texture = ExtResource("11_odrgt")
 
 [node name="Cloud (Background)" parent="Overworld" instance=ExtResource("13_6x2u0")]
+physics_interpolation_mode = 0
 position = Vector2(128, 24)
 
 [node name="Cloud (Foreground)" parent="Overworld" instance=ExtResource("14_1osfy")]
+physics_interpolation_mode = 0
 position = Vector2(128, 0)
 
 [node name="RotoDisc Core" parent="Overworld" instance=ExtResource("13_y308r")]
@@ -214,6 +232,9 @@ Target = NodePath("../Door")
 [node name="Door 2" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("36_xxotm")]
 position = Vector2(1328, 352)
 Target = NodePath("../Door")
+
+[node name="Bullet Launcher" parent="Overworld" instance=ExtResource("35_ps4lb")]
+position = Vector2(528, 336)
 
 [node name="Bonus Room" type="Node2D" parent="."]
 position = Vector2(0, 480)

@@ -18,6 +18,7 @@ public partial class WaterSplash : SelfDestroyingEffect
     {
         base._EnterTree();
         _pending = true;
+        Visible = false;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -25,12 +26,14 @@ public partial class WaterSplash : SelfDestroyingEffect
         base._PhysicsProcess(delta);
         if (_pending)
         {
+            var detectorOldPos = _waterDetector.Position;
             if (_waterDetector.MoveAndCollide(WaterDetectDistance) is not null)
             {
-                GlobalPosition = _waterDetector.GlobalPosition;
-                _waterDetector.Position = Vector2.Zero;
+                this.TeleportTo(ToGlobal(_waterDetector.Position - detectorOldPos));
+                _waterDetector.Position = detectorOldPos;
             }
             _pending = false;
+            Visible = true;
         }
     }
 

@@ -206,7 +206,7 @@ public partial class Mario : CharacterBody2D
         base._Process(delta);
         ProcessPositionInterpolation((float)delta);
         ProcessFlashing((float)delta);
-        MoveCamera();
+        MoveCamera(Tween.TweenProcessMode.Idle);
     }
 
     private void ProcessPositionInterpolation(double delta)
@@ -242,6 +242,7 @@ public partial class Mario : CharacterBody2D
             _lastPhysicsDelta = deltaD;
             _deltaCounter = 0;
         }
+        MoveCamera(Tween.TweenProcessMode.Physics);
     }
 
     private void PhysicsProcess0(double deltaD)
@@ -349,7 +350,7 @@ public partial class Mario : CharacterBody2D
         }
     }
 
-    private void MoveCamera()
+    private void MoveCamera(Tween.TweenProcessMode mode)
     {
         var cam = _camera;
         if (!IsInstanceValid(cam) || !cam.IsInsideTree())
@@ -358,8 +359,15 @@ public partial class Mario : CharacterBody2D
         }
         if (IsInstanceValid(cam) && cam!.IsInsideTree())
         {
-            cam.GlobalPosition = GlobalPosition - new Vector2(0, CurrentSize.GetIdealHeight() / 2);
-            _cameraPosInitialized = true;
+            if ((mode == Tween.TweenProcessMode.Physics) == cam.IsPhysicsInterpolatedAndEnabled())
+            {
+                cam.GlobalPosition = ToGlobal(new Vector2(0, -CurrentSize.GetIdealHeight() / 2));
+                _cameraPosInitialized = true;
+                if (cam.IsPhysicsInterpolatedAndEnabled())
+                {
+                    cam.MakeCurrent();
+                }
+            }
         }
     }
 

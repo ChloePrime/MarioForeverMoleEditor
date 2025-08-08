@@ -180,6 +180,7 @@ _data = {
 }
 
 [node name="O_leaping_coin" type="Node2D"]
+physics_interpolation_mode = 2
 script = ExtResource("1_ycbnh")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -188,7 +189,7 @@ autoplay = "default"
 
 [node name="Leaping Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
-autoplay = "leaping"
 libraries = {
-"": SubResource("AnimationLibrary_rvudv")
+&"": SubResource("AnimationLibrary_rvudv")
 }
+autoplay = "leaping"

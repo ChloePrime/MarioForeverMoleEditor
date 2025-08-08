@@ -145,3 +145,7 @@ dialogic_default_action={
 2d_physics/layer_17="Mario"
 2d_physics/layer_18="Enemy (Turning etc.)"
 2d_physics/layer_19="FX"
+
+[physics]
+
+common/physics_interpolation=true

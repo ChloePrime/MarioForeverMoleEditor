@@ -42,7 +42,7 @@ public partial class WarpTransitionCircle : WarpTransition
         base._BeginTransition(type);
         _tween?.Free();
         _tween = null;
-        var tween = _tween = this.CreateTween();
+        var tween = _tween = CreateTween();
         var scaleVec = new Vector2(scale, scale);
         _circle.Position = _originalCirclePos + (pos ?? Vector2.Zero);
         _circle.Scale = type switch

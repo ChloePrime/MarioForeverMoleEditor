@@ -1,5 +1,6 @@
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Enemy;
+using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Player;
@@ -31,15 +32,8 @@ public partial class MarioStatusFire : MarioStatus
         }
         // 发射火球
         var fireball = Fireball.Instantiate();
-        if (mario.GetParent() is not { } environment)
-        {
-            return false;
-        }
-        environment.AddChild(fireball);
-        if (fireball is Node2D fireball2D)
-        {
-            fireball2D.GlobalPosition = mario.Muzzle.GlobalPosition;
-        }
+        var environment = mario.GetPreferredRoot();
+        environment.AddChildAt(fireball, mario.Muzzle.GlobalPosition);
         if (fireball is GravityObjectBase ball)
         {
             ball.XDirection = mario.CharacterDirection;

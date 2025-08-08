@@ -70,13 +70,12 @@ animations = [{
 
 [sub_resource type="Resource" id="Resource_ugitm"]
 script = ExtResource("3_qh5ei")
-LoopStarts = 0
-LoopCount = 0
 FramePivots = null
 FramePivotVectors = null
 FrameOffsets = Array[Vector2]([Vector2(0.5, -0.5), Vector2(0.5, -0.5)])
 
 [node name="Medium Smoke" type="AnimatedSprite2D"]
+physics_interpolation_mode = 2
 z_index = 500
 sprite_frames = SubResource("SpriteFrames_exn6o")
 autoplay = "default"

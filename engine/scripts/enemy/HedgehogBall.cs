@@ -1,4 +1,5 @@
-﻿using ChloePrime.MarioForever.RPG;
+﻿using ChloePrime.Godot.Util;
+using ChloePrime.MarioForever.RPG;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
@@ -27,11 +28,7 @@ public partial class HedgehogBall : WalkableNpc
             {
                 npc.NpcData.CopyValueFrom(NpcData);
             }
-            this.GetPreferredRoot().AddChild(ontology);
-            if (ontology is Node2D o2d)
-            {
-                o2d.GlobalPosition = GlobalPosition;
-            }
+            this.GetPreferredRoot().AddChildAt(ontology, GlobalPosition);
         }
         QueueFree();
     }

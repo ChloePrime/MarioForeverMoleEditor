@@ -83,11 +83,7 @@ public partial class Lakitu : Node2D
         {
             gob.YSpeed = -ThrowPower;
         }
-        this.GetPreferredRoot().AddChild(projectile);
-        if (projectile is Node2D p2d)
-        {
-            p2d.GlobalPosition = _muzzle.GlobalPosition;
-        }
+        this.GetPreferredRoot().AddChildAt(projectile, _muzzle.GlobalPosition);
     }
 
     private async void OnAttackTimerTimeout()
@@ -162,6 +158,8 @@ public partial class Lakitu : Node2D
         
         var revived = GD.Load<PackedScene>(prefabPath).Instantiate();
         root.AddChild(revived);
+        revived.DisablePhysicsInterpolationUntilNextFrame();
+        
         if (revived is Node2D revived2d)
         {
             var frame = revived2d.GetFrame();

@@ -21,6 +21,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [node name="Warp Transition (Circle)" type="CanvasLayer"]
+physics_interpolation_mode = 2
 layer = 0
 script = ExtResource("1_64xai")
 
@@ -38,9 +39,10 @@ layout_mode = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="AspectRatioContainer/SubViewportContainer"]
+physics_interpolation_mode = 2
 disable_3d = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(640, 640)
 size_2d_override = Vector2i(640, 640)
 render_target_update_mode = 4
 

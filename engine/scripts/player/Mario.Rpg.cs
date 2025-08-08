@@ -150,8 +150,7 @@ public partial class Mario
         _killed = true;
         
         var corpse = Constants.CorpsePrefab.Instantiate<MarioCorpse>();
-        GetParent()?.AddChild(corpse);
-        corpse.GlobalPosition = GlobalPosition;
+        GetParent()?.AddChildAt(corpse, GlobalPosition);
         if (_slipperyGas.Visible &&
             e.DirectSource == _slipperyGas &&
             corpse.TryGetNode(out AudioStreamPlayer funnySound, NpCorpseDeathSound))
