@@ -667,7 +667,7 @@ public partial class Mario : CharacterBody2D
         pressed = !ControlIgnored && Input.IsActionPressed(action);
     }
 
-    public override void _Ready()
+    public override async void _Ready()
     {
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
@@ -709,6 +709,7 @@ public partial class Mario : CharacterBody2D
         }
 
         RpgReady();
+        await this.WaitForPhysicsProcess();
         Translate(new Vector2(0, -SafeMargin / 2));
     }
 
