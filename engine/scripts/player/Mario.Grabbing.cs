@@ -60,6 +60,8 @@ public partial class Mario
         {
             _grabRoot.AddChild(newNode);
         }
+        
+        obj.AsNode.DisablePhysicsInterpolationUntilNextFrame();
         if (obj.AsNode is GravityObjectBase gob)
         {
             gob.Position = new Vector2(gob.Size.X / 4, 0);
