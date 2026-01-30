@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ObjectTilePresetList" load_steps=7 format=3 uid="uid://0spcwwwagtpi"]
+[gd_resource type="Resource" script_class="ObjectTilePresetList" format=3 uid="uid://0spcwwwagtpi"]
 
 [ext_resource type="Script" uid="uid://b35qt8rknu4c1" path="res://engine/scripts/level/ObjectTilePreset.cs" id="1_47fvo"]
 [ext_resource type="Script" uid="uid://b32v6dwpciq6l" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_a0i6s"]
