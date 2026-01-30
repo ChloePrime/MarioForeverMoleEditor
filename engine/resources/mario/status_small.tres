@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://2dq2dosvv7hb"]
+[gd_resource type="Resource" format=3 uid="uid://2dq2dosvv7hb"]
 
 [ext_resource type="Script" uid="uid://bnkbswggnvs0r" path="res://engine/scripts/player/MarioStatusBasic.cs" id="1_ybo8x"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbe1qjvwn88mw"]
+[gd_scene format=3 uid="uid://bbe1qjvwn88mw"]
 
 [ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_w6ouc"]
 [ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://engine/resources/enemies/T_hedgehog.png" id="2_ymkig"]
@@ -25,7 +25,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Red Hedgehog" instance=ExtResource("1_w6ouc")]
+[node name="Red Hedgehog" unique_id=716260286 instance=ExtResource("1_w6ouc")]
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_sa165")

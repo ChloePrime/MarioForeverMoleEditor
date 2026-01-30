@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bkn27cfm387i2"]
+[gd_resource type="Theme" format=3 uid="uid://bkn27cfm387i2"]
 
 [ext_resource type="FontFile" uid="uid://uwvnrj5uh3qi" path="res://engine/resources/ui/T_hud_font.png" id="1_0t42s"]
 [ext_resource type="FontFile" uid="uid://e3bknu53gjhm" path="res://engine/resources/ui/maoken_assorted_sans.otf" id="2_o7dhx"]

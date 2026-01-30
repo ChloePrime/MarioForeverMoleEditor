@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvk3d12frsrl8"]
+[gd_scene format=3 uid="uid://dvk3d12frsrl8"]
 
 [ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_kdvf8"]
 [ext_resource type="Texture2D" uid="uid://bvbpct3ofpfnj" path="res://engine/resources/enemies/T_hedgehog.png" id="2_ci5bm"]
@@ -25,7 +25,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Sonic" instance=ExtResource("1_kdvf8")]
+[node name="Sonic" unique_id=87313466 instance=ExtResource("1_kdvf8")]
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_sa165")

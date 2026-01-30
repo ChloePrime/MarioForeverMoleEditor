@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://blwx4hmks2qf0"]
+[gd_scene format=3 uid="uid://blwx4hmks2qf0"]
 
 [ext_resource type="PackedScene" uid="uid://bf5pyelftad5i" path="res://engine/objects/enemies/spiky_facility/O_spike_grey_0_up.tscn" id="1_bgoos"]
 
-[node name="Spike (Grey, Down)" instance=ExtResource("1_bgoos")]
+[node name="Spike (Grey, Down)" unique_id=1529284653 instance=ExtResource("1_bgoos")]
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=1937449298]
 flip_v = true
 
-[node name="CollisionPolygon2D" parent="." index="1"]
+[node name="CollisionPolygon2D" parent="." index="1" unique_id=1869616286]
 polygon = PackedVector2Array(0, 15, 15, -15, -15, -15)

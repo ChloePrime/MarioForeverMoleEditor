@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://b14yj3c25gx0c"]
+[gd_scene format=3 uid="uid://b14yj3c25gx0c"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_lbnix"]
 [ext_resource type="Texture2D" uid="uid://bi73vjmbt27bi" path="res://engine/resources/background/T_cloud_top.png" id="2_5xv32"]
 [ext_resource type="Script" uid="uid://2s80ouirkb0t" path="res://engine/scripts/level/LevelMovingBackgroundManager.cs" id="4_br84d"]
 
-[node name="Cloud (Background)" instance=ExtResource("1_lbnix")]
+[node name="Cloud (Background)" unique_id=1869476697 instance=ExtResource("1_lbnix")]
 z_index = -3995
 texture = ExtResource("2_5xv32")
 

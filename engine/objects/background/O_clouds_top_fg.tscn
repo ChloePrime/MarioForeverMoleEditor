@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://xvmcqrqgmclu"]
+[gd_scene format=3 uid="uid://xvmcqrqgmclu"]
 
 [ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://engine/objects/background/O_clouds_top_bg.tscn" id="1_3oq3c"]
 
-[node name="Cloud (Foreground)" instance=ExtResource("1_3oq3c")]
+[node name="Cloud (Foreground)" unique_id=1882901611 instance=ExtResource("1_3oq3c")]
 z_index = 550
 
 [node name="LevelBackgroundManager" parent="." index="0"]

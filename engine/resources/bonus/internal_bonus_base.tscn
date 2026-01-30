@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ch0ilgsgq41mh"]
+[gd_scene format=3 uid="uid://ch0ilgsgq41mh"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_qua70"]
 [ext_resource type="Script" uid="uid://rk4836wdoj3m" path="res://engine/scripts/bonus/PickableBonus.cs" id="2_k6fvw"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://fkv1apskp037" path="res://engine/resources/mario/SE_powerup.wav" id="4_qtpe2"]
 [ext_resource type="Script" uid="uid://csipsi3vw67ju" path="res://engine/scripts/bonus/PickableBonusHitbox.cs" id="5_pkyu0"]
 
-[node name="Internal Bonus Base" instance=ExtResource("1_qua70")]
+[node name="Internal Bonus Base" unique_id=794816760 instance=ExtResource("1_qua70")]
 z_index = -1
 collision_layer = 0
 script = ExtResource("2_k6fvw")

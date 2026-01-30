@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://myfcitnc2nv1"]
+[gd_scene format=3 uid="uid://myfcitnc2nv1"]
 
 [ext_resource type="PackedScene" uid="uid://blwx4hmks2qf0" path="res://engine/objects/enemies/spiky_facility/O_spike_grey_1_down.tscn" id="1_fsass"]
 [ext_resource type="Texture2D" uid="uid://bvmgaa8ryics" path="res://engine/resources/enemies/spiky_facility/T_spike_iw_up.tres" id="2_hique"]
 
-[node name="Spike (I Wanna, Down)" instance=ExtResource("1_fsass")]
+[node name="Spike (I Wanna, Down)" unique_id=1364883916 instance=ExtResource("1_fsass")]
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=1937449298]
 texture = ExtResource("2_hique")
 flip_h = true

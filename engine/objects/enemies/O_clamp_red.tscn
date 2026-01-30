@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfx20bo55gu8w"]
+[gd_scene format=3 uid="uid://cfx20bo55gu8w"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_wvdjp"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="3_gwqwj"]
@@ -25,7 +25,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clamp (Red)" instance=ExtResource("1_wvdjp")]
+[node name="Clamp (Red)" unique_id=1206479825 instance=ExtResource("1_wvdjp")]
 ShyDetectDistance = 40.0
 
 [node name="Sprite" parent="Enemy Core" index="2"]

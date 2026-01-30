@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://cfywv6a3w5n52"]
+[gd_scene format=3 uid="uid://cfywv6a3w5n52"]
 
 [ext_resource type="Script" uid="uid://c4t21qddxci6e" path="res://engine/scripts/player/Mario.cs" id="1_04nnj"]
 [ext_resource type="Resource" uid="uid://2dq2dosvv7hb" path="res://engine/resources/mario/status_small.tres" id="2_fh74l"]
@@ -406,7 +406,7 @@ animations = [{
 "speed": 25.0
 }]
 
-[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
+[node name="Mario" type="CharacterBody2D" unique_id=977979639 node_paths=PackedStringArray("CollisionBySize", "MuzzleBySize", "GrabMuzzleBySize", "StatusSpriteNodeList") groups=["player"]]
 z_index = 100
 collision_layer = 65536
 collision_mask = 3
@@ -420,21 +420,21 @@ MuzzleBySize = [NodePath("SpriteRoot/Muzzle (Crouching)"), NodePath("SpriteRoot/
 GrabMuzzleBySize = [NodePath("SpriteRoot/Grab Muzzle (Small)"), NodePath("SpriteRoot/Grab Muzzle (Big)"), NodePath("SpriteRoot/Grab Muzzle (Small)")]
 StatusSpriteNodeList = [NodePath("SpriteRoot/SpriteParent/Sprite_Small")]
 
-[node name="Collision_Big" type="CollisionShape2D" parent="."]
+[node name="Collision_Big" type="CollisionShape2D" parent="." unique_id=192369077]
 position = Vector2(0, -26)
 shape = SubResource("RectangleShape2D_66cuu")
 disabled = true
 
-[node name="Collision_Small" type="CollisionShape2D" parent="."]
+[node name="Collision_Small" type="CollisionShape2D" parent="." unique_id=1769095138]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_ulo8p")
 
-[node name="Collision_Mini" type="CollisionShape2D" parent="."]
+[node name="Collision_Mini" type="CollisionShape2D" parent="." unique_id=2086268447]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_7d1yp")
 disabled = true
 
-[node name="Hurt Zone" type="Area2D" parent="." node_paths=PackedStringArray("Root", "ShapeBySize")]
+[node name="Hurt Zone" type="Area2D" parent="." unique_id=886232705 node_paths=PackedStringArray("Root", "ShapeBySize")]
 collision_layer = 65536
 collision_mask = 256
 input_pickable = false
@@ -442,153 +442,153 @@ script = ExtResource("6_2ef4g")
 Root = NodePath("..")
 ShapeBySize = [NodePath("HurtZone_Small"), NodePath("HurtZone_Big"), NodePath("HurtZone_Mini")]
 
-[node name="HurtZone_Big" type="CollisionShape2D" parent="Hurt Zone"]
+[node name="HurtZone_Big" type="CollisionShape2D" parent="Hurt Zone" unique_id=341671233]
 position = Vector2(0, -26)
 shape = SubResource("RectangleShape2D_heyer")
 disabled = true
 
-[node name="HurtZone_Small" type="CollisionShape2D" parent="Hurt Zone"]
+[node name="HurtZone_Small" type="CollisionShape2D" parent="Hurt Zone" unique_id=312526288]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_vd42n")
 
-[node name="HurtZone_Mini" type="CollisionShape2D" parent="Hurt Zone"]
+[node name="HurtZone_Mini" type="CollisionShape2D" parent="Hurt Zone" unique_id=1606202170]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
-[node name="Death Zone" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+[node name="Death Zone" type="Area2D" parent="." unique_id=403829851 node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
 collision_mask = 512
 input_pickable = false
 script = ExtResource("7_402rp")
 ShapeBySize = [NodePath("DeathZone_Small"), NodePath("DeathZone_Big"), NodePath("DeathZone_Mini")]
 
-[node name="DeathZone_Big" type="CollisionShape2D" parent="Death Zone"]
+[node name="DeathZone_Big" type="CollisionShape2D" parent="Death Zone" unique_id=403572639]
 position = Vector2(0, -26)
 shape = SubResource("RectangleShape2D_heyer")
 disabled = true
 
-[node name="DeathZone_Small" type="CollisionShape2D" parent="Death Zone"]
+[node name="DeathZone_Small" type="CollisionShape2D" parent="Death Zone" unique_id=1571564375]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_vd42n")
 
-[node name="DeathZone_Mini" type="CollisionShape2D" parent="Death Zone"]
+[node name="DeathZone_Mini" type="CollisionShape2D" parent="Death Zone" unique_id=1556465896]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_asyp1")
 disabled = true
 
-[node name="Climb Detector (Vert)" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+[node name="Climb Detector (Vert)" type="Area2D" parent="." unique_id=936628753 node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
 collision_mask = 32
 input_pickable = false
 script = ExtResource("7_402rp")
 ShapeBySize = [NodePath("ClimbDetector_Small"), NodePath("ClimbDetector_Big"), NodePath("ClimbDetector_Mini")]
 
-[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (Vert)" unique_id=1265059536]
 position = Vector2(0, -27)
 shape = SubResource("RectangleShape2D_07e11")
 disabled = true
 
-[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (Vert)" unique_id=1269695670]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_07e11")
 
-[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (Vert)"]
+[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (Vert)" unique_id=1115710165]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_07e11")
 disabled = true
 
-[node name="Climb Detector (2DOF)" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+[node name="Climb Detector (2DOF)" type="Area2D" parent="." unique_id=1821608235 node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
 collision_mask = 64
 input_pickable = false
 script = ExtResource("7_402rp")
 ShapeBySize = [NodePath("ClimbDetector_Small"), NodePath("ClimbDetector_Big"), NodePath("ClimbDetector_Mini")]
 
-[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+[node name="ClimbDetector_Big" type="CollisionShape2D" parent="Climb Detector (2DOF)" unique_id=1649460634]
 position = Vector2(0, -27)
 shape = SubResource("RectangleShape2D_07e11")
 disabled = true
 
-[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+[node name="ClimbDetector_Small" type="CollisionShape2D" parent="Climb Detector (2DOF)" unique_id=1612187454]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_07e11")
 
-[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (2DOF)"]
+[node name="ClimbDetector_Mini" type="CollisionShape2D" parent="Climb Detector (2DOF)" unique_id=1596673569]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_07e11")
 disabled = true
 
-[node name="Water Detector" type="Area2D" parent="." node_paths=PackedStringArray("ShapeBySize")]
+[node name="Water Detector" type="Area2D" parent="." unique_id=692949192 node_paths=PackedStringArray("ShapeBySize")]
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("7_402rp")
 ShapeBySize = [NodePath("Collision_Small"), NodePath("Collision_Big"), NodePath("Collision_Mini")]
 
-[node name="Collision_Big" type="CollisionShape2D" parent="Water Detector"]
+[node name="Collision_Big" type="CollisionShape2D" parent="Water Detector" unique_id=1821100567]
 position = Vector2(0, -26)
 shape = SubResource("RectangleShape2D_66cuu")
 disabled = true
 
-[node name="Collision_Small" type="CollisionShape2D" parent="Water Detector"]
+[node name="Collision_Small" type="CollisionShape2D" parent="Water Detector" unique_id=959818655]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_ulo8p")
 
-[node name="Collision_Mini" type="CollisionShape2D" parent="Water Detector"]
+[node name="Collision_Mini" type="CollisionShape2D" parent="Water Detector" unique_id=77428009]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_7d1yp")
 disabled = true
 
-[node name="Water Surface Detector" type="Area2D" parent="."]
+[node name="Water Surface Detector" type="Area2D" parent="." unique_id=1380327344]
 position = Vector2(0, -48)
 collision_layer = 0
 collision_mask = 16
 
-[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector"]
+[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector" unique_id=1682586451]
 shape = SubResource("RectangleShape2D_i0sqx")
 
-[node name="Water Surface Detector 2" type="Area2D" parent="."]
+[node name="Water Surface Detector 2" type="Area2D" parent="." unique_id=381314852]
 position = Vector2(0, -40)
 collision_layer = 0
 collision_mask = 16
 
-[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector 2"]
+[node name="Collision Shape" type="CollisionShape2D" parent="Water Surface Detector 2" unique_id=1004985934]
 shape = SubResource("RectangleShape2D_f8fcn")
 
-[node name="SpriteRoot" type="Node2D" parent="."]
+[node name="SpriteRoot" type="Node2D" parent="." unique_id=694537608]
 material = ExtResource("8_gwosk")
 position = Vector2(0, 1)
 
-[node name="Muzzle" type="Node2D" parent="SpriteRoot"]
+[node name="Muzzle" type="Node2D" parent="SpriteRoot" unique_id=1945667145]
 position = Vector2(10, -40)
 
-[node name="Muzzle (Crouching)" type="Node2D" parent="SpriteRoot"]
+[node name="Muzzle (Crouching)" type="Node2D" parent="SpriteRoot" unique_id=1633112206]
 position = Vector2(10, -21)
 
-[node name="Grab Muzzle (Small)" type="Node2D" parent="SpriteRoot"]
+[node name="Grab Muzzle (Small)" type="Node2D" parent="SpriteRoot" unique_id=55113848]
 position = Vector2(12, -17)
 script = ExtResource("9_6ss0x")
 
-[node name="Grab Muzzle (Big)" type="Node2D" parent="SpriteRoot"]
+[node name="Grab Muzzle (Big)" type="Node2D" parent="SpriteRoot" unique_id=2123231854]
 position = Vector2(8, -26)
 script = ExtResource("9_6ss0x")
 
-[node name="Grab Root" type="Node2D" parent="SpriteRoot"]
+[node name="Grab Root" type="Node2D" parent="SpriteRoot" unique_id=857817531]
 position = Vector2(12, -17)
 
-[node name="SpriteParent" type="Node2D" parent="SpriteRoot"]
+[node name="SpriteParent" type="Node2D" parent="SpriteRoot" unique_id=1684025009]
 use_parent_material = true
 
-[node name="Sprite_Small" parent="SpriteRoot/SpriteParent" instance=ExtResource("10_7jaa0")]
+[node name="Sprite_Small" parent="SpriteRoot/SpriteParent" unique_id=1493798091 instance=ExtResource("10_7jaa0")]
 texture_filter = 0
 
-[node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot"]
+[node name="Sprite_3D" type="Sprite2D" parent="SpriteRoot" unique_id=1197234744]
 use_parent_material = true
 position = Vector2(1, -48)
 scale = Vector2(0.25, 0.25)
 texture = SubResource("ViewportTexture_myvdk")
 
-[node name="Viewport" type="SubViewport" parent="SpriteRoot/Sprite_3D"]
+[node name="Viewport" type="SubViewport" parent="SpriteRoot/Sprite_3D" unique_id=1716543604]
 own_world_3d = true
 transparent_bg = true
 gui_disable_input = true
@@ -596,51 +596,51 @@ size = Vector2i(256, 512)
 size_2d_override = Vector2i(256, 512)
 size_2d_override_stretch = true
 
-[node name="Camera" type="Camera3D" parent="SpriteRoot/Sprite_3D/Viewport"]
+[node name="Camera" type="Camera3D" parent="SpriteRoot/Sprite_3D/Viewport" unique_id=879294129]
 transform = Transform3D(0.809017, -0.0767214, 0.582757, 0, 0.991445, 0.130526, -0.587785, -0.105598, 0.802096, 1.62147, 2.14443, 2.28588)
 current = true
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SpriteRoot/Sprite_3D/Viewport/Camera"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SpriteRoot/Sprite_3D/Viewport/Camera" unique_id=931954107]
 transform = Transform3D(0.991445, 0.0652631, -0.113039, 0, 0.866026, 0.5, 0.130526, -0.495723, 0.858617, 0, 0, 0)
 light_energy = 2.0
 light_indirect_energy = 2.0
 shadow_enabled = true
 sky_mode = 1
 
-[node name="3D Character Root" type="Node3D" parent="SpriteRoot/Sprite_3D/Viewport"]
+[node name="3D Character Root" type="Node3D" parent="SpriteRoot/Sprite_3D/Viewport" unique_id=2050548711]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Light Source" parent="." instance=ExtResource("11_xwjmo")]
+[node name="Light Source" parent="." unique_id=344708542 instance=ExtResource("11_xwjmo")]
 position = Vector2(0, -32)
 AnimatedDestroy = true
 
-[node name="Slippery Foot Gas" type="AnimatedSprite2D" parent="."]
+[node name="Slippery Foot Gas" type="AnimatedSprite2D" parent="." unique_id=917234442]
 visible = false
 position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_i21ar")
 autoplay = "default"
 frame_progress = 0.274168
 
-[node name="Jump Sound" type="AudioStreamPlayer" parent="."]
+[node name="Jump Sound" type="AudioStreamPlayer" parent="." unique_id=1049238330]
 stream = ExtResource("13_pd7rs")
 
-[node name="Swim Sound" type="AudioStreamPlayer" parent="."]
+[node name="Swim Sound" type="AudioStreamPlayer" parent="." unique_id=180760368]
 stream = ExtResource("14_st7j1")
 
-[node name="Hurt Sound" type="AudioStreamPlayer" parent="."]
+[node name="Hurt Sound" type="AudioStreamPlayer" parent="." unique_id=123202084]
 stream = ExtResource("15_dthxx")
 
-[node name="Skid Sound" type="AudioStreamPlayer" parent="."]
+[node name="Skid Sound" type="AudioStreamPlayer" parent="." unique_id=213438052]
 stream = ExtResource("16_xcoy2")
 
-[node name="Invulnerable Timer" type="Timer" parent="."]
+[node name="Invulnerable Timer" type="Timer" parent="." unique_id=1477523112]
 one_shot = true
 
-[node name="Sprint Smoke Timer" type="Timer" parent="."]
+[node name="Sprint Smoke Timer" type="Timer" parent="." unique_id=332232518]
 wait_time = 0.05
 
-[node name="Skid Smoke Timer" type="Timer" parent="."]
+[node name="Skid Smoke Timer" type="Timer" parent="." unique_id=1784169584]
 wait_time = 0.05
 
-[node name="Stomp Combo Tracker" type="Node" parent="."]
+[node name="Stomp Combo Tracker" type="Node" parent="." unique_id=1475079125]
 script = ExtResource("17_00ck7")

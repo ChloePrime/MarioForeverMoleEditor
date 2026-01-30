@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://de3l15m5jcviv"]
+[gd_scene format=3 uid="uid://de3l15m5jcviv"]
 
 [ext_resource type="PackedScene" uid="uid://5fga1kqh71x2" path="res://engine/objects/enemies/spiky_facility/O_spike_grey_2_left.tscn" id="1_i026a"]
 [ext_resource type="Texture2D" uid="uid://dsfcr5030wkp6" path="res://engine/resources/enemies/spiky_facility/T_spike_iw_left.tres" id="2_4a1fc"]
 
-[node name="Spike (I Wanna, Left)" instance=ExtResource("1_i026a")]
+[node name="Spike (I Wanna, Left)" unique_id=1694458588 instance=ExtResource("1_i026a")]
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=1937449298]
 texture = ExtResource("2_4a1fc")

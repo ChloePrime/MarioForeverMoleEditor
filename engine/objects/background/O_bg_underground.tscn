@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnyn88gnmki3v"]
+[gd_scene format=3 uid="uid://bnyn88gnmki3v"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_ltf1c"]
 [ext_resource type="Texture2D" uid="uid://dhx638421iygw" path="res://engine/resources/background/T_bg_underground.png" id="2_dp28i"]
 
-[node name="Background" instance=ExtResource("1_ltf1c")]
+[node name="Background" unique_id=2125341392 instance=ExtResource("1_ltf1c")]
 texture = ExtResource("2_dp28i")
 
 [node name="LevelBackgroundManager" parent="." index="0"]

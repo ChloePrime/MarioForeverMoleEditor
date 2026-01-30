@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccy8one0m0nvv"]
+[gd_scene format=3 uid="uid://ccy8one0m0nvv"]
 
 [ext_resource type="Script" uid="uid://dl068voj8ujxf" path="res://engine/scripts/tool/AudioLooper.cs" id="1_lmq2b"]
 
-[node name="AudioLooper" type="Control" node_paths=PackedStringArray("QualityInput", "ModeMenu")]
+[node name="AudioLooper" type="Control" unique_id=2034073839 node_paths=PackedStringArray("QualityInput", "ModeMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ script = ExtResource("1_lmq2b")
 QualityInput = NodePath("VBoxContainer/Quality Input")
 ModeMenu = NodePath("VBoxContainer/Mode Menu")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=677154052]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -28,16 +28,16 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Quality Input" type="TextEdit" parent="VBoxContainer"]
+[node name="Quality Input" type="TextEdit" parent="VBoxContainer" unique_id=2011952844]
 custom_minimum_size = Vector2(128, 36)
 layout_mode = 2
 text = "3"
 placeholder_text = "Q"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer" unique_id=617901481]
 layout_mode = 2
 
-[node name="Mode Menu" type="OptionButton" parent="VBoxContainer"]
+[node name="Mode Menu" type="OptionButton" parent="VBoxContainer" unique_id=707754819]
 layout_mode = 2
 selected = 1
 item_count = 2

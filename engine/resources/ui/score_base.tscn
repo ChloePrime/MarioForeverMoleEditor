@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8s8guay3ciu1"]
+[gd_scene format=3 uid="uid://c8s8guay3ciu1"]
 
 [ext_resource type="Texture2D" uid="uid://c5q5lrrtqmrbr" path="res://engine/resources/ui/T_score.png" id="1_54a3e"]
 [ext_resource type="Script" uid="uid://dghbvn0rvpj6f" path="res://engine/scripts/ui/Score.cs" id="2_ehqr6"]
@@ -54,7 +54,7 @@ _data = {
 &"disappearing": SubResource("Animation_lhqw4")
 }
 
-[node name="Score Base" type="Sprite2D"]
+[node name="Score Base" type="Sprite2D" unique_id=1772931620]
 physics_interpolation_mode = 2
 z_index = 1000
 texture = ExtResource("1_54a3e")
@@ -63,8 +63,6 @@ region_rect = Rect2(0, 0, 42, 16)
 script = ExtResource("2_ehqr6")
 Amount = 0
 
-[node name="Animation Player" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rrtyl")
-}
-autoplay = "disappearing"
+[node name="Animation Player" type="AnimationPlayer" parent="." unique_id=305416662]
+libraries/ = SubResource("AnimationLibrary_rrtyl")
+autoplay = &"disappearing"

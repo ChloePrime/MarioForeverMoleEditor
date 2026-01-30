@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtfl0hiysv42t"]
+[gd_scene format=3 uid="uid://dtfl0hiysv42t"]
 
 [ext_resource type="PackedScene" uid="uid://cxy6ek6eyfipw" path="res://engine/resources/facility/internal_platform_speed_mark_base.tscn" id="1_indth"]
 [ext_resource type="Texture2D" uid="uid://cur7n7076utq7" path="res://engine/resources/facility/T_platform_marks.png" id="2_peidq"]
@@ -7,7 +7,7 @@
 atlas = ExtResource("2_peidq")
 region = Rect2(0, 128, 32, 32)
 
-[node name="Platform Speed Mark (Fast)" instance=ExtResource("1_indth")]
+[node name="Platform Speed Mark (Fast)" unique_id=1208610364 instance=ExtResource("1_indth")]
 TargetVelocity = Vector2(250, 0)
 
 [node name="Sprite" parent="." index="1"]

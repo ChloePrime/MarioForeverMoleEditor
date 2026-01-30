@@ -1,4 +1,4 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://du33xby40jx10"]
+[gd_resource type="AtlasTexture" format=3 uid="uid://du33xby40jx10"]
 
 [ext_resource type="Texture2D" uid="uid://pfkq8pwcknr8" path="res://engine/tiles/functional.png" id="1_xu1gl"]
 

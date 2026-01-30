@@ -1,5 +1,5 @@
-[gd_scene load_steps=2 format=3 uid="uid://qriqbprl1mvt"]
+[gd_scene format=3 uid="uid://qriqbprl1mvt"]
 
 [ext_resource type="PackedScene" uid="uid://cd1okgvhe6myg" path="res://engine/resources/level/darkness/light_source_base.tscn" id="1_ep2w6"]
 
-[node name="Light Source (Spot Light)" instance=ExtResource("1_ep2w6")]
+[node name="Light Source (Spot Light)" unique_id=1807573831 instance=ExtResource("1_ep2w6")]

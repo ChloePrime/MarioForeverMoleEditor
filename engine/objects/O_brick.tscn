@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cu4j48wogmvd8"]
+[gd_scene format=3 uid="uid://cu4j48wogmvd8"]
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_p2tjr"]
 [ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="2_ox1mq"]
@@ -29,7 +29,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="Brick" instance=ExtResource("1_p2tjr")]
+[node name="Brick" unique_id=603826560 instance=ExtResource("1_p2tjr")]
 script = ExtResource("2_rji2b")
 BreakSound = ExtResource("3_o4lvq")
 OneTimeUse = false

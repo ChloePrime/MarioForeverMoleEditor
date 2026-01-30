@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://5qil325ycwfx"]
+[gd_scene format=3 uid="uid://5qil325ycwfx"]
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_87vtd"]
 [ext_resource type="PackedScene" uid="uid://c4f28jot3dg5i" path="res://engine/objects/bonus/O_red_mushroom.tscn" id="2_458uu"]
@@ -8,7 +8,7 @@
 atlas = ExtResource("2_nbltu")
 region = Rect2(2127, 160, 33, 32)
 
-[node name="Question Block (Red Mushroom)" instance=ExtResource("1_87vtd")]
+[node name="Question Block (Red Mushroom)" unique_id=456733405 instance=ExtResource("1_87vtd")]
 Content = ExtResource("2_458uu")
 SmallMarioOverride = null
 

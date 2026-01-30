@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dojyxy3crbyhj"]
+[gd_scene format=3 uid="uid://dojyxy3crbyhj"]
 
 [ext_resource type="PackedScene" uid="uid://cwatosp0umcd6" path="res://engine/resources/enemies/internal_launcher_base.tscn" id="1_ns7b2"]
 [ext_resource type="Texture2D" uid="uid://bajy5onvg0qbr" path="res://engine/resources/enemies/AT_bullet_launcher_up.tres" id="3_nacbd"]
@@ -14,7 +14,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Bullet Launcher" instance=ExtResource("1_ns7b2")]
+[node name="Bullet Launcher" unique_id=1174329896 instance=ExtResource("1_ns7b2")]
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_854sj")

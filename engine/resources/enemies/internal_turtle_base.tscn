@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dsc1uriffc8l"]
+[gd_scene format=3 uid="uid://dsc1uriffc8l"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_puf1u"]
 [ext_resource type="Script" uid="uid://dhd3bpggxi60e" path="res://engine/scripts/enemy/Turtle.cs" id="2_aaayt"]
@@ -76,7 +76,7 @@ animations = [{
 "speed": 67.0
 }]
 
-[node name="Turtle Base" instance=ExtResource("1_puf1u")]
+[node name="Turtle Base" unique_id=844919701 instance=ExtResource("1_puf1u")]
 script = ExtResource("2_aaayt")
 WalkSpeed = 50.0
 RollSpeed = 250.0
@@ -84,27 +84,27 @@ ShellTurnAtCliff = false
 State = 2
 JumpStrength = 400.0
 
-[node name="Enemy Core" parent="." index="2"]
+[node name="Enemy Core" parent="." index="2" unique_id=1533463982]
 script = ExtResource("3_spfq6")
 DieWhenThrownAndHitOther = false
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 script = ExtResource("4_1ofhp")
 KickSound = ExtResource("5_f8588")
 
-[node name="Damage Source" parent="Enemy Core" index="1"]
+[node name="Damage Source" parent="Enemy Core" index="1" unique_id=417058048]
 script = ExtResource("5_2gxph")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_fqhyd")
 animation = &"4_shell_moving"
 autoplay = "0_walking"
 
-[node name="Combo Tracker" type="Node" parent="." index="3"]
+[node name="Combo Tracker" type="Node" parent="." index="3" unique_id=1447239742]
 script = ExtResource("10_0o35x")
 ResetAtLast = true
 
-[node name="Fly Movement" type="Node" parent="." index="4"]
+[node name="Fly Movement" type="Node" parent="." index="4" unique_id=1652712844]
 script = ExtResource("11_t5ep7")
 
 [editable path="Enemy Core"]

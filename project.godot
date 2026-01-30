@@ -8,10 +8,6 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="MarioForeverMoleEditor"
@@ -21,7 +17,7 @@ config/icon="uid://dt7pqquhl3hly"
 
 [audio]
 
-buses/default_bus_layout="res://engine/R_audio_bus_layout.tres"
+buses/default_bus_layout="uid://dcqli3s16faxv"
 
 [autoload]
 

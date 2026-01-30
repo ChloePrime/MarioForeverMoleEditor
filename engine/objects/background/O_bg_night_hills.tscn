@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cetyd2dnqycv1"]
+[gd_scene format=3 uid="uid://cetyd2dnqycv1"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_vk3ci"]
 [ext_resource type="Texture2D" uid="uid://cu6kuube5qpcl" path="res://engine/resources/background/T_bg_night_hills.png" id="2_n3o62"]
 
-[node name="Background" instance=ExtResource("1_vk3ci")]
+[node name="Background" unique_id=1217311305 instance=ExtResource("1_vk3ci")]
 texture = ExtResource("2_n3o62")

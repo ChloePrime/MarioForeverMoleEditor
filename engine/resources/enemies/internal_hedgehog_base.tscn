@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://boio8lcsy30r7"]
+[gd_scene format=3 uid="uid://boio8lcsy30r7"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_ax0a5"]
 
-[node name="Internal Hedgehog Base" instance=ExtResource("1_ax0a5")]
+[node name="Internal Hedgehog Base" unique_id=1381532574 instance=ExtResource("1_ax0a5")]
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" parent_id_path=PackedInt32Array(1533463982) index="0" unique_id=1678321624]
 Stompable = false
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(1533463982) index="2" unique_id=38458147]
 autoplay = "default"
 
 [editable path="Enemy Core"]

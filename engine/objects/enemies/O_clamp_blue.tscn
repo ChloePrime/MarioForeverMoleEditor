@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://m3ivqqmxnx21"]
+[gd_scene format=3 uid="uid://m3ivqqmxnx21"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_qtenp"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="2_v3yhl"]
@@ -26,7 +26,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clamp (Blue)" instance=ExtResource("1_qtenp")]
+[node name="Clamp (Blue)" unique_id=456925942 instance=ExtResource("1_qtenp")]
 ShyDetectDistance = 0.0
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]

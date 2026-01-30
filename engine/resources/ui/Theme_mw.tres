@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dxaw76vg14cno"]
+[gd_resource type="Theme" format=3 uid="uid://dxaw76vg14cno"]
 
 [ext_resource type="FontFile" uid="uid://e3bknu53gjhm" path="res://engine/resources/ui/maoken_assorted_sans.otf" id="1_bayth"]
 

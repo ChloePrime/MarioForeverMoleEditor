@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://40iy1yhyf77i"]
+[gd_scene format=3 uid="uid://40iy1yhyf77i"]
 
 [ext_resource type="Texture2D" uid="uid://tg5v3mo1ncte" path="res://engine/resources/effect/T_explosion_m_megaman.png" id="1_j6ncu"]
 [ext_resource type="Script" uid="uid://chtx1pc0jxh4c" path="res://engine/scripts/util/helper_nodes/SelfDestroyingEffect.cs" id="2_8jh45"]
@@ -122,7 +122,7 @@ animations = [{
 "speed": 25.0
 }]
 
-[node name="Medium Explosion (Mega Man)" type="AnimatedSprite2D"]
+[node name="Medium Explosion (Mega Man)" type="AnimatedSprite2D" unique_id=692187682]
 physics_interpolation_mode = 2
 z_index = 500
 sprite_frames = SubResource("SpriteFrames_kmure")

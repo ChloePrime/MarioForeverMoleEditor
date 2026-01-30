@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cdos7gesbnvy1"]
+[gd_scene format=3 uid="uid://cdos7gesbnvy1"]
 
 [ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://engine/resources/enemies/internal_turtle_base.tscn" id="1_o710u"]
 [ext_resource type="Script" uid="uid://by51dv531pttx" path="res://engine/scripts/enemy/GoldenTurtle.cs" id="2_82ykn"]
@@ -91,7 +91,7 @@ animations = [{
 "speed": 67.0
 }]
 
-[node name="Golden Turtle" instance=ExtResource("1_o710u")]
+[node name="Golden Turtle" unique_id=2117693231 instance=ExtResource("1_o710u")]
 script = ExtResource("2_82ykn")
 JumpStrength = 550.0
 

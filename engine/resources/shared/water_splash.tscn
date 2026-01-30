@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dmcvas57a0yix"]
+[gd_scene format=3 uid="uid://dmcvas57a0yix"]
 
 [ext_resource type="Texture2D" uid="uid://24ibpu5w8rbg" path="res://engine/resources/shared/T_water_splash.png" id="1_dkh0n"]
 [ext_resource type="Script" uid="uid://du600r57invec" path="res://engine/scripts/effect/WaterSplash.cs" id="2_6p3w5"]
@@ -116,16 +116,16 @@ animations = [{
 "speed": 35.0
 }]
 
-[node name="Water Splash" type="AnimatedSprite2D"]
+[node name="Water Splash" type="AnimatedSprite2D" unique_id=2063076680]
 physics_interpolation_mode = 2
 sprite_frames = SubResource("SpriteFrames_k2a1w")
 autoplay = "default"
 script = ExtResource("2_6p3w5")
 
-[node name="Surface Detector" type="StaticBody2D" parent="."]
+[node name="Surface Detector" type="StaticBody2D" parent="." unique_id=444408149]
 position = Vector2(0, 16)
 collision_layer = 0
 collision_mask = 16
 
-[node name="Collision Polygon" type="CollisionPolygon2D" parent="Surface Detector"]
+[node name="Collision Polygon" type="CollisionPolygon2D" parent="Surface Detector" unique_id=1952641282]
 polygon = PackedVector2Array(0, 8, -16, -8, 16, -8)

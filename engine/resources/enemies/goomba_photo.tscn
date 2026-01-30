@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbmforo52axh2"]
+[gd_scene format=3 uid="uid://cbmforo52axh2"]
 
 [ext_resource type="Script" uid="uid://dvqpky42rpkvb" path="res://engine/scripts/enemy/GoombaPhoto.cs" id="1_q2ebx"]
 [ext_resource type="Texture2D" uid="uid://bhruamdqjf6kj" path="res://engine/resources/enemies/AT_goomba_photo.tres" id="2_gaiiu"]
@@ -41,21 +41,19 @@ _data = {
 &"transparency": SubResource("Animation_0750y")
 }
 
-[node name="Goomba Photo" type="CharacterBody2D"]
+[node name="Goomba Photo" type="CharacterBody2D" unique_id=612247976]
 collision_layer = 0
 collision_mask = 5
 script = ExtResource("1_q2ebx")
 Enabled = true
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=43399015]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_xo1kh")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=342219368]
 texture = ExtResource("2_gaiiu")
 
-[node name="Animation Player" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_5gfch")
-}
-autoplay = "transparency"
+[node name="Animation Player" type="AnimationPlayer" parent="." unique_id=546790204]
+libraries/ = SubResource("AnimationLibrary_5gfch")
+autoplay = &"transparency"

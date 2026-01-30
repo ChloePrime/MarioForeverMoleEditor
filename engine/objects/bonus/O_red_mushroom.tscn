@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4f28jot3dg5i"]
+[gd_scene format=3 uid="uid://c4f28jot3dg5i"]
 
 [ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_pn022"]
 [ext_resource type="Texture2D" uid="uid://dt67lystoiu82" path="res://engine/tiles/bonus_tileset.png" id="2_ci2a8"]
@@ -18,7 +18,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="Red Mushroom" instance=ExtResource("1_pn022")]
+[node name="Red Mushroom" unique_id=1457561777 instance=ExtResource("1_pn022")]
 TargetSpeed = 100.0
 
 [node name="Sprite" parent="Enemy Core" index="2"]

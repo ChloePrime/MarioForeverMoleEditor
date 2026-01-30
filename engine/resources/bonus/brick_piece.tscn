@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cu8e6tp4ixcwf"]
+[gd_scene format=3 uid="uid://cu8e6tp4ixcwf"]
 
 [ext_resource type="Texture2D" uid="uid://5qnfls82sxkp" path="res://engine/resources/bonus/brick_piece.png" id="1_qspkk"]
 
@@ -56,22 +56,20 @@ _data = {
 &"default": SubResource("Animation_q4ln8")
 }
 
-[node name="Brick Piece" type="RigidBody2D"]
+[node name="Brick Piece" type="RigidBody2D" unique_id=1244921576]
 z_index = -5
 collision_layer = 262144
 collision_mask = 262145
 can_sleep = false
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=925083912]
 texture = ExtResource("1_qspkk")
 
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1453495371]
 position = Vector2(0.0606601, 0.0961936)
 rotation = 0.785398
 shape = SubResource("RectangleShape2D_4uqyx")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_pprbf")
-}
-autoplay = "default"
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1769140251]
+libraries/ = SubResource("AnimationLibrary_pprbf")
+autoplay = &"default"

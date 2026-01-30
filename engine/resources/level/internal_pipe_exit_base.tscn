@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cabraxfm8hpy0"]
+[gd_scene format=3 uid="uid://cabraxfm8hpy0"]
 
 [ext_resource type="Script" uid="uid://df0cfemfekor7" path="res://engine/scripts/level/warp/PipeExit.cs" id="1_ct407"]
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="2_escge"]
@@ -6,20 +6,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v866p"]
 size = Vector2(32, 64)
 
-[node name="Pipe Exit Base" type="Node2D"]
+[node name="Pipe Exit Base" type="Node2D" unique_id=818996926]
 script = ExtResource("1_ct407")
 
-[node name="Editor Display" type="Sprite2D" parent="."]
+[node name="Editor Display" type="Sprite2D" parent="." unique_id=1808890047]
 self_modulate = Color(1, 1, 1, 0.501961)
 z_index = 10
 position = Vector2(0, -32)
 texture = ExtResource("2_escge")
 
-[node name="Clamp Detector" type="Area2D" parent="."]
+[node name="Clamp Detector" type="Area2D" parent="." unique_id=840012258]
 position = Vector2(0, -88)
 collision_layer = 0
 collision_mask = 131072
 metadata/_edit_group_ = true
 
-[node name="Collision Shape" type="CollisionShape2D" parent="Clamp Detector"]
+[node name="Collision Shape" type="CollisionShape2D" parent="Clamp Detector" unique_id=1133077281]
 shape = SubResource("RectangleShape2D_v866p")

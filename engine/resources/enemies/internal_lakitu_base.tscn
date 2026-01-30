@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://bbmxplfobtgeu"]
+[gd_scene format=3 uid="uid://bbmxplfobtgeu"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_385ag"]
 [ext_resource type="Script" uid="uid://ctgc2qby1d3yj" path="res://engine/scripts/enemy/Lakitu.cs" id="1_auun5"]
@@ -403,51 +403,51 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7sww0"]
 size = Vector2(32, 32)
 
-[node name="Lakitu Base" type="Node2D"]
+[node name="Lakitu Base" type="Node2D" unique_id=1705032157]
 script = ExtResource("1_auun5")
 AttackSound = SubResource("Resource_6f7po")
 
-[node name="Enemy Core" parent="." instance=ExtResource("1_385ag")]
+[node name="Enemy Core" parent="." unique_id=1555809362 instance=ExtResource("1_385ag")]
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 Stompable = true
 
-[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0"]
+[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0" unique_id=1030125473]
 position = Vector2(0, -8.25)
 shape = SubResource("RectangleShape2D_64aav")
 
-[node name="Damage Source" parent="Enemy Core" index="1"]
+[node name="Damage Source" parent="Enemy Core" index="1" unique_id=417058048]
 monitoring = false
 monitorable = false
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_qa46n")
 animation = &"[00] default"
 autoplay = "[00] default"
 
-[node name="Muzzle" type="Node2D" parent="."]
+[node name="Muzzle" type="Node2D" parent="." unique_id=791325145]
 position = Vector2(0, -24)
 
-[node name="Solid Detector" type="Area2D" parent="Muzzle"]
+[node name="Solid Detector" type="Area2D" parent="Muzzle" unique_id=1959072159]
 unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Muzzle/Solid Detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muzzle/Solid Detector" unique_id=356141849]
 shape = SubResource("RectangleShape2D_7sww0")
 
-[node name="Movement Component" type="Node" parent="."]
+[node name="Movement Component" type="Node" parent="." unique_id=82250353]
 script = ExtResource("11_gxfa8")
 
-[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=1843036894]
 position = Vector2(0, -8)
 rect = Rect2(-32, -32, 64, 64)
 
-[node name="Animation Update Timer" type="Timer" parent="."]
+[node name="Animation Update Timer" type="Timer" parent="." unique_id=711912253]
 process_callback = 0
 wait_time = 0.1
 autostart = true
 
-[node name="Attack Timer" type="Timer" parent="."]
+[node name="Attack Timer" type="Timer" parent="." unique_id=1481985447]
 process_callback = 0
 one_shot = true
 

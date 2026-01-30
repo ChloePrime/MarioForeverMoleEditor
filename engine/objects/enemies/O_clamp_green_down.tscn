@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://drmc7ne02iyrh"]
+[gd_scene format=3 uid="uid://drmc7ne02iyrh"]
 
 [ext_resource type="PackedScene" uid="uid://c788col1kh50g" path="res://engine/objects/enemies/O_clamp_green.tscn" id="1_qbscv"]
 
-[node name="Clamp (Green, Down)" instance=ExtResource("1_qbscv")]
+[node name="Clamp (Green, Down)" unique_id=1058192048 instance=ExtResource("1_qbscv")]
 rotation = 3.14159
 MoveDirection = Vector2(0, -1)
 

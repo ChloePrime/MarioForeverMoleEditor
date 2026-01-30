@@ -1,4 +1,4 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bajy5onvg0qbr"]
+[gd_resource type="AtlasTexture" format=3 uid="uid://bajy5onvg0qbr"]
 
 [ext_resource type="Texture2D" uid="uid://dgsqt0skchyt6" path="res://engine/tiles/bullet_launcher_tileset.png" id="1_4jwhd"]
 

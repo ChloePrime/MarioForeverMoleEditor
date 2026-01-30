@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cb150wkayut5b"]
+[gd_scene format=3 uid="uid://cb150wkayut5b"]
 
 [ext_resource type="PackedScene" uid="uid://b0f766vnjn4y6" path="res://engine/resources/bonus/question_block_base.tscn" id="1_4045e"]
 [ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://engine/objects/bonus/O_slippery_vn.tscn" id="2_cyc6j"]
@@ -8,7 +8,7 @@
 atlas = ExtResource("3_2l1gu")
 region = Rect2(256, 0, 33, 32)
 
-[node name="Question Block (Poisonous VN)" instance=ExtResource("1_4045e")]
+[node name="Question Block (Poisonous VN)" unique_id=1248797409 instance=ExtResource("1_4045e")]
 Content = ExtResource("2_cyc6j")
 SmallMarioOverride = null
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cnaj8b4v3ig13"]
+[gd_scene format=3 uid="uid://cnaj8b4v3ig13"]
 
 [ext_resource type="PackedScene" uid="uid://d4nciym8w2k6p" path="res://engine/resources/facility/internal_platform_style_mark_base.tscn" id="1_yrwpd"]
 [ext_resource type="Texture2D" uid="uid://pvswrex0x8jm" path="res://engine/resources/facility/T_platforms.png" id="2_ofcu1"]
@@ -44,7 +44,7 @@ animations = [{
 atlas = ExtResource("3_4qxwl")
 region = Rect2(64, 0, 32, 32)
 
-[node name="Platform Style Mark (Cloud)" instance=ExtResource("1_yrwpd")]
+[node name="Platform Style Mark (Cloud)" unique_id=87138481 instance=ExtResource("1_yrwpd")]
 AnimatedSprite = SubResource("SpriteFrames_0n425")
 AnimatedSpriteSize = Vector2(128, 32)
 

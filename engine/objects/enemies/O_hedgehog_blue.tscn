@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://naiq184h1ib3"]
+[gd_scene format=3 uid="uid://naiq184h1ib3"]
 
 [ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_xlwdt"]
 [ext_resource type="Script" uid="uid://b42wal5c5br02" path="res://engine/scripts/enemy/HorizontalHomingNpc.cs" id="2_dg5s1"]
@@ -26,7 +26,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Blue Hedgehog" instance=ExtResource("1_xlwdt")]
+[node name="Blue Hedgehog" unique_id=1029086804 instance=ExtResource("1_xlwdt")]
 script = ExtResource("2_dg5s1")
 MaxSpeed = 50.0
 ScaleAnimationSpeed = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b63wm0j1pxr2a"]
+[gd_scene format=3 uid="uid://b63wm0j1pxr2a"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_kxuxr"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="3_huqcf"]
@@ -42,7 +42,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clamp (Pink)" instance=ExtResource("1_kxuxr")]
+[node name="Clamp (Pink)" unique_id=417457290 instance=ExtResource("1_kxuxr")]
 WaitTimeUp = 1.2
 
 [node name="Stem" parent="." index="0"]
@@ -51,7 +51,7 @@ sprite_frames = SubResource("SpriteFrames_hooij")
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_vh5tr")
 
-[node name="Shoot Component" type="Node" parent="." index="4"]
+[node name="Shoot Component" type="Node" parent="." index="4" unique_id=1517526165]
 script = ExtResource("4_nflm4")
 BulletPrefab = ExtResource("5_gu7xl")
 

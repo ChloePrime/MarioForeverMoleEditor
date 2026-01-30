@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://ncpsy2e0onio"]
+[gd_scene format=3 uid="uid://ncpsy2e0onio"]
 
 [ext_resource type="Texture2D" uid="uid://djbvbtl4j328x" path="res://engine/16x_testdata.png" id="1_nhl27"]
 [ext_resource type="Texture2D" uid="uid://yksscbotkc4o" path="res://engine/resources/bonus/question_block_bit.png" id="2_a64ur"]
 
-[node name="16xExample" type="TextureRect"]
+[node name="16xExample" type="TextureRect" unique_id=46309510]
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 224.0
 texture = ExtResource("1_nhl27")
 
-[node name="QuestionBlockBit" type="Sprite2D" parent="."]
+[node name="QuestionBlockBit" type="Sprite2D" parent="." unique_id=160877090]
 position = Vector2(264, 8)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_a64ur")

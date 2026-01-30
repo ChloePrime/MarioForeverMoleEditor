@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c788col1kh50g"]
+[gd_scene format=3 uid="uid://c788col1kh50g"]
 
 [ext_resource type="PackedScene" uid="uid://dkop8m3ysird7" path="res://engine/resources/enemies/internal_clamp_base.tscn" id="1_yybt7"]
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="3_aohnd"]
@@ -25,7 +25,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clamp (Green)" instance=ExtResource("1_yybt7")]
+[node name="Clamp (Green)" unique_id=1611254187 instance=ExtResource("1_yybt7")]
 
 [node name="Enemy Core" parent="." index="1"]
 DieWhenThrownAndHitOther = false

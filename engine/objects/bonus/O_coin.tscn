@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dinl48hffdhy2"]
+[gd_scene format=3 uid="uid://dinl48hffdhy2"]
 
 [ext_resource type="Texture2D" uid="uid://kagdt0x8t7xl" path="res://engine/resources/bonus/coin.png" id="1_1olx2"]
 [ext_resource type="Script" uid="uid://dvqlecvvl5s7o" path="res://engine/scripts/bonus/Coin.cs" id="1_a4tqk"]
@@ -35,15 +35,15 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="O_coin" type="Area2D"]
+[node name="O_coin" type="Area2D" unique_id=1410601042]
 collision_layer = 0
 collision_mask = 65536
 script = ExtResource("1_a4tqk")
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=1616149222]
 shape = SubResource("RectangleShape2D_0uj80")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1942565539]
 sprite_frames = SubResource("SpriteFrames_i4n3u")
 autoplay = "default"
 frame_progress = 0.416059

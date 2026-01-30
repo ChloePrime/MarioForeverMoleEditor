@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bh7p8gsfxvui8"]
+[gd_scene format=3 uid="uid://bh7p8gsfxvui8"]
 
 [ext_resource type="Script" uid="uid://bpf6kit6xrlfm" path="res://engine/scripts/enemy/Fireball.cs" id="1_auv4v"]
 [ext_resource type="Texture2D" uid="uid://ckcf62qldbqqx" path="res://engine/resources/shared/T_fireball.png" id="2_y7ff5"]
@@ -10,7 +10,7 @@ radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7m7jk"]
 
-[node name="Fireball" type="CharacterBody2D" node_paths=PackedStringArray("Sprite")]
+[node name="Fireball" type="CharacterBody2D" unique_id=1415174719 node_paths=PackedStringArray("Sprite")]
 collision_layer = 0
 script = ExtResource("1_auv4v")
 JumpStrength = 250.0
@@ -18,24 +18,24 @@ Enabled = true
 TargetSpeed = 400.0
 Sprite = NodePath("Sprite")
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=1468194867]
 shape = SubResource("CircleShape2D_rd105")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=519352920]
 scale = Vector2(-1, -1)
 texture = ExtResource("2_y7ff5")
 
-[node name="Rotator" type="Node" parent="Sprite"]
+[node name="Rotator" type="Node" parent="Sprite" unique_id=1384927275]
 script = ExtResource("3_57fow")
 
-[node name="Action Zone" type="Area2D" parent="."]
+[node name="Action Zone" type="Area2D" parent="." unique_id=1674649049]
 collision_layer = 0
 collision_mask = 0
 
-[node name="Collision Shape" type="CollisionShape2D" parent="Action Zone"]
+[node name="Collision Shape" type="CollisionShape2D" parent="Action Zone" unique_id=558757914]
 shape = SubResource("CircleShape2D_7m7jk")
 
-[node name="Light Source" parent="." instance=ExtResource("4_kjl7p")]
+[node name="Light Source" parent="." unique_id=1710371664 instance=ExtResource("4_kjl7p")]
 LightSize = 0.4
 AnimatedDestroy = true
 Volatile = true

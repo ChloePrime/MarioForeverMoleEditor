@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmernpmljosof"]
+[gd_scene format=3 uid="uid://bmernpmljosof"]
 
 [ext_resource type="PackedScene" uid="uid://h2jlwfwm5800" path="res://engine/resources/level/darkness/light_base.tscn" id="1_0kurc"]
 
@@ -13,5 +13,5 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[node name="Spot Light" instance=ExtResource("1_0kurc")]
+[node name="Spot Light" unique_id=331860942 instance=ExtResource("1_0kurc")]
 texture = SubResource("GradientTexture2D_ujsg0")

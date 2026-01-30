@@ -1,13 +1,9 @@
-[gd_resource type="AtlasTexture" script_class="ClampFlower" load_steps=3 format=3 uid="uid://ch8fl846ua5tu"]
+[gd_resource type="AtlasTexture" script_class="ClampFlower" format=3 uid="uid://ch8fl846ua5tu"]
 
 [ext_resource type="Texture2D" uid="uid://3kucw6pj7cdj" path="res://engine/resources/enemies/T_clamp.png" id="1_thcni"]
-[ext_resource type="Script" path="res://engine/scripts/enemy/ClampFlower.cs" id="2_j0the"]
+[ext_resource type="Script" uid="uid://dsb3li1smd4xh" path="res://engine/scripts/enemy/ClampFlower.cs" id="2_j0the"]
 
 [resource]
 atlas = ExtResource("1_thcni")
 region = Rect2(0, 0, 32, 32)
 script = ExtResource("2_j0the")
-MoveDirection = Vector2(0, 1)
-MoveDistance = 56.0
-MoveSpeed = 100.0
-WaitTime = 1.4

@@ -1,7 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://vlfkky6d6jx2"]
+[gd_scene format=3 uid="uid://vlfkky6d6jx2"]
 
 [ext_resource type="PackedScene" uid="uid://c8s8guay3ciu1" path="res://engine/resources/ui/score_base.tscn" id="1_130iw"]
 
-[node name="Score 2000" instance=ExtResource("1_130iw")]
+[node name="Score 2000" unique_id=2048321226 instance=ExtResource("1_130iw")]
 region_rect = Rect2(0, 64, 42, 16)
 Amount = 2000
+
+[node name="Animation Player" parent="." index="0"]
+autoplay = &"disappearing"

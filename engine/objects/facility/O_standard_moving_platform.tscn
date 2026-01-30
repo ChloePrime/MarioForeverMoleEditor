@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbjby6d0tq3lk"]
+[gd_scene format=3 uid="uid://cbjby6d0tq3lk"]
 
 [ext_resource type="PackedScene" uid="uid://cfh2yaxle81ha" path="res://engine/resources/facility/internal_platform_base.tscn" id="1_e0g80"]
 [ext_resource type="Script" uid="uid://b4qpaisp2788o" path="res://engine/scripts/facility/StandardMovingPlatform.cs" id="2_iy5jj"]
@@ -12,17 +12,17 @@ size = Vector2(96, 16)
 atlas = ExtResource("3_q2ah4")
 region = Rect2(0, 0, 96, 16)
 
-[node name="Standard Moving Platform" instance=ExtResource("1_e0g80")]
+[node name="Standard Moving Platform" unique_id=2114951669 instance=ExtResource("1_e0g80")]
 script = ExtResource("2_iy5jj")
 
 [node name="Collision Shape" parent="." index="0"]
 shape = SubResource("RectangleShape2D_m8hl7")
 
-[node name="Static Sprite" type="Sprite2D" parent="." index="1"]
+[node name="Static Sprite" type="Sprite2D" parent="." index="1" unique_id=76100530]
 position = Vector2(0, 8)
 texture = SubResource("AtlasTexture_7c1cm")
 
-[node name="Animated Sprite" type="AnimatedSprite2D" parent="." index="2"]
+[node name="Animated Sprite" type="AnimatedSprite2D" parent="." index="2" unique_id=1106494571]
 visible = false
 position = Vector2(0, 16)
 sprite_frames = ExtResource("2_s4l6o")

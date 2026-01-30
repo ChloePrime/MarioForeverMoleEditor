@@ -1,7 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://gi86my0pjg6q"]
+[gd_scene format=3 uid="uid://gi86my0pjg6q"]
 
 [ext_resource type="PackedScene" uid="uid://b25x5u3i360p1" path="res://engine/resources/mario/chloe.glb" id="1_71pae"]
-[ext_resource type="Script" uid="uid://5wcfr0ny4l3s" path="res://engine/scripts/player/YsmMarioSprite3D.cs" id="2_peu6d"]
 
-[node name="3D Mario Example" instance=ExtResource("1_71pae")]
-script = ExtResource("2_peu6d")
+[node name="3D Mario Example" unique_id=1881713839 instance=ExtResource("1_71pae")]

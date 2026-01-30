@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://j04gurtf7ia4"]
+[gd_scene format=3 uid="uid://j04gurtf7ia4"]
 
 [ext_resource type="PackedScene" uid="uid://c8s8guay3ciu1" path="res://engine/resources/ui/score_base.tscn" id="1_0642j"]
 
-[node name="Score 100" instance=ExtResource("1_0642j")]
+[node name="Score 100" unique_id=1766534364 instance=ExtResource("1_0642j")]
 Amount = 100
+
+[node name="Animation Player" parent="." index="0"]
+autoplay = &"disappearing"

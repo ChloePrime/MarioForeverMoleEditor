@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://5sc3usouo3hk"]
+[gd_scene format=3 uid="uid://5sc3usouo3hk"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_84ptw"]
 [ext_resource type="Texture2D" uid="uid://qv04mu0kaj0u" path="res://engine/resources/background/T_bg_clouds.png" id="2_vsnkc"]
 
-[node name="Background" instance=ExtResource("1_84ptw")]
+[node name="Background" unique_id=1466596286 instance=ExtResource("1_84ptw")]
 texture = ExtResource("2_vsnkc")

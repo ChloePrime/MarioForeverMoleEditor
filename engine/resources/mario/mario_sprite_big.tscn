@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://xk3v8y8h1dpp"]
+[gd_scene format=3 uid="uid://xk3v8y8h1dpp"]
 
 [ext_resource type="PackedScene" uid="uid://u3mnx4topf7v" path="res://engine/resources/mario/mario_sprite_prefab.tscn" id="1_3f8m8"]
 [ext_resource type="Texture2D" uid="uid://b4n0jeehuj4go" path="res://engine/resources/mario/mario.png" id="3_rxbyq"]
@@ -280,7 +280,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="Sprite_Big" instance=ExtResource("1_3f8m8")]
+[node name="Sprite_Big" unique_id=837469653 instance=ExtResource("1_3f8m8")]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_47fc0")
 animation = &"[p0] front"

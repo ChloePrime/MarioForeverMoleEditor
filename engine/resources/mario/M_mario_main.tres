@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://myh55fdcpwtl"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://myh55fdcpwtl"]
 
-[ext_resource type="Shader" path="res://engine/resources/mario/S_mario_main.gdshader" id="1_bulgg"]
+[ext_resource type="Shader" uid="uid://c8jssr46f5iew" path="res://engine/resources/mario/S_mario_main.gdshader" id="1_bulgg"]
 
 [resource]
 resource_local_to_scene = true

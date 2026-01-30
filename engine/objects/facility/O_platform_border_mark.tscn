@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bg2dqueyd3rv4"]
+[gd_scene format=3 uid="uid://bg2dqueyd3rv4"]
 
 [ext_resource type="PackedScene" uid="uid://bhu84is5vldgf" path="res://engine/resources/facility/internal_platform_mark_base.tscn" id="1_smogn"]
 [ext_resource type="Script" uid="uid://dqegyqfoevvog" path="res://engine/scripts/facility/MovingPlatformBorderMark.cs" id="2_030xa"]
@@ -8,7 +8,7 @@
 atlas = ExtResource("3_2rp21")
 region = Rect2(96, 128, 32, 32)
 
-[node name="Platform Border Mark" instance=ExtResource("1_smogn")]
+[node name="Platform Border Mark" unique_id=1725130412 instance=ExtResource("1_smogn")]
 script = ExtResource("2_030xa")
 
 [node name="Sprite" parent="." index="1"]

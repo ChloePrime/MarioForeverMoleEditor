@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://byh1c1cibv3ot"]
+[gd_scene format=3 uid="uid://byh1c1cibv3ot"]
 
 [ext_resource type="Texture2D" uid="uid://2ass1ejyirk4" path="res://engine/resources/level/T_goal_sub.png" id="1_i8s4m"]
 [ext_resource type="Script" uid="uid://dbrmw68xbqogd" path="res://engine/scripts/level/Goal.cs" id="1_wfmd8"]
@@ -32,11 +32,11 @@ animations = [{
 "speed": 25.0
 }]
 
-[node name="Goal (Small)" type="Node2D"]
+[node name="Goal (Small)" type="Node2D" unique_id=143881197]
 script = ExtResource("1_wfmd8")
 Type = 1
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1085905503]
 position = Vector2(-16, -32)
 sprite_frames = SubResource("SpriteFrames_7xeg4")
 autoplay = "default"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://u3mnx4topf7v"]
+[gd_scene format=3 uid="uid://u3mnx4topf7v"]
 
 [ext_resource type="Script" uid="uid://bg28r3uhie57i" path="res://engine/scripts/util/animation/BetterAnimatedSprite2D.cs" id="3_d672b"]
 [ext_resource type="Resource" uid="uid://dd7bxjcwac518" path="res://engine/resources/mario/AnimData_swimming_common.tres" id="4_cdue1"]
@@ -12,7 +12,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Sprite_Prefab" type="AnimatedSprite2D"]
+[node name="Sprite_Prefab" type="AnimatedSprite2D" unique_id=761099233]
 texture_filter = 1
 use_parent_material = true
 position = Vector2(0, -29)

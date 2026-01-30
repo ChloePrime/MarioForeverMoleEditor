@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwatosp0umcd6"]
+[gd_scene format=3 uid="uid://cwatosp0umcd6"]
 
 [ext_resource type="PackedScene" uid="uid://dbnsb6lkv56gm" path="res://engine/resources/enemies/internal_launcher_component_base.tscn" id="1_y5lr8"]
 [ext_resource type="Script" uid="uid://dai4p1jhw6bil" path="res://engine/scripts/enemy/BulletLauncher.cs" id="2_n42k8"]
@@ -15,7 +15,7 @@
 script = ExtResource("7_5yc17")
 AudioStreamList = Array[AudioStream]([ExtResource("5_1d228"), ExtResource("6_dda6g")])
 
-[node name="Launcher Base" instance=ExtResource("1_y5lr8")]
+[node name="Launcher Base" unique_id=1464602396 instance=ExtResource("1_y5lr8")]
 script = ExtResource("2_n42k8")
 FirstShotDelay = 0.5
 MinDelay = 1.5
@@ -25,27 +25,27 @@ BulletPrefab = ExtResource("3_6yk6y")
 MuzzleFlash = ExtResource("4_lg86i")
 ShootSound = SubResource("Resource_44b5r")
 
-[node name="Enemy Core" parent="." index="1" instance=ExtResource("8_y0esy")]
+[node name="Enemy Core" parent="." index="1" unique_id=1530403227 instance=ExtResource("8_y0esy")]
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 AcceptedDamageTypes = ExtResource("9_7nw4y")
 OneHitDamageTypes = ExtResource("9_7nw4y")
 IgnoreUnsupportedDamageTypes = true
 
-[node name="Damage Source" parent="Enemy Core" index="1"]
+[node name="Damage Source" parent="Enemy Core" index="1" unique_id=417058048]
 process_mode = 4
 monitoring = false
 monitorable = false
 script = null
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = ExtResource("10_6wbp7")
 
-[node name="Timer" type="Timer" parent="." index="2"]
+[node name="Timer" type="Timer" parent="." index="2" unique_id=317467862]
 process_callback = 0
 one_shot = true
 
-[node name="VisibleOnScreenEnabler" type="VisibleOnScreenEnabler2D" parent="." index="3"]
+[node name="VisibleOnScreenEnabler" type="VisibleOnScreenEnabler2D" parent="." index="3" unique_id=543886774]
 rect = Rect2(-16, -16, 32, 32)
 enable_node_path = NodePath("../Timer")
 

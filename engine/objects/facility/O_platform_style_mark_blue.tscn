@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://du1fnspwmuqmw"]
+[gd_scene format=3 uid="uid://du1fnspwmuqmw"]
 
 [ext_resource type="PackedScene" uid="uid://d4nciym8w2k6p" path="res://engine/resources/facility/internal_platform_style_mark_base.tscn" id="1_mqjum"]
 [ext_resource type="Texture2D" uid="uid://pvswrex0x8jm" path="res://engine/resources/facility/T_platforms.png" id="2_6k5hr"]
@@ -12,7 +12,7 @@ region = Rect2(0, 16, 96, 16)
 atlas = ExtResource("3_mj213")
 region = Rect2(32, 96, 32, 32)
 
-[node name="Platform Style Mark (Blue)" instance=ExtResource("1_mqjum")]
+[node name="Platform Style Mark (Blue)" unique_id=885989918 instance=ExtResource("1_mqjum")]
 StaticSprite = SubResource("AtlasTexture_t1otx")
 
 [node name="Sprite" parent="." index="1"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqjisxub87u1q"]
+[gd_scene format=3 uid="uid://dqjisxub87u1q"]
 
 [ext_resource type="Texture2D" uid="uid://dolus182yai4y" path="res://engine/resources/ui/AT_megaman_hp_bar_base.tres" id="1_8ytt2"]
 [ext_resource type="Script" uid="uid://c3d3vfttkmlct" path="res://engine/scripts/ui/MegaManHpBar.cs" id="1_27ao2"]
@@ -6,21 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://scgd04ogcsyr" path="res://engine/resources/ui/AT_megaman_hp_bar_layer2.tres" id="3_5b27k"]
 [ext_resource type="AudioStream" uid="uid://cw0iqq4ohrrmk" path="res://engine/resources/shared/SE_megaman_heal.wav" id="5_0dvas"]
 
-[node name="MegaMan HP Bar" type="Control"]
+[node name="MegaMan HP Bar" type="Control" unique_id=1925392366]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 16.0
 offset_bottom = 256.0
 script = ExtResource("1_27ao2")
 
-[node name="Base" type="TextureRect" parent="."]
+[node name="Base" type="TextureRect" parent="." unique_id=1363092145]
 layout_mode = 1
 offset_right = 16.0
 offset_bottom = 256.0
 texture = ExtResource("1_8ytt2")
 expand_mode = 1
 
-[node name="Value" type="Control" parent="."]
+[node name="Value" type="Control" parent="." unique_id=1011778959]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -29,7 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Layer 2" type="TextureRect" parent="Value"]
+[node name="Layer 2" type="TextureRect" parent="Value" unique_id=22505383]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -43,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("3_5b27k")
 
-[node name="Layer 1" type="TextureRect" parent="Value"]
+[node name="Layer 1" type="TextureRect" parent="Value" unique_id=710740438]
 self_modulate = Color(0.992157, 0.901961, 0.611765, 1)
 layout_mode = 1
 anchors_preset = 7
@@ -58,5 +58,5 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("2_js4se")
 
-[node name="Add HP Sound Player" type="AudioStreamPlayer" parent="."]
+[node name="Add HP Sound Player" type="AudioStreamPlayer" parent="." unique_id=169490922]
 stream = ExtResource("5_0dvas")

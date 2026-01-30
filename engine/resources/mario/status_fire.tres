@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://6ijibb8vqa75"]
+[gd_resource type="Resource" format=3 uid="uid://6ijibb8vqa75"]
 
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://engine/resources/mario/status_big.tres" id="1_08ane"]
 [ext_resource type="Script" uid="uid://c5fylyfskrds7" path="res://engine/scripts/player/MarioStatusFire.cs" id="1_oco3b"]
@@ -8,9 +8,5 @@
 
 [resource]
 script = ExtResource("1_oco3b")
-Fireball = ExtResource("3_hpgot")
-FireSound = ExtResource("2_qxcpa")
-MaxFireballs = 2
-Size = 1
 HurtResult = ExtResource("1_08ane")
 AnimationNode = ExtResource("1_ubuub")

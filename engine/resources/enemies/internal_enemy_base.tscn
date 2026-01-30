@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqd5ut2wsbi1h"]
+[gd_scene format=3 uid="uid://cqd5ut2wsbi1h"]
 
 [ext_resource type="Script" uid="uid://co15ngxtfslre" path="res://engine/scripts/rpg/WalkableNpc.cs" id="1_hflx6"]
 [ext_resource type="Script" uid="uid://ck0bg0qwlyyyf" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_enr0v"]
@@ -7,17 +7,11 @@
 
 [sub_resource type="Resource" id="Resource_35v0x"]
 script = ExtResource("2_enr0v")
-HitPoint = 50.0
-MaxHitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8kmp8"]
 size = Vector2(30, 30)
 
-[node name="Internal Npc Base" type="CharacterBody2D"]
+[node name="Internal Npc Base" type="CharacterBody2D" unique_id=567852746]
 collision_layer = 131072
 collision_mask = 131077
 floor_max_angle = 0.794125
@@ -29,14 +23,14 @@ TargetSpeed = 50.0
 MaxYSpeed = 500.0
 CollideWithOthers = true
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=912270298]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_8kmp8")
 
-[node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="Enter Screen Notifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=1154912853]
 rect = Rect2(-16, -16, 32, 32)
 
-[node name="Enemy Core" parent="." instance=ExtResource("3_ketea")]
+[node name="Enemy Core" parent="." unique_id=1533463982 instance=ExtResource("3_ketea")]
 MyNpcData = null
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]

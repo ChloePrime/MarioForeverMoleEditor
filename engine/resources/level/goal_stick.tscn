@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk7ad77x2jpcb"]
+[gd_scene format=3 uid="uid://bk7ad77x2jpcb"]
 
 [ext_resource type="Script" uid="uid://bjckliuver1fr" path="res://engine/scripts/level/GoalStick.cs" id="1_c7jgv"]
 [ext_resource type="Texture2D" uid="uid://dpccmadysyfbc" path="res://engine/resources/level/T_goal_stick.png" id="2_njpbb"]
@@ -8,19 +8,19 @@
 radius = 7.0
 height = 44.0
 
-[node name="Goal Stick" type="Area2D"]
+[node name="Goal Stick" type="Area2D" unique_id=110878205]
 collision_layer = 0
 collision_mask = 65536
 script = ExtResource("1_c7jgv")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=938535942]
 texture = ExtResource("2_njpbb")
 
-[node name="Rotator" type="Node" parent="Sprite"]
+[node name="Rotator" type="Node" parent="Sprite" unique_id=1644856006]
 process_mode = 4
 script = ExtResource("2_xment")
 Cycle = 0.32
 
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=765540287]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_oyr2s")

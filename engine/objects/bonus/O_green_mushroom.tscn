@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0pmmjb7l4rps"]
+[gd_scene format=3 uid="uid://d0pmmjb7l4rps"]
 
 [ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://engine/resources/bonus/internal_bonus_base.tscn" id="1_tc5vs"]
 [ext_resource type="PackedScene" uid="uid://clxjy65i0vde0" path="res://engine/objects/ui/O_1up.tscn" id="2_bdxsb"]
@@ -20,7 +20,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="1UP Mushroom" instance=ExtResource("1_tc5vs")]
+[node name="1UP Mushroom" unique_id=917383935 instance=ExtResource("1_tc5vs")]
 script = ExtResource("2_qohbl")
 Score = ExtResource("2_bdxsb")
 PickSound = null

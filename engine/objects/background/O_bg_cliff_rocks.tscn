@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dadm4p4w8vkvs"]
+[gd_scene format=3 uid="uid://dadm4p4w8vkvs"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_6svfj"]
 [ext_resource type="Texture2D" uid="uid://bk1lealgeetib" path="res://engine/resources/background/T_bg_cliff_rocks.png" id="2_ao47t"]
 
-[node name="Background" instance=ExtResource("1_6svfj")]
+[node name="Background" unique_id=1572177288 instance=ExtResource("1_6svfj")]
 texture = ExtResource("2_ao47t")

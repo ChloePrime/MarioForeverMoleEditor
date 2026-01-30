@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cyxyvhym4lhdw"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cyxyvhym4lhdw"]
 
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="1_8vfm3"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b5iq4ju3uohvh"]
+[gd_scene format=3 uid="uid://b5iq4ju3uohvh"]
 
 [ext_resource type="Script" uid="uid://cjlj23jt1h6fk" path="res://engine/scripts/level/MaFoLevel.cs" id="1_ga1s3"]
 [ext_resource type="PackedScene" uid="uid://cfywv6a3w5n52" path="res://engine/objects/mario.tscn" id="3_5usbp"]
@@ -48,7 +48,7 @@ width = 640
 height = 480
 fill_to = Vector2(0, 1)
 
-[node name="Example" type="Node2D"]
+[node name="Example" type="Node2D" unique_id=905935978]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
 script = ExtResource("1_ga1s3")
 LevelName = "Mole Editor
@@ -56,199 +56,199 @@ LevelName = "Mole Editor
 TimeLimit = 4000.0
 TileLoadingPreset = ExtResource("3_ad6k1")
 
-[node name="MaFoCamera" type="Camera2D" parent="."]
+[node name="MaFoCamera" type="Camera2D" parent="." unique_id=1086021764]
 position = Vector2(320, 240)
 script = ExtResource("4_jc67v")
 Border = Rect2(0, 0, 640, 480)
 
-[node name="Overworld" type="Node2D" parent="."]
+[node name="Overworld" type="Node2D" parent="." unique_id=325645826]
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("5_ps4lb")
 
-[node name="Tiles" parent="Overworld" instance=ExtResource("6_6hpwf")]
+[node name="Tiles" parent="Overworld" unique_id=375188008 instance=ExtResource("6_6hpwf")]
 
-[node name="Spring" parent="Overworld" instance=ExtResource("36_132yy")]
+[node name="Spring" parent="Overworld" unique_id=862500632 instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
 
-[node name="Mario" parent="Overworld" instance=ExtResource("3_5usbp")]
+[node name="Mario" parent="Overworld" unique_id=1109980927 instance=ExtResource("3_5usbp")]
 position = Vector2(272, 416)
 FastRetry = true
 
-[node name="Music Changer" parent="Overworld" instance=ExtResource("6_5ta4l")]
+[node name="Music Changer" parent="Overworld" unique_id=174494719 instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
 TargetMusic = ExtResource("7_a81sv")
 
-[node name="Parallax" type="Parallax2D" parent="Overworld"]
+[node name="Parallax" type="Parallax2D" parent="Overworld" unique_id=1685424333]
 z_index = -4000
 repeat_size = Vector2(512, 0)
 repeat_times = 4
 
-[node name="BG Gradient" type="Sprite2D" parent="Overworld/Parallax"]
+[node name="BG Gradient" type="Sprite2D" parent="Overworld/Parallax" unique_id=1696564428]
 position = Vector2(320, 240)
 texture = SubResource("GradientTexture2D_o2jv4")
 
-[node name="BG" type="Sprite2D" parent="Overworld/Parallax"]
+[node name="BG" type="Sprite2D" parent="Overworld/Parallax" unique_id=1189257729]
 position = Vector2(256, 240)
 texture = ExtResource("11_odrgt")
 
-[node name="Cloud (Background)" parent="Overworld" instance=ExtResource("13_6x2u0")]
+[node name="Cloud (Background)" parent="Overworld" unique_id=1283532085 instance=ExtResource("13_6x2u0")]
 physics_interpolation_mode = 0
 position = Vector2(128, 24)
 
-[node name="Cloud (Foreground)" parent="Overworld" instance=ExtResource("14_1osfy")]
+[node name="Cloud (Foreground)" parent="Overworld" unique_id=438389876 instance=ExtResource("14_1osfy")]
 physics_interpolation_mode = 0
 position = Vector2(128, 0)
 
-[node name="RotoDisc Core" parent="Overworld" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld" unique_id=146340117 instance=ExtResource("13_y308r")]
 position = Vector2(1456, 144)
 
-[node name="Mole" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole" parent="Overworld/RotoDisc Core" unique_id=850978389 instance=ExtResource("14_23duk")]
 position = Vector2(0, 128)
 MaxYSpeed = inf
 
-[node name="Mole2" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole2" parent="Overworld/RotoDisc Core" unique_id=287276524 instance=ExtResource("14_23duk")]
 position = Vector2(0, 64)
 MaxYSpeed = inf
 
-[node name="Mole3" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole3" parent="Overworld/RotoDisc Core" unique_id=1033706720 instance=ExtResource("14_23duk")]
 position = Vector2(0, 96)
 MaxYSpeed = inf
 
-[node name="Mole4" parent="Overworld/RotoDisc Core" instance=ExtResource("14_23duk")]
+[node name="Mole4" parent="Overworld/RotoDisc Core" unique_id=60148808 instance=ExtResource("14_23duk")]
 position = Vector2(0, 32)
 MaxYSpeed = inf
 
-[node name="Mole (SMB3)" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)" parent="Overworld/RotoDisc Core" unique_id=149667008 instance=ExtResource("16_o84e0")]
 position = Vector2(0, -32)
 MaxYSpeed = inf
 
-[node name="Mole (SMB3)2" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)2" parent="Overworld/RotoDisc Core" unique_id=1381929284 instance=ExtResource("16_o84e0")]
 position = Vector2(0, -64)
 MaxYSpeed = inf
 
-[node name="Mole (SMB3)3" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)3" parent="Overworld/RotoDisc Core" unique_id=750683338 instance=ExtResource("16_o84e0")]
 position = Vector2(0, -96)
 MaxYSpeed = inf
 
-[node name="Mole (SMB3)4" parent="Overworld/RotoDisc Core" instance=ExtResource("16_o84e0")]
+[node name="Mole (SMB3)4" parent="Overworld/RotoDisc Core" unique_id=224269519 instance=ExtResource("16_o84e0")]
 position = Vector2(0, -128)
 MaxYSpeed = inf
 
-[node name="RotoDisc Core" parent="Overworld/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core" unique_id=1823202238 instance=ExtResource("13_y308r")]
 position = Vector2(128, 0)
 RotationSpeed = -2.0
 ModifyChildrenRotation = true
 
-[node name="Spike (I Wanna, Up)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("17_foy4y")]
+[node name="Spike (I Wanna, Up)" parent="Overworld/RotoDisc Core/RotoDisc Core" unique_id=994587680 instance=ExtResource("17_foy4y")]
 position = Vector2(0, -32)
 
-[node name="Spike (I Wanna, Down)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("18_lsifq")]
+[node name="Spike (I Wanna, Down)" parent="Overworld/RotoDisc Core/RotoDisc Core" unique_id=1808105894 instance=ExtResource("18_lsifq")]
 position = Vector2(0, 32)
 
-[node name="Spike (I Wanna, Left)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("19_veeqw")]
+[node name="Spike (I Wanna, Left)" parent="Overworld/RotoDisc Core/RotoDisc Core" unique_id=847058228 instance=ExtResource("19_veeqw")]
 position = Vector2(-32, 0)
 
-[node name="Spike (I Wanna, Right)" parent="Overworld/RotoDisc Core/RotoDisc Core" instance=ExtResource("20_tvwyx")]
+[node name="Spike (I Wanna, Right)" parent="Overworld/RotoDisc Core/RotoDisc Core" unique_id=1374509971 instance=ExtResource("20_tvwyx")]
 position = Vector2(32, 0)
 
-[node name="RotoDisc Core 2" parent="Overworld/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core 2" parent="Overworld/RotoDisc Core" unique_id=1423345140 instance=ExtResource("13_y308r")]
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2" unique_id=504050750 instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core" unique_id=509707132 instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core" unique_id=2099981823 instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("13_y308r")]
+[node name="RotoDisc Core" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core" unique_id=632432690 instance=ExtResource("13_y308r")]
 position = Vector2(-32, 0)
 ModifyChildrenRotation = true
 
-[node name="Goomba" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" instance=ExtResource("21_l8ajo")]
+[node name="Goomba" parent="Overworld/RotoDisc Core/RotoDisc Core 2/RotoDisc Core/RotoDisc Core/RotoDisc Core/RotoDisc Core" unique_id=1922165339 instance=ExtResource("21_l8ajo")]
 position = Vector2(-32, 0)
 MaxYSpeed = inf
 Gravity = 500.0
 AppearSpeed = 25.0
 
-[node name="Golden Turtle" parent="Overworld/RotoDisc Core" instance=ExtResource("21_0d0u4")]
+[node name="Golden Turtle" parent="Overworld/RotoDisc Core" unique_id=845280189 instance=ExtResource("21_0d0u4")]
 position = Vector2(0, 160)
 State = 0
 MaxYSpeed = inf
 
-[node name="Bonus Room Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
+[node name="Bonus Room Entrance" parent="Overworld" unique_id=896092483 node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(576, 320)
 Target = NodePath("../../Bonus Room/Bonus Room Entrance")
 
-[node name="Bonus Room Exit" parent="Overworld" instance=ExtResource("28_iu26d")]
+[node name="Bonus Room Exit" parent="Overworld" unique_id=679237284 instance=ExtResource("28_iu26d")]
 position = Vector2(576, 160)
 
-[node name="Fire Flower" parent="Overworld" instance=ExtResource("28_ewyo7")]
+[node name="Fire Flower" parent="Overworld" unique_id=765777332 instance=ExtResource("28_ewyo7")]
 position = Vector2(368, 400)
 MaxYSpeed = inf
 
-[node name="Bonus Room Rev Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("32_p6x3p")]
+[node name="Bonus Room Rev Entrance" parent="Overworld" unique_id=1820702615 node_paths=PackedStringArray("Target") instance=ExtResource("32_p6x3p")]
 position = Vector2(576, 224)
 Target = NodePath("../../Bonus Room/Bonus Room Rev Entrance")
 
-[node name="Pipe Entrance" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("34_6pyw6")]
+[node name="Pipe Entrance" parent="Overworld" unique_id=347526647 node_paths=PackedStringArray("Target") instance=ExtResource("34_6pyw6")]
 position = Vector2(752, 416)
 Target = NodePath("../Pipe Exit")
 
-[node name="Pipe Exit" parent="Overworld" instance=ExtResource("35_gflwc")]
+[node name="Pipe Exit" parent="Overworld" unique_id=1030519192 instance=ExtResource("35_gflwc")]
 position = Vector2(1008, 416)
 
-[node name="Pipe Entrance (Left)" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("36_n2tk6")]
+[node name="Pipe Entrance (Left)" parent="Overworld" unique_id=822339519 node_paths=PackedStringArray("Target") instance=ExtResource("36_n2tk6")]
 position = Vector2(1040, 416)
 Target = NodePath("../Pipe Exit (Left)")
 
-[node name="Pipe Exit (Left)" parent="Overworld" instance=ExtResource("37_77bxi")]
+[node name="Pipe Exit (Left)" parent="Overworld" unique_id=1315758007 instance=ExtResource("37_77bxi")]
 position = Vector2(784, 416)
 
-[node name="Area Water" parent="Overworld" instance=ExtResource("37_mi6cf")]
+[node name="Area Water" parent="Overworld" unique_id=167927243 instance=ExtResource("37_mi6cf")]
 position = Vector2(32, 448)
 
-[node name="Goal (Small)" parent="Overworld" instance=ExtResource("46_jmabb")]
+[node name="Goal (Small)" parent="Overworld" unique_id=703801437 instance=ExtResource("46_jmabb")]
 position = Vector2(2320, 416)
 
-[node name="Goal" parent="Overworld" instance=ExtResource("38_ypky8")]
+[node name="Goal" parent="Overworld" unique_id=923921746 instance=ExtResource("38_ypky8")]
 position = Vector2(2480, 416)
 
-[node name="Door" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("36_xxotm")]
+[node name="Door" parent="Overworld" unique_id=663854291 node_paths=PackedStringArray("Target") instance=ExtResource("36_xxotm")]
 position = Vector2(1008, 352)
 Target = NodePath("../Door 2")
 
-[node name="Door Test Pipe Entrance (Down)" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
+[node name="Door Test Pipe Entrance (Down)" parent="Overworld" unique_id=1493848127 node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(1184, 320)
 Target = NodePath("../Door")
 
-[node name="Door 2" parent="Overworld" node_paths=PackedStringArray("Target") instance=ExtResource("36_xxotm")]
+[node name="Door 2" parent="Overworld" unique_id=296278171 node_paths=PackedStringArray("Target") instance=ExtResource("36_xxotm")]
 position = Vector2(1328, 352)
 Target = NodePath("../Door")
 
-[node name="Bonus Room" type="Node2D" parent="."]
+[node name="Bonus Room" type="Node2D" parent="." unique_id=146233307]
 position = Vector2(0, 480)
 script = ExtResource("3_gyt0a")
 Border = Rect2(0, 480, 640, 480)
 AreaMusic = ExtResource("36_ps4lb")
 
-[node name="Tiles" parent="Bonus Room" instance=ExtResource("36_3k0x5")]
+[node name="Tiles" parent="Bonus Room" unique_id=1843572011 instance=ExtResource("36_3k0x5")]
 
-[node name="Bonus Room Entrance" parent="Bonus Room" instance=ExtResource("28_iu26d")]
+[node name="Bonus Room Entrance" parent="Bonus Room" unique_id=894348599 instance=ExtResource("28_iu26d")]
 position = Vector2(128, 128)
 
-[node name="Bonus Room Exit" parent="Bonus Room" node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
+[node name="Bonus Room Exit" parent="Bonus Room" unique_id=201680560 node_paths=PackedStringArray("Target") instance=ExtResource("27_064tg")]
 position = Vector2(512, 352)
 Target = NodePath("../../Overworld/Bonus Room Exit")
 
-[node name="Background" parent="Bonus Room" instance=ExtResource("29_g2m7a")]
+[node name="Background" parent="Bonus Room" unique_id=1926503177 instance=ExtResource("29_g2m7a")]
 position = Vector2(256, 240)
 
-[node name="Bonus Room Rev Entrance" parent="Bonus Room" instance=ExtResource("33_sw521")]
+[node name="Bonus Room Rev Entrance" parent="Bonus Room" unique_id=592555169 instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)

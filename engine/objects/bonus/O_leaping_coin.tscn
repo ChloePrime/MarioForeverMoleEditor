@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dnfiyq8iuoad2"]
+[gd_scene format=3 uid="uid://dnfiyq8iuoad2"]
 
 [ext_resource type="Script" uid="uid://b1do3h875awss" path="res://engine/scripts/bonus/LeapingCoin.cs" id="1_ycbnh"]
 [ext_resource type="Texture2D" uid="uid://jslpfrp6fydt" path="res://engine/resources/bonus/T_leaping_coin.png" id="2_xtqbv"]
@@ -179,17 +179,15 @@ _data = {
 &"leaping": SubResource("Animation_v34ur")
 }
 
-[node name="O_leaping_coin" type="Node2D"]
+[node name="O_leaping_coin" type="Node2D" unique_id=701378514]
 physics_interpolation_mode = 2
 script = ExtResource("1_ycbnh")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1687750960]
 sprite_frames = SubResource("SpriteFrames_38hgb")
 autoplay = "default"
 
-[node name="Leaping Animation" type="AnimationPlayer" parent="."]
+[node name="Leaping Animation" type="AnimationPlayer" parent="." unique_id=1956216695]
 root_node = NodePath("../Sprite")
-libraries = {
-&"": SubResource("AnimationLibrary_rvudv")
-}
-autoplay = "leaping"
+libraries/ = SubResource("AnimationLibrary_rvudv")
+autoplay = &"leaping"

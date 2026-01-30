@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dekph2thmcuyn"]
+[gd_scene format=3 uid="uid://dekph2thmcuyn"]
 
 [ext_resource type="Texture2D" uid="uid://1i0wh8xinrmo" path="res://engine/resources/shared/T_fireball_explosion.png" id="1_3a7vn"]
 [ext_resource type="Script" uid="uid://chtx1pc0jxh4c" path="res://engine/scripts/util/helper_nodes/SelfDestroyingEffect.cs" id="2_nhcn6"]
@@ -32,7 +32,7 @@ animations = [{
 "speed": 25.0
 }]
 
-[node name="Small Explosion" type="AnimatedSprite2D"]
+[node name="Small Explosion" type="AnimatedSprite2D" unique_id=682575528]
 physics_interpolation_mode = 2
 z_index = 500
 sprite_frames = SubResource("SpriteFrames_kmure")

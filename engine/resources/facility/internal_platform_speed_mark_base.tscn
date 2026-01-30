@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxy6ek6eyfipw"]
+[gd_scene format=3 uid="uid://cxy6ek6eyfipw"]
 
 [ext_resource type="Script" uid="uid://b5p8ihvnytqtp" path="res://engine/scripts/facility/MovingPlatformSpeedMark.cs" id="1_vqi4q"]
 [ext_resource type="Texture2D" uid="uid://co35iqkb563hw" path="res://engine/resources/enemies/T_mole_jumping.png" id="2_fe5c3"]
@@ -7,17 +7,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxhsn"]
 size = Vector2(32, 32)
 
-[node name="Internal Platform Speed Mark Base" type="Area2D"]
+[node name="Internal Platform Speed Mark Base" type="Area2D" unique_id=2008812996]
 collision_layer = 0
 collision_mask = 2048
 script = ExtResource("1_vqi4q")
 OneTimeUse = true
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=356881900]
 shape = SubResource("RectangleShape2D_nxhsn")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=941342622]
 texture = ExtResource("2_fe5c3")
 
-[node name="EditorOnlyComponent" type="Node" parent="Sprite"]
+[node name="EditorOnlyComponent" type="Node" parent="Sprite" unique_id=1684420787]
 script = ExtResource("3_6p10t")

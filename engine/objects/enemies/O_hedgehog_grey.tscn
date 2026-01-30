@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bh0rc8rlbhfpl"]
+[gd_scene format=3 uid="uid://bh0rc8rlbhfpl"]
 
 [ext_resource type="PackedScene" uid="uid://boio8lcsy30r7" path="res://engine/resources/enemies/internal_hedgehog_base.tscn" id="1_4glvl"]
 [ext_resource type="Resource" uid="uid://dv0xcfjvxhonj" path="res://engine/resources/enemies/R_damagetype_armored.tres" id="2_ta2eq"]
@@ -26,7 +26,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Grey Hedgehog" instance=ExtResource("1_4glvl")]
+[node name="Grey Hedgehog" unique_id=1548460385 instance=ExtResource("1_4glvl")]
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 AcceptedDamageTypes = ExtResource("2_ta2eq")

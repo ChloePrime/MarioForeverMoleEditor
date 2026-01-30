@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cairj0w5jo2nv"]
+[gd_scene format=3 uid="uid://cairj0w5jo2nv"]
 
 [ext_resource type="Theme" uid="uid://bkn27cfm387i2" path="res://engine/resources/ui/Theme_game_ui.tres" id="1_4n6h2"]
 [ext_resource type="Script" uid="uid://5ehstv75tlu7" path="res://engine/scripts/ui/LevelHud.cs" id="1_beqw8"]
@@ -75,7 +75,7 @@ _data = {
 &"default": SubResource("Animation_qood3")
 }
 
-[node name="Game UI" type="Control"]
+[node name="Game UI" type="Control" unique_id=1735038851]
 z_index = 4000
 layout_mode = 3
 anchors_preset = 15
@@ -88,7 +88,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_beqw8")
 
-[node name="Life System" type="Control" parent="."]
+[node name="Life System" type="Control" parent="." unique_id=1034159503]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,7 +97,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_d76tu")
 
-[node name="MARIOx" type="Label" parent="Life System"]
+[node name="MARIOx" type="Label" parent="Life System" unique_id=417820578]
 layout_mode = 1
 offset_left = 35.0
 offset_top = 8.0
@@ -107,7 +107,7 @@ theme = ExtResource("1_4n6h2")
 text = "MARIO×"
 horizontal_alignment = 2
 
-[node name="Life" type="Label" parent="Life System"]
+[node name="Life" type="Label" parent="Life System" unique_id=1614101805]
 layout_mode = 1
 offset_left = 135.0
 offset_top = 8.0
@@ -117,7 +117,7 @@ theme = ExtResource("1_4n6h2")
 text = "4"
 script = ExtResource("4_qh2x4")
 
-[node name="Score System" type="Control" parent="."]
+[node name="Score System" type="Control" parent="." unique_id=1830449133]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,7 +126,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_d76tu")
 
-[node name="Score" type="Label" parent="Score System"]
+[node name="Score" type="Label" parent="Score System" unique_id=1056108744]
 layout_mode = 1
 offset_left = -106.0
 offset_top = 27.0
@@ -137,7 +137,7 @@ text = "0"
 horizontal_alignment = 2
 script = ExtResource("4_qh2x4")
 
-[node name="Coin System" type="Control" parent="."]
+[node name="Coin System" type="Control" parent="." unique_id=2037453091]
 layout_mode = 1
 anchor_left = 0.391
 anchor_right = 0.391
@@ -148,7 +148,7 @@ offset_bottom = 43.0
 grow_horizontal = 2
 script = ExtResource("2_d76tu")
 
-[node name="Coin" type="Label" parent="Coin System"]
+[node name="Coin" type="Label" parent="Coin System" unique_id=1444020065]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -162,12 +162,12 @@ theme = ExtResource("1_4n6h2")
 text = "0"
 script = ExtResource("4_qh2x4")
 
-[node name="Coin X" type="AnimatedSprite2D" parent="Coin System"]
+[node name="Coin X" type="AnimatedSprite2D" parent="Coin System" unique_id=1739216285]
 sprite_frames = SubResource("SpriteFrames_aiayr")
 autoplay = "default"
 centered = false
 
-[node name="Hit Point System" type="Control" parent="."]
+[node name="Hit Point System" type="Control" parent="." unique_id=84115588]
 layout_mode = 1
 anchor_left = 0.391
 anchor_right = 0.391
@@ -175,7 +175,7 @@ offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource("2_d76tu")
 
-[node name="Text L" type="Label" parent="Hit Point System"]
+[node name="Text L" type="Label" parent="Hit Point System" unique_id=916410726]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -193,7 +193,7 @@ text = "E"
 horizontal_alignment = 2
 script = ExtResource("4_qh2x4")
 
-[node name="Text R" type="Label" parent="Hit Point System"]
+[node name="Text R" type="Label" parent="Hit Point System" unique_id=1735280695]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -207,7 +207,7 @@ theme = ExtResource("1_4n6h2")
 text = "99"
 script = ExtResource("4_qh2x4")
 
-[node name="Bar Background" type="TextureRect" parent="Hit Point System/Text R"]
+[node name="Bar Background" type="TextureRect" parent="Hit Point System/Text R" unique_id=972403032]
 layout_mode = 1
 offset_left = 36.0
 offset_top = 0.5
@@ -219,7 +219,7 @@ expand_mode = 1
 stretch_mode = 1
 script = ExtResource("7_eo6s5")
 
-[node name="Bar" type="TextureRect" parent="Hit Point System/Text R"]
+[node name="Bar" type="TextureRect" parent="Hit Point System/Text R" unique_id=1612890508]
 layout_mode = 1
 offset_left = 36.0
 offset_top = 0.5
@@ -231,7 +231,7 @@ expand_mode = 1
 stretch_mode = 1
 script = ExtResource("7_eo6s5")
 
-[node name="Mega Man HP" type="Control" parent="."]
+[node name="Mega Man HP" type="Control" parent="." unique_id=148758137]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 32.0
@@ -240,9 +240,10 @@ offset_right = 32.0
 offset_bottom = -96.0
 script = ExtResource("2_d76tu")
 
-[node name="Bar" parent="Mega Man HP" instance=ExtResource("9_nxqmq")]
+[node name="Bar" parent="Mega Man HP" unique_id=1101052683 instance=ExtResource("9_nxqmq")]
+layout_mode = 0
 
-[node name="Mega Man Boss HP" type="Control" parent="."]
+[node name="Mega Man Boss HP" type="Control" parent="." unique_id=545001679]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -253,9 +254,10 @@ offset_right = -48.0
 offset_bottom = -96.0
 grow_horizontal = 0
 
-[node name="Bar" parent="Mega Man Boss HP" instance=ExtResource("9_nxqmq")]
+[node name="Bar" parent="Mega Man Boss HP" unique_id=1881077888 instance=ExtResource("9_nxqmq")]
+layout_mode = 0
 
-[node name="World" type="Label" parent="."]
+[node name="World" type="Label" parent="." unique_id=1013412647]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.623
@@ -270,7 +272,7 @@ text = "WORLD"
 horizontal_alignment = 1
 script = ExtResource("2_d76tu")
 
-[node name="World Name" type="Label" parent="World"]
+[node name="World Name" type="Label" parent="World" unique_id=530597597]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -286,7 +288,7 @@ horizontal_alignment = 1
 script = ExtResource("9_k8aoj")
 ThemeForLongText = ExtResource("9_mwx5i")
 
-[node name="Time System" type="Control" parent="."]
+[node name="Time System" type="Control" parent="." unique_id=600899066]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -299,7 +301,7 @@ grow_horizontal = 0
 theme = ExtResource("1_4n6h2")
 script = ExtResource("2_d76tu")
 
-[node name="TIME" type="Label" parent="Time System"]
+[node name="TIME" type="Label" parent="Time System" unique_id=2064593399]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -310,7 +312,7 @@ grow_vertical = 2
 theme = ExtResource("1_4n6h2")
 text = "TIME"
 
-[node name="Time" type="Label" parent="Time System"]
+[node name="Time" type="Label" parent="Time System" unique_id=411107191]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -325,13 +327,11 @@ text = "400"
 horizontal_alignment = 2
 script = ExtResource("4_qh2x4")
 
-[node name="Timeout Hint Animation" type="AnimationPlayer" parent="Time System"]
+[node name="Timeout Hint Animation" type="AnimationPlayer" parent="Time System" unique_id=156431748]
 root_node = NodePath("../TIME")
-libraries = {
-&"": SubResource("AnimationLibrary_0a140")
-}
+libraries/ = SubResource("AnimationLibrary_0a140")
 
-[node name="GO" type="Label" parent="."]
+[node name="GO" type="Label" parent="." unique_id=534973238]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

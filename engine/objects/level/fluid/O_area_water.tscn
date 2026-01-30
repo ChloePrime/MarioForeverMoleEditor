@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cnff4y14doqop"]
+[gd_scene format=3 uid="uid://cnff4y14doqop"]
 
 [ext_resource type="Script" uid="uid://bfwk66nqresmq" path="res://engine/scripts/level/AreaFluid.cs" id="1_t57w1"]
 [ext_resource type="Texture2D" uid="uid://bnfrwe6motgc1" path="res://engine/tiles/water_tileset.png" id="2_aid8y"]
@@ -75,27 +75,27 @@ size = Vector2(65536, 65536)
 atlas = ExtResource("2_aid8y")
 region = Rect2(96, 0, 32, 32)
 
-[node name="Area Water" type="Node2D"]
+[node name="Area Water" type="Node2D" unique_id=2013331875]
 modulate = Color(1, 1, 1, 0.470588)
 z_index = 1000
 script = ExtResource("1_t57w1")
 
-[node name="Top Core" type="AnimatedSprite2D" parent="."]
+[node name="Top Core" type="AnimatedSprite2D" parent="." unique_id=2032253185]
 sprite_frames = SubResource("SpriteFrames_guw6s")
 autoplay = "default"
 
-[node name="Background Manager" type="Node" parent="Top Core"]
+[node name="Background Manager" type="Node" parent="Top Core" unique_id=202733329]
 script = ExtResource("3_r2jjr")
 
-[node name="Collision" type="AnimatableBody2D" parent="Top Core"]
+[node name="Collision" type="AnimatableBody2D" parent="Top Core" unique_id=653057787]
 collision_layer = 16
 collision_mask = 0
 
-[node name="Collision Shape" type="CollisionShape2D" parent="Top Core/Collision"]
+[node name="Collision Shape" type="CollisionShape2D" parent="Top Core/Collision" unique_id=1743111409]
 position = Vector2(0, 32769)
 shape = SubResource("RectangleShape2D_qs7s2")
 
-[node name="Bottom" type="Sprite2D" parent="Top Core"]
+[node name="Bottom" type="Sprite2D" parent="Top Core" unique_id=280516352]
 position = Vector2(0, 32784)
 scale = Vector2(2048, 2048)
 texture = SubResource("AtlasTexture_gnxef")

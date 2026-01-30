@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvlmc75n1oo82"]
+[gd_scene format=3 uid="uid://bvlmc75n1oo82"]
 
 [ext_resource type="Script" uid="uid://dbrmw68xbqogd" path="res://engine/scripts/level/Goal.cs" id="1_d5xjt"]
 [ext_resource type="Texture2D" uid="uid://cxml2i81tm5b7" path="res://engine/resources/level/T_goal.png" id="2_l2htv"]
@@ -19,27 +19,27 @@ point_count = 3
 atlas = ExtResource("2_l2htv")
 region = Rect2(64, 0, 32, 288)
 
-[node name="Goal" type="Node2D"]
+[node name="Goal" type="Node2D" unique_id=1970355676]
 script = ExtResource("1_d5xjt")
 
-[node name="Frame (Back)" type="Sprite2D" parent="."]
+[node name="Frame (Back)" type="Sprite2D" parent="." unique_id=1656565927]
 z_index = -10
 position = Vector2(-32, -144)
 texture = SubResource("AtlasTexture_bhgtg")
 
-[node name="Stick Path" type="Path2D" parent="."]
+[node name="Stick Path" type="Path2D" parent="." unique_id=1233653176]
 position = Vector2(0, -250)
 curve = SubResource("Curve2D_lre7u")
 
-[node name="Path Follower" type="PathFollow2D" parent="Stick Path"]
+[node name="Path Follower" type="PathFollow2D" parent="Stick Path" unique_id=245526399]
 rotates = false
 cubic_interp = false
 script = ExtResource("4_wcggd")
 speed = 150
 
-[node name="Goal Stick" parent="Stick Path/Path Follower" instance=ExtResource("3_jybxj")]
+[node name="Goal Stick" parent="Stick Path/Path Follower" unique_id=1034283333 instance=ExtResource("3_jybxj")]
 
-[node name="Frame (Front)" type="Sprite2D" parent="."]
+[node name="Frame (Front)" type="Sprite2D" parent="." unique_id=359263998]
 z_index = 110
 position = Vector2(32, -144)
 texture = SubResource("AtlasTexture_cl1n7")

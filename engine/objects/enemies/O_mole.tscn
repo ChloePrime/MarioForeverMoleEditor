@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cokgsxbgqqv72"]
+[gd_scene format=3 uid="uid://cokgsxbgqqv72"]
 
 [ext_resource type="PackedScene" uid="uid://cqd5ut2wsbi1h" path="res://engine/resources/enemies/internal_enemy_base.tscn" id="1_a8alf"]
 [ext_resource type="Script" uid="uid://b42wal5c5br02" path="res://engine/scripts/enemy/HorizontalHomingNpc.cs" id="2_f52af"]
@@ -26,7 +26,7 @@ animations = [{
 "speed": 16.0
 }]
 
-[node name="Mole" instance=ExtResource("1_a8alf")]
+[node name="Mole" unique_id=1654316004 instance=ExtResource("1_a8alf")]
 script = ExtResource("2_f52af")
 MaxSpeed = 150.0
 ScaleAnimationSpeed = true

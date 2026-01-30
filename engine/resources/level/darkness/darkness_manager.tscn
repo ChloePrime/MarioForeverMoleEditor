@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dit32ifngwqgh"]
+[gd_scene format=3 uid="uid://dit32ifngwqgh"]
 
 [ext_resource type="Script" uid="uid://cajm5ig4dnvut" path="res://engine/scripts/level/darkness/DarknessManager.cs" id="1_8b016"]
 [ext_resource type="Shader" uid="uid://c5rldfdrm0k2n" path="res://engine/resources/level/darkness/S_darkness.gdshader" id="1_ug3yu"]
@@ -16,7 +16,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_h5d1w"]
 gradient = SubResource("Gradient_kktix")
 
-[node name="Darkness Manager" type="Control"]
+[node name="Darkness Manager" type="Control" unique_id=117501156]
 process_priority = 5
 z_index = 3000
 layout_mode = 3
@@ -28,20 +28,20 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_8b016")
 
-[node name="Viewport Container" type="TextureRect" parent="."]
+[node name="Viewport Container" type="TextureRect" parent="." unique_id=156417680]
 material = SubResource("ShaderMaterial_2hmpb")
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 texture = SubResource("ViewportTexture_hk527")
 
-[node name="Sub Viewport" type="SubViewport" parent="Viewport Container"]
+[node name="Sub Viewport" type="SubViewport" parent="Viewport Container" unique_id=373018311]
 own_world_3d = true
 handle_input_locally = false
 size = Vector2i(640, 480)
 size_2d_override = Vector2i(640, 480)
 
-[node name="Base" type="TextureRect" parent="Viewport Container/Sub Viewport"]
+[node name="Base" type="TextureRect" parent="Viewport Container/Sub Viewport" unique_id=1767574784]
 z_index = -4000
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,12 +50,12 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_h5d1w")
 
-[node name="Light Root" type="Node2D" parent="Viewport Container/Sub Viewport"]
+[node name="Light Root" type="Node2D" parent="Viewport Container/Sub Viewport" unique_id=2021505084]
 
-[node name="Camera" type="Camera2D" parent="Viewport Container/Sub Viewport"]
+[node name="Camera" type="Camera2D" parent="Viewport Container/Sub Viewport" unique_id=1007905938]
 position = Vector2(320, 240)
 
-[node name="GC Timer" type="Timer" parent="."]
+[node name="GC Timer" type="Timer" parent="." unique_id=1750449899]
 process_mode = 3
 process_callback = 0
 wait_time = 6.0

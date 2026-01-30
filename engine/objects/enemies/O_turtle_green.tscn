@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cm06y3cialwt2"]
+[gd_scene format=3 uid="uid://cm06y3cialwt2"]
 
 [ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://engine/resources/enemies/internal_turtle_base.tscn" id="1_kof02"]
 [ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://engine/resources/enemies/T_turtle.png" id="3_74ubv"]
@@ -89,7 +89,7 @@ animations = [{
 "speed": 67.0
 }]
 
-[node name="Green Turtle" instance=ExtResource("1_kof02")]
+[node name="Green Turtle" unique_id=1255177206 instance=ExtResource("1_kof02")]
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 position = Vector2(4, -7)

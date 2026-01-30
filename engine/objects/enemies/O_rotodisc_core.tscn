@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dblakd5cjfdla"]
+[gd_scene format=3 uid="uid://dblakd5cjfdla"]
 
 [ext_resource type="Script" uid="uid://c6gnus5w8qdxx" path="res://engine/scripts/enemy/RotoDiscCore.cs" id="1_6w2l8"]
 [ext_resource type="Script" uid="uid://ck0bg0qwlyyyf" path="res://engine/scripts/rpg/MarioForeverNpcData.cs" id="2_fq10r"]
@@ -6,17 +6,11 @@
 
 [sub_resource type="Resource" id="Resource_36w7e"]
 script = ExtResource("2_fq10r")
-HitPoint = 50.0
-MaxHitPoint = 50.0
-DamageLo = 2.0
-DamageHi = 40.0
-Friendly = false
-DoNotMove = false
 
-[node name="RotoDisc Core" type="Node2D"]
+[node name="RotoDisc Core" type="Node2D" unique_id=148095807]
 script = ExtResource("1_6w2l8")
 CoreVisible = true
 NpcData = SubResource("Resource_36w7e")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=375291668]
 texture = ExtResource("3_y3bq0")

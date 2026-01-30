@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dav5m8obc6byj"]
+[gd_scene format=3 uid="uid://dav5m8obc6byj"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_8adxg"]
 
@@ -11,6 +11,6 @@ width = 640
 height = 480
 fill_to = Vector2(0, 1)
 
-[node name="Background Gradient" instance=ExtResource("1_8adxg")]
+[node name="Background Gradient" unique_id=1362975848 instance=ExtResource("1_8adxg")]
 z_index = -4090
 texture = SubResource("GradientTexture2D_o2jv4")

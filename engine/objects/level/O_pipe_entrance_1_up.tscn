@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://pb4dqrvo8h3j"]
+[gd_scene format=3 uid="uid://pb4dqrvo8h3j"]
 
 [ext_resource type="PackedScene" uid="uid://be23nigkrkxcw" path="res://engine/resources/level/internal_pipe_entrance_base.tscn" id="1_fu6td"]
 [ext_resource type="Texture2D" uid="uid://mm0taedhy73o" path="res://engine/resources/level/T_pipe_warps.png" id="2_6to0a"]
 
-[node name="Pipe Entrance (Up)" instance=ExtResource("1_fu6td")]
+[node name="Pipe Entrance (Up)" unique_id=1005944341 instance=ExtResource("1_fu6td")]
 Direction = 1
 
 [node name="Editor Display" parent="." index="0"]
@@ -14,6 +14,6 @@ region_rect = Rect2(0, 0, 64, 64)
 [node name="Hitbox" parent="." index="1"]
 position = Vector2(0, -58)
 
-[node name="Enter Wait Timer" type="Timer" parent="." index="2"]
+[node name="Enter Wait Timer" type="Timer" parent="." index="2" unique_id=1024281979]
 process_callback = 0
 one_shot = true

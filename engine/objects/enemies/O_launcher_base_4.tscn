@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://rpsqq0qvsyo3"]
+[gd_scene format=3 uid="uid://rpsqq0qvsyo3"]
 
 [ext_resource type="PackedScene" uid="uid://d2u2y448u58m4" path="res://engine/resources/enemies/internal_launcher_base_base.tscn" id="1_8w13j"]
 [ext_resource type="Texture2D" uid="uid://dgsqt0skchyt6" path="res://engine/tiles/bullet_launcher_tileset.png" id="2_ivo11"]
 
-[node name="Launcher Base (Lower, Alt)" instance=ExtResource("1_8w13j")]
+[node name="Launcher Base (Lower, Alt)" unique_id=1099264599 instance=ExtResource("1_8w13j")]
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource("2_ivo11")

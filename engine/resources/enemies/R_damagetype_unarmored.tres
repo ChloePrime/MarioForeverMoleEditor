@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DamageTypePreset" load_steps=2 format=3 uid="uid://v430l16luk5i"]
+[gd_resource type="Resource" script_class="DamageTypePreset" format=3 uid="uid://v430l16luk5i"]
 
 [ext_resource type="Script" uid="uid://dwlqjavkm3fdr" path="res://engine/scripts/rpg/DamageTypePreset.cs" id="1_wgiyv"]
 

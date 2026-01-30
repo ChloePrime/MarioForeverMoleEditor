@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkop8m3ysird7"]
+[gd_scene format=3 uid="uid://dkop8m3ysird7"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_3n0pw"]
 [ext_resource type="Script" uid="uid://dsb3li1smd4xh" path="res://engine/scripts/enemy/ClampFlower.cs" id="1_m7ojg"]
@@ -26,15 +26,15 @@ size = Vector2(20, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juljo"]
 size = Vector2(24, 32)
 
-[node name="Clamp Base" type="Node2D"]
+[node name="Clamp Base" type="Node2D" unique_id=2145167249]
 z_index = -1
 script = ExtResource("1_m7ojg")
 
-[node name="Stem" type="AnimatedSprite2D" parent="."]
+[node name="Stem" type="AnimatedSprite2D" parent="." unique_id=498225158]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_dnxv3")
 
-[node name="Enemy Core" parent="." instance=ExtResource("1_3n0pw")]
+[node name="Enemy Core" parent="." unique_id=2033821746 instance=ExtResource("1_3n0pw")]
 position = Vector2(0, -32)
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
@@ -54,11 +54,11 @@ shape = SubResource("RectangleShape2D_juljo")
 sprite_frames = ExtResource("3_cslh6")
 autoplay = "default"
 
-[node name="Wait Timer" type="Timer" parent="."]
+[node name="Wait Timer" type="Timer" parent="." unique_id=345158544]
 process_callback = 0
 one_shot = true
 
-[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=146500216]
 rect = Rect2(-16, -32, 32, 32)
 
 [editable path="Enemy Core"]

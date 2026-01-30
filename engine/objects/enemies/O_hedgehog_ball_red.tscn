@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b6akv10bkfxp5"]
+[gd_scene format=3 uid="uid://b6akv10bkfxp5"]
 
 [ext_resource type="PackedScene" uid="uid://c4agpmklk278b" path="res://engine/resources/enemies/internal_hedgehog_ball_base.tscn" id="1_36h3b"]
 [ext_resource type="Texture2D" uid="uid://bnqo64rhk8vi7" path="res://engine/resources/enemies/T_hedgehog_ball.png" id="2_hsle6"]
@@ -124,7 +124,7 @@ animations = [{
 "speed": 50.0
 }]
 
-[node name="Hedgehog Ball (Red)" instance=ExtResource("1_36h3b")]
+[node name="Hedgehog Ball (Red)" unique_id=1319862508 instance=ExtResource("1_36h3b")]
 Ontology = ExtResource("2_j0io1")
 
 [node name="Sprite" parent="Enemy Core" index="2"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ryf2r5cmt4w7"]
+[gd_scene format=3 uid="uid://ryf2r5cmt4w7"]
 
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://engine/objects/enemies/O_mole.tscn" id="1_g2n2e"]
 [ext_resource type="Texture2D" uid="uid://cge0ho83cp17u" path="res://engine/resources/enemies/T_mole_smb3.png" id="3_i7j4d"]
@@ -25,7 +25,7 @@ animations = [{
 "speed": 16.0
 }]
 
-[node name="Mole (SMB3)" instance=ExtResource("1_g2n2e")]
+[node name="Mole (SMB3)" unique_id=1896422350 instance=ExtResource("1_g2n2e")]
 
 [node name="Sprite" parent="Enemy Core" index="2"]
 sprite_frames = SubResource("SpriteFrames_w5mh4")

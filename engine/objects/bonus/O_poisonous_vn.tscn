@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4t8mbtjglpky"]
+[gd_scene format=3 uid="uid://c4t8mbtjglpky"]
 
 [ext_resource type="PackedScene" uid="uid://ch0ilgsgq41mh" path="res://engine/resources/bonus/internal_bonus_base.tscn" id="1_224uk"]
 [ext_resource type="Script" uid="uid://5c4tuf2xg77k" path="res://engine/scripts/bonus/PoisonousVn.cs" id="2_h2d6g"]
@@ -27,7 +27,7 @@ animations = [{
 "speed": 4.5
 }]
 
-[node name="Poisonous VN" instance=ExtResource("1_224uk")]
+[node name="Poisonous VN" unique_id=1335298808 instance=ExtResource("1_224uk")]
 script = ExtResource("2_h2d6g")
 Score = ExtResource("3_njqwp")
 PickSound = null

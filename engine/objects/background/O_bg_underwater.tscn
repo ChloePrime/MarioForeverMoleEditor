@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dr0ene4s7hu0d"]
+[gd_scene format=3 uid="uid://dr0ene4s7hu0d"]
 
 [ext_resource type="PackedScene" uid="uid://cgs5e7grimv6" path="res://engine/resources/background/background_base.tscn" id="1_vgpf1"]
 [ext_resource type="Texture2D" uid="uid://dq52edupqjngv" path="res://engine/resources/background/T_bg_underwater.png" id="2_2xs02"]
 
-[node name="Background" instance=ExtResource("1_vgpf1")]
+[node name="Background" unique_id=1969968321 instance=ExtResource("1_vgpf1")]
 texture = ExtResource("2_2xs02")

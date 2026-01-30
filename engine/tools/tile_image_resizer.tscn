@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://2nv20wrjn4i0"]
+[gd_scene format=3 uid="uid://2nv20wrjn4i0"]
 
 [ext_resource type="PackedScene" uid="uid://qmfgn6jgqh78" path="res://engine/resources/ui/image_resizer_base.tscn" id="1_h0atp"]
 [ext_resource type="Script" uid="uid://cnijih42f20f7" path="res://engine/scripts/tool/TileImageResizer.cs" id="2_h0atp"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://cf1sc3v3ksxst" path="res://engine/scripts/tool/TileImageResizerFormat.cs" id="3_qx14l"]
 [ext_resource type="Texture2D" uid="uid://cr5meevp5vyhn" path="res://engine/tools/tile_image_resizer_reference_source_tileset.png" id="5_wj16g"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_db4rr"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_wj16g"]
 viewport_path = NodePath("Frame Buffer")
 
 [sub_resource type="Resource" id="Resource_6p82p"]
@@ -80,19 +80,19 @@ script = ExtResource("3_qx14l")
 Parts = Array[Object]([SubResource("Resource_sp636"), SubResource("Resource_0us5j"), SubResource("Resource_rwxjg"), SubResource("Resource_p2wx1")])
 metadata/_custom_type_script = "uid://cf1sc3v3ksxst"
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_tw202"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jsnoi"]
 viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 
-[node name="Tile Image Resizer" instance=ExtResource("1_h0atp")]
-texture = SubResource("ViewportTexture_db4rr")
+[node name="Tile Image Resizer" unique_id=220481887 instance=ExtResource("1_h0atp")]
+texture = SubResource("ViewportTexture_wj16g")
 script = ExtResource("2_h0atp")
 PrepareFormat = SubResource("Resource_wj16g")
 ExportFormat = SubResource("Resource_jsnoi")
 
-[node name="XBRz Viewport" parent="Frame Buffer" index="0"]
-texture = SubResource("ViewportTexture_tw202")
+[node name="XBRz Viewport" parent="Frame Buffer" parent_id_path=PackedInt32Array(1275563666) index="0" unique_id=970450840]
+texture = SubResource("ViewportTexture_jsnoi")
 
-[node name="Sprite" parent="Frame Buffer/XBRz Viewport/16x Pixelized Content" index="0"]
+[node name="Sprite" parent="Frame Buffer/XBRz Viewport/16x Pixelized Content" parent_id_path=PackedInt32Array(1561553489) index="0" unique_id=315114654]
 position = Vector2(160, 120)
 texture = ExtResource("5_wj16g")
 centered = true

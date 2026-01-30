@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccqxn7t61xoyn"]
+[gd_scene format=3 uid="uid://ccqxn7t61xoyn"]
 
 [ext_resource type="PackedScene" uid="uid://b7gvthly3y30h" path="res://engine/resources/bonus/powerup_bonus_base.tscn" id="1_xkatw"]
 [ext_resource type="Texture2D" uid="uid://cexrqlqvkj0yi" path="res://engine/resources/bonus/fire_flower.png" id="2_0dx43"]
@@ -40,7 +40,7 @@ animations = [{
 "speed": 13.5
 }]
 
-[node name="Fire Flower" instance=ExtResource("1_xkatw")]
+[node name="Fire Flower" unique_id=343081365 instance=ExtResource("1_xkatw")]
 TargetStatus = ExtResource("2_e04y1")
 ControlAcceleration = 0.0
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0f766vnjn4y6"]
+[gd_scene format=3 uid="uid://b0f766vnjn4y6"]
 
 [ext_resource type="PackedScene" uid="uid://bk2nauiy0bc81" path="res://engine/resources/bonus/bumpable_base.tscn" id="1_s5hwn"]
 [ext_resource type="Texture2D" uid="uid://hdkq0burtgfl" path="res://engine/resources/bonus/question_block.png" id="2_bn5x8"]
@@ -44,7 +44,7 @@ animations = [{
 "speed": 4.5
 }]
 
-[node name="Question Block Base" instance=ExtResource("1_s5hwn")]
+[node name="Question Block Base" unique_id=1569336206 instance=ExtResource("1_s5hwn")]
 script = ExtResource("2_ku66y")
 Content = null
 ContentOffset = Vector2(0, 0)
@@ -52,8 +52,8 @@ SmallMarioOverride = ExtResource("3_65m1q")
 OneTimeUse = true
 BumpSound = ExtResource("4_v17lf")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1932351312]
 sprite_frames = SubResource("SpriteFrames_mnp63")
 autoplay = "default"
 
-[node name="Editor Display" type="Sprite2D" parent="." index="3"]
+[node name="Editor Display" type="Sprite2D" parent="." index="3" unique_id=1692777881]

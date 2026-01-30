@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://byg768ksumge4"]
+[gd_scene format=3 uid="uid://byg768ksumge4"]
 
 [ext_resource type="Texture2D" uid="uid://ssk740hux3cu" path="res://engine/resources/shared/T_smoke_s.png" id="1_ip1tt"]
 [ext_resource type="Script" uid="uid://byhmsdssfjer" path="res://engine/scripts/util/helper_nodes/SelfDestroyingBetterAnimatedEffect.cs" id="2_cuilp"]
@@ -39,7 +39,7 @@ FramePivots = null
 FramePivotVectors = null
 FrameOffsets = Array[Vector2]([Vector2(0.5, -0.5), Vector2(0.5, -0.5)])
 
-[node name="Small Smoke" type="AnimatedSprite2D"]
+[node name="Small Smoke" type="AnimatedSprite2D" unique_id=950002250]
 physics_interpolation_mode = 2
 z_index = 500
 sprite_frames = SubResource("SpriteFrames_0yshx")

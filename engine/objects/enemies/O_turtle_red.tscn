@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bntc5tgacawy8"]
+[gd_scene format=3 uid="uid://bntc5tgacawy8"]
 
 [ext_resource type="PackedScene" uid="uid://dsc1uriffc8l" path="res://engine/resources/enemies/internal_turtle_base.tscn" id="1_el05g"]
 [ext_resource type="Texture2D" uid="uid://dqqqnklfjrp57" path="res://engine/resources/enemies/T_turtle.png" id="3_6k1i5"]
@@ -89,7 +89,7 @@ animations = [{
 "speed": 67.0
 }]
 
-[node name="Red Turtle" instance=ExtResource("1_el05g")]
+[node name="Red Turtle" unique_id=803979032 instance=ExtResource("1_el05g")]
 WalkSpeed = 100.0
 JumpStrength = 300.0
 TurnAtCliff = true

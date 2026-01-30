@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bodhgx6bdjudy"]
+[gd_resource type="Resource" format=3 uid="uid://bodhgx6bdjudy"]
 
 [ext_resource type="PackedScene" uid="uid://gi86my0pjg6q" path="res://engine/resources/mario/mario_sprite_3d_example.tscn" id="1_t8070"]
 [ext_resource type="Resource" uid="uid://bmteyw5cbqi3e" path="res://engine/resources/mario/status_big.tres" id="2_bm5mn"]
@@ -7,6 +7,5 @@
 [resource]
 script = ExtResource("3_6y68x")
 Id = &"chloe_3d"
-Size = 1
 HurtResult = ExtResource("2_bm5mn")
 AnimationNode = ExtResource("1_t8070")

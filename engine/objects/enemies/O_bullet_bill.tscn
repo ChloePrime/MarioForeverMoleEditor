@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd05sqe4qug7h"]
+[gd_scene format=3 uid="uid://bd05sqe4qug7h"]
 
 [ext_resource type="PackedScene" uid="uid://shi4xcud2fmv" path="res://engine/resources/enemies/internal_enemy_core.tscn" id="1_aau2y"]
 [ext_resource type="Script" uid="uid://e0y54ihtk4pw" path="res://engine/scripts/enemy/BulletBill.cs" id="1_do0wn"]
@@ -17,11 +17,11 @@ size = Vector2(32, 28)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0x121"]
 size = Vector2(24, 20)
 
-[node name="Bullet Bill" type="Node2D"]
+[node name="Bullet Bill" type="Node2D" unique_id=224724909]
 z_index = -1
 script = ExtResource("1_do0wn")
 
-[node name="Enemy Core" parent="." instance=ExtResource("1_aau2y")]
+[node name="Enemy Core" parent="." unique_id=462940845 instance=ExtResource("1_aau2y")]
 
 [node name="Hurt Detector" parent="Enemy Core" index="0"]
 script = ExtResource("3_n4bos")

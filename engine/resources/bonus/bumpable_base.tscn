@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk2nauiy0bc81"]
+[gd_scene format=3 uid="uid://bk2nauiy0bc81"]
 
 [ext_resource type="Script" uid="uid://b32v6dwpciq6l" path="res://engine/scripts/bonus/BumpableBlock.cs" id="1_ws4w7"]
 [ext_resource type="SpriteFrames" uid="uid://cyxyvhym4lhdw" path="res://engine/resources/shared/SF_placeholder.tres" id="2_2qoei"]
@@ -27,17 +27,15 @@ _data = {
 &"bumped": SubResource("Animation_00s4d")
 }
 
-[node name="Bumpable Base" type="StaticBody2D"]
+[node name="Bumpable Base" type="StaticBody2D" unique_id=698772337]
 collision_mask = 0
 script = ExtResource("1_ws4w7")
 
-[node name="Collision Shape" type="CollisionShape2D" parent="."]
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=1442654978]
 shape = SubResource("RectangleShape2D_iwkro")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1932351312]
 sprite_frames = ExtResource("2_2qoei")
 
-[node name="Bump Animation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_ddyan")
-}
+[node name="Bump Animation" type="AnimationPlayer" parent="." unique_id=2058159253]
+libraries/ = SubResource("AnimationLibrary_ddyan")
