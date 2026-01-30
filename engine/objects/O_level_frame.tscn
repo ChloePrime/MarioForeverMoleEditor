@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwanfr0onc8vt"]
+[gd_scene format=3 uid="uid://dwanfr0onc8vt"]
 
 [ext_resource type="Script" uid="uid://bopixaidmpi2h" path="res://engine/scripts/level/LevelFrame.cs" id="1_bhhpe"]
 [ext_resource type="PackedScene" uid="uid://b5iq4ju3uohvh" path="res://levels/example/example.tscn" id="2_bego7"]
@@ -15,7 +15,7 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_h4287"]
 viewport_path = NodePath("Level/Scaled HD Level")
 
-[node name="Level Frame" type="Control" node_paths=PackedStringArray("DarknessManager", "GameViewport", "Hud")]
+[node name="Level Frame" type="Control" unique_id=2004579497 node_paths=PackedStringArray("DarknessManager", "GameViewport", "Hud")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +32,7 @@ GameViewport = NodePath("Level/Scaled HD Level/Level Container/Level Viewport")
 Hud = NodePath("Level/Aspect Ratio Container/Game UI")
 GameRule = ExtResource("3_qymbr")
 
-[node name="Level" type="TextureRect" parent="."]
+[node name="Level" type="TextureRect" parent="." unique_id=641436654]
 z_index = 1
 texture_filter = 2
 layout_mode = 1
@@ -45,9 +45,10 @@ texture = SubResource("ViewportTexture_h4287")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Scaled HD Level" type="SubViewport" parent="Level"]
+[node name="Scaled HD Level" type="SubViewport" parent="Level" unique_id=1660508423]
 disable_3d = true
 handle_input_locally = false
+use_hdr_2d = true
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 physics_object_picking = true
@@ -57,7 +58,7 @@ size_2d_override = Vector2i(640, 480)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Level Container" type="SubViewportContainer" parent="Level/Scaled HD Level"]
+[node name="Level Container" type="SubViewportContainer" parent="Level/Scaled HD Level" unique_id=277890302]
 texture_filter = 1
 material = ExtResource("2_howmm")
 anchors_preset = 15
@@ -67,10 +68,11 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="Level Viewport" type="SubViewport" parent="Level/Scaled HD Level/Level Container"]
+[node name="Level Viewport" type="SubViewport" parent="Level/Scaled HD Level/Level Container" unique_id=2003536776]
 own_world_3d = true
 handle_input_locally = false
 snap_2d_vertices_to_pixel = true
+use_hdr_2d = true
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
@@ -79,7 +81,7 @@ physics_object_picking_sort = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="Aspect Ratio Container" type="AspectRatioContainer" parent="Level"]
+[node name="Aspect Ratio Container" type="AspectRatioContainer" parent="Level" unique_id=1386768552]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,14 +92,14 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 1.3333
 
-[node name="Game UI" parent="Level/Aspect Ratio Container" instance=ExtResource("3_i5s5a")]
+[node name="Game UI" parent="Level/Aspect Ratio Container" unique_id=1350769507 instance=ExtResource("3_i5s5a")]
 layout_mode = 2
 
-[node name="Darkness Manager" parent="Level/Aspect Ratio Container" instance=ExtResource("6_kh17v")]
+[node name="Darkness Manager" parent="Level/Aspect Ratio Container" unique_id=684519822 instance=ExtResource("6_kh17v")]
 visible = false
 layout_mode = 2
 
-[node name="Frame Curtain" type="Control" parent="."]
+[node name="Frame Curtain" type="Control" parent="." unique_id=1024441431]
 visible = false
 modulate = Color(0.75, 0.75, 0.75, 1)
 anchors_preset = 0
@@ -106,7 +108,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="L" type="Control" parent="Frame Curtain"]
+[node name="L" type="Control" parent="Frame Curtain" unique_id=1928099343]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -118,7 +120,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Image" type="TextureRect" parent="Frame Curtain/L"]
+[node name="Image" type="TextureRect" parent="Frame Curtain/L" unique_id=1454059919]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -135,7 +137,7 @@ texture = ExtResource("3_nh8oc")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="R" type="Control" parent="Frame Curtain"]
+[node name="R" type="Control" parent="Frame Curtain" unique_id=315690293]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -147,7 +149,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Image" type="TextureRect" parent="Frame Curtain/R"]
+[node name="Image" type="TextureRect" parent="Frame Curtain/R" unique_id=1010808923]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -161,7 +163,7 @@ texture = ExtResource("3_nh8oc")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Frame Anime" type="Control" parent="."]
+[node name="Frame Anime" type="Control" parent="." unique_id=305590084]
 modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -170,7 +172,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="L" type="Control" parent="Frame Anime"]
+[node name="L" type="Control" parent="Frame Anime" unique_id=1644258549]
 clip_contents = true
 layout_mode = 1
 anchor_right = 0.5
@@ -180,7 +182,7 @@ offset_right = -120.0
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Image" type="TextureRect" parent="Frame Anime/L"]
+[node name="Image" type="TextureRect" parent="Frame Anime/L" unique_id=447909198]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -192,7 +194,7 @@ texture = ExtResource("3_bly6j")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="R" type="Control" parent="Frame Anime"]
+[node name="R" type="Control" parent="Frame Anime" unique_id=619201917]
 clip_contents = true
 layout_mode = 1
 anchor_left = 0.5
@@ -205,7 +207,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Image" type="TextureRect" parent="Frame Anime/R"]
+[node name="Image" type="TextureRect" parent="Frame Anime/R" unique_id=385747183]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,5 +219,5 @@ texture = ExtResource("4_leriq")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Debug Cheater" type="Node" parent="."]
+[node name="Debug Cheater" type="Node" parent="." unique_id=814533814]
 script = ExtResource("6_sxgtr")
