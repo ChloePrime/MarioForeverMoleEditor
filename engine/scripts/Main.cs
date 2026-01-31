@@ -1,4 +1,5 @@
-﻿global using static ChloePrime.MarioForever.Util.InputHelper;
+﻿global using ChloePrime.Godot.SimpleGlobalSound;
+global using static ChloePrime.MarioForever.Util.InputHelper;
 using Godot;
 
 namespace ChloePrime.MarioForever;
