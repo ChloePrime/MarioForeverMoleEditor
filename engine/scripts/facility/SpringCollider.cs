@@ -1,18 +1,19 @@
-﻿using ChloePrime.Godot.Util;
-using ChloePrime.MarioForever.Enemy;
+﻿using ChloePrime.MarioForever.Enemy;
 using ChloePrime.MarioForever.Player;
 using ChloePrime.MarioForever.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.Facility;
 
-public partial class Spring : Area2D, IStompable
+public partial class SpringCollider : Area2D, IStompable
 {
     [Export] public float JumpStrengthLo { get; set; } = Units.Speed.CtfToGd(10);
     [Export] public float JumpStrengthHi { get; set; } = Units.Speed.CtfToGd(19);
-    [Export] public AudioStream JumpSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/facility/SE_spring.wav");
+    
+    [Signal] public delegate void SpringStompedEventHandler();
     
     public Vector2 StompCenter => GlobalPosition;
+    
     public void StompBy(Node2D stomper)
     {
         switch (stomper)
@@ -26,17 +27,7 @@ public partial class Spring : Area2D, IStompable
             default:
                 return;
         }
-        JumpSound?.Play();
-        _sprite.Play(AnimDefault);
+        
+        EmitSignal(SignalName.SpringStomped);
     }
-
-    public override void _Ready()
-    {
-        base._Ready();
-        this.GetNode(out _sprite, NpSprite);
-    }
-
-    private static readonly NodePath NpSprite = "Sprite";
-    private static readonly StringName AnimDefault = "default";
-    private AnimatedSprite2D _sprite;
 }

@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://engine/objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://engine/objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
 [ext_resource type="PackedScene" uid="uid://dvmjb13j7iff" path="res://levels/example/example_tiles_area1.tmx" id="36_3k0x5"]
-[ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://engine/objects/facility/O_spring.tscn" id="36_132yy"]
+[ext_resource type="PackedScene" uid="uid://bqhecjqjc5kim" path="res://engine/objects/facility/spring.tscn" id="36_132yy"]
 [ext_resource type="PackedScene" uid="uid://bx1heogl41wtf" path="res://engine/objects/level/O_pipe_entrance_3_left.tscn" id="36_n2tk6"]
 [ext_resource type="AudioStream" uid="uid://577kyg1v8coa" path="res://levels/example/underground.ogg" id="36_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://cura0qvkompxa" path="res://engine/objects/level/O_door.tscn" id="36_xxotm"]
