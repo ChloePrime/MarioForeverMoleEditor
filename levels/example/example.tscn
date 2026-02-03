@@ -35,7 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://577kyg1v8coa" path="res://levels/example/underground.ogg" id="36_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://cura0qvkompxa" path="res://engine/objects/level/O_door.tscn" id="36_xxotm"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://engine/objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
-[ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://engine/objects/level/fluid/O_area_water.tscn" id="37_mi6cf"]
+[ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://engine/objects/level/fluid/water_area.tscn" id="37_mi6cf"]
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://engine/objects/level/O_goal.tscn" id="38_ypky8"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://engine/objects/level/O_goal_small.tscn" id="46_jmabb"]
 
@@ -212,7 +212,7 @@ Target = NodePath("../Pipe Exit (Left)")
 position = Vector2(784, 416)
 
 [node name="Area Water" parent="Overworld" unique_id=167927243 instance=ExtResource("37_mi6cf")]
-position = Vector2(32, 448)
+position = Vector2(352, 464)
 
 [node name="Goal (Small)" parent="Overworld" unique_id=703801437 instance=ExtResource("46_jmabb")]
 position = Vector2(2320, 416)
