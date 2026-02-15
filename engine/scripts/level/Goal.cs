@@ -26,7 +26,7 @@ public enum GoalType
 public partial class Goal : Node2D
 {
     [Export] public PackedScene ExitTarget { get; set; }
-    [Export] public AudioStream ClearJingle { get; set; } = GD.Load<AudioStream>("res://engine/resources/level/ME_level_completed.ogg");
+    [Export] public AudioStream ClearJingle { get; set; } = GD.Load<AudioStream>("uid://dpxtp67nosaqr");
     
     [ExportSubgroup("Advanced")]
     [Export]
@@ -35,14 +35,14 @@ public partial class Goal : Node2D
     private static readonly NodePath NpGoalStick = "Stick Path/Path Follower/Goal Stick";
     private GoalStick _stick;
     
-    private static readonly PackedScene Score100 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_100.tscn");
-    private static readonly PackedScene Score200 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_200.tscn");
-    private static readonly PackedScene Score500 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_500.tscn");
-    private static readonly PackedScene Score1000 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_1000.tscn");
-    private static readonly PackedScene Score2000 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_2000.tscn");
-    private static readonly PackedScene Score5000 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_5000.tscn");
-    private static readonly PackedScene Score10000 = GD.Load<PackedScene>("res://engine/objects/ui/O_score_10000.tscn");
-    private static readonly AudioStream TimeSettlingSound = GD.Load<AudioStream>("res://engine/resources/level/SE_time_settling.wav");
+    private static readonly PackedScene Score100 = GD.Load<PackedScene>("uid://j04gurtf7ia4");
+    private static readonly PackedScene Score200 = GD.Load<PackedScene>("uid://dapxc0x6y1soc");
+    private static readonly PackedScene Score500 = GD.Load<PackedScene>("uid://jy5he83djmim");
+    private static readonly PackedScene Score1000 = GD.Load<PackedScene>("uid://cunb52mqbotiq");
+    private static readonly PackedScene Score2000 = GD.Load<PackedScene>("uid://vlfkky6d6jx2");
+    private static readonly PackedScene Score5000 = GD.Load<PackedScene>("uid://inksxurmj4x0");
+    private static readonly PackedScene Score10000 = GD.Load<PackedScene>("uid://qko6cscqp6lc");
+    private static readonly AudioStream TimeSettlingSound = GD.Load<AudioStream>("uid://bnv6wu750m822");
     private WeakRef _capturedPlayer;
 
     public async void CompleteLevel()
@@ -121,7 +121,7 @@ public partial class Goal : Node2D
             .MinBy(g => ToLocal(g.GlobalPosition).LengthSquared())
             ?.ExitTarget;
 
-        manager.Level = targetFromNearby ?? GD.Load<PackedScene>("res://engine/resources/level/limbo.tscn");
+        manager.Level = targetFromNearby ?? GD.Load<PackedScene>("uid://cw8mqse8hnr72"); // Limbo.tscn
     }
 
     private async void PlayTimeSettlingSound()

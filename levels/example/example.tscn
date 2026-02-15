@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://de3l15m5jcviv" path="res://engine/objects/enemies/spiky_facility/O_spike_iw_2_left.tscn" id="19_veeqw"]
 [ext_resource type="PackedScene" uid="uid://cpir81futt1ii" path="res://engine/objects/enemies/spiky_facility/O_spike_iw_3_right.tscn" id="20_tvwyx"]
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://engine/objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
-[ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://engine/objects/enemies/O_goomba.tscn" id="21_l8ajo"]
+[ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://engine/objects/enemies/goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://engine/objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://engine/objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://engine/objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://engine/objects/level/O_goal.tscn" id="38_ypky8"]
 [ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://engine/objects/bonus/slippery_vn.tscn" id="39_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://d0pmmjb7l4rps" path="res://engine/objects/bonus/green_mushroom.tscn" id="40_odrgt"]
+[ext_resource type="AudioStream" uid="uid://fkv1apskp037" path="res://engine/resources/mario/SE_powerup.wav" id="41_0s6mt"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://engine/objects/level/O_goal_small.tscn" id="46_jmabb"]
 
 [sub_resource type="Gradient" id="Gradient_ctip4"]
@@ -72,10 +73,6 @@ AreaMusic = ExtResource("5_ps4lb")
 
 [node name="Spring" parent="Overworld" unique_id=862500632 instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
-
-[node name="Mario" parent="Overworld" unique_id=1109980927 instance=ExtResource("3_5usbp")]
-position = Vector2(272, 416)
-FastRetry = true
 
 [node name="Music Changer" parent="Overworld" unique_id=174494719 instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
@@ -234,6 +231,9 @@ Target = NodePath("../Door")
 position = Vector2(1328, 352)
 Target = NodePath("../Door")
 
+[node name="Mario" parent="Overworld" unique_id=977979639 instance=ExtResource("3_5usbp")]
+position = Vector2(144, 416)
+
 [node name="Bonus Room" type="Node2D" parent="." unique_id=146233307]
 position = Vector2(0, 480)
 script = ExtResource("3_gyt0a")
@@ -269,3 +269,4 @@ position = Vector2(496, 400)
 
 [node name="1UP Mushroom" parent="." unique_id=917383935 instance=ExtResource("40_odrgt")]
 position = Vector2(1121, 400)
+PickSound = ExtResource("41_0s6mt")

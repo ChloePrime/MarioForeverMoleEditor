@@ -27,7 +27,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     [Export, MaybeNull]
     public AudioStream StompedSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/enemies/SE_stomp.wav");
 
-    [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://engine/objects/ui/O_score_200.tscn");
+    [Export] public PackedScene Score { get; set; }
 
     [Export]
     public PackedScene Corpse { get; set; } = GD.Load<PackedScene>("res://engine/resources/enemies/generic_corpse.tscn");

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jslpfrp6fydt"
-path="res://.godot/imported/T_leaping_coin.png-c9ce8142b5f7a5766891ff396a81fa9c.ctex"
+uid="uid://c5q5lrrtqmrbr"
+path="res://.godot/imported/score.png-5b42928c7d03fedfff0337f68c8e5905.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/resources/bonus/T_leaping_coin.png"
-dest_files=["res://.godot/imported/T_leaping_coin.png-c9ce8142b5f7a5766891ff396a81fa9c.ctex"]
+source_file="res://engine/resources/ui/score.png"
+dest_files=["res://.godot/imported/score.png-5b42928c7d03fedfff0337f68c8e5905.ctex"]
 
 [params]
 

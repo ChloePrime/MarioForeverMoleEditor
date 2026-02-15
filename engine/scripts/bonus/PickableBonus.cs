@@ -9,10 +9,10 @@ namespace ChloePrime.MarioForever.Bonus;
 public partial class PickableBonus : WalkableObjectBase
 {
     [Export]
-    public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://engine/objects/ui/O_score_1000.tscn");
-
+    public PackedScene Score { get; set; }
+    
     [Export]
-    public AudioStream PickSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/mario/SE_powerup.wav");
+    public AudioStream PickSound { get; set; } = GD.Load<AudioStream>("uid://fkv1apskp037");
 
     public virtual void _OnMarioGotMe(Mario mario)
     {

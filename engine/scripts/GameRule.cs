@@ -19,6 +19,7 @@ public partial class GameRule : Resource
     [ExportGroup("Vanilla")]
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
+    [Export] public Array<PackedScene> AddLifeMethod { get; set; } = [];
     
     [ExportSubgroup("Coins")]
     [Export] public bool DisableCoin { get; set; }
@@ -57,12 +58,6 @@ public partial class GameRule : Resource
         /// </summary>
         Date,
     }
-
-    [Export]
-    public Array<PackedScene> AddLifeMethod { get; set; } = new()
-    {
-        GD.Load<PackedScene>("res://engine/objects/ui/O_1up.tscn")
-    };
     
     [ExportSubgroup("Mario")]
     [Export, MaybeNull] public MarioStatus DefaultStatus { get; set; }

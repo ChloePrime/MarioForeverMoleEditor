@@ -7,7 +7,7 @@ public partial class LeapingCoin : Node2D
 {
     [Export] public float HitPointNutritionLo { get; set; } = 1;
     [Export] public float HitPointNutritionHi { get; set; } = 5;
-    [Export] public PackedScene Score { get; set; } = GD.Load<PackedScene>("res://engine/objects/ui/O_score_200.tscn"); 
+    [Export] public PackedScene Score { get; set; } 
     
     public override void _Ready()
     {

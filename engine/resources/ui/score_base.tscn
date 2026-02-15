@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8s8guay3ciu1"]
 
-[ext_resource type="Texture2D" uid="uid://c5q5lrrtqmrbr" path="res://engine/resources/ui/T_score.png" id="1_54a3e"]
+[ext_resource type="Texture2D" uid="uid://c5q5lrrtqmrbr" path="res://engine/resources/ui/score.png" id="1_54a3e"]
 [ext_resource type="Script" uid="uid://dghbvn0rvpj6f" path="res://engine/scripts/ui/Score.cs" id="2_ehqr6"]
 
 [sub_resource type="Animation" id="Animation_5x2en"]
