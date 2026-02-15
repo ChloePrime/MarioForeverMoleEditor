@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+chloe_prime_rpg/config_resource="uid://ca2nbg1f77xir"
+
 [application]
 
 config/name="MarioForeverMoleEditor"
@@ -41,7 +45,7 @@ import/use_multiple_threads=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
+enabled=PackedStringArray("res://addons/ChloePrime.Godot.RPG/plugin.cfg", "res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
 
 [importer_defaults]
 

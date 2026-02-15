@@ -1,3 +1,6 @@
 [submodule "addons/ChloePrime.Godot.SimpleGlobalSound"]
 	path = addons/ChloePrime.Godot.SimpleGlobalSound
 	url = https://github.com/ChloePrime/ChloePrime.Godot.SimpleGlobalSound
+[submodule "addons/ChloePrime.Godot.RPG"]
+	path = addons/ChloePrime.Godot.RPG
+	url = https://github.com/ChloePrime/ChloePrime.Godot.RPG
