@@ -12,8 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://dc4sbrhjkjgrr" path="res://engine/resources/mario/mario_sprite_small.tscn" id="10_7jaa0"]
 [ext_resource type="PackedScene" uid="uid://qriqbprl1mvt" path="res://engine/objects/level/darkness/O_light_source_spot.tscn" id="11_xwjmo"]
 [ext_resource type="Texture2D" uid="uid://dm3igultx8jfo" path="res://engine/resources/mario/T_foot_gas.png" id="12_kesvh"]
+[ext_resource type="Script" uid="uid://bxn7rtli7cbaw" path="res://addons/ChloePrime.Godot.RPG/src/attribute/AttributeContainer.cs" id="13_fh74l"]
 [ext_resource type="AudioStream" uid="uid://dfebnlpchaat0" path="res://engine/resources/mario/SE_jump.wav" id="13_pd7rs"]
+[ext_resource type="Script" uid="uid://b718kbttput75" path="res://addons/ChloePrime.Godot.RPG/src/attribute/Attribute.cs" id="14_7tcrj"]
 [ext_resource type="AudioStream" uid="uid://d1hl8pya43a0d" path="res://engine/resources/mario/SE_swim.wav" id="14_st7j1"]
+[ext_resource type="Resource" uid="uid://cd3lvvtovx465" path="res://engine/resources/rpg/attributes/slipperiness.tres" id="15_6ssmc"]
 [ext_resource type="AudioStream" uid="uid://4yo63sgji6p3" path="res://engine/resources/mario/SE_hurt.wav" id="15_dthxx"]
 [ext_resource type="AudioStream" uid="uid://dnpkn8t16e4xj" path="res://engine/resources/mario/SE_skid.ogg" id="16_xcoy2"]
 [ext_resource type="Script" uid="uid://dkvlr22th6odl" path="res://engine/scripts/shared/ComboTracker.cs" id="17_00ck7"]
@@ -620,6 +623,12 @@ position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_i21ar")
 autoplay = "default"
 frame_progress = 0.274168
+
+[node name="Attribute Container" type="Node" parent="." unique_id=1212020059]
+script = ExtResource("13_fh74l")
+BaseValues = Dictionary[ExtResource("14_7tcrj"), float]({
+ExtResource("15_6ssmc"): 0.0
+})
 
 [node name="Jump Sound" type="AudioStreamPlayer" parent="." unique_id=1049238330]
 stream = ExtResource("13_pd7rs")

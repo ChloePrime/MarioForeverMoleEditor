@@ -37,6 +37,8 @@
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://engine/objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 [ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://engine/objects/level/fluid/water_area.tscn" id="37_mi6cf"]
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://engine/objects/level/O_goal.tscn" id="38_ypky8"]
+[ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://engine/objects/bonus/slippery_vn.tscn" id="39_ps4lb"]
+[ext_resource type="PackedScene" uid="uid://d0pmmjb7l4rps" path="res://engine/objects/bonus/green_mushroom.tscn" id="40_odrgt"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://engine/objects/level/O_goal_small.tscn" id="46_jmabb"]
 
 [sub_resource type="Gradient" id="Gradient_ctip4"]
@@ -252,3 +254,18 @@ position = Vector2(256, 240)
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" unique_id=592555169 instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)
+
+[node name="Slippery VN" parent="." unique_id=95497260 instance=ExtResource("39_ps4lb")]
+position = Vector2(400, 400)
+
+[node name="Slippery VN2" parent="." unique_id=276445382 instance=ExtResource("39_ps4lb")]
+position = Vector2(432, 400)
+
+[node name="Slippery VN3" parent="." unique_id=1646184415 instance=ExtResource("39_ps4lb")]
+position = Vector2(464, 400)
+
+[node name="Slippery VN4" parent="." unique_id=1173799005 instance=ExtResource("39_ps4lb")]
+position = Vector2(496, 400)
+
+[node name="1UP Mushroom" parent="." unique_id=917383935 instance=ExtResource("40_odrgt")]
+position = Vector2(1121, 400)

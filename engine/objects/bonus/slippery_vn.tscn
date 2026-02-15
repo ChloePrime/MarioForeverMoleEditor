@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dt7gj1s88k04l"]
 
-[ext_resource type="PackedScene" uid="uid://c4t8mbtjglpky" path="res://engine/objects/bonus/O_poisonous_vn.tscn" id="1_manpy"]
+[ext_resource type="PackedScene" uid="uid://c4t8mbtjglpky" path="res://engine/objects/bonus/poisonous_vn.tscn" id="1_manpy"]
 [ext_resource type="Script" uid="uid://cvvkwrkhop6vs" path="res://engine/scripts/bonus/SlipperyVn.cs" id="2_pvsg0"]
 [ext_resource type="AudioStream" uid="uid://bqrjks83br828" path="res://engine/resources/bonus/SE_weird_food.wav" id="3_wqacn"]
 

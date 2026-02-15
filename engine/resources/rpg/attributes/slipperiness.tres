@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://cd3lvvtovx465"]
+
+[ext_resource type="Script" uid="uid://b718kbttput75" path="res://addons/ChloePrime.Godot.RPG/src/attribute/Attribute.cs" id="1_u208t"]
+
+[resource]
+script = ExtResource("1_u208t")
+Name = &"mfme:slipperiness"
+Dichotomy = 2
+MinValue = 0.0

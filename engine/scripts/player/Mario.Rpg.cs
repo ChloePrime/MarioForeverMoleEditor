@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using ChloePrime.Godot.RPG.Attribute;
 using ChloePrime.Godot.Util;
 using ChloePrime.MarioForever.Level;
 using ChloePrime.MarioForever.RPG;
 using Godot;
+using Attribute = ChloePrime.Godot.RPG.Attribute.Attribute;
 
 namespace ChloePrime.MarioForever.Player;
 
@@ -195,11 +197,26 @@ public partial class Mario
     private readonly Queue<Vector2> _posQueue = new(32);
     private const int PosSaveRecordCount = 30;
     private static readonly NodePath NpCorpseDeathSound = "The Funny Sound";
+    private static readonly Attribute SlipperyAttribute = GD.Load<Attribute>("uid://cd3lvvtovx465");
+    private static readonly List<StringName> SlipperinessModifiers = [];
+    public float Slipperiness => (float) this.GetAttributeValue(SlipperyAttribute, 0);
 
     public void MakeSlippery(float slipperiness)
     {
-        Slipperiness = slipperiness;
-        _slipperyGas.Visible = slipperiness is not 0;
+        if (this.TryGetAttributeInstance(SlipperyAttribute, out var attrInstance))
+        {
+            if (Mathf.IsEqualApprox(slipperiness, 0))
+            {
+                attrInstance.ClearModifiers();
+            }
+            else
+            {
+                attrInstance.AddModifier(AttributeModifier.CreateWithRandomId(
+                    BuiltinAttributeModifierOperations.AddToBase(), slipperiness, out var id
+                ));   
+            }
+        }
+        _slipperyGas.Visible = Slipperiness is not 0;
     }
 
     private void PostDeath()
