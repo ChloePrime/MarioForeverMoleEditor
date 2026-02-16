@@ -8,6 +8,8 @@ uniform float REAL_TEXEL_SIZE = 1.0;
 
 varying vec4 t[8];
 
+const float ALPHA_1_THRESHOLD = 247.5 / 255.0;
+
 void vertex() {
 	vec2 source_wh = vec2(1.0 / TEXTURE_PIXEL_SIZE.x / REAL_TEXEL_SIZE, 1.0 / TEXTURE_PIXEL_SIZE.y / REAL_TEXEL_SIZE);
 	vec4 source_size = vec4(source_wh, 1.0 / source_wh);
@@ -245,8 +247,12 @@ vec3 xbrz(vec2 uv, vec2 tex_pixel_size, sampler2D tex, bool is_alpha) {
 		mix(mix(mix(dst[4], dst[3], step(0.25, f.x)), mix(dst[2], dst[11], step(0.75, f.x)), step(0.50, f.x)),
 			mix(mix(dst[15], dst[14], step(0.25, f.x)), mix(dst[13], dst[12], step(0.75, f.x)), step(0.50, f.x)), step(0.75, f.y)),
 		step(0.50, f.y));
-
-	return res;
+		
+	if (is_alpha && res.r >= ALPHA_1_THRESHOLD) {
+		return vec3(1.0, 1.0, 1.0);
+	} else {
+		return res;
+	}
 }
 
 void fragment() {
