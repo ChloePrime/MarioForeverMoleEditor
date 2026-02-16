@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cdos7gesbnvy1" path="res://engine/objects/enemies/O_turtle_golden.tscn" id="21_0d0u4"]
 [ext_resource type="PackedScene" uid="uid://skpl30bmwg2q" path="res://engine/objects/enemies/goomba.tscn" id="21_l8ajo"]
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://engine/objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
-[ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://engine/objects/bonus/O_fire_flower.tscn" id="28_ewyo7"]
+[ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://engine/objects/bonus/fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://engine/objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
 [ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://engine/objects/background/O_bg_underground.tscn" id="29_g2m7a"]
 [ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://engine/objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
@@ -69,7 +69,7 @@ script = ExtResource("3_gyt0a")
 Border = Rect2(0, 0, 2560, 480)
 AreaMusic = ExtResource("5_ps4lb")
 
-[node name="Tiles" parent="Overworld" unique_id=375188008 instance=ExtResource("6_6hpwf")]
+[node name="Tiles" parent="Overworld" unique_id=178805034 instance=ExtResource("6_6hpwf")]
 
 [node name="Spring" parent="Overworld" unique_id=862500632 instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
@@ -240,7 +240,7 @@ script = ExtResource("3_gyt0a")
 Border = Rect2(0, 480, 640, 480)
 AreaMusic = ExtResource("36_ps4lb")
 
-[node name="Tiles" parent="Bonus Room" unique_id=1843572011 instance=ExtResource("36_3k0x5")]
+[node name="Tiles" parent="Bonus Room" unique_id=2063107204 instance=ExtResource("36_3k0x5")]
 
 [node name="Bonus Room Entrance" parent="Bonus Room" unique_id=894348599 instance=ExtResource("28_iu26d")]
 position = Vector2(128, 128)
