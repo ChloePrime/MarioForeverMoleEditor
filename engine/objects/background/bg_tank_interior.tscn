@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ck1a3hb435po8"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_bpg14"]
+[ext_resource type="Texture2D" uid="uid://dh414pxa2gnp8" path="res://engine/resources/background/bg_tank_interior.png" id="2_bpg14"]
+
+[node name="Background - Tank Interior" unique_id=616307664 instance=ExtResource("1_bpg14")]
+repeat_size = Vector2(640, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_bpg14")

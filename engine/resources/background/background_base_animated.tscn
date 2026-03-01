@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bauw8n8v4y6yr"]
+
+[ext_resource type="PackedScene" uid="uid://bbinnoosgf674" path="res://engine/resources/background/background_base.tscn" id="1_to4uy"]
+
+[node name="Background Base V2 (Animated)" unique_id=616307664 instance=ExtResource("1_to4uy")]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." index="0" unique_id=547092860]

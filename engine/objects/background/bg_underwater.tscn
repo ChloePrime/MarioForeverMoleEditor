@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c0hncny0tpcks"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_bt38p"]
+[ext_resource type="Texture2D" uid="uid://dq52edupqjngv" path="res://engine/resources/background/bg_underwater.png" id="2_bt38p"]
+
+[node name="Background - Underwater" unique_id=616307664 instance=ExtResource("1_bt38p")]
+repeat_size = Vector2(1280, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_bt38p")

@@ -8,11 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://cnvn3u7lejdnu" path="res://levels/example/forest_funk.ogg" id="5_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://b8ny2qhax0b54" path="res://engine/objects/O_music_changer.tscn" id="6_5ta4l"]
 [ext_resource type="PackedScene" uid="uid://drt0lrsquocxi" path="res://levels/example/example_tiles.tmx" id="6_6hpwf"]
+[ext_resource type="PackedScene" uid="uid://rn4j26rebvls" path="res://engine/objects/background/bg_gradient.tscn" id="7_0s6mt"]
 [ext_resource type="AudioStream" uid="uid://do3p32anqadhi" path="res://levels/example/minus5_2.ogg" id="7_a81sv"]
-[ext_resource type="Texture2D" uid="uid://b742dtbx11r86" path="res://engine/resources/background/T_bg_forest_hills.png" id="11_odrgt"]
-[ext_resource type="PackedScene" uid="uid://b14yj3c25gx0c" path="res://engine/objects/background/O_clouds_top_bg.tscn" id="13_6x2u0"]
+[ext_resource type="PackedScene" uid="uid://bufpyunfb63r3" path="res://engine/objects/background/clouds_top_bg.tscn" id="9_52djh"]
+[ext_resource type="PackedScene" uid="uid://b8a1u2n2kyuxd" path="res://engine/objects/background/bg_forest_hills.tscn" id="10_52djh"]
 [ext_resource type="PackedScene" uid="uid://dblakd5cjfdla" path="res://engine/objects/enemies/O_rotodisc_core.tscn" id="13_y308r"]
-[ext_resource type="PackedScene" uid="uid://xvmcqrqgmclu" path="res://engine/objects/background/O_clouds_top_fg.tscn" id="14_1osfy"]
 [ext_resource type="PackedScene" uid="uid://cokgsxbgqqv72" path="res://engine/objects/enemies/O_mole.tscn" id="14_23duk"]
 [ext_resource type="PackedScene" uid="uid://ryf2r5cmt4w7" path="res://engine/objects/enemies/O_mole_smb3.tscn" id="16_o84e0"]
 [ext_resource type="PackedScene" uid="uid://c8aes4jehis0j" path="res://engine/objects/enemies/spiky_facility/O_spike_iw_0_up.tscn" id="17_foy4y"]
@@ -24,8 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://davkfuhrfjwej" path="res://engine/objects/level/O_pipe_entrance_0_down.tscn" id="27_064tg"]
 [ext_resource type="PackedScene" uid="uid://ccqxn7t61xoyn" path="res://engine/objects/bonus/fire_flower.tscn" id="28_ewyo7"]
 [ext_resource type="PackedScene" uid="uid://dej8rp4gd6m3i" path="res://engine/objects/level/O_pipe_exit_0_down.tscn" id="28_iu26d"]
-[ext_resource type="PackedScene" uid="uid://bnyn88gnmki3v" path="res://engine/objects/background/O_bg_underground.tscn" id="29_g2m7a"]
 [ext_resource type="PackedScene" uid="uid://pb4dqrvo8h3j" path="res://engine/objects/level/O_pipe_entrance_1_up.tscn" id="32_p6x3p"]
+[ext_resource type="PackedScene" uid="uid://knyk4yi3x4ry" path="res://engine/objects/background/clouds_top_fg.tscn" id="33_odrgt"]
 [ext_resource type="PackedScene" uid="uid://dht8opdpeyyd6" path="res://engine/objects/level/O_pipe_exit_1_up.tscn" id="33_sw521"]
 [ext_resource type="PackedScene" uid="uid://djnsqvu6y4yvn" path="res://engine/objects/level/O_pipe_entrance_2_right.tscn" id="34_6pyw6"]
 [ext_resource type="PackedScene" uid="uid://dcawpamuv7tcw" path="res://engine/objects/level/O_pipe_exit_2_right.tscn" id="35_gflwc"]
@@ -36,20 +36,12 @@
 [ext_resource type="PackedScene" uid="uid://cura0qvkompxa" path="res://engine/objects/level/O_door.tscn" id="36_xxotm"]
 [ext_resource type="PackedScene" uid="uid://c3q28kdcid3mo" path="res://engine/objects/level/O_pipe_exit_3_left.tscn" id="37_77bxi"]
 [ext_resource type="PackedScene" uid="uid://cnff4y14doqop" path="res://engine/objects/level/fluid/water_area.tscn" id="37_mi6cf"]
+[ext_resource type="PackedScene" uid="uid://bp61rdvu3rowb" path="res://engine/objects/background/bg_underground.tscn" id="38_52djh"]
 [ext_resource type="PackedScene" uid="uid://bvlmc75n1oo82" path="res://engine/objects/level/O_goal.tscn" id="38_ypky8"]
 [ext_resource type="PackedScene" uid="uid://dt7gj1s88k04l" path="res://engine/objects/bonus/slippery_vn.tscn" id="39_ps4lb"]
 [ext_resource type="PackedScene" uid="uid://d0pmmjb7l4rps" path="res://engine/objects/bonus/green_mushroom.tscn" id="40_odrgt"]
 [ext_resource type="AudioStream" uid="uid://fkv1apskp037" path="res://engine/resources/mario/SE_powerup.wav" id="41_0s6mt"]
 [ext_resource type="PackedScene" uid="uid://byh1c1cibv3ot" path="res://engine/objects/level/O_goal_small.tscn" id="46_jmabb"]
-
-[sub_resource type="Gradient" id="Gradient_ctip4"]
-colors = PackedColorArray(0.235294, 0.470588, 0.627451, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_o2jv4"]
-gradient = SubResource("Gradient_ctip4")
-width = 640
-height = 480
-fill_to = Vector2(0, 1)
 
 [node name="Example" type="Node2D" unique_id=905935978]
 self_modulate = Color(0.45, 0.9, 0.225, 1)
@@ -71,33 +63,24 @@ AreaMusic = ExtResource("5_ps4lb")
 
 [node name="Tiles" parent="Overworld" unique_id=178805034 instance=ExtResource("6_6hpwf")]
 
+[node name="Background" type="Node2D" parent="Overworld" unique_id=412359133]
+
+[node name="Background - Gradient" parent="Overworld/Background" unique_id=616307664 instance=ExtResource("7_0s6mt")]
+
+[node name="Background - Forest Hills" parent="Overworld/Background" unique_id=1977112493 instance=ExtResource("10_52djh")]
+scroll_scale = Vector2(0.5, 1)
+
+[node name="Infinite Cloud (Back)" parent="Overworld/Background" unique_id=1857218505 instance=ExtResource("9_52djh")]
+
+[node name="Infinite Cloud (Front)" parent="Overworld/Background" unique_id=699419959 instance=ExtResource("33_odrgt")]
+scroll_offset = Vector2(0, -24)
+
 [node name="Spring" parent="Overworld" unique_id=862500632 instance=ExtResource("36_132yy")]
 position = Vector2(208, 400)
 
 [node name="Music Changer" parent="Overworld" unique_id=174494719 instance=ExtResource("6_5ta4l")]
 position = Vector2(496, -16)
 TargetMusic = ExtResource("7_a81sv")
-
-[node name="Parallax" type="Parallax2D" parent="Overworld" unique_id=1685424333]
-z_index = -4000
-repeat_size = Vector2(512, 0)
-repeat_times = 4
-
-[node name="BG Gradient" type="Sprite2D" parent="Overworld/Parallax" unique_id=1696564428]
-position = Vector2(320, 240)
-texture = SubResource("GradientTexture2D_o2jv4")
-
-[node name="BG" type="Sprite2D" parent="Overworld/Parallax" unique_id=1189257729]
-position = Vector2(256, 240)
-texture = ExtResource("11_odrgt")
-
-[node name="Cloud (Background)" parent="Overworld" unique_id=1283532085 instance=ExtResource("13_6x2u0")]
-physics_interpolation_mode = 0
-position = Vector2(128, 24)
-
-[node name="Cloud (Foreground)" parent="Overworld" unique_id=438389876 instance=ExtResource("14_1osfy")]
-physics_interpolation_mode = 0
-position = Vector2(128, 0)
 
 [node name="RotoDisc Core" parent="Overworld" unique_id=146340117 instance=ExtResource("13_y308r")]
 position = Vector2(1456, 144)
@@ -249,8 +232,7 @@ position = Vector2(128, 128)
 position = Vector2(512, 352)
 Target = NodePath("../../Overworld/Bonus Room Exit")
 
-[node name="Background" parent="Bonus Room" unique_id=1926503177 instance=ExtResource("29_g2m7a")]
-position = Vector2(256, 240)
+[node name="Background - Underground" parent="Bonus Room" unique_id=1468030708 instance=ExtResource("38_52djh")]
 
 [node name="Bonus Room Rev Entrance" parent="Bonus Room" unique_id=592555169 instance=ExtResource("33_sw521")]
 position = Vector2(512, 416)

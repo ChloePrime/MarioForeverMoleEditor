@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b5vj4wdqvgakd"]
+
+[ext_resource type="PackedScene" uid="uid://bbinnoosgf674" path="res://engine/resources/background/background_base.tscn" id="1_ba0rp"]
+
+[node name="Background Base V2 (Static)" unique_id=616307664 instance=ExtResource("1_ba0rp")]
+
+[node name="Sprite" type="Sprite2D" parent="." index="0" unique_id=924458021]
+centered = false

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bbiqw0a0jowv8"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_l6rjw"]
+[ext_resource type="Texture2D" uid="uid://nckcnnhsynpa" path="res://engine/resources/background/bg_greatwall_smb1.png" id="2_l6rjw"]
+
+[node name="Background - SMB1 Great Wall" unique_id=616307664 instance=ExtResource("1_l6rjw")]
+repeat_size = Vector2(3934, 0)
+repeat_times = 3
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_l6rjw")

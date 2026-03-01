@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://daarr0fayqj4c"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_ndrfm"]
+[ext_resource type="Texture2D" uid="uid://7tckhrv6068l" path="res://engine/resources/background/bg_castle_smb1.png" id="2_ol1op"]
+
+[node name="Background - SMB1 Castle" unique_id=616307664 instance=ExtResource("1_ndrfm")]
+z_index = 0
+repeat_size = Vector2(1024, 786)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_ol1op")

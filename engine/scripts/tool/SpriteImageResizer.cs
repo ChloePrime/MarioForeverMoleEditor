@@ -6,14 +6,13 @@ namespace ChloePrime.MarioForever.Tool;
 
 public partial class SpriteImageResizer : ImageResizerBase
 {
-    public const int Margin = 8;
-    
+    [Export] public int ImageMargin { get; set; } = 8;
     [Export] public SubViewport ResultFrameBuffer { get; set; }
     [Export] public SubViewport PixelizedContent { get; set; }
 
     protected override async ValueTask<Image> CaptureImage()
     {
-        Vector2I size = (Vector2I) SourceSprite.Texture.GetSize() + new Vector2I(Margin, Margin);
+        Vector2I size = (Vector2I) SourceSprite.Texture.GetSize() + new Vector2I(ImageMargin, ImageMargin);
         SourceSprite.Position = size / 2;
         PixelizedContent.Size2DOverride = size;
         PixelizedContent.Size = ResultFrameBuffer.Size = size * 2;
@@ -22,10 +21,10 @@ public partial class SpriteImageResizer : ImageResizerBase
         
         // 移除8px边距
         size *= 2;
-        size -= new Vector2I(Margin, Margin);
+        size -= new Vector2I(ImageMargin, ImageMargin);
         captured.Crop(size.X, size.Y);
         captured.Rotate180();
-        size -= new Vector2I(Margin, Margin);
+        size -= new Vector2I(ImageMargin, ImageMargin);
         captured.Crop(size.X, size.Y);
         captured.Rotate180();
         

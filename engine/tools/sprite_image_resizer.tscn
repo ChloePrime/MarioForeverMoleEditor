@@ -13,6 +13,7 @@ viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 [node name="Sprite Image Resizer" unique_id=950289641 node_paths=PackedStringArray("ResultFrameBuffer", "PixelizedContent") instance=ExtResource("1_7fdy5")]
 texture = SubResource("ViewportTexture_tw202")
 script = ExtResource("2_db4rr")
+ImageMargin = 8
 ResultFrameBuffer = NodePath("Frame Buffer")
 PixelizedContent = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 

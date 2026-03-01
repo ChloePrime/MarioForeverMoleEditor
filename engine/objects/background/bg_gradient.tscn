@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://rn4j26rebvls"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_uwwge"]
+
+[sub_resource type="Gradient" id="Gradient_ctip4"]
+colors = PackedColorArray(0.235294, 0.470588, 0.627451, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o2jv4"]
+gradient = SubResource("Gradient_ctip4")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
+
+[node name="Background - Gradient" unique_id=616307664 instance=ExtResource("1_uwwge")]
+repeat_size = Vector2(640, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = SubResource("GradientTexture2D_o2jv4")

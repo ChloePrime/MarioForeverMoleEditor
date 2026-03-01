@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b8a1u2n2kyuxd"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_ma8xf"]
+[ext_resource type="Texture2D" uid="uid://b742dtbx11r86" path="res://engine/resources/background/bg_forest_hills.png" id="2_ma8xf"]
+
+[node name="Background - Forest Hills" unique_id=616307664 instance=ExtResource("1_ma8xf")]
+repeat_size = Vector2(512, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_ma8xf")

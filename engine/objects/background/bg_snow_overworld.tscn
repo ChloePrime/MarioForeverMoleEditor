@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dcnrfvshgc4uj"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_uo1at"]
+[ext_resource type="Texture2D" uid="uid://b8wjw7u4jjw3m" path="res://engine/resources/background/bg_snow_overworld.png" id="2_uo1at"]
+
+[node name="Background - Snow Overworld" unique_id=616307664 instance=ExtResource("1_uo1at")]
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_uo1at")

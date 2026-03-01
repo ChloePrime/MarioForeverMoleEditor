@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bufpyunfb63r3"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_i2bp4"]
+[ext_resource type="Texture2D" uid="uid://bi73vjmbt27bi" path="res://engine/resources/background/cloud_top.png" id="2_i2bp4"]
+
+[node name="Infinite Cloud (Back)" unique_id=616307664 instance=ExtResource("1_i2bp4")]
+repeat_size = Vector2(256, 0)
+autoscroll = Vector2(-62.5, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_i2bp4")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bd8jo8f71eun4"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_m76fk"]
+[ext_resource type="Texture2D" uid="uid://qv04mu0kaj0u" path="res://engine/resources/background/bg_clouds.png" id="2_m76fk"]
+
+[node name="Background - Clouds" unique_id=616307664 instance=ExtResource("1_m76fk")]
+repeat_size = Vector2(960, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_m76fk")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bp61rdvu3rowb"]
+
+[ext_resource type="PackedScene" uid="uid://b5vj4wdqvgakd" path="res://engine/resources/background/background_base_static.tscn" id="1_p78p1"]
+[ext_resource type="Texture2D" uid="uid://dhx638421iygw" path="res://engine/resources/background/bg_underground.png" id="2_p78p1"]
+
+[node name="Background - Underground" unique_id=616307664 instance=ExtResource("1_p78p1")]
+repeat_size = Vector2(511, 0)
+
+[node name="Sprite" parent="." index="0" unique_id=924458021]
+texture = ExtResource("2_p78p1")
