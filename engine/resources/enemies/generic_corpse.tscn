@@ -13,4 +13,4 @@ flip_v = true
 
 [node name="Rotator" type="Node" parent="." unique_id=1212471188]
 script = ExtResource("2_0cv3s")
-Cycle = 0.6000000000058208
+Cycle = 0.4

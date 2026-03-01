@@ -223,7 +223,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public virtual void CustomizeCorpse(DamageEvent e, Node2D corpse)
     {
         if (corpse is not GenericCorpse cor) return;
-        cor.XSpeed = Units.Speed.CtfToGd(2);
+        cor.XSpeed = Units.Speed.CtfToGd(3);
         cor.YSpeed = Units.Speed.CtfMovementToGd(-35);
         cor.GlobalScale = Root.GlobalScale.Abs();
         var xDir = cor.XDirection = Math.Sign(e.AttackVector?.X ?? -((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X));
