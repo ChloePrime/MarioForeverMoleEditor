@@ -14,8 +14,10 @@ new_line_before_else = false
 csharp_new_line_before_catch = false
 new_line_before_finally = false
 csharp_blank_lines_after_block_statements = 0
+# 去除行尾空格（效果不好）
+trim_trailing_whitespace = true
 # Trailing Comma
-trailing_comma_in_multiline_lists = true 
+trailing_comma_in_multiline_lists = true
 # if while 等语句必须使用大括号，即使只有一行
 braces_for_ifelse = required
 braces_for_dowhile = required
