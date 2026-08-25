@@ -6,14 +6,12 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Bonus;
 
-public partial class QuestionBlock : BumpableBlock
-{
+public partial class QuestionBlock : BumpableBlock {
     [Export] public PackedScene Content { get; set; }
     [Export] public Vector2 ContentOffset { get; set; } = Vector2.Zero;
     [Export] public PackedScene SmallMarioOverride { get; set; }
-    
-    public override void _Ready()
-    {
+
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _sprite, NpSprite);
         this.GetNode(out _edytor, NpEdytor);
@@ -21,61 +19,44 @@ public partial class QuestionBlock : BumpableBlock
         _edytor.QueueFree();
     }
 
-    protected override void _OnBumpedBy(Node2D bumper)
-    {
+    protected override void _OnBumpedBy(Node2D bumper) {
         base._OnBumpedBy(bumper);
-        if (OneTimeUse)
-        {
+        if (OneTimeUse) {
             _sprite.Animation = AnimUsed;
         }
-        if (_watched is { } reference && reference.TryGetTarget(out var watched))
-        {
-            if (!IsInstanceValid(watched))
-            {
+        if (_watched is { } reference && reference.TryGetTarget(out var watched)) {
+            if (!IsInstanceValid(watched)) {
                 _watched = null;
-            }
-            else
-            {
+            } else {
                 var delta = ToLocal(watched.GlobalPosition);
-                if (Math.Abs(delta.X) < 1 && delta.Y < 0)
-                {
+                if (Math.Abs(delta.X) < 1 && delta.Y < 0) {
                     return;
                 }
             }
         }
 
-        if (GetParent() is not { } parent)
-        {
+        if (GetParent() is not { } parent) {
             return;
         }
         var content = GlobalData.Status == MarioStatus.Small ? SmallMarioOverride ?? Content : Content;
-        if (content.TryInstantiate(out Node2D instance, out var fallback))
-        {
-            
-            if (instance is GravityObjectBase gob)
-            {
+        if (content.TryInstantiate(out Node2D instance, out var fallback)) {
+            if (instance is GravityObjectBase gob) {
                 var offset = new Vector2(0, -Shape.Shape.GetRect().Size.Y) + ContentOffset;
                 parent.AddChildAt(instance, GlobalTransform.TranslatedLocal(offset).Origin);
                 gob.AppearFrom(-GlobalTransform.Y);
-            }
-            else
-            {
+            } else {
                 parent.AddChildAt(instance, GlobalTransform.TranslatedLocal(ContentOffset).Origin);
             }
 
-            if (!OneTimeUse)
-            {
+            if (!OneTimeUse) {
                 _watched = new WeakReference<Node2D>(instance);
             }
-        }
-        else
-        {
+        } else {
             parent.AddChild(fallback);
         }
     }
 
-    protected override void _Disable()
-    {
+    protected override void _Disable() {
         base._Disable();
         _sprite.Stop();
     }

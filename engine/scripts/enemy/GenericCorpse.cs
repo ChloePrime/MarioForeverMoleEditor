@@ -8,16 +8,13 @@ namespace ChloePrime.MarioForever.Enemy;
 /// <summary>
 /// 普通的尸体
 /// </summary>
-public partial class GenericCorpse : SimpleNoClipGravityObject, ICorpse
-{
+public partial class GenericCorpse : SimpleNoClipGravityObject, ICorpse {
     public AnimatedSprite2D Sprite => _sprite ??= GetNode<AnimatedSprite2D>(NpSprite);
     public Rotator2D Rotator => _rotator ??= GetNode<Rotator2D>(NpRotator);
 
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
         base._Process(delta);
-        if (GlobalPosition.Y >= this.GetFrame().End.Y + Sprite.GetSpriteSize().Y)
-        {
+        if (GlobalPosition.Y >= this.GetFrame().End.Y + Sprite.GetSpriteSize().Y) {
             QueueFree();
         }
     }

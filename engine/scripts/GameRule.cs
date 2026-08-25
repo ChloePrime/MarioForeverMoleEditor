@@ -11,16 +11,15 @@ using Godot.Collections;
 
 namespace ChloePrime.MarioForever;
 
-public partial class GameRule : Resource
-{
+public partial class GameRule : Resource {
     public static GameRule Default => _default ??= GD.Load<GameRule>("res://engine/default_game_rule.tres");
     public static GameRule Get() => GetManager(Engine.GetMainLoop() as SceneTree)?.GameRule ?? Default;
-    
+
     [ExportGroup("Vanilla")]
     [Export] public bool DisableLives { get; set; }
     [Export] public bool DisableScore { get; set; }
     [Export] public Array<PackedScene> AddLifeMethod { get; set; } = [];
-    
+
     [ExportSubgroup("Coins")]
     [Export] public bool DisableCoin { get; set; }
     [Export] public bool CoinAutoExchangeLife { get; set; } = true;
@@ -31,8 +30,7 @@ public partial class GameRule : Resource
     [Export] public double ClassicTimeUnitSize { get; set; } = 0.64;
     [Export] public AudioStream TimeoutHintSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/level/ME_timeout.ogg");
 
-    public enum TimePolicyType
-    {
+    public enum TimePolicyType {
         /// <summary>
         /// 禁用时间机制
         /// </summary>
@@ -52,18 +50,19 @@ public partial class GameRule : Resource
         /// 正计时
         /// </summary>
         CountOnly,
-        
+
         /// <summary>
         /// 显示当前日期
         /// </summary>
         Date,
     }
-    
+
     [ExportSubgroup("Mario")]
     [Export, MaybeNull] public MarioStatus DefaultStatus { get; set; }
-    
+
     [ExportSubgroup("Shell Combo")]
     [Export] public ComboRule DefaultComboRule { get; set; }
+
     [Export] public bool ComboOnStomp { get; set; } = true;
 
     /// <summary>
@@ -72,41 +71,41 @@ public partial class GameRule : Resource
     /// </summary>
     [ExportSubgroup("Clamps")]
     [Export] public bool W10EClampOffScreenPolicy { get; set; } = true;
-    
+
     /// <summary>
     /// 开启后夹子的子弹撞到实心会爆炸
     /// </summary>
     [Export] public bool ClampFireballExplodeOnWallHit { get; set; } = true;
-    
-        
+
+
     [ExportGroup("Simple QoL")]
     [ExportSubgroup("Direction Calculation")]
     [Export] public MarioDirectionPolicy CharacterDirectionPolicy { get; set; } = MarioDirectionPolicy.FollowXSpeed;
 
     [ExportSubgroup("Water")]
     [Export] public bool KeepXSpeedInWater { get; set; }
-    
-    public enum MarioDirectionPolicy
-    {
+
+    public enum MarioDirectionPolicy {
         FollowXSpeed,
         FollowControlDirection,
     }
-    
+
     [ExportSubgroup("Toss Fireball Upward")]
     [Export] public bool EnableTossFireballUpward { get; set; } = true;
+
     [Export] public float TossFireballUpwardStrength { get; set; } = 400;
 
     [ExportSubgroup("Pipe and Warp")]
     [Export] public PackedScene DefaultTransitionPrefab { get; set; } =
         GD.Load<PackedScene>("res://engine/objects/level/O_warp_transition_circle.tscn");
-    
+
 
     [ExportGroup("")]
-    [ExportSubgroup("")] 
+    [ExportSubgroup("")]
     [Export] public bool BulletLauncherBreakable { get; set; } = true;
-    
 
-    [ExportGroup("Advanced")] 
+
+    [ExportGroup("Advanced")]
     [Export] public bool EnableMarioBursting { get; set; } = true;
 
     [ExportSubgroup("Jump Height Bonus")]
@@ -117,14 +116,14 @@ public partial class GameRule : Resource
     [Export] public HitPointPolicyType HitPointPolicy { get; set; } = HitPointPolicyType.Metroid;
 
     [Export] public bool HideHitPointAtZero { get; set; } = true;
-    
+
     /// <summary>
     /// 如果为 false，那么玩家在 HP 归零后再次受伤会掉状态。
     /// 如果为 true，那么玩家在 HP 归零时会立刻死亡。
     /// </summary>
     [Export] public bool KillPlayerWhenHitPointReachesZero { get; set; }
 
-    
+
     [Export] public bool HitPointProtectsYourPowerup { get; set; } = true;
     [Export] public bool HitPointProtectsDeath { get; set; } = true;
     [Export] public float HitPointProtectsDeathCostLo { get; set; } = 3;
@@ -138,42 +137,37 @@ public partial class GameRule : Resource
     [Export] public float DefaultTerrainDamageHi { get; set; } = 16;
     [Export] public float MegaManHitPointBarLengthScale { get; set; } = 4;
 
-    
+
     [ExportSubgroup("Player Weapon's Power")]
     [Export] public float StompPower { get; set; } = 100;
     [Export] public float FireballPower { get; set; } = 20;
 
-    
-    [ExportSubgroup("Grabbing")]
+
+    [ExportSubgroup("Grabbing")] 
     [Export] public bool EnableActiveGrabbing { get; set; } = true;
 
-    public void ResetGlobalData()
-    {
+    public void ResetGlobalData() {
         GlobalData.ResetRuleNeutralValues();
         ReloadStatus();
         ResetHitPoint();
         Checkpoint.ClearSaved();
     }
 
-    public void ReloadStatus()
-    {
+    public void ReloadStatus() {
         GlobalData.Status = DefaultStatus ?? MarioStatus.Small;
     }
 
     private static Optional<LevelManager> _manager;
     private static GameRule _default;
 
-    private static LevelManager GetManager(SceneTree tree)
-    {
-        if (_manager.IsUndefined)
-        {
+    private static LevelManager GetManager(SceneTree tree) {
+        if (_manager.IsUndefined) {
             _manager = tree?.Root.Walk().OfType<LevelManager>().FirstOrDefault();
         }
         return _manager.OrDefault();
     }
 }
 
-public static class GameRuleEx
-{
+public static class GameRuleEx {
     public static GameRule GetRule(this Node node) => node.GetLevelManager()?.GameRule ?? GameRule.Get();
 }

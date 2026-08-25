@@ -3,10 +3,8 @@
 namespace ChloePrime.MarioForever.RPG;
 
 [GlobalClass]
-public partial class MarioForeverNpcData : Resource
-{
-    public static MarioForeverNpcData SafeFallback => new()
-    {
+public partial class MarioForeverNpcData : Resource {
+    public static MarioForeverNpcData SafeFallback => new() {
         Friendly = true,
     };
 
@@ -17,10 +15,9 @@ public partial class MarioForeverNpcData : Resource
     [Export] public bool Friendly { get; set; }
     [Export] public bool DoNotMove { get; set; }
 
-    public void CopyValueFrom(MarioForeverNpcData other)
-    {
+    public void CopyValueFrom(MarioForeverNpcData other) {
         HitPoint = other.HitPoint;
-        MaxHitPoint = other.MaxHitPoint ;
+        MaxHitPoint = other.MaxHitPoint;
         DamageLo = other.DamageLo;
         DamageHi = other.DamageHi;
         Friendly = other.Friendly;

@@ -4,31 +4,25 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Effect;
 
-public partial class WaterSplash : SelfDestroyingEffect
-{
+public partial class WaterSplash : SelfDestroyingEffect {
     public static readonly Vector2 WaterDetectDistance = new(0, 96);
-    
-    public override void _Ready()
-    {
+
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _waterDetector, NpWaterDetector);
     }
 
-    public override void _EnterTree()
-    {
+    public override void _EnterTree() {
         base._EnterTree();
         _pending = true;
         Visible = false;
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
-        if (_pending)
-        {
+        if (_pending) {
             var detectorOldPos = _waterDetector.Position;
-            if (_waterDetector.MoveAndCollide(WaterDetectDistance) is not null)
-            {
+            if (_waterDetector.MoveAndCollide(WaterDetectDistance) is not null) {
                 this.TeleportTo(ToGlobal(_waterDetector.Position - detectorOldPos));
                 _waterDetector.Position = detectorOldPos;
             }

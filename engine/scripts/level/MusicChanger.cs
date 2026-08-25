@@ -3,21 +3,17 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Level;
 
-public partial class MusicChanger : Area2D
-{
+public partial class MusicChanger : Area2D {
     [Export] public AudioStream TargetMusic { get; set; }
-    
-    public override void _Ready()
-    {
+
+    public override void _Ready() {
         base._Ready();
         BodyEntered += OnBodyEntered;
     }
 
-    private void OnBodyEntered(Node2D other)
-    {
-        if (other is Mario && TargetMusic is {} music)
-        {
+    private void OnBodyEntered(Node2D other) {
+        if (other is Mario && TargetMusic is { } music) {
             BackgroundMusic.Music = music;
         }
     }
-}   
+}

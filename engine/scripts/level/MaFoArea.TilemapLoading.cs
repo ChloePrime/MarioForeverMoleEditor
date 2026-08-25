@@ -10,228 +10,185 @@ using Array = Godot.Collections.Array;
 
 namespace ChloePrime.MarioForever.Level;
 
-public partial class MaFoLevelArea
-{
-	private void LoadTilemaps()
-	{
-		foreach (var tilemapRoot in this.Children().Where(IsPossibleTilemapRoot))
-		{
-			LoadTilemapSeperated(tilemapRoot);
-		}
-	}
+public partial class MaFoLevelArea {
+    private void LoadTilemaps() {
+        foreach (var tilemapRoot in this.Children().Where(IsPossibleTilemapRoot)) {
+            LoadTilemapSeperated(tilemapRoot);
+        }
+    }
 
-	private enum TilemapType
-	{
-		None,
-		SolidOnly,
-		DamageSource,
-		DeathSource,
-	}
+    private enum TilemapType {
+        None,
+        SolidOnly,
+        DamageSource,
+        DeathSource,
+    }
 
-	private static readonly Dictionary<StringName, TilemapType> TypeLookup = new()
-	{
-		{ "Collision", TilemapType.SolidOnly },
-	};
+    private static readonly Dictionary<StringName, TilemapType> TypeLookup = new() {
+        { "Collision", TilemapType.SolidOnly },
+    };
 
-	private static bool IsPossibleTilemapRoot(Node node)
-	{
-		return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMapLayer>().Any();
-	}
+    private static bool IsPossibleTilemapRoot(Node node) {
+        return node.GetType() == typeof(Node2D) && node.Children().OfType<TileMapLayer>().Any();
+    }
 
-	private void LoadTilemapSeperated(Node root) => LoadTilemapCore(root, root, TilemapType.None);
+    private void LoadTilemapSeperated(Node root) => LoadTilemapCore(root, root, TilemapType.None);
 
-	/// <summary>
-	/// 针对未勾选 Use Tilemap Layers 的 tmx scene 的处理，
-	/// 支持伤害层。
-	/// </summary>
-	private void LoadTilemapCore(Node root, Node parent, TilemapType baseType)
-	{
-		var objRoot = this.GetPreferredRoot();
-		foreach (var node in parent.Children())
-		{
-			var typeByName = TypeLookup.GetValueOrDefault(node.Name, TilemapType.None);
-			var type = typeByName == TilemapType.None ? baseType : typeByName;
-			if (node is TileMapLayer tilemap)
-			{
-				LoadObjectsFromTile(tilemap);
-				switch (type)
-				{
-					case TilemapType.SolidOnly:
-						tilemap.Visible = false;
-						break;
-					case TilemapType.None:
-					default:
-						break;
-				}
-			}
-			else if (node.GetType() == typeof(Node2D))
-			{
-				LoadTilemapCore(root, node, type);
-			}
-			else if (node is Sprite2D possibleObject)
-			{
-				LoadObject(objRoot, possibleObject);
-			}
-		}
-	}
+    /// <summary>
+    /// 针对未勾选 Use Tilemap Layers 的 tmx scene 的处理，
+    /// 支持伤害层。
+    /// </summary>
+    private void LoadTilemapCore(Node root, Node parent, TilemapType baseType) {
+        var objRoot = this.GetPreferredRoot();
+        foreach (var node in parent.Children()) {
+            var typeByName = TypeLookup.GetValueOrDefault(node.Name, TilemapType.None);
+            var type = typeByName == TilemapType.None ? baseType : typeByName;
+            if (node is TileMapLayer tilemap) {
+                LoadObjectsFromTile(tilemap);
+                switch (type) {
+                    case TilemapType.SolidOnly:
+                        tilemap.Visible = false;
+                        break;
+                    case TilemapType.None:
+                    default:
+                        break;
+                }
+            } else if (node.GetType() == typeof(Node2D)) {
+                LoadTilemapCore(root, node, type);
+            } else if (node is Sprite2D possibleObject) {
+                LoadObject(objRoot, possibleObject);
+            }
+        }
+    }
 
-	private void LoadObjectsFromTile(TileMapLayer tilemap)
-	{
-		var all = tilemap.GetUsedCells();
-		using var _ = (Array)all;
-		var tileSize = tilemap.TileSet.TileSize;
-		var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
-		var resPathLayer = tilemap.TileSet.GetCustomDataLayerByName("res_path");
-		var presetLayer = tilemap.TileSet.GetCustomDataLayerByName("preset");
-		var root = this.GetPreferredRoot();
-		
-		if (resPathLayer == -1) return;
-		
-		foreach (var coord in all)
-		{
-			if (tilemap.GetCellTileData(coord) is not { } tileData)
-			{
-				continue;
-			}
-			var resPath = tileData.GetCustomDataByLayerId(resPathLayer).AsString();
-			if (resPath.Length == 0 ||
-			    !resPath.StartsWith("res://") ||
-			    GD.Load(resPath) is not PackedScene prefab)
-			{
-				continue;
-			}
-			var instance = prefab.Instantiate();
+    private void LoadObjectsFromTile(TileMapLayer tilemap) {
+        var all = tilemap.GetUsedCells();
+        using var _ = (Array)all;
+        var tileSize = tilemap.TileSet.TileSize;
+        var myTransform = tilemap.GlobalTransform.TranslatedLocal(tileSize / 2);
+        var resPathLayer = tilemap.TileSet.GetCustomDataLayerByName("res_path");
+        var presetLayer = tilemap.TileSet.GetCustomDataLayerByName("preset");
+        var root = this.GetPreferredRoot();
 
-			if (presetLayer != -1)
-			{
-				var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
-				if (preset > 0)
-				{
-					LoadPreset(instance, preset);
-				}
-			}
-			
-			PostInstantiate(instance, coord);
-			
-			root.AddChild(instance);
-			if (instance is Node2D node2D)
-			{
-				node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
-			}
-			if (instance is ICustomTileOffsetObject o)
-			{
-				o.CustomOffset();
-			}
-			
-			tilemap.EraseCell(coord);
-		}
-	}
+        if (resPathLayer == -1) return;
 
-	private ConditionalWeakTable<Type, ObjectTilePreset> PresetCache { get; } = new();
+        foreach (var coord in all) {
+            if (tilemap.GetCellTileData(coord) is not { } tileData) {
+                continue;
+            }
+            var resPath = tileData.GetCustomDataByLayerId(resPathLayer).AsString();
+            if (resPath.Length == 0 ||
+                !resPath.StartsWith("res://") ||
+                GD.Load(resPath) is not PackedScene prefab) {
+                continue;
+            }
+            var instance = prefab.Instantiate();
 
-	private void LoadPreset(GodotObject instance, int preset)
-	{
-		var typeInfo = PresetCache.GetValue(instance.GetType(), _ =>
-		{
-			bool ConfigFilter(ObjectTilePreset p)
-			{
-				var script0 = instance.GetScript();
-				if (script0.VariantType != Variant.Type.Object || script0.AsGodotObject() is not Script script)
-				{
-					return false;
-				}
-				do
-				{
-					if (script == p.BaseClass)
-					{
-						return true;
-					}
-				} while ((script = script.GetBaseScript()) != null);
+            if (presetLayer != -1) {
+                var preset = tileData.GetCustomDataByLayerId(presetLayer).AsInt32();
+                if (preset > 0) {
+                    LoadPreset(instance, preset);
+                }
+            }
 
-				return false;
-			}
-			return Level.TileLoadingPreset.Presets.FirstOrDefault(ConfigFilter);
-		});
-		if (typeInfo is null)
-		{
-			return;
-		}
-		
-		if (preset <= 0 || preset > typeInfo.PropertiesById.Count)
-		{
-			this.LogWarn($"Invalid preset: preset should in 1..{typeInfo.PropertiesById.Count}");
-			return;
-		}
-		var presetData = typeInfo.PropertiesById[preset - 1];
-		foreach (var (prop, value) in presetData)
-		{
-			instance.Set(prop, value);
-		}
-	}
+            PostInstantiate(instance, coord);
 
-	private void LoadObject(Node parent, Sprite2D @object)
-	{
-		string resPath;
-		if (!@object.HasMeta(ResPathName) ||
-		    (resPath = @object.GetMeta(ResPathName).AsString()).Length == 0 ||
-		    !resPath.StartsWith("res://"))
-		{
-			return;
-		}
-		if (GD.Load(resPath) is not PackedScene prefab)
-		{
-			return;
-		}
-		var instance = prefab.Instantiate();
-		LoadProperties(@object, instance);
-		PostInstantiate(instance, @object.Position);
-		
-		parent.AddChild(instance);
-		if (instance is Node2D node2D)
-		{
-			node2D.GlobalPosition = GetTileObjectRealPosition(@object);
-		}
-		
-		@object.QueueFree();
-	}
+            root.AddChild(instance);
+            if (instance is Node2D node2D) {
+                node2D.GlobalPosition = myTransform.TranslatedLocal(coord * tileSize).Origin;
+            }
+            if (instance is ICustomTileOffsetObject o) {
+                o.CustomOffset();
+            }
 
-	private static Vector2 GetTileObjectRealPosition(Sprite2D tileObject)
-	{
-		Vector2 sprSize;
-		if (tileObject.RegionEnabled)
-		{
-			sprSize = tileObject.RegionRect.Size * tileObject.GlobalScale;
-		}
-		else
-		{
-			sprSize = tileObject.Texture.GetSize() * tileObject.GlobalScale;
-		}
-		var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
-		return tileObject.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
-	}
+            tilemap.EraseCell(coord);
+        }
+    }
 
-	private void LoadProperties(GodotObject dataSrc, GodotObject dataTarget)
-	{
-		if (dataSrc.HasMeta(PresetName))
-		{
-			LoadPreset(dataTarget, dataSrc.GetMeta(PresetName).AsInt32());
-			return;
-		}
-		foreach (var name in dataSrc.GetMetaList())
-		{
-			if (name == ResPathName) continue;
-			dataTarget.Set(name, dataSrc.GetMeta(name));
-		}
-	}
+    private ConditionalWeakTable<Type, ObjectTilePreset> PresetCache { get; } = new();
 
-	private static void PostInstantiate(Node @object, Vector2 context)
-	{
-		if (@object is INodeNameIsImportant)
-		{
-			@object.Name = $"{@object.GetClass()}_{context.X}_{context.Y}";
-		}
-	}
+    private void LoadPreset(GodotObject instance, int preset) {
+        var typeInfo = PresetCache.GetValue(instance.GetType(), _ => {
+            bool ConfigFilter(ObjectTilePreset p) {
+                var script0 = instance.GetScript();
+                if (script0.VariantType != Variant.Type.Object || script0.AsGodotObject() is not Script script) {
+                    return false;
+                }
+                do {
+                    if (script == p.BaseClass) {
+                        return true;
+                    }
+                } while ((script = script.GetBaseScript()) != null);
 
-	private static readonly StringName ResPathName = "res_path";
-	private static readonly StringName PresetName = "preset";
+                return false;
+            }
+
+            return Level.TileLoadingPreset.Presets.FirstOrDefault(ConfigFilter);
+        });
+        if (typeInfo is null) {
+            return;
+        }
+
+        if (preset <= 0 || preset > typeInfo.PropertiesById.Count) {
+            this.LogWarn($"Invalid preset: preset should in 1..{typeInfo.PropertiesById.Count}");
+            return;
+        }
+        var presetData = typeInfo.PropertiesById[preset - 1];
+        foreach (var (prop, value) in presetData) {
+            instance.Set(prop, value);
+        }
+    }
+
+    private void LoadObject(Node parent, Sprite2D @object) {
+        string resPath;
+        if (!@object.HasMeta(ResPathName) ||
+            (resPath = @object.GetMeta(ResPathName).AsString()).Length == 0 ||
+            !resPath.StartsWith("res://")) {
+            return;
+        }
+        if (GD.Load(resPath) is not PackedScene prefab) {
+            return;
+        }
+        var instance = prefab.Instantiate();
+        LoadProperties(@object, instance);
+        PostInstantiate(instance, @object.Position);
+
+        parent.AddChild(instance);
+        if (instance is Node2D node2D) {
+            node2D.GlobalPosition = GetTileObjectRealPosition(@object);
+        }
+
+        @object.QueueFree();
+    }
+
+    private static Vector2 GetTileObjectRealPosition(Sprite2D tileObject) {
+        Vector2 sprSize;
+        if (tileObject.RegionEnabled) {
+            sprSize = tileObject.RegionRect.Size * tileObject.GlobalScale;
+        } else {
+            sprSize = tileObject.Texture.GetSize() * tileObject.GlobalScale;
+        }
+        var offset = new Vector2(sprSize.X, -sprSize.Y) / 2;
+        return tileObject.GlobalTransform.Orthonormalized().TranslatedLocal(offset).Origin;
+    }
+
+    private void LoadProperties(GodotObject dataSrc, GodotObject dataTarget) {
+        if (dataSrc.HasMeta(PresetName)) {
+            LoadPreset(dataTarget, dataSrc.GetMeta(PresetName).AsInt32());
+            return;
+        }
+        foreach (var name in dataSrc.GetMetaList()) {
+            if (name == ResPathName) continue;
+            dataTarget.Set(name, dataSrc.GetMeta(name));
+        }
+    }
+
+    private static void PostInstantiate(Node @object, Vector2 context) {
+        if (@object is INodeNameIsImportant) {
+            @object.Name = $"{@object.GetClass()}_{context.X}_{context.Y}";
+        }
+    }
+
+    private static readonly StringName ResPathName = "res_path";
+    private static readonly StringName PresetName = "preset";
 }

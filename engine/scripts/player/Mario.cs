@@ -15,14 +15,12 @@ namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
 [Icon("res://engine/resources/mario/AT_icon.tres")]
-public partial class Mario : CharacterBody2D
-{
+public partial class Mario : CharacterBody2D {
     public static readonly bool InterpolationEnabled = false;
-    
-    #region Movement Params
-    
-    [ExportGroup("Initial Values")]
 
+    #region Movement Params
+
+    [ExportGroup("Initial Values")]
     [Export] public float YSpeed { get; set; }
 
     [ExportGroup("Mario Movement")]
@@ -43,13 +41,13 @@ public partial class Mario : CharacterBody2D
 
     [Export]
     public AudioStream SprintStartSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/mario/SE_run.ogg");
-    
-    
+
+
     [ExportSubgroup("Jumping & Swimming")]
     [Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(1);
     [Export] public float MaxYSpeed { get; set; } = Units.Speed.CtfToGd(10);
     [Export] public float JumpStrength { get; set; } = Units.Speed.CtfToGd(13);
-    
+
     /// <summary>
     /// 在脚滑踩空后的多少时间内仍然可以跳起来，
     /// 即 "威利狼跳"
@@ -62,7 +60,7 @@ public partial class Mario : CharacterBody2D
     [ExportSubgroup("")]
     [Export] public float ClimbSpeed { get; set; } = Units.Speed.CtfToGd(2);
 
-    
+
     [ExportSubgroup("Swimming (Advanced)")]
     [Export] public float SwimStrengthAcc { get; set; } = Units.Speed.CtfToGd(0.5F);
 
@@ -72,33 +70,34 @@ public partial class Mario : CharacterBody2D
     /// 水下按住上时的最小起跳速度（Factory Engine 专属）
     /// </summary>
     [Export] public float MinSwimStrengthWhenFloatingUp { get; set; } = Units.Speed.CtfToGd(6);
-        
+
     /// <summary>
     /// 水下按住上时的最大起跳速度（Factory Engine 专属）
     /// </summary>
     [Export] public float MaxSwimStrengthWhenFloatingUp { get; set; } = Units.Speed.CtfToGd(8);
 
     [Export] public float SwimStrengthAccWhenFloatingUp { get; set; } = Units.Speed.CtfToGd(1);
-    
+
     /// <summary>
     /// 水下按住下时的加速度（Factory Engine 专属）
     /// </summary>
     [Export] public float GravityWhenSinking { get; set; } = Units.Acceleration.CtfToGd(1) * 3 / 10;
-    
+
     /// <summary>
     /// 水下按住下时的最大速度（Factory Engine 专属）
     /// </summary>
     [Export] public float MaxYSpeedWhenSinking { get; set; } = Units.Speed.CtfToGd(6);
-    
+
     /// <summary>
     /// 水下下沉时的最小起跳速度（Factory Engine 专属）
     /// </summary>
     [Export] public float MinSwimStrengthWhenSinking { get; set; } = Units.Speed.CtfToGd(1);
-        
+
     /// <summary>
     /// 水下下沉时的最大起跳速度（Factory Engine 专属）
     /// </summary>
     [Export] public float MaxSwimStrengthWhenSinking { get; set; } = Units.Speed.CtfToGd(2);
+
     [Export] public float SwimStrengthAccWhenSinking { get; set; } = Units.Speed.CtfToGd(0.5F);
 
     #endregion
@@ -109,7 +108,7 @@ public partial class Mario : CharacterBody2D
 
     [Export, MaybeNull]
     public AudioStream GrabTossSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/shared/SE_kick.wav");
-    
+
     /// <summary>
     /// 每个大小所对应的碰撞体积，数量必须是 3 个，对应小个子，大个子，迷你状态
     /// </summary>
@@ -117,7 +116,7 @@ public partial class Mario : CharacterBody2D
     [ExportGroup("Mario Collision")]
     [Export] public Array<CollisionShape2D> CollisionBySize { get; private set; }
 
-    
+
     [ExportGroup("RPG")]
     [Export] public float InvulnerableTimeOnHurt { get; private set; } = 2;
     [Export] public float InvulnerableTimeOnSmallHpHurt { get; private set; } = 1;
@@ -141,11 +140,11 @@ public partial class Mario : CharacterBody2D
     [Export] public float InvulnerabilityFlashSpeed { get; set; } = 8;
 
     [Signal] public delegate void SizeChangedEventHandler();
-    
+
     public Node2D Muzzle => MuzzleBySize[(int)CurrentSize];
     public MarioGrabMuzzle GrabMuzzle => GrabMuzzleBySize[(int)CurrentSize];
     public ComboTracker StompComboTracker => _stompComboTracker;
-    
+
     /// <summary>
     /// 受下蹲影响
     /// </summary>
@@ -171,51 +170,41 @@ public partial class Mario : CharacterBody2D
     public StringName ExpectedAnimation { get; private set; }
     public float ExpectedAnimationSpeed { get; private set; }
 
-    public AudioStream GetHurtVoice(DamageEvent e)
-    {
-        if (e.IsDeathProtection)
-        {
+    public AudioStream GetHurtVoice(DamageEvent e) {
+        if (e.IsDeathProtection) {
             return e.DirectSource == _slipperyGas ? HitPointSaveSlipperyVoice : HitPointSevereHurtVoice;
         }
         return HitPointHurtVoice;
     }
-    
-    public bool WillStomp(IStompable other)
-    {
+
+    public bool WillStomp(IStompable other) {
         return YSpeed >= 0 && ToLocal(other.StompCenter).Y >= -8;
     }
 
-    public bool WillStomp(Node2D other)
-    {
+    public bool WillStomp(Node2D other) {
         return YSpeed >= 0 && ToLocal(other.GlobalPosition).Y >= -8;
     }
 
-    public void ForceCancelCrouch()
-    {
-        if (StandingSize != MarioSize.Big)
-        {
+    public void ForceCancelCrouch() {
+        if (StandingSize != MarioSize.Big) {
             return;
         }
         IsCrouching = false;
         SetSize(MarioSize.Big, true);
     }
 
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
         base._Process(delta);
         ProcessPositionInterpolation((float)delta);
         ProcessFlashing((float)delta);
         MoveCamera(Tween.TweenProcessMode.Idle);
     }
 
-    private void ProcessPositionInterpolation(double delta)
-    {
-        if (!InterpolationEnabled || PipeState != MarioPipeState.NotInPipe)
-        {
+    private void ProcessPositionInterpolation(double delta) {
+        if (!InterpolationEnabled || PipeState != MarioPipeState.NotInPipe) {
             return;
         }
-        if (_posBeforePhProcess == _posAfterPhProcess || GlobalPosition != _lastGlobalPos)
-        {
+        if (_posBeforePhProcess == _posAfterPhProcess || GlobalPosition != _lastGlobalPos) {
             _posBeforePhProcess = _posAfterPhProcess = _lastGlobalPos = GlobalPosition;
             _lastPhysicsDelta = 0;
             return;
@@ -225,18 +214,15 @@ public partial class Mario : CharacterBody2D
         _deltaCounter += delta;
     }
 
-    public override void _PhysicsProcess(double deltaD)
-    {
+    public override void _PhysicsProcess(double deltaD) {
         base._PhysicsProcess(deltaD);
-        if (InterpolationEnabled && _posBeforePhProcess != _posAfterPhProcess)
-        {
+        if (InterpolationEnabled && _posBeforePhProcess != _posAfterPhProcess) {
             GlobalPosition = _posAfterPhProcess;
         }
         _posBeforePhProcess = GlobalPosition;
         PhysicsProcess0(deltaD);
         _posAfterPhProcess = GlobalPosition;
-        if (InterpolationEnabled)
-        {
+        if (InterpolationEnabled) {
             GlobalPosition = _lastGlobalPos = _posBeforePhProcess;
             _lastPhysicsDelta = deltaD;
             _deltaCounter = 0;
@@ -244,32 +230,24 @@ public partial class Mario : CharacterBody2D
         MoveCamera(Tween.TweenProcessMode.Physics);
     }
 
-    private void PhysicsProcess0(double deltaD)
-    {
+    private void PhysicsProcess0(double deltaD) {
         base._PhysicsProcess(deltaD);
-        if (PipeState is not MarioPipeState.NotInPipe || _internalTrackedInPipe)
-        {
+        if (PipeState is not MarioPipeState.NotInPipe || _internalTrackedInPipe) {
             ProcessPipe((float)deltaD);
-            if (_internalTrackedInPipe)
-            {
+            if (_internalTrackedInPipe) {
                 ProcessAnimation();
                 return;
             }
         }
-        
-        if (_deathStack > 0)
-        {
-            Kill(new DamageEvent
-            {
+
+        if (_deathStack > 0) {
+            Kill(new DamageEvent {
                 DamageTypes = DamageType.Environment,
                 DirectSource = null,
                 TrueSource = null,
             });
-        }
-        else if (_hurtStack > 0)
-        {
-            Hurt(new DamageEvent
-            {
+        } else if (_hurtStack > 0) {
+            Hurt(new DamageEvent {
                 DamageTypes = DamageType.Environment,
                 DirectSource = null,
                 TrueSource = null,
@@ -277,10 +255,8 @@ public partial class Mario : CharacterBody2D
                 DamageHi = GameRule.DefaultTerrainDamageHi,
             });
         }
-        if (_cameraPosInitialized && GlobalPosition.Y > this.GetFrame().End.Y + 48)
-        {
-            Kill(new DamageEvent
-            {
+        if (_cameraPosInitialized && GlobalPosition.Y > this.GetFrame().End.Y + 48) {
+            Kill(new DamageEvent {
                 DamageTypes = DamageType.Environment,
                 DirectSource = _slipperyGas,
                 TrueSource = _slipperyGas,
@@ -289,12 +265,9 @@ public partial class Mario : CharacterBody2D
             return;
         }
         var delta = (float)deltaD;
-        if (IsClimbing)
-        {
+        if (IsClimbing) {
             ProcessClimb(delta);
-        }
-        else
-        {
+        } else {
             ProcessClimbDetection(delta);
         }
         PhysicsProcessX(delta);
@@ -305,17 +278,13 @@ public partial class Mario : CharacterBody2D
         ProcessAnimation();
 
         var shouldSkid = (_leftPressed || _rightPressed) && !IsInAir && (_turning || (IsCrouching && XSpeed > 0));
-        if (_skidding != shouldSkid)
-        {
+        if (_skidding != shouldSkid) {
             _skidding = shouldSkid;
-            if (shouldSkid)
-            {
+            if (shouldSkid) {
                 _skidSound.Play();
                 _skidSmokeTimer.EmitSignal(Timer.SignalName.Timeout);
                 _skidSmokeTimer.Start();
-            }
-            else
-            {
+            } else {
                 _skidSound.Stop();
                 _skidSmokeTimer.Stop();
             }
@@ -324,92 +293,75 @@ public partial class Mario : CharacterBody2D
         ProcessInput(delta);
     }
 
-    private void ProcessInput(float delta)
-    {
+    private void ProcessInput(float delta) {
         if (HasCompletedLevel) return;
-        
+
         FetchInput(out _jumpPressed, Constants.ActionJump);
         FetchInput(out _runPressed, Constants.ActionRun);
         FetchInput(out _firePressed, Constants.ActionFire);
         FetchInput(out _upPressed, Constants.ActionMoveUp);
         FetchInput(out _downPressed, Constants.ActionMoveDown);
         if (ControlIgnored) return;
-        
+
         InputGrab();
-        if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing && Input.IsActionJustPressed(Constants.ActionFire))
-        {
+        if (PipeState == MarioPipeState.NotInPipe && !WasJustGrabbing &&
+            Input.IsActionJustPressed(Constants.ActionFire)) {
             _firePreInput = 0.2F;
             TryFire();
         }
-        
-        if (_firePreInput > 0)
-        {
+
+        if (_firePreInput > 0) {
             _firePreInput -= delta;
             TryFire();
         }
     }
 
-    private void MoveCamera(Tween.TweenProcessMode mode)
-    {
+    private void MoveCamera(Tween.TweenProcessMode mode) {
         var cam = _camera;
-        if (!IsInstanceValid(cam) || !cam.IsInsideTree())
-        {
+        if (!IsInstanceValid(cam) || !cam.IsInsideTree()) {
             cam = _camera = this.GetLevel()?.FindCamera();
         }
-        if (IsInstanceValid(cam) && cam!.IsInsideTree())
-        {
-            if ((mode == Tween.TweenProcessMode.Physics) == cam.IsPhysicsInterpolatedAndEnabled())
-            {
+        if (IsInstanceValid(cam) && cam!.IsInsideTree()) {
+            if ((mode == Tween.TweenProcessMode.Physics) == cam.IsPhysicsInterpolatedAndEnabled()) {
                 cam.GlobalPosition = ToGlobal(new Vector2(0, -CurrentSize.GetIdealHeight() / 2));
                 _cameraPosInitialized = true;
-                if (cam.IsPhysicsInterpolatedAndEnabled())
-                {
+                if (cam.IsPhysicsInterpolatedAndEnabled()) {
                     cam.MakeCurrent();
                 }
             }
         }
     }
 
-    private void TryFire()
-    {
-        if (WasJustGrabbing)
-        {
+    private void TryFire() {
+        if (WasJustGrabbing) {
             return;
         }
-        if (GlobalData.Status.Fire(this))
-        {
+        if (GlobalData.Status.Fire(this)) {
             _firePreInput = 0;
-            if (!IsCrouching && _currentSprite is { } sprite && _optionalAnimations.Contains(Constants.AnimLaunching))
-            {
+            if (!IsCrouching && _currentSprite is { } sprite && _optionalAnimations.Contains(Constants.AnimLaunching)) {
                 sprite.Animation = Constants.AnimLaunching;
             }
         }
     }
 
-    private void ProcessCrouch()
-    {
-        if (IsClimbing || StandingSize != MarioSize.Big)
-        {
+    private void ProcessCrouch() {
+        if (IsClimbing || StandingSize != MarioSize.Big) {
             return;
         }
         // 水中需要触地才能蹲下
         var isAirSwimming = IsInAir && IsInWater;
-        if (_downPressed && !isAirSwimming && !IsCrouching && !IsGrabbing)
-        {
+        if (_downPressed && !isAirSwimming && !IsCrouching && !IsGrabbing) {
             SetSize(MarioSize.Small);
             IsCrouching = true;
         }
-        if ((!_downPressed || IsGrabbing || isAirSwimming) && IsCrouching)
-        {
+        if ((!_downPressed || IsGrabbing || isAirSwimming) && IsCrouching) {
             var bigShape = CollisionBySize[(int)MarioSize.Big];
 
-            if (MeInAnArray.Count == 0)
-            {
+            if (MeInAnArray.Count == 0) {
                 MeInAnArray.Add(GetRid());
             }
 
-            var query = new PhysicsShapeQueryParameters2D()
-            {
+            var query = new PhysicsShapeQueryParameters2D() {
                 Shape = bigShape.Shape,
                 Transform = bigShape.GlobalTransform,
                 CollisionMask = this.CollisionMask,
@@ -418,8 +370,7 @@ public partial class Mario : CharacterBody2D
             };
 
             var willCollide = GetWorld2D().DirectSpaceState.CollideShape(query).Count > 0;
-            if (!willCollide)
-            {
+            if (!willCollide) {
                 SetSize(MarioSize.Big);
                 IsCrouching = false;
             }
@@ -430,18 +381,15 @@ public partial class Mario : CharacterBody2D
 
     private void SetSize(MarioSize size) => SetSize(size, false);
 
-    private void SetSize(MarioSize size, bool force)
-    {
-        for (var i = 0; i < CollisionBySize.Count; i++)
-        {
+    private void SetSize(MarioSize size, bool force) {
+        for (var i = 0; i < CollisionBySize.Count; i++) {
             var isActive = i == (int)size;
             var shape = CollisionBySize[i];
             Callable.From(() => shape.Disabled = !isActive).CallDeferred();
             // GrabMuzzleBySize[i].ProcessMode = isActive 
             //     ? ProcessModeEnum.Inherit
             //     : ProcessModeEnum.Disabled;
-            if (isActive)
-            {
+            if (isActive) {
                 _grabRoot.GetParent()?.RemoveChild(_grabRoot);
                 GrabMuzzleBySize[i].AddChild(_grabRoot);
                 _grabRoot.Position = Vector2.Zero;
@@ -450,155 +398,117 @@ public partial class Mario : CharacterBody2D
         CurrentSize = size;
         EmitSignal(SignalName.SizeChanged);
 
-        if (size != MarioSize.Big && IsCrouching)
-        {
+        if (size != MarioSize.Big && IsCrouching) {
             IsCrouching = false;
         }
 
-        if (!force && size == MarioSize.Big)
-        {
+        if (!force && size == MarioSize.Big) {
             TestAndForceCrouch();
         }
     }
 
-    private void TestAndForceCrouch()
-    {
+    private void TestAndForceCrouch() {
         var bigShape = CollisionBySize[(int)MarioSize.Big];
-        var query = new PhysicsShapeQueryParameters2D
-        {
+        var query = new PhysicsShapeQueryParameters2D {
             Shape = bigShape.Shape,
             Transform = bigShape.GlobalTransform,
             CollisionMask = CollisionMask,
             CollideWithBodies = true,
             CollideWithAreas = false,
         };
-        if (GetWorld2D().DirectSpaceState.IntersectShape(query).Count > 0)
-        {
+        if (GetWorld2D().DirectSpaceState.IntersectShape(query).Count > 0) {
             SetSize(MarioSize.Small);
             IsCrouching = true;
         }
     }
 
-    private void ProcessAnimation()
-    {
+    private void ProcessAnimation() {
         TrySwitchStatusSprite();
         _spriteRoot.Scale = CharacterDirection < 0 ? Constants.FlipX : Constants.DoNotFlipX;
 
         var hasSprite = _currentSprite is not null;
 
-        if (IsInSpecialAnimation())
-        {
-            if (hasSprite)
-            {
+        if (IsInSpecialAnimation()) {
+            if (hasSprite) {
                 _currentSprite.SpeedScale = 1;
             }
             return;
         }
         var (anim, speed) = GetAnimationIdAndSpeed();
-        if (hasSprite)
-        {
-            if (_currentSprite.Animation != anim)
-            {
+        if (hasSprite) {
+            if (_currentSprite.Animation != anim) {
                 _currentSprite.Animation = anim;
             }
             _currentSprite.SpeedScale = speed;
         }
     }
 
-    private (StringName, float) GetAnimationIdAndSpeed()
-    {
+    private (StringName, float) GetAnimationIdAndSpeed() {
         StringName anim;
         var speed = 1F;
         var inPipe = PipeState != MarioPipeState.NotInPipe;
-        if (inPipe && PipeForceAnimation is { } pipeAnimation)
-        {
+        if (inPipe && PipeForceAnimation is { } pipeAnimation) {
             return (pipeAnimation, speed);
         }
 
-        if (IsClimbing)
-        {
+        if (IsClimbing) {
             return (Constants.AnimClimbing, _isClimbMoving ? 1 : 0);
         }
-        
-        if (IsGrabbing)
-        {
-            if (IsInAir && _optionalAnimations.Contains(Constants.AnimGrabJump))
-            {
+
+        if (IsGrabbing) {
+            if (IsInAir && _optionalAnimations.Contains(Constants.AnimGrabJump)) {
                 return (Constants.AnimGrabJump, speed);
             }
-            if (!inPipe && XSpeed > 0 && _optionalAnimations.Contains(Constants.AnimGrabWalk))
-            {
+            if (!inPipe && XSpeed > 0 && _optionalAnimations.Contains(Constants.AnimGrabWalk)) {
                 return (Constants.AnimGrabWalk, XSpeed / MaxSpeedWhenRunning);
             }
-            if (_optionalAnimations.Contains(Constants.AnimGrabStop))
-            {
+            if (_optionalAnimations.Contains(Constants.AnimGrabStop)) {
                 return (Constants.AnimGrabStop, speed);
             }
         }
-        if (IsCrouching && _optionalAnimations.Contains(Constants.AnimCrouching))
-        {
+        if (IsCrouching && _optionalAnimations.Contains(Constants.AnimCrouching)) {
             return (Constants.AnimCrouching, speed);
         }
-        if (IsInAir)
-        {
-            if (IsInWater)
-            {
+        if (IsInAir) {
+            if (IsInWater) {
                 anim = Constants.AnimSwimming;
-            }
-            else if (_sprinting && _optionalAnimations.Contains(Constants.AnimLeaping))
-            {
+            } else if (_sprinting && _optionalAnimations.Contains(Constants.AnimLeaping)) {
                 anim = Constants.AnimLeaping;
-            }
-            else
-            {
+            } else {
                 anim = (YSpeed >= 0 && _optionalAnimations.Contains(Constants.AnimFalling))
                     ? Constants.AnimFalling
                     : Constants.AnimJumping;
             }
-        }
-        else
-        {
-            if (!inPipe && XSpeed > 0)
-            {
-                if (_optionalAnimations.Contains(Constants.AnimTurning) && _walking && _turning)
-                {
+        } else {
+            if (!inPipe && XSpeed > 0) {
+                if (_optionalAnimations.Contains(Constants.AnimTurning) && _walking && _turning) {
                     anim = Constants.AnimTurning;
-                }
-                else
-                {
-                    anim = (_sprinting && _optionalAnimations.Contains(Constants.AnimRunning)) 
-                        ? Constants.AnimRunning 
+                } else {
+                    anim = (_sprinting && _optionalAnimations.Contains(Constants.AnimRunning))
+                        ? Constants.AnimRunning
                         : Constants.AnimWalking;
                 }
                 speed = XSpeed / MaxSpeedWhenRunning;
-            }
-            else
-            {
+            } else {
                 anim = Constants.AnimStopped;
             }
         }
         return (anim, speed);
     }
 
-    private bool IsInSpecialAnimation()
-    {
+    private bool IsInSpecialAnimation() {
         return _currentSprite != null && Constants.SpecialAnimations.Contains(_currentSprite.Animation);
     }
 
-    private void TrySwitchStatusSprite()
-    {
-        if (_currentStatus != GlobalData.Status)
-        {
+    private void TrySwitchStatusSprite() {
+        if (_currentStatus != GlobalData.Status) {
             _currentStatus = GlobalData.Status;
             _currentSprite = SpriteNodes[_currentStatus];
             PostSwitchStatusSprite();
         }
-        if (_currentSprite is Node sprite && sprite.GetParent() is null)
-        {
-            foreach (var child in PossibleSprites)
-            {
-                if (child.GetParent() is { } parent)
-                {
+        if (_currentSprite is Node sprite && sprite.GetParent() is null) {
+            foreach (var child in PossibleSprites) {
+                if (child.GetParent() is { } parent) {
                     Callable.From<Node>(parent.RemoveChild).CallDeferred(child.AsNode());
                 }
             }
@@ -612,27 +522,20 @@ public partial class Mario : CharacterBody2D
             .Concat(_spriteParent.Children())
             .OfType<IAnimatedSprite>();
 
-    private void PostSwitchStatusSprite()
-    {
-        if (!_invulnerable)
-        {
+    private void PostSwitchStatusSprite() {
+        if (!_invulnerable) {
             _spriteRoot.Modulate = Colors.White;
         }
 
         _optionalAnimations.Clear();
-        if (_currentSprite is AnimatedSprite2D sprite)
-        {
+        if (_currentSprite is AnimatedSprite2D sprite) {
             var frames = sprite.SpriteFrames;
-            foreach (var name in Constants.OptionalAnimations)
-            {
-                if (frames.HasAnimation(name))
-                {
+            foreach (var name in Constants.OptionalAnimations) {
+                if (frames.HasAnimation(name)) {
                     _optionalAnimations.Add(name);
                 }
             }
-        }
-        else
-        {
+        } else {
             _optionalAnimations.AddAll(Constants.OptionalAnimations);
         }
 
@@ -640,34 +543,28 @@ public partial class Mario : CharacterBody2D
         _sprite3DRoot.Visible = is3D;
         _sprite3DRoot.ProcessMode = is3D ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
 
-        if (_spriteRoot.Material is ShaderMaterial sm)
-        {
+        if (_spriteRoot.Material is ShaderMaterial sm) {
             sm.SetShaderParameter("outline_width", _currentSprite is Node3D ? 4F : 0F);
         }
-        
+
         StandingSize = _currentStatus.Size;
-        if (!(StandingSize == MarioSize.Big && IsCrouching))
-        {
+        if (!(StandingSize == MarioSize.Big && IsCrouching)) {
             SetSize(StandingSize);
         }
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        foreach (var sprite in SpriteNodes.Values.Cast<Node>().Where(it => IsInstanceValid(it) && it.GetParent() == null))
-        {
+    protected override void Dispose(bool disposing) {
+        foreach (var sprite in SpriteNodes.Values.Cast<Node>().Where(it => IsInstanceValid(it) && it.GetParent() == null)) {
             sprite.QueueFree();
         }
         base.Dispose(disposing);
     }
 
-    private void FetchInput(out bool pressed, StringName action)
-    {
+    private void FetchInput(out bool pressed, StringName action) {
         pressed = !ControlIgnored && Input.IsActionPressed(action);
     }
 
-    public override async void _Ready()
-    {
+    public override async void _Ready() {
         base._Ready();
         this.GetNode(out _spriteRoot, Constants.NpSpriteRoot);
         this.GetNode(out _sprite3DRoot, Constants.NpSprite3DRoot);
@@ -691,19 +588,16 @@ public partial class Mario : CharacterBody2D
         WaterReady();
 
         var statuses = StatusList.Count;
-        for (var i = 0; i < statuses; i++)
-        {
+        for (var i = 0; i < statuses; i++) {
             var status = StatusList[i];
             var spriteMaybe = (i >= StatusSpriteNodeList.Count ? null : StatusSpriteNodeList[i]) as IAnimatedSprite;
             var sprite = spriteMaybe ?? status.AnimationNode?.Instantiate<IAnimatedSprite>();
-            if (sprite is not null)
-            {
+            if (sprite is not null) {
                 InstallStatusSprite(sprite);
             }
             SpriteNodes[status] = sprite;
         }
-        for (var i = 0; i < GrabMuzzleBySize.Count; i++)
-        {
+        for (var i = 0; i < GrabMuzzleBySize.Count; i++) {
             _grabMuzzleOriginalXBySize[i] = GrabMuzzleBySize[i].Position.X;
         }
 
@@ -712,28 +606,24 @@ public partial class Mario : CharacterBody2D
         Translate(new Vector2(0, -SafeMargin / 2));
     }
 
-    private static void InstallStatusSprite(IAnimatedSprite sprite)
-    {
+    private static void InstallStatusSprite(IAnimatedSprite sprite) {
         sprite.GetParent()?.RemoveChild(sprite.AsNode());
-        sprite.AnimationFinished += _ =>
-        {
+        sprite.AnimationFinished += _ => {
             sprite.Animation = Constants.AnimStopped;
             sprite.Play();
         };
     }
-    
-    private void EmitSmoke(PackedScene smoke)
-    {
+
+    private void EmitSmoke(PackedScene smoke) {
         if (PipeState != MarioPipeState.NotInPipe) return;
         if (IsInAir || !this.TryGetParent(out Node parent)) return;
         smoke.Instantiate(out Node2D instance);
-        
+
         parent.AddChild(instance);
         instance.GlobalPosition = GlobalPosition;
     }
 
-    private CollisionShape2D CurrentCollisionShape
-    {
+    private CollisionShape2D CurrentCollisionShape {
         get => CollisionBySize[(int)CurrentSize];
         set => CollisionBySize[(int)CurrentSize] = value;
     }

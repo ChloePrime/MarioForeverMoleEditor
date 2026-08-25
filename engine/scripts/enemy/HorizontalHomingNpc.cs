@@ -7,47 +7,35 @@ using Godot;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEnemy
-{
+public partial class HorizontalHomingNpc : WalkableNpc, IDynamicAnimationSpeedEnemy {
     [Export] public float MaxSpeed = Units.Speed.CtfToGd(1.5F);
-    [Export] public bool ScaleAnimationSpeed { get; set; } = true; 
+    [Export] public bool ScaleAnimationSpeed { get; set; } = true;
     [Export] public Node2D Target { get; set; }
 
     public float AnimationSpeedScale => (ScaleAnimationSpeed && CanMove) ? XSpeed / MaxSpeed : 1;
 
-    public override float AnimationDirection
-    {
-        get
-        {
+    public override float AnimationDirection {
+        get {
             if (XSpeed >= 2 * MaxSpeed ||
-                Target is not { } target || 
-                !IsInstanceValid(target))
-            {
+                Target is not { } target ||
+                !IsInstanceValid(target)) {
                 return base.AnimationDirection;
             }
             return Math.Sign(ToLocal(target.GlobalPosition).X);
         }
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         Target ??= GetTree().GetPlayer() as Node2D;
-        if (Target is not { } target || !IsInstanceValid(target))
-        {
+        if (Target is not { } target || !IsInstanceValid(target)) {
             Target = null;
-        }
-        else if (CanMove)
-        {
+        } else if (CanMove) {
             var sameDir = Mathf.IsEqualApprox(Math.Sign(ToLocal(target.GlobalPosition).X), XDirection);
-            if (sameDir)
-            {
+            if (sameDir) {
                 TargetSpeed = MaxSpeed;
-            }
-            else
-            {
+            } else {
                 TargetSpeed = 0;
-                if (XSpeed <= 0)
-                {
+                if (XSpeed <= 0) {
                     XDirection *= -1;
                     TargetSpeed = MaxSpeed;
                 }

@@ -5,15 +5,13 @@ using Godot;
 namespace ChloePrime.MarioForever.Shared;
 
 [GlobalClass]
-public partial class ComboTracker : Node
-{
+public partial class ComboTracker : Node {
     [Export] public bool ResetAtLast { get; set; }
     [Export, MaybeNull] public ComboRule RuleOverride { get; set; }
-    
+
     public ComboRule Rule => RuleOverride ?? this.GetRule().DefaultComboRule;
 
-    public void MoveNext()
-    {
+    public void MoveNext() {
         _rule = Rule;
         _position = ResetAtLast ? (_position + 1) % _rule.ScoreList.Count : _position + 1;
     }
@@ -21,8 +19,7 @@ public partial class ComboTracker : Node
     public void Reset() => _position = -1;
 
     [return: NotNull]
-    public Node2D CreateScore()
-    {
+    public Node2D CreateScore() {
         CheckMoveNextCalled();
         var rule = _rule ??= Rule;
         var scores = rule.ScoreList;
@@ -30,18 +27,15 @@ public partial class ComboTracker : Node
     }
 
     [return: MaybeNull]
-    public AudioStream GetSound()
-    {
+    public AudioStream GetSound() {
         CheckMoveNextCalled();
         var rule = _rule ??= Rule;
         var sounds = rule.SoundList;
         return sounds[Math.Clamp(_position, 0, sounds.Count - 1)];
     }
 
-    private void CheckMoveNextCalled()
-    {
-        if (_position < 0)
-        {
+    private void CheckMoveNextCalled() {
+        if (_position < 0) {
             throw new IndexOutOfRangeException("Call MoveNext() before getting result from ComboTracker!");
         }
     }

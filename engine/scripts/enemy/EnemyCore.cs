@@ -11,15 +11,16 @@ using Godot.Collections;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class EnemyCore : Node2D, IMarioForeverNpc
-{
+public partial class EnemyCore : Node2D, IMarioForeverNpc {
     /// <summary>
     /// 优先使用 <see cref="Root"/> 的 NPC 数据，随后才会用这里的
     /// </summary>
-    [Export, MaybeNull] public MarioForeverNpcData MyNpcData { get; private set; }
+    [Export, MaybeNull]
+    public MarioForeverNpcData MyNpcData { get; private set; }
+
     [Export] public bool DieWhenThrownAndHitOther { get; set; } = true;
     [Export] private Node2D RootOverride { get; set; }
-    
+
     [Signal]
     public delegate void HurtEventHandler(float amount);
 
@@ -31,20 +32,22 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
     public AnimatedSprite2D Sprite { get; private set; }
     public AnimationPlayer Animation { get; private set; }
     public Node2D Root => _root ??= (RootOverride ?? (GetParent() as Node2D)) ?? this;
-    public MarioForeverNpcData NpcData => Root == this ? MyNpcData : (Root as IMarioForeverNpc)?.NpcData ?? MyNpcData ?? MarioForeverNpcData.SafeFallback;
+
+    public MarioForeverNpcData NpcData => Root == this
+        ? MyNpcData
+        : (Root as IMarioForeverNpc)?.NpcData ?? MyNpcData ?? MarioForeverNpcData.SafeFallback;
+
     public IMarioForeverNpc AsNpc => this;
 
     [return: MaybeNull]
     public virtual ComboTracker GetComboTracker() => null;
 
-    public (float, float) GetDamage()
-    {
+    public (float, float) GetDamage() {
         var npcData = (this as IMarioForeverNpc).NpcData;
         return (npcData.DamageLo, npcData.DamageHi);
     }
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         _ = Root;
         Sprite = GetNode<AnimatedSprite2D>(NpSprite);
@@ -52,51 +55,40 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         HurtDetector = GetNodeOrNull<EnemyHurtDetector>("Hurt Detector");
         DamageSource = GetNodeOrNull<EnemyDamageSource>("Damage Source");
 
-        if (Sprite.Material is { ResourceLocalToScene: false } material)
-        {
+        if (Sprite.Material is { ResourceLocalToScene: false } material) {
             Sprite.Material = material.Clone();
         }
 
-        if (Root is GravityObjectBase gob && HurtDetector is { } myHurtDetector)
-        {
+        if (Root is GravityObjectBase gob && HurtDetector is { } myHurtDetector) {
             gob.GrabReleased += e => OnGrabReleased(e, gob, myHurtDetector);
             gob.HitEnemyWhenThrown += (c, isKiss) => OnHitOthers(c, isKiss, myHurtDetector);
         }
-        if (MyNpcData is {} npcData)
-        {
+        if (MyNpcData is { } npcData) {
             MyNpcData = npcData.ForceLocalToScene();
         }
     }
 
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
         base._Process(delta);
-        if (Sprite is { } sprite && Root is GravityObjectBase gob)
-        {
+        if (Sprite is { } sprite && Root is GravityObjectBase gob) {
             var shouldFlipH = IGrabbable.IsGrabbedByPlayer(gob) ? false : gob.AnimationDirection < 0;
-            if (sprite.FlipH != shouldFlipH)
-            {
+            if (sprite.FlipH != shouldFlipH) {
                 sprite.FlipH = shouldFlipH;
                 sprite.Position *= new Vector2(-1, 1);
             }
-            if (gob is IDynamicAnimationSpeedEnemy das)
-            {
+            if (gob is IDynamicAnimationSpeedEnemy das) {
                 sprite.SpeedScale = das.AnimationSpeedScale;
             }
         }
     }
 
-    private static void OnGrabReleased(Mario.GrabReleaseEvent e, GravityObjectBase myGob, EnemyHurtDetector myEhd)
-    {
-        if (e.Flags.HasFlag(Mario.GrabReleaseFlags.Gently))
-        {
+    private static void OnGrabReleased(Mario.GrabReleaseEvent e, GravityObjectBase myGob, EnemyHurtDetector myEhd) {
+        if (e.Flags.HasFlag(Mario.GrabReleaseFlags.Gently)) {
             return;
         }
 
-        if (TestIsInWall(myGob))
-        {
-            myEhd.Kill(new DamageEvent
-            {
+        if (TestIsInWall(myGob)) {
+            myEhd.Kill(new DamageEvent {
                 DamageToEnemy = 100,
                 DamageTypes = DamageType.KickShell,
                 AttackVector = new Vector2(myGob.Grabber.GlobalPosition.X - myGob.GlobalPosition.X, 0),
@@ -106,26 +98,22 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         }
     }
 
-    private static bool TestIsInWall(GravityObjectBase myGob)
-    {
+    private static bool TestIsInWall(GravityObjectBase myGob) {
         var state = myGob.GetWorld2D().DirectSpaceState;
-        var param = new PhysicsShapeQueryParameters2D
-        {
+        var param = new PhysicsShapeQueryParameters2D {
             Shape = myGob.Shape.Shape,
             CollideWithAreas = false,
             CollideWithBodies = true,
             CollisionMask = MaFo.CollisionMask.Solid | MaFo.CollisionMask.SolidEnemyOnly,
             Exclude = new Array<Rid> { myGob.GetRid() },
         };
-        return TestInWallOffsetList.All(offset =>
-        {
+        return TestInWallOffsetList.All(offset => {
             param.Transform = myGob.GlobalTransform.TranslatedLocal(offset);
             return state.IntersectShapeTyped(param).Any();
         });
     }
 
-    private static readonly Vector2[] TestInWallOffsetList =
-    {
+    private static readonly Vector2[] TestInWallOffsetList = {
         8 * Vector2.Right,
         8 * Vector2.Up,
         8 * Vector2.Left,
@@ -136,13 +124,11 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
         8 * Vector2.Down.Rotated(Mathf.Pi / 4),
     };
 
-    private void OnHitOthers(EnemyCore it, bool isKiss, EnemyHurtDetector myHurtDetector)
-    {
+    private void OnHitOthers(EnemyCore it, bool isKiss, EnemyHurtDetector myHurtDetector) {
         if (it.HurtDetector is not { } itsHurtDetector) return;
         var trueSource = (Root as IGrabbable)?.Grabber ?? this;
         // 伤害对方
-        var e = new DamageEvent
-        {
+        var e = new DamageEvent {
             DamageToEnemy = 100,
             DamageTypes = DamageType.KickShell,
             DirectSource = Root,
@@ -150,24 +136,20 @@ public partial class EnemyCore : Node2D, IMarioForeverNpc
             ComboTracker = GetComboTracker(),
         };
         // 亲嘴必须能够杀死对方时才会触发
-        if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e))
-        {
+        if (isKiss && !itsHurtDetector.CanBeOneHitKilledBy(e)) {
             return;
         }
-        if (itsHurtDetector.IgnoreUnsupportedDamageTypes && !itsHurtDetector.CanBeHurtBy(e))
-        {
+        if (itsHurtDetector.IgnoreUnsupportedDamageTypes && !itsHurtDetector.CanBeHurtBy(e)) {
             return;
         }
 
         itsHurtDetector.HurtBy(e);
 
         // 自己暴毙
-        if (!isKiss && Root is not IGrabbable { IsGrabbed: true })
-        {
+        if (!isKiss && Root is not IGrabbable { IsGrabbed: true }) {
             if (!DieWhenThrownAndHitOther) return;
         }
-        myHurtDetector.Kill(e with
-        {
+        myHurtDetector.Kill(e with {
             DirectSource = it.Root,
             EventFlags = DamageEvent.Flags.Silent,
         });

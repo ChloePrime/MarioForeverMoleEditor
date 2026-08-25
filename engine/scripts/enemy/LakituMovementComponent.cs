@@ -5,8 +5,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
-public partial class LakituMovementComponent : Node
-{
+public partial class LakituMovementComponent : Node {
     [Export] public float SpeedHi { get; set; } = Units.Speed.CtfToGd(9);
     [Export] public float SpeedLo { get; set; } = Units.Speed.CtfToGd(2);
     [Export] public float AccRangeHi { get; set; } = 100;
@@ -17,35 +16,28 @@ public partial class LakituMovementComponent : Node
     public float XSpeed => Mathf.Abs(_speed);
     public float XDirection => Mathf.Sign(_speed);
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         _lakitu = GetParent<Node2D>();
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
         var mario = _mario ??= GetTree().GetMario();
-        if (!IsInstanceValid(mario))
-        {
+        if (!IsInstanceValid(mario)) {
             _mario = null;
             return;
         }
         var rel = _lakitu.ToLocal(mario.GlobalPosition).X;
-        if (rel > +AccRangeLo && _speed < +SpeedHi)
-        {
+        if (rel > +AccRangeLo && _speed < +SpeedHi) {
             _speed.MoveToward(+SpeedHi, AccelerationLo * (float)delta);
         }
-        if (rel < -AccRangeLo && _speed > -SpeedHi)
-        {
+        if (rel < -AccRangeLo && _speed > -SpeedHi) {
             _speed.MoveToward(-SpeedHi, AccelerationLo * (float)delta);
         }
-        if (rel >= -AccRangeHi && rel <= AccRangeHi)
-        {
+        if (rel >= -AccRangeHi && rel <= AccRangeHi) {
             var marioDir = mario is Mario m ? m.XDirection : 0;
-            switch (marioDir)
-            {
+            switch (marioDir) {
                 case > 0 when _speed < -SpeedLo:
                     _speed.MoveToward(-SpeedLo, AccelerationHi * (float)delta);
                     break;
@@ -56,8 +48,7 @@ public partial class LakituMovementComponent : Node
         }
     }
 
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
         base._Process(delta);
         _lakitu.Translate(new Vector2(_speed * (float)delta, 0));
     }

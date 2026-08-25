@@ -6,8 +6,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Player;
 
-public enum MarioPipeState
-{
+public enum MarioPipeState {
     NotInPipe,
     Entering,
     TransitionIn,
@@ -16,8 +15,7 @@ public enum MarioPipeState
     Smb3Moving,
 }
 
-public partial class Mario
-{
+public partial class Mario {
     public MarioPipeState PipeState { get; set; }
     public PackedScene WarpTransitionPrefab { get; set; } = GD.Load<PackedScene>("res://engine/objects/level/O_warp_transition_circle.tscn");
     public StringName PipeForceAnimation { get; set; }
@@ -27,16 +25,12 @@ public partial class Mario
     public event Action RequireTeleport;
     public event Action TransitionCompleted;
 
-    public bool TryTeleportTo(Node2D target)
-    {
-        if (target is null || this.GetArea() is not { } oldArea
-                           || target.GetArea() is not { } newArea)
-        {
+    public bool TryTeleportTo(Node2D target) {
+        if (target is null || this.GetArea() is not { } oldArea || target.GetArea() is not { } newArea) {
             return false;
         }
-        
-        if (oldArea != newArea)
-        {
+
+        if (oldArea != newArea) {
             var level = this.GetLevel()!;
             GetParent()?.RemoveChild(this);
             level.SetArea(newArea);
@@ -46,15 +40,13 @@ public partial class Mario
         return true;
     }
 
-    public void BeginWarpTransitionIn()
-    {
+    public void BeginWarpTransitionIn() {
         PipeState = MarioPipeState.TransitionIn;
 
         StartTransition(WarpTransitionType.In, OnTransitionInFinished);
         return;
 
-        async void OnTransitionInFinished()
-        {
+        async void OnTransitionInFinished() {
             RequireTeleport?.Invoke();
             RequireTeleport = null;
             await this.DelayAsync(0.1F);
@@ -63,12 +55,10 @@ public partial class Mario
             BeginWarpTransitionOut();
         }
     }
-    
-    public void BeginWarpTransitionOut()
-    {
+
+    public void BeginWarpTransitionOut() {
         PipeState = MarioPipeState.TransitionOut;
-        StartTransition(WarpTransitionType.Out, () =>
-        {
+        StartTransition(WarpTransitionType.Out, () => {
             _transitionInstance.QueueFree();
             _transitionInstance = null;
             TransitionCompleted?.Invoke();
@@ -80,14 +70,10 @@ public partial class Mario
     private static readonly PackedScene ImmediateTransition = GD.Load<PackedScene>("res://engine/objects/level/O_warp_transition_immediate.tscn");
     private static WarpTransition _transitionInstance;
 
-    private void ProcessPipe(float delta)
-    {
-        if (PipeState != MarioPipeState.NotInPipe)
-        {
+    private void ProcessPipe(float delta) {
+        if (PipeState != MarioPipeState.NotInPipe) {
             _internalTrackedInPipe = true;
-        }
-        else
-        {
+        } else {
             _internalTrackedInPipe = false;
             EndInPipe();
             return;
@@ -95,60 +81,48 @@ public partial class Mario
         _skidSound.Stop();
         ShrinkGrabMuzzle();
         _transitionInstance?.ProcessTransition(delta);
-        
-        switch (PipeState)
-        {
+
+        switch (PipeState) {
             case MarioPipeState.TransitionIn:
-                if (_transitionInstance == null)
-                {
+                if (_transitionInstance == null) {
                     BeginWarpTransitionIn();
                 }
                 break;
             case MarioPipeState.TransitionOut:
-                if (_transitionInstance == null)
-                {
+                if (_transitionInstance == null) {
                     BeginWarpTransitionOut();
                 }
                 break;
         }
     }
 
-    private void ShrinkGrabMuzzle()
-    {
+    private void ShrinkGrabMuzzle() {
         var grabMuzzle = GrabMuzzle;
-        grabMuzzle.Position = grabMuzzle.Position with
-        {
+        grabMuzzle.Position = grabMuzzle.Position with {
             X = _grabMuzzleOriginalXBySize[(int)CurrentSize] * PipeGrabbedObjectXOffsetShrink
         };
     }
 
-    private void StartTransition(WarpTransitionType type, Action callback)
-    {
+    private void StartTransition(WarpTransitionType type, Action callback) {
         var node = WarpTransitionPrefab.Instantiate();
-        if (node is not WarpTransition transition)
-        {
+        if (node is not WarpTransition transition) {
             node.QueueFree();
             GD.PushError($"The script of WarpTransitionType should be child class of {nameof(WarpTransition)}, found {node.GetType().Name}");
             _transitionInstance = ImmediateTransition.Instantiate<WarpTransition>();
-        }
-        else
-        {
+        } else {
             _transitionInstance = transition;
         }
         var instance = _transitionInstance;
         AddChild(instance);
-        instance.TransitionCompleted += () =>
-        {
+        instance.TransitionCompleted += () => {
             instance.EndTransition();
             callback();
         };
         instance.BeginTransition(type);
     }
 
-    private void EndInPipe()
-    {
-        for (var i = 0; i < GrabMuzzleBySize.Count; i++)
-        {
+    private void EndInPipe() {
+        for (var i = 0; i < GrabMuzzleBySize.Count; i++) {
             var grabMuzzle = GrabMuzzleBySize[i];
             grabMuzzle.Position = grabMuzzle.Position with { X = _grabMuzzleOriginalXBySize[i] };
         }

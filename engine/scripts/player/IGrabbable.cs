@@ -4,13 +4,11 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Player;
 
-public interface IGrabbable
-{
+public interface IGrabbable {
     public Node2D Grabber { get; set; }
     public bool IsGrabbed => Grabber is not null;
 
-    public bool CanBeGrabbed()
-    {
+    public bool CanBeGrabbed() {
         return false;
     }
 
@@ -18,8 +16,7 @@ public interface IGrabbable
     public event Action<Mario.GrabReleaseEvent> GrabReleased;
     public sealed Node2D AsNode => (Node2D)this;
 
-    public static bool IsGrabbedByPlayer(IGrabbable grabbable)
-    {
+    public static bool IsGrabbedByPlayer(IGrabbable grabbable) {
         return grabbable.IsGrabbed && (grabbable.Grabber is not IMarioForeverNpc npc || npc.NpcData.Friendly);
     }
 
@@ -30,14 +27,11 @@ public interface IGrabbable
         Action<Mario.GrabEvent> grabbed,
         Action<Mario.GrabReleaseEvent> released,
         Mario.GrabEvent ge,
-        Mario.GrabReleaseEvent? gre)
-    {
-        if (gre is {} e)
-        {
+        Mario.GrabReleaseEvent? gre
+    ) {
+        if (gre is { } e) {
             released?.Invoke(e);
-        }
-        else
-        {
+        } else {
             grabbed.Invoke(ge);
         }
     }

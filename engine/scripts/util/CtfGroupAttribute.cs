@@ -7,9 +7,7 @@ namespace ChloePrime.MarioForever.Util;
 /// 用于提示某个类对应 RE 引擎里的某个分组
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class CtfGroupAttribute : Attribute
-{
-    public CtfGroupAttribute(string groupName)
-    {
+public class CtfGroupAttribute : Attribute {
+    public CtfGroupAttribute(string groupName) {
     }
 }

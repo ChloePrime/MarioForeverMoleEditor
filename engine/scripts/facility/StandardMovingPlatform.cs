@@ -4,17 +4,14 @@ using Godot;
 namespace ChloePrime.MarioForever.Facility;
 
 [GlobalClass]
-public partial class StandardMovingPlatform : MovingPlatform
-{
-    public override void _Ready()
-    {
+public partial class StandardMovingPlatform : MovingPlatform {
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _staticSprite, NpStaticSprite);
         this.GetNode(out _animatedSprite, NpAnimatedSprite);
     }
 
-    public void SetSprite(Texture2D sprite)
-    {
+    public void SetSprite(Texture2D sprite) {
         var size = sprite.GetSize();
         _staticSprite.Visible = true;
         _staticSprite.ProcessMode = ProcessModeEnum.Inherit;
@@ -25,8 +22,7 @@ public partial class StandardMovingPlatform : MovingPlatform
         Callable.From<Vector2>(UpdateCollisionSize).CallDeferred(size);
     }
 
-    public void SetSprite(SpriteFrames frames, Vector2 size)
-    {
+    public void SetSprite(SpriteFrames frames, Vector2 size) {
         _animatedSprite.Visible = true;
         _animatedSprite.ProcessMode = ProcessModeEnum.Inherit;
         _animatedSprite.SpriteFrames = frames;
@@ -37,12 +33,9 @@ public partial class StandardMovingPlatform : MovingPlatform
         Callable.From<Vector2>(UpdateCollisionSize).CallDeferred(size);
     }
 
-    private void UpdateCollisionSize(Vector2 size)
-    {
-        if (CollisionShape.Shape is not RectangleShape2D shape || !Mathf.IsEqualApprox(shape.Size.X, size.X))
-        {
-            CollisionShape.Shape = new RectangleShape2D()
-            {
+    private void UpdateCollisionSize(Vector2 size) {
+        if (CollisionShape.Shape is not RectangleShape2D shape || !Mathf.IsEqualApprox(shape.Size.X, size.X)) {
+            CollisionShape.Shape = new RectangleShape2D() {
                 Size = size
             };
             CollisionShape.Position = new Vector2(0, size.Y / 2);

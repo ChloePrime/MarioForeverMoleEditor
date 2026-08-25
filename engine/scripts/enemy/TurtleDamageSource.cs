@@ -5,48 +5,36 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
-public partial class TurtleDamageSource : EnemyDamageSource
-{
-    public override void _Ready()
-    {
+public partial class TurtleDamageSource : EnemyDamageSource {
+    public override void _Ready() {
         base._Ready();
         _core = (TurtleEnemyCore)Core;
         _core.Turtle.TurtleStateChanged += OnTurtleStateChanged;
     }
 
-    private void OnTurtleStateChanged()
-    {
-        if (_core.Turtle.State == Turtle.TurtleState.MovingShell)
-        {
+    private void OnTurtleStateChanged() {
+        if (_core.Turtle.State == Turtle.TurtleState.MovingShell) {
             HaltFor(TimeSpan.FromSeconds(0.25));
         }
     }
 
-    public override void HurtMario(Mario mario)
-    {
-        if (_core.Turtle.State == Turtle.TurtleState.StaticShell)
-        {
+    public override void HurtMario(Mario mario) {
+        if (_core.Turtle.State == Turtle.TurtleState.StaticShell) {
             Callable.From<Mario>(KickOrGrab).CallDeferred(mario);
-        }
-        else
-        {
+        } else {
             base.HurtMario(mario);
         }
     }
 
-    private void KickOrGrab(Mario mario)
-    {
-        if (mario.WillActivelyGrab)
-        {
+    private void KickOrGrab(Mario mario) {
+        if (mario.WillActivelyGrab) {
             mario.Grab(_core.Turtle);
-        }
-        else
-        {
+        } else {
             (_core.HurtDetector as TurtleHurtDetector)?.KickSound.Play();
             _core.Turtle.State = Turtle.TurtleState.MovingShell;
             _core.Turtle.KickBy(mario);
         }
     }
-    
+
     private TurtleEnemyCore _core;
 }

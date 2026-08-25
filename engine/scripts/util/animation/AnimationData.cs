@@ -4,8 +4,7 @@ using Godot.Collections;
 namespace ChloePrime.MarioForever.Util.Animation;
 
 [GlobalClass]
-public partial class AnimationData : Resource
-{
+public partial class AnimationData : Resource {
     [Export] public int LoopStarts { get; set; }
     [Export] public int LoopCount { get; set; }
     [Export] public Array<Pivot> FramePivots { get; private set; }
@@ -13,9 +12,7 @@ public partial class AnimationData : Resource
     /// <summary>
     /// 尚未实现
     /// </summary>
-    [Export]
-    public Array<Vector2> FramePivotVectors { get; private set; }
-    
-    [Export]
-    public Array<Vector2> FrameOffsets { get; private set; }
+    [Export] public Array<Vector2> FramePivotVectors { get; private set; }
+
+    [Export] public Array<Vector2> FrameOffsets { get; private set; }
 }

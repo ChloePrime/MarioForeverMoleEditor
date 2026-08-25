@@ -7,44 +7,39 @@ using static Godot.Mathf;
 
 namespace ChloePrime.MarioForever.Level;
 
-public partial class GoalStick : Area2D
-{
+public partial class GoalStick : Area2D {
     [Export] public Vector2 Velocity;
     [Export] public Vector2 MGravity = new(0, Units.Acceleration.CtfToGd(0.2F));
     [Export] public float LaunchSpeed = Units.Speed.CtfMovementToGd(40);
-    
-    public bool IsActivated
-    {
+
+    public bool IsActivated {
         get => _rotator.ProcessMode != ProcessModeEnum.Disabled;
         set => _rotator.ProcessMode = value ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
     }
-    
+
     [Signal]
     public delegate void ActivatedEventHandler();
-    
-    
+
+
     private static readonly NodePath NpRotator = "Sprite/Rotator";
     private Rotator2D _rotator;
-    
-    
-    public override void _Ready()
-    {
+
+
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _rotator, NpRotator);
 
         BodyEntered += OnBodyEntered;
     }
 
-    private void OnBodyEntered(Node2D body)
-    {
+    private void OnBodyEntered(Node2D body) {
         if (IsActivated || Goal.HasCompletedLevel(body)) return;
-        
+
         Callable.From(() => Reparent(this.GetPreferredRoot())).CallDeferred();
         Activate();
     }
 
-    public void Activate()
-    {
+    public void Activate() {
         if (IsActivated) return;
         IsActivated = true;
 
@@ -52,11 +47,9 @@ public partial class GoalStick : Area2D
         EmitSignal(SignalName.Activated);
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
-        if (IsActivated)
-        {
+        if (IsActivated) {
             Position += Velocity * (float)delta;
             Velocity += MGravity * (float)delta;
         }

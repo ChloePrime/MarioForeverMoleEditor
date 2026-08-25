@@ -8,8 +8,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Level;
 
-public enum GoalType
-{
+public enum GoalType {
     /// <summary>
     /// 通关杠
     /// </summary>
@@ -23,18 +22,16 @@ public enum GoalType
     Max,
 }
 
-public partial class Goal : Node2D
-{
+public partial class Goal : Node2D {
     [Export] public PackedScene ExitTarget { get; set; }
     [Export] public AudioStream ClearJingle { get; set; } = GD.Load<AudioStream>("uid://dpxtp67nosaqr");
-    
-    [ExportSubgroup("Advanced")]
-    [Export]
-    public GoalType Type { get; set; } = GoalType.Main;
+
+    [ExportSubgroup("Advanced")] 
+    [Export] public GoalType Type { get; set; } = GoalType.Main;
 
     private static readonly NodePath NpGoalStick = "Stick Path/Path Follower/Goal Stick";
     private GoalStick _stick;
-    
+
     private static readonly PackedScene Score100 = GD.Load<PackedScene>("uid://j04gurtf7ia4");
     private static readonly PackedScene Score200 = GD.Load<PackedScene>("uid://dapxc0x6y1soc");
     private static readonly PackedScene Score500 = GD.Load<PackedScene>("uid://jy5he83djmim");
@@ -45,36 +42,29 @@ public partial class Goal : Node2D
     private static readonly AudioStream TimeSettlingSound = GD.Load<AudioStream>("uid://bnv6wu750m822");
     private WeakRef _capturedPlayer;
 
-    public async void CompleteLevel()
-    {
+    public async void CompleteLevel() {
         BackgroundMusic.Music = ClearJingle;
 
-        foreach (var player in GetTree().GetAllPlayers())
-        {
+        foreach (var player in GetTree().GetAllPlayers()) {
             SetLevelCompleted(player, true);
-            if (Type is GoalType.Small && player is Node2D player2d)
-            {
+            if (Type is GoalType.Small && player is Node2D player2d) {
                 var score100 = Score100.Instantiate<Node2D>();
                 player.GetPreferredRoot().AddChildAt(score100, player2d.ToGlobal(new Vector2(0, -32)));
             }
         }
 
-        if (this.GetLevel() is { } level)
-        {
+        if (this.GetLevel() is { } level) {
             level.Completed = true;
-        }
-        else
-        {
+        } else {
             return;
         }
 
         await this.DelayAsync(8, false);
         if (!IsInstanceValid(this) || !IsInstanceValid(level)) return;
-        if (level.GetLevelManager() is not {} manager) return;
+        if (level.GetLevelManager() is not { } manager) return;
 
         double timeUnit;
-        switch (manager.GameRule.TimePolicy)
-        {
+        switch (manager.GameRule.TimePolicy) {
             case GameRule.TimePolicyType.Classic:
                 timeUnit = manager.GameRule.ClassicTimeUnitSize;
                 break;
@@ -84,16 +74,13 @@ public partial class Goal : Node2D
             default:
                 return;
         }
-        
+
         PlayTimeSettlingSound();
 
-        while (GlobalData.Time > 0)
-        {
+        while (GlobalData.Time > 0) {
             await this.DelayAsync(0.02F, false);
-            for (var i = 0; i < 8; i++)
-            {
-                if (GlobalData.Time > 0)
-                {
+            for (var i = 0; i < 8; i++) {
+                if (GlobalData.Time > 0) {
                     GlobalData.Time = Math.Max(0, GlobalData.Time - timeUnit);
                     GlobalData.Score += 10;
                 }
@@ -104,17 +91,15 @@ public partial class Goal : Node2D
         SwitchToNextLevel();
     }
 
-    public void SwitchToNextLevel()
-    {
+    public void SwitchToNextLevel() {
         Checkpoint.ClearSaved();
         if (this.GetLevelManager() is not { } manager) return;
 
-        if (ExitTarget is { } target)
-        {
+        if (ExitTarget is { } target) {
             manager.Level = target;
             return;
         }
-        
+
         var targetFromNearby = this.GetPreferredRoot().Walk()
             .OfType<Goal>()
             .Where(g => g.ExitTarget != null)
@@ -124,36 +109,29 @@ public partial class Goal : Node2D
         manager.Level = targetFromNearby ?? GD.Load<PackedScene>("uid://cw8mqse8hnr72"); // Limbo.tscn
     }
 
-    private async void PlayTimeSettlingSound()
-    {
-        while (GlobalData.Time > 0)
-        {
+    private async void PlayTimeSettlingSound() {
+        while (GlobalData.Time > 0) {
             TimeSettlingSound.Play();
             await this.DelayAsync(0.1F, false);
         }
     }
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
-        if (Type is GoalType.Main)
-        {
+        if (Type is GoalType.Main) {
             this.GetNode(out _stick, NpGoalStick);
             _stick.Activated += OnGoalStickActivated;
         }
     }
-    
-    private void OnGoalStickActivated()
-    {
+
+    private void OnGoalStickActivated() {
         PopScoreWhenHitStick();
         CompleteLevel();
     }
 
-    public void PopScoreWhenHitStick()
-    {
+    public void PopScoreWhenHitStick() {
         if (Type is not GoalType.Main) return;
-        var score = (ToLocal(_stick.GlobalPosition).Y switch
-        {
+        var score = (ToLocal(_stick.GlobalPosition).Y switch {
             <= -266 + 30 => Score10000,
             <= -266 + 60 => Score5000,
             <= -266 + 100 => Score2000,
@@ -164,70 +142,55 @@ public partial class Goal : Node2D
         this.GetPreferredRoot().AddChildAt(score, _stick.GlobalPosition);
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
-        if (FetchPlayer() is not { } player )
-        {
+        if (FetchPlayer() is not { } player) {
             return;
         }
-        if (Type == GoalType.Small)
-        {
+        if (Type == GoalType.Small) {
             ProcessSmallGoal(player);
         }
     }
 
-    private void ProcessSmallGoal(Node2D player)
-    {
-        if (player is Mario mario && (mario.ComboJumpAsked || !mario.IsOnFloor() || Math.Abs(mario.YSpeed) > 1e-4))
-        {
+    private void ProcessSmallGoal(Node2D player) {
+        if (player is Mario mario && (mario.ComboJumpAsked || !mario.IsOnFloor() || Math.Abs(mario.YSpeed) > 1e-4)) {
             return;
         }
         var relPos = ToLocal(player.GlobalPosition);
-        if (relPos.X > 0 && Mathf.Abs(relPos.Y) <= 0.5)
-        {
+        if (relPos.X > 0 && Mathf.Abs(relPos.Y) <= 0.5) {
             TryCompleteLevel(player);
         }
     }
 
-    [return:MaybeNull]
-    private Node2D FetchPlayer()
-    {
+    [return: MaybeNull]
+    private Node2D FetchPlayer() {
         if (_capturedPlayer?.GetRef() is { VariantType: Variant.Type.Object } refer &&
-            refer.AsGodotObject() is Node2D cp)
-        {
+            refer.AsGodotObject() is Node2D cp) {
             return cp;
         }
-        if (GetTree().GetAllPlayers().OfType<Node2D>().FirstOrDefault() is {} np)
-        {
+        if (GetTree().GetAllPlayers().OfType<Node2D>().FirstOrDefault() is { } np) {
             _capturedPlayer = WeakRef(np);
             return np;
         }
-        
+
         return null;
     }
 
-    private void TryCompleteLevel(Node2D player)
-    {
+    private void TryCompleteLevel(Node2D player) {
         if (HasCompletedLevel(player)) return;
         CompleteLevel();
     }
 
-    public static bool HasCompletedLevel(GodotObject player)
-    {
+    public static bool HasCompletedLevel(GodotObject player) {
         return player is Mario mario
             ? mario.HasCompletedLevel
             : player.GetMeta(LevelCompletedMetaName) is { VariantType: Variant.Type.Bool } variant && variant.AsBool();
     }
 
-    public static void SetLevelCompleted(GodotObject player, bool value)
-    {
-        if (player is Mario mario)
-        {
+    public static void SetLevelCompleted(GodotObject player, bool value) {
+        if (player is Mario mario) {
             mario.HasCompletedLevel = value;
-        }
-        else
-        {
+        } else {
             player.SetMeta(LevelCompletedMetaName, value);
         }
     }

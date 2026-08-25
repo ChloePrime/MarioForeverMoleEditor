@@ -1,29 +1,21 @@
-using ChloePrime.Godot.Util;
 using Godot;
 
 namespace ChloePrime.MarioForever.UI;
 
-public partial class OneUp : Score
-{
+public partial class OneUp : Score {
     [Export] public AudioStream Sound { get; private set; } = GD.Load<AudioStream>("res://engine/resources/ui/SE_1up.wav");
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
-        if (Sound is { } sound)
-        {
+        if (Sound is { } sound) {
             this.PlaySound(sound);
         }
     }
 
-    public override void TakeEffect()
-    {
-        if (!this.GetRule().DisableLives)
-        {
+    public override void TakeEffect() {
+        if (!this.GetRule().DisableLives) {
             GlobalData.Lives += (int)Amount;
-        }
-        else
-        {
+        } else {
             Visible = false;
             QueueFree();
         }

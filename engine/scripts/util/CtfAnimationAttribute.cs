@@ -7,13 +7,10 @@ namespace ChloePrime.MarioForever.Util;
 /// 用于提示某个 StringName 对应 RE 引擎里该物体的某个动画
 /// </summary>
 [AttributeUsage(AttributeTargets.Field)]
-public class CtfAnimationAttribute : Attribute
-{
-    public CtfAnimationAttribute(int id)
-    {
+public class CtfAnimationAttribute : Attribute {
+    public CtfAnimationAttribute(int id) {
     }
 
-    public CtfAnimationAttribute(string name)
-    {
+    public CtfAnimationAttribute(string name) {
     }
 }

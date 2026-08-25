@@ -9,8 +9,7 @@ namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 [Icon("res://engine/resources/enemies/AT_bullet_launcher_up.tres")]
-public partial class BulletLauncher : BulletLauncherBase
-{
+public partial class BulletLauncher : BulletLauncherBase {
     [Export] public double FirstShotDelay { get; set; } = 0.5F;
     [Export] public double MinDelay { get; set; } = 1.5F;
     [Export] public double MaxDelay { get; set; } = 3;
@@ -19,8 +18,7 @@ public partial class BulletLauncher : BulletLauncherBase
     [Export] public PackedScene MuzzleFlash { get; set; } = GD.Load<PackedScene>("res://engine/objects/effect/O_explosion_s.tscn");
     [Export] public AudioStreamGroup ShootSound { get; set; }
 
-    public virtual void ShootBullet()
-    {
+    public virtual void ShootBullet() {
         // 炮弹
         var root = this.GetPreferredRoot()!;
         var bullet = BulletPrefab.Instantiate();
@@ -28,64 +26,55 @@ public partial class BulletLauncher : BulletLauncherBase
         // 音效
         ShootSound?.Play();
         // 烟花
-        if (MuzzleFlash?.Instantiate() is { } flash)
-        {
-            if (flash is Node2D flash2D)
-            {
+        if (MuzzleFlash?.Instantiate() is { } flash) {
+            if (flash is Node2D flash2D) {
                 var player = GetTree().GetPlayer();
                 var xDir = player is Node2D mario ? Mathf.Sign(ToLocal(mario.GlobalPosition).X) : 0;
                 flash2D.ZIndex = ZIndex;
                 root.AddChildAt(flash, GlobalPosition + new Vector2(16 * xDir, 0));
-            }
-            else
-            {
+            } else {
                 root.AddChild(flash);
             }
         }
     }
 
-    public bool TryShootBullet()
-    {
+    public bool TryShootBullet() {
         if (!_vose.IsOnScreen()) return false;
-        
+
         var players = GetTree().GetAllPlayers();
         using var _ = (Array)players;
-        
+
         var shy = players
             .OfType<Node2D>()
             .Select(mario => ToLocal(mario.GlobalPosition))
             .Any(rp => Mathf.Abs(rp.X) < ShyDistance);
 
         if (shy) return false;
-        
+
         ShootBullet();
         return true;
     }
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _timer, NpTimer);
         this.GetNode(out _vose, NpVose);
         _timer.Timeout += OnTimerTimeout;
         _timer.WaitTime = FirstShotDelay;
         _timer.Start();
-        if (!this.GetRule().BulletLauncherBreakable)
-        {
+        if (!this.GetRule().BulletLauncherBreakable) {
             this.GetNode(out EnemyHurtDetector ehd, NpEhd);
             ehd.Monitorable = ehd.Monitoring = false;
             ehd.ProcessMode = ProcessModeEnum.Disabled;
         }
     }
 
-    private void OnTimerTimeout()
-    {
+    private void OnTimerTimeout() {
         TryShootBullet();
         ScheduleNextShot();
     }
 
-    private void ScheduleNextShot()
-    {
+    private void ScheduleNextShot() {
         _timer.WaitTime = GD.RandRange(MinDelay, MaxDelay);
         _timer.Start();
     }

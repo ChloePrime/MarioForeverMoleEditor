@@ -10,367 +10,315 @@ using DotNext.Collections.Generic;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class GravityObjectBase : CharacterBody2D, IGrabbable
-{
-	/// <see cref="ReallyEnabled"/> Enabled 并且不在出水管过程中
-	[Export]
-	public bool Enabled { get; set; }
+public partial class GravityObjectBase : CharacterBody2D, IGrabbable {
+    /// <see cref="ReallyEnabled"/> Enabled 并且不在出水管过程中
+    [Export]
+    public bool Enabled { get; set; }
 
-	/// <summary>
-	/// X 速度，永远为正
-	/// </summary>
-	/// <see cref="XDirection"/>
-	[Export]
-	public float XSpeed { get; set; }
-	
-	[Export] public float TargetSpeed { get; set; }
+    /// <summary>
+    /// X 速度，永远为正
+    /// </summary>
+    /// <see cref="XDirection"/>
+    [Export]
+    public float XSpeed { get; set; }
 
-	/// <summary>
-	/// X 方向的运动方向，为 1 或 -1
-	/// </summary>
-	[Export(PropertyHint.Enum, "Left:-1,Right:1")]
-	public float XDirection { get; set; } = -1;
+    [Export] public float TargetSpeed { get; set; }
 
-	/// <summary>
-	/// Y 速度，可能为负值
-	/// </summary>
-	[Export]
-	public float YSpeed { get; set; }
+    /// <summary>
+    /// X 方向的运动方向，为 1 或 -1
+    /// </summary>
+    [Export(PropertyHint.Enum, "Left:-1,Right:1")]
+    public float XDirection { get; set; } = -1;
 
-	[Export] public float MaxYSpeed { get; set; } = float.PositiveInfinity;
-	[Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
+    /// <summary>
+    /// Y 速度，可能为负值
+    /// </summary>
+    [Export]
+    public float YSpeed { get; set; }
 
-	[Export]
-	public bool CollideWithOthers
-	{
-		get => GetCollisionLayerValue(MaFo.CollisionLayers.Enemy) || GetCollisionMaskValue(MaFo.CollisionLayers.Enemy);
-		set
-		{
-			SetCollisionLayerValue(MaFo.CollisionLayers.Enemy, value);
-			SetCollisionMaskValue(MaFo.CollisionLayers.Enemy, value);
-		}
-	}
+    [Export] public float MaxYSpeed { get; set; } = float.PositiveInfinity;
+    [Export] public float Gravity { get; set; } = Units.Acceleration.CtfToGd(0.4F);
 
-	[Export] public Node2D Sprite { get; set; }
+    [Export]
+    public bool CollideWithOthers {
+        get => GetCollisionLayerValue(MaFo.CollisionLayers.Enemy) || GetCollisionMaskValue(MaFo.CollisionLayers.Enemy);
+        set {
+            SetCollisionLayerValue(MaFo.CollisionLayers.Enemy, value);
+            SetCollisionMaskValue(MaFo.CollisionLayers.Enemy, value);
+        }
+    }
 
-	[ExportGroup("Appearing")] [Export] public float AppearSpeed { get; set; } = Units.Speed.CtfToGd(1);
+    [Export] public Node2D Sprite { get; set; }
 
-	[Signal]
-	public delegate void HitEnemyWhenThrownEventHandler(EnemyCore hit, bool isKiss);
+    [ExportGroup("Appearing")] [Export] public float AppearSpeed { get; set; } = Units.Speed.CtfToGd(1);
 
-	public CollisionShape2D Shape => _shape ??= this.Children().OfType<CollisionShape2D>().First();
-	public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
-	public Vector2 VelocityVector
-	{
-		get => new(XSpeed * XDirection, YSpeed);
-		set => SetVelocityVector(value);
-	}
-	
-	protected bool IsVelocityExplicitSet { get; private set; }
+    [Signal]
+    public delegate void HitEnemyWhenThrownEventHandler(EnemyCore hit, bool isKiss);
 
-	public bool Appearing { get; private set; }
-	public bool ReallyEnabled => Enabled && !Appearing;
-	public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
-	public virtual bool AutoDestroy => false;
-	public virtual float AnimationDirection => XDirection;
+    public CollisionShape2D Shape => _shape ??= this.Children().OfType<CollisionShape2D>().First();
+    public Vector2 Size => _size ??= Shape.Shape.GetRect().Size;
 
-	public void AppearFrom(Vector2 pipeNormal)
-	{
-		this.DisablePhysicsInterpolationUntilNextFrame();
-		
-		var distance = pipeNormal.Abs().MaxAxisIndex() == Vector2.Axis.X ? Size.X : Size.Y;
-		Translate(-pipeNormal * distance);
+    public Vector2 VelocityVector {
+        get => new(XSpeed * XDirection, YSpeed);
+        set => SetVelocityVector(value);
+    }
 
-		_zIndexBefore = ZIndex;
-		ZIndex = -1;
-		_appearNormal = pipeNormal;
-		_appearDistance = distance;
-		Appearing = true;
-	}
+    protected bool IsVelocityExplicitSet { get; private set; }
 
-	public bool HasHitWall { get; private set; }
-	public bool WasThrown { get; private set; }
-	public bool WasShot { get; private set; }
-	public virtual bool WillHurtOthers
-	{
-		get
-		{
-			if (Grabber is Mario { PipeState: not MarioPipeState.NotInPipe })
-			{
-				return false;
-			}
-			return WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
-		}
-	}
+    public bool Appearing { get; private set; }
+    public bool ReallyEnabled => Enabled && !Appearing;
+    public virtual bool CanMove => ReallyEnabled && !(this as IGrabbable).IsGrabbed;
+    public virtual bool AutoDestroy => false;
+    public virtual float AnimationDirection => XDirection;
 
-	public float LastXSpeed { get; private set; }
-	public float LastYSpeed { get; private set; }
+    public void AppearFrom(Vector2 pipeNormal) {
+        this.DisablePhysicsInterpolationUntilNextFrame();
 
-	public override void _Ready()
-	{
-		base._Ready();
-		Grabbed += OnGrabbed;
-		GrabReleased += OnGrabReleased;
-		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
+        var distance = pipeNormal.Abs().MaxAxisIndex() == Vector2.Axis.X ? Size.X : Size.Y;
+        Translate(-pipeNormal * distance);
 
-		if (!Appearing && !Enabled)
-		{
-			Callable.From(_ReallyReady).CallDeferred();
-		}
-	}
+        _zIndexBefore = ZIndex;
+        ZIndex = -1;
+        _appearNormal = pipeNormal;
+        _appearDistance = distance;
+        Appearing = true;
+    }
 
-	protected virtual void _ProcessCollision(float delta)
-	{
-		var hitSomething = false;
-		
-		if (IsOnWall())
-		{
-			XDirection *= -1;
-			hitSomething = true;
-		}
+    public bool HasHitWall { get; private set; }
+    public bool WasThrown { get; private set; }
+    public bool WasShot { get; private set; }
 
-		if (WillHurtOthers && !IsOnFloorOnly())
-		{
-			foreach (var collision in this.GetSlideCollisions())
-			{
-				if (collision.GetCollider() is IBumpable bumpable)
-				{
-					bumpable.OnBumpBy(this);
-					hitSomething = true;
-				}
-			}
-		}
+    public virtual bool WillHurtOthers {
+        get {
+            if (Grabber is Mario { PipeState: not MarioPipeState.NotInPipe }) {
+                return false;
+            }
+            return WasThrown || WasShot || IGrabbable.IsGrabbedByPlayer(this);
+        }
+    }
 
-		if (!WasThrown) return;
-		if (IsOnFloor() && LastYSpeed > 50)
-		{
-			YSpeed = -LastYSpeed / 4;
-			hitSomething = true;
-		}
+    public float LastXSpeed { get; private set; }
+    public float LastYSpeed { get; private set; }
 
-		if (hitSomething)
-		{
-			SetDeferred(PropertyName.WasThrown, false);
-		}
-	}
+    public override void _Ready() {
+        base._Ready();
+        Grabbed += OnGrabbed;
+        GrabReleased += OnGrabReleased;
+        Velocity = new Vector2(XSpeed * XDirection, YSpeed);
 
-	private void TryHitOverlappedEnemyWhenThrown(bool isKiss)
-	{
-		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
-		{
-			CollideWithAreas = true,
-			CollideWithBodies = false,
-			CollisionMask = MaFo.CollisionMask.Enemy,
-		}).Select(result => result.Collider)
-			.OfType<EnemyHurtDetector>()
-			.Where(ehd => ehd.Core.Root != this)
-			.ForEach(ehd =>
-			{
-				EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss);
-			});
+        if (!Appearing && !Enabled) {
+            Callable.From(_ReallyReady).CallDeferred();
+        }
+    }
 
-		if (WasShot && !WasThrown)
-		{
-			var isSpeedUsual = (Mathf.IsZeroApprox(TargetSpeed) && Mathf.IsZeroApprox(XSpeed)) ||
-			                   (XSpeed - TargetSpeed <= TargetSpeed);
-			if (isSpeedUsual)
-			{
-				SetDeferred(PropertyName.WasShot, false);
-				OnShotEnd();
-			}
-		}
-	}
+    protected virtual void _ProcessCollision(float delta) {
+        var hitSomething = false;
 
-	private void TryHitOverlappedHiddenBonusWhenThrown()
-	{
-		Shape.IntersectTyped(new PhysicsShapeQueryParameters2D
-			{
-				CollideWithAreas = false,
-				CollideWithBodies = true,
-				CollisionMask = MaFo.CollisionMask.HiddenBonus,
-			}).Select(result => result.Collider)
-			.OfType<IBumpable>()
-			.ForEach(b => b.OnBumpBy(this));
-	}
-	
-	/// <summary>
-	/// 在该物件完全从水管中钻出后触发。
-	/// </summary>
-	public virtual void _ReallyReady()
-	{
-	}
+        if (IsOnWall()) {
+            XDirection *= -1;
+            hitSomething = true;
+        }
 
-	private int _zIndexBefore;
-	private uint _collLayerBeforeGrab;
-	private uint _collMaskBeforeGrab;
-	private bool? _collWithOthersBefore;
-	private Vector2 _appearNormal;
-	private float _appearDistance;
-	private Vector2? _size;
-	private CollisionShape2D _shape;
+        if (WillHurtOthers && !IsOnFloorOnly()) {
+            foreach (var collision in this.GetSlideCollisions()) {
+                if (collision.GetCollider() is IBumpable bumpable) {
+                    bumpable.OnBumpBy(this);
+                    hitSomething = true;
+                }
+            }
+        }
 
-	public override void _Process(double delta)
-	{
-		base._Process(delta);
-		if (!Enabled)
-		{
-			return;
-		}
-		if (Appearing)
-		{
-			ProcessAppearing((float)delta);
-		}
-	}
+        if (!WasThrown) return;
+        if (IsOnFloor() && LastYSpeed > 50) {
+            YSpeed = -LastYSpeed / 4;
+            hitSomething = true;
+        }
 
-	private void OnGrabbed(Mario.GrabEvent _)
-	{
-		_collWithOthersBefore = CollideWithOthers;
-		CollideWithOthers = false;
-		
-		_collLayerBeforeGrab = CollisionLayer;
-		_collMaskBeforeGrab = CollisionMask;
-		CollisionLayer = 0;
-		CollisionMask = 0;
-	}
+        if (hitSomething) {
+            SetDeferred(PropertyName.WasThrown, false);
+        }
+    }
 
-	private void OnGrabReleased(Mario.GrabReleaseEvent e)
-	{
-		if (CollisionMask == 0 && _collMaskBeforeGrab != 0)
-		{
-			CollisionMask = _collMaskBeforeGrab;
-			_collMaskBeforeGrab = 0;
-		}
-		if (e.Flags == Mario.GrabReleaseFlags.Gently)
-		{
-			OnShotEnd();
-		}
-		else
-		{
-			WasThrown = true;
-			WasShot = true;
-		}
-	}
+    private void TryHitOverlappedEnemyWhenThrown(bool isKiss) {
+        Shape.IntersectTyped(new PhysicsShapeQueryParameters2D {
+                CollideWithAreas = true,
+                CollideWithBodies = false,
+                CollisionMask = MaFo.CollisionMask.Enemy,
+            })
+            .Select(result => result.Collider)
+            .OfType<EnemyHurtDetector>()
+            .Where(ehd => ehd.Core.Root != this)
+            .ForEach(ehd => { EmitSignal(SignalName.HitEnemyWhenThrown, ehd.Core, isKiss); });
 
-	private void OnShotEnd()
-	{
-		if (CollisionLayer == 0 && _collLayerBeforeGrab != 0)
-		{
-			CollisionLayer = _collLayerBeforeGrab;
-			_collLayerBeforeGrab = 0;
-		}
-		if (_collWithOthersBefore is { } collWithOthersBefore)
-		{
-			CollideWithOthers = collWithOthersBefore;
-			_collWithOthersBefore = null;
-		}
-		_OnShotEnd();
-	}
-	
-	protected virtual void _OnShotEnd()
-	{
-		
-	}
+        if (WasShot && !WasThrown) {
+            var isSpeedUsual = (Mathf.IsZeroApprox(TargetSpeed) && Mathf.IsZeroApprox(XSpeed)) ||
+                               (XSpeed - TargetSpeed <= TargetSpeed);
+            if (isSpeedUsual) {
+                SetDeferred(PropertyName.WasShot, false);
+                OnShotEnd();
+            }
+        }
+    }
 
-	private void ProcessAppearing(float delta)
-	{
-		var wouldFinish = Mathf.IsZeroApprox(_appearDistance);
+    private void TryHitOverlappedHiddenBonusWhenThrown() {
+        Shape.IntersectTyped(new PhysicsShapeQueryParameters2D {
+                CollideWithAreas = false,
+                CollideWithBodies = true,
+                CollisionMask = MaFo.CollisionMask.HiddenBonus,
+            }).Select(result => result.Collider)
+            .OfType<IBumpable>()
+            .ForEach(b => b.OnBumpBy(this));
+    }
 
-		var offset = wouldFinish
-			? AppearSpeed * delta
-			: -_appearDistance.MoveToward(0, AppearSpeed * delta);
-		Translate(_appearNormal * offset);
+    /// <summary>
+    /// 在该物件完全从水管中钻出后触发。
+    /// </summary>
+    public virtual void _ReallyReady() {
+    }
 
-		if (Mathf.IsZeroApprox(_appearDistance) && !TestMove(GlobalTransform, DeMargin))
-		{
-			Appearing = false;
-			ZIndex = _zIndexBefore;
-			_ReallyReady();
-		}
-	}
+    private int _zIndexBefore;
+    private uint _collLayerBeforeGrab;
+    private uint _collMaskBeforeGrab;
+    private bool? _collWithOthersBefore;
+    private Vector2 _appearNormal;
+    private float _appearDistance;
+    private Vector2? _size;
+    private CollisionShape2D _shape;
 
-	private Vector2 SetVelocityVector(Vector2 value)
-	{
-		IsVelocityExplicitSet = true;
-		XDirection = value.X > 0 ? 1 : -1;
-		XSpeed = TargetSpeed = Mathf.Abs(value.X);
-		YSpeed = value.Y;
-		if (!IsNodeReady())
-		{
-			TargetSpeed = XSpeed;
-		}
-		return value;
-	}
+    public override void _Process(double delta) {
+        base._Process(delta);
+        if (!Enabled) {
+            return;
+        }
+        if (Appearing) {
+            ProcessAppearing((float)delta);
+        }
+    }
 
-	private static readonly Vector2 DeMargin = new(0, 0.08F);
+    private void OnGrabbed(Mario.GrabEvent _) {
+        _collWithOthersBefore = CollideWithOthers;
+        CollideWithOthers = false;
 
-	public override void _PhysicsProcess(double deltaD)
-	{
-		var willHurtOthers = WillHurtOthers;
-		var grabbed = (this as IGrabbable).IsGrabbed;
-		
-		if (ReallyEnabled && willHurtOthers)
-		{
-			TryHitOverlappedEnemyWhenThrown(grabbed);
-			if (!grabbed)
-			{
-				TryHitOverlappedHiddenBonusWhenThrown();
-			}
-		}
-		
-		if (!Enabled || Appearing || grabbed)
-		{
-			return;
-		}
-		
-		if (!CanMove) return;
+        _collLayerBeforeGrab = CollisionLayer;
+        _collMaskBeforeGrab = CollisionMask;
+        CollisionLayer = 0;
+        CollisionMask = 0;
+    }
 
-		var delta = (float)deltaD;
-		if (!IsOnFloor() || YSpeed < 0)
-		{
-			YSpeed = Mathf.Min(MaxYSpeed, YSpeed + Gravity * delta);
-		}
+    private void OnGrabReleased(Mario.GrabReleaseEvent e) {
+        if (CollisionMask == 0 && _collMaskBeforeGrab != 0) {
+            CollisionMask = _collMaskBeforeGrab;
+            _collMaskBeforeGrab = 0;
+        }
+        if (e.Flags == Mario.GrabReleaseFlags.Gently) {
+            OnShotEnd();
+        } else {
+            WasThrown = true;
+            WasShot = true;
+        }
+    }
 
-		Velocity = new Vector2(XSpeed * XDirection, YSpeed);
-		var collided = MoveAndSlide();
+    private void OnShotEnd() {
+        if (CollisionLayer == 0 && _collLayerBeforeGrab != 0) {
+            CollisionLayer = _collLayerBeforeGrab;
+            _collLayerBeforeGrab = 0;
+        }
+        if (_collWithOthersBefore is { } collWithOthersBefore) {
+            CollideWithOthers = collWithOthersBefore;
+            _collWithOthersBefore = null;
+        }
+        _OnShotEnd();
+    }
 
-		TryAutoDestroy();
-		if (IsQueuedForDeletion()) return;
+    protected virtual void _OnShotEnd() {
+    }
 
-		HasHitWall = Math.Abs(Velocity.X) < XSpeed;
-		LastXSpeed = XSpeed;
-		LastYSpeed = YSpeed;
-		XSpeed = Math.Abs(Velocity.X);
-		YSpeed = IsOnFloor() ? 0 : Velocity.Y;
-		
-		if (collided)
-		{
-			_ProcessCollision(delta);
-		}
+    private void ProcessAppearing(float delta) {
+        var wouldFinish = Mathf.IsZeroApprox(_appearDistance);
 
-		if (Sprite is { } sprite)
-		{
-			sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
-		}
-	}
+        var offset = wouldFinish
+            ? AppearSpeed * delta
+            : -_appearDistance.MoveToward(0, AppearSpeed * delta);
+        Translate(_appearNormal * offset);
 
-	private void TryAutoDestroy()
-	{
-		if (!AutoDestroy) return;
-		if (GetViewport().GetCamera2D() is not { } camera) return;
-		if (Position.Y > camera.LimitBottom + 64)
-		{
-			QueueFree();
-		}
-	}
+        if (Mathf.IsZeroApprox(_appearDistance) && !TestMove(GlobalTransform, DeMargin)) {
+            Appearing = false;
+            ZIndex = _zIndexBefore;
+            _ReallyReady();
+        }
+    }
 
-	// IGrabbable
+    private Vector2 SetVelocityVector(Vector2 value) {
+        IsVelocityExplicitSet = true;
+        XDirection = value.X > 0 ? 1 : -1;
+        XSpeed = TargetSpeed = Mathf.Abs(value.X);
+        YSpeed = value.Y;
+        if (!IsNodeReady()) {
+            TargetSpeed = XSpeed;
+        }
+        return value;
+    }
 
-	public Node2D Grabber { get; set; }
-	public event Action<Mario.GrabEvent> Grabbed;
-	public event Action<Mario.GrabReleaseEvent> GrabReleased;
+    private static readonly Vector2 DeMargin = new(0, 0.08F);
 
-	public void GrabNotify(Mario.GrabEvent e, Mario.GrabReleaseEvent? flags)
-	{
-		IGrabbable.GrabNotifyImpl(Grabbed, GrabReleased, e, flags);
-	}
+    public override void _PhysicsProcess(double deltaD) {
+        var willHurtOthers = WillHurtOthers;
+        var grabbed = (this as IGrabbable).IsGrabbed;
+
+        if (ReallyEnabled && willHurtOthers) {
+            TryHitOverlappedEnemyWhenThrown(grabbed);
+            if (!grabbed) {
+                TryHitOverlappedHiddenBonusWhenThrown();
+            }
+        }
+
+        if (!Enabled || Appearing || grabbed) {
+            return;
+        }
+
+        if (!CanMove) return;
+
+        var delta = (float)deltaD;
+        if (!IsOnFloor() || YSpeed < 0) {
+            YSpeed = Mathf.Min(MaxYSpeed, YSpeed + Gravity * delta);
+        }
+
+        Velocity = new Vector2(XSpeed * XDirection, YSpeed);
+        var collided = MoveAndSlide();
+
+        TryAutoDestroy();
+        if (IsQueuedForDeletion()) return;
+
+        HasHitWall = Math.Abs(Velocity.X) < XSpeed;
+        LastXSpeed = XSpeed;
+        LastYSpeed = YSpeed;
+        XSpeed = Math.Abs(Velocity.X);
+        YSpeed = IsOnFloor() ? 0 : Velocity.Y;
+
+        if (collided) {
+            _ProcessCollision(delta);
+        }
+
+        if (Sprite is { } sprite) {
+            sprite.Scale = XDirection > 0 ? Mario.Constants.DoNotFlipX : Mario.Constants.FlipX;
+        }
+    }
+
+    private void TryAutoDestroy() {
+        if (!AutoDestroy) return;
+        if (GetViewport().GetCamera2D() is not { } camera) return;
+        if (Position.Y > camera.LimitBottom + 64) {
+            QueueFree();
+        }
+    }
+
+    // IGrabbable
+
+    public Node2D Grabber { get; set; }
+    public event Action<Mario.GrabEvent> Grabbed;
+    public event Action<Mario.GrabReleaseEvent> GrabReleased;
+
+    public void GrabNotify(Mario.GrabEvent e, Mario.GrabReleaseEvent? flags) {
+        IGrabbable.GrabNotifyImpl(Grabbed, GrabReleased, e, flags);
+    }
 }

@@ -1,11 +1,9 @@
 ﻿namespace ChloePrime.MarioForever.RPG;
 
-public interface IMarioForeverNpc
-{
+public interface IMarioForeverNpc {
     public MarioForeverNpcData NpcData { get; }
 
-    public float HitPoint
-    {
+    public float HitPoint {
         get => NpcData.HitPoint;
         set => AlterHitPoint(value - HitPoint);
     }

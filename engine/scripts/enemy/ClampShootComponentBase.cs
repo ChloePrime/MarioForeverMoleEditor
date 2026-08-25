@@ -1,10 +1,8 @@
-﻿using ChloePrime.Godot.Util;
-using Godot;
+﻿using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
-public partial class ClampShootComponentBase : Node
-{
+public partial class ClampShootComponentBase : Node {
     [Export] public int BulletCount { get; set; } = 3;
     [Export] public float ShootDelay { get; set; } = 0.2F;
     [Export] public PackedScene BulletPrefab { get; set; }
@@ -13,22 +11,18 @@ public partial class ClampShootComponentBase : Node
     public ClampFlower Flower => _clamp ??= GetParent<ClampFlower>();
     public Node2D Muzzle { get; private set; }
 
-    public virtual void ShootBullet()
-    {
+    public virtual void ShootBullet() {
         ShootSound?.Play();
     }
 
-    protected virtual void OnClampMovedToTop()
-    {
-        if (Flower.VisibleOnScreenNotifier.IsOnScreen())
-        {
+    protected virtual void OnClampMovedToTop() {
+        if (Flower.VisibleOnScreenNotifier.IsOnScreen()) {
             _shootTimer.WaitTime = ShootDelay;
             _shootTimer.Start();
         }
     }
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         Flower.ClampMovedToTop += OnClampMovedToTop;
         Muzzle = Flower.GetNode<EnemyCore>(NpClampEnemyCore);
@@ -37,11 +31,9 @@ public partial class ClampShootComponentBase : Node
         _shootTimer.Timeout += OnShootTimerTimeout;
     }
 
-    private void OnShootTimerTimeout()
-    {
+    private void OnShootTimerTimeout() {
         _bulletsShot++;
-        if (_bulletsShot >= BulletCount)
-        {
+        if (_bulletsShot >= BulletCount) {
             _shootTimer.Stop();
             _bulletsShot = 0;
         }

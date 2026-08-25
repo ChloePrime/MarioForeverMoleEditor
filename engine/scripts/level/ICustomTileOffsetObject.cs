@@ -1,6 +1,5 @@
 ﻿namespace ChloePrime.MarioForever.Level;
 
-public interface ICustomTileOffsetObject
-{
+public interface ICustomTileOffsetObject {
     void CustomOffset();
 }

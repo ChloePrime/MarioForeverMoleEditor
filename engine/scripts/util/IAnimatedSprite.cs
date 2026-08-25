@@ -2,8 +2,7 @@
 
 namespace ChloePrime.MarioForever.Util;
 
-public interface IAnimatedSprite
-{
+public interface IAnimatedSprite {
     public StringName Animation { get; set; }
     public float SpeedScale { get; set; }
     public void Play();

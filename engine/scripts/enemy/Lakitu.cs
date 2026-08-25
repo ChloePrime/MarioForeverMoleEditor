@@ -4,8 +4,7 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Enemy;
 
-public partial class Lakitu : Node2D
-{
+public partial class Lakitu : Node2D {
     [Export] public PackedScene Projectile { get; set; }
     [Export] public float MinAttackDelay { get; set; } = 4;
     [Export] public float MaxAttackDelay { get; set; } = 6;
@@ -18,9 +17,8 @@ public partial class Lakitu : Node2D
 
     public const float StandardAttackCastTime = 0.8F;
     public const float StandardAttackRecoverTime = 0.2F;
-    
-    public override void _Ready()
-    {
+
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _sprite, NpSprite);
         this.GetNode(out _muzzle, NpMuzzle);
@@ -30,88 +28,72 @@ public partial class Lakitu : Node2D
         ResetAttackTimer();
     }
 
-    public async void ThrowSpiny()
-    {
+    public async void ThrowSpiny() {
         if (_sprite.Animation != Anim00Default &&
             _sprite.Animation != Anim03BlinkUp &&
-            _sprite.Animation != Anim04BlinkDown)
-        {
+            _sprite.Animation != Anim04BlinkDown) {
             return;
         }
-        
+
         _sprite.Play(Anim01AttackIn, AttackCastTime / StandardAttackCastTime);
         await this.DelayAsync(AttackCastTime);
-        if (_sprite.Animation != Anim01AttackIn)
-        {
+        if (_sprite.Animation != Anim01AttackIn) {
             return;
         }
 
-        while (_solidDetector.HasOverlappingBodies())
-        {
+        while (_solidDetector.HasOverlappingBodies()) {
             await this.DelayAsync(0.1F);
         }
-        if (_sprite.Animation != Anim01AttackIn)
-        {
-            return;
-        }
-        
-        _sprite.Play(Anim02AttackOut, AttackRecoverTime / StandardAttackRecoverTime);
-        await this.DelayAsync(AttackRecoverTime, true, true);
-        if (_sprite.Animation != Anim02AttackOut)
-        {
+        if (_sprite.Animation != Anim01AttackIn) {
             return;
         }
 
-        if (!_solidDetector.HasOverlappingBodies())
-        {
+        _sprite.Play(Anim02AttackOut, AttackRecoverTime / StandardAttackRecoverTime);
+        await this.DelayAsync(AttackRecoverTime, true, true);
+        if (_sprite.Animation != Anim02AttackOut) {
+            return;
+        }
+
+        if (!_solidDetector.HasOverlappingBodies()) {
             ThrowSpinyInstantly();
         }
         _sprite.Play(Anim00Default);
     }
 
-    public void ThrowSpinyInstantly()
-    {
+    public void ThrowSpinyInstantly() {
         AttackSound.Play();
 
-        if (Projectile is not { } prefab)
-        {
+        if (Projectile is not { } prefab) {
             return;
         }
 
         var projectile = prefab.Instantiate();
-        if (projectile is GravityObjectBase gob)
-        {
+        if (projectile is GravityObjectBase gob) {
             gob.YSpeed = -ThrowPower;
         }
         this.GetPreferredRoot().AddChildAt(projectile, _muzzle.GlobalPosition);
     }
 
-    private async void OnAttackTimerTimeout()
-    {
-        if (_vosn.IsOnScreen())
-        {
+    private async void OnAttackTimerTimeout() {
+        if (_vosn.IsOnScreen()) {
             ThrowSpiny();
         }
         await this.DelayAsync(AttackCastTime + AttackRecoverTime);
         ResetAttackTimer();
     }
 
-    private void ResetAttackTimer()
-    {
+    private void ResetAttackTimer() {
         _attackTimer.WaitTime = Mathf.Lerp(MinAttackDelay, MaxAttackDelay, GD.Randf());
         _attackTimer.StartSafely();
     }
 
-    private void OnAnimationUpdateTimerTimeout()
-    {
-        if (_sprite.Animation != Anim00Default)
-        {
+    private void OnAnimationUpdateTimerTimeout() {
+        if (_sprite.Animation != Anim00Default) {
             return;
         }
 
         var rng = GD.Randi() % 20;
-        _sprite.Animation = rng switch
-        {
+        _sprite.Animation = rng switch {
             12 => Anim03BlinkUp,
             13 => Anim04BlinkDown,
             _ => Anim00Default,
@@ -119,49 +101,41 @@ public partial class Lakitu : Node2D
         _sprite.Play();
     }
 
-    private void OnSpriteAnimationFinished()
-    {
-        if (_sprite.Animation != Anim00Default && 
+    private void OnSpriteAnimationFinished() {
+        if (_sprite.Animation != Anim00Default &&
             _sprite.Animation != Anim01AttackIn &&
-            _sprite.Animation != Anim02AttackOut)
-        {
+            _sprite.Animation != Anim02AttackOut) {
             _sprite.Animation = Anim00Default;
             _sprite.Play();
         }
     }
 
-    private void OnDied()
-    {
+    private void OnDied() {
         ScheduleRevive();
     }
 
-    private async void ScheduleRevive()
-    {
-        if (!Revives || SceneFilePath is not { Length: > 0 } prefabPath)
-        {
+    private async void ScheduleRevive() {
+        if (!Revives || SceneFilePath is not { Length: > 0 } prefabPath) {
             return;
         }
-        
+
         var root = GetParent();
         var tree = GetTree();
         var y = GlobalPosition.Y;
         await root.DelayAsync(ReviveDelay);
 
-        while (!root.IsInsideTree())
-        {
-            if (!IsInstanceValid(root) || !IsInstanceValid(tree))
-            {
+        while (!root.IsInsideTree()) {
+            if (!IsInstanceValid(root) || !IsInstanceValid(tree)) {
                 return;
             }
             await tree.Root.DelayAsync(0.5F);
         }
-        
+
         var revived = GD.Load<PackedScene>(prefabPath).Instantiate();
         root.AddChild(revived);
         revived.DisablePhysicsInterpolationUntilNextFrame();
-        
-        if (revived is Node2D revived2d)
-        {
+
+        if (revived is Node2D revived2d) {
             var frame = revived2d.GetFrame();
             Vector2 revivePos = new(frame.End.X + frame.Size.X, y);
             revived2d.GlobalPosition = revivePos;

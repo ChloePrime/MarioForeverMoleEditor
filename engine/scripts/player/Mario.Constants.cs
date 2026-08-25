@@ -5,10 +5,8 @@ using Godot;
 
 namespace ChloePrime.MarioForever.Player;
 
-public partial class Mario
-{
-    public static class Constants
-    {
+public partial class Mario {
+    public static class Constants {
         public static readonly StringName ActionMoveUp = "[moving] up";
         public static readonly StringName ActionMoveDown = "[moving] down";
         public static readonly StringName ActionMoveLeft = "[moving] left";
@@ -74,13 +72,12 @@ public partial class Mario
         public static readonly ImmutableHashSet<StringName> SpecialAnimations = ImmutableHashSet.Create(
             AnimLaunching
         );
-        
+
         public static readonly PackedScene CorpsePrefab = GD.Load<PackedScene>("res://engine/resources/mario/mario_corpse.tscn");
         public static readonly PackedScene SprintSmoke = GD.Load<PackedScene>("res://engine/resources/mario/mario_sprint_smoke.tscn");
         public static readonly PackedScene SkidSmoke = GD.Load<PackedScene>("res://engine/objects/effect/O_smoke_s.tscn");
 
-        static Constants()
-        {
+        static Constants() {
             NodeEx.Load(out SmallStatus, "res://engine/resources/mario/status_small.tres");
             NodeEx.Load(out BigStatus, "res://engine/resources/mario/status_big.tres");
             NodeEx.Load(out FireStatus, "res://engine/resources/mario/status_fire.tres");

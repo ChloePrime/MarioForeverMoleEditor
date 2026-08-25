@@ -12,10 +12,8 @@ namespace ChloePrime.Godot.Util;
 /// 在另一个 part 还有针对体素世界用的方法和属性。
 /// </summary>
 [StructLayout(LayoutKind.Auto)]
-public struct ShapeHitResult
-{
-    public ShapeHitResult(Dictionary result) : this()
-    {
+public struct ShapeHitResult {
+    public ShapeHitResult(Dictionary result) : this() {
         _data = result;
     }
 
@@ -23,7 +21,7 @@ public struct ShapeHitResult
     public int ColliderId => _colliderId ??= (int)_data["collider_id"];
     public Rid Rid => _rid ??= (Rid)_data["rid"];
     public int Shape => _shape ??= (int)_data["shape"];
-    
+
     private readonly Dictionary _data;
     private GodotObject? _collider;
     private int? _colliderId;
@@ -31,24 +29,21 @@ public struct ShapeHitResult
     private int? _shape;
 }
 
-public static class ShapeHitResultEx
-{
+public static class ShapeHitResultEx {
     public static IEnumerable<ShapeHitResult> IntersectTyped(
         this CollisionShape2D shape,
         PhysicsShapeQueryParameters2D param,
-        int maxResults = 32)
-    {
+        int maxResults = 32) {
         var state = shape.GetWorld2D().DirectSpaceState;
         param.Shape = shape.Shape;
         param.Transform = shape.GlobalTransform;
         return state.IntersectShapeTyped(param, maxResults);
     }
-    
+
     public static IEnumerable<ShapeHitResult> IntersectShapeTyped(
         this PhysicsDirectSpaceState2D state,
         PhysicsShapeQueryParameters2D parameters,
-        int maxResults = 32)
-    {
+        int maxResults = 32) {
         return state.IntersectShape(parameters, maxResults).Select(d => new ShapeHitResult(d));
     }
 }

@@ -6,26 +6,20 @@ using Godot;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class HedgehogBall : WalkableNpc
-{
+public partial class HedgehogBall : WalkableNpc {
     [Export] public PackedScene Ontology { get; set; } = GD.Load<PackedScene>("res://engine/objects/enemies/O_mole.tscn");
-    
-    public override void _PhysicsProcess(double deltaD)
-    {
+
+    public override void _PhysicsProcess(double deltaD) {
         base._PhysicsProcess(deltaD);
-        if (IsOnFloor())
-        {
+        if (IsOnFloor()) {
             TransformToOntology();
         }
     }
 
-    public void TransformToOntology()
-    {
-        if (Ontology is { } prefab)
-        {
+    public void TransformToOntology() {
+        if (Ontology is { } prefab) {
             var ontology = prefab.Instantiate();
-            if (ontology is IMarioForeverNpc npc)
-            {
+            if (ontology is IMarioForeverNpc npc) {
                 npc.NpcData.CopyValueFrom(NpcData);
             }
             this.GetPreferredRoot().AddChildAt(ontology, GlobalPosition);

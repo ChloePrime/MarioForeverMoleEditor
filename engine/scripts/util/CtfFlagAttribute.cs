@@ -7,9 +7,7 @@ namespace ChloePrime.MarioForever.Util;
 /// 用于提示某个字段对应 RE 引擎里该物体的某个 flag
 /// </summary>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class CtfFlagAttribute : Attribute
-{
-    public CtfFlagAttribute(int id)
-    {
+public class CtfFlagAttribute : Attribute {
+    public CtfFlagAttribute(int id) {
     }
 }

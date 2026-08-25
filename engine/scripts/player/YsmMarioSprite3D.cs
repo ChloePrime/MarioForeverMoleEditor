@@ -5,30 +5,24 @@ using Godot;
 namespace ChloePrime.MarioForever.Player;
 
 [GlobalClass]
-public partial class YsmMarioSprite3D : Node3D, IAnimatedSprite
-{
+public partial class YsmMarioSprite3D : Node3D, IAnimatedSprite {
     [Export] public float WalkingSpeedScale { get; private set; } = 4;
     [Export] public float RunningSpeedScale { get; private set; } = 2;
 
-    public float GetIntrinsicSpeedScale(StringName anim)
-    {
-        if (anim == Mario.Constants.AnimWalking)
-        {
+    public float GetIntrinsicSpeedScale(StringName anim) {
+        if (anim == Mario.Constants.AnimWalking) {
             return WalkingSpeedScale;
         }
-        if (anim == Mario.Constants.AnimRunning)
-        {
+        if (anim == Mario.Constants.AnimRunning) {
             return RunningSpeedScale;
         }
-        if (anim == Mario.Constants.AnimCrouching)
-        {
+        if (anim == Mario.Constants.AnimCrouching) {
             return 0;
         }
         return 1;
     }
-    
-    private static readonly Dictionary<StringName, StringName> AnimNameMappings = new()
-    {
+
+    private static readonly Dictionary<StringName, StringName> AnimNameMappings = new() {
         { Mario.Constants.AnimStopped, "idle" },
         { Mario.Constants.AnimWalking, "walk" },
         { Mario.Constants.AnimRunning, "run" },
@@ -40,45 +34,37 @@ public partial class YsmMarioSprite3D : Node3D, IAnimatedSprite
         { Mario.Constants.AnimCrouching, "sneak" },
     };
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         _mario = this.FindParentOfType<Mario>();
     }
 
-    public StringName Animation
-    {
+    public StringName Animation {
         get => _animation;
-        set
-        {
+        set {
             _animation = value;
-            if (AnimNameMappings.TryGetValue(value, out var ysmAnim))
-            {
+            if (AnimNameMappings.TryGetValue(value, out var ysmAnim)) {
                 Player.Play(ysmAnim);
             }
             Player.SpeedScale = SpeedScale * GetIntrinsicSpeedScale(value);
         }
     }
 
-    public float SpeedScale
-    {
+    public float SpeedScale {
         get => Player.SpeedScale / GetIntrinsicSpeedScale(_animation);
         set => Player.SpeedScale = value * GetIntrinsicSpeedScale(_animation);
     }
-    
-    public void Play()
-    {
+
+    public void Play() {
         Player.Play();
     }
 
-    public void Reset()
-    {
+    public void Reset() {
         Player.Stop();
         Player.Play();
     }
 
-    public event AnimationPlayer.AnimationFinishedEventHandler AnimationFinished
-    {
+    public event AnimationPlayer.AnimationFinishedEventHandler AnimationFinished {
         add => Player.AnimationFinished += value;
         remove => Player.AnimationFinished -= value;
     }

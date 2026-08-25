@@ -9,8 +9,7 @@ namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
 [Icon("res://engine/resources/enemies/AT_clamp_icon.tres")]
-public partial class ClampFlower : Node2D, ICustomTileOffsetObject
-{
+public partial class ClampFlower : Node2D, ICustomTileOffsetObject {
     public const float ForceShyShyDistance = 80;
     [Export] public Vector2 MoveDirection { get; private set; } = Vector2.Down;
     [Export] public float MoveDistance { get; private set; } = 56;
@@ -21,13 +20,11 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
 
     [Signal] public delegate void ClampMovedToTopEventHandler();
     [Signal] public delegate void ClampMovedToBottomEventHandler();
-    
+
     public VisibleOnScreenNotifier2D VisibleOnScreenNotifier => _vosn;
-    
-    public void ShrinkAndForceShy()
-    {
-        if (!_moving)
-        {
+
+    public void ShrinkAndForceShy() {
+        if (!_moving) {
             SwapMovement();
         }
         _forceShy = true;
@@ -35,8 +32,7 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
         Move(MoveDistance);
     }
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         this.GetNode(out _waitTimer, NpWaitTimer);
         this.GetNode(out _vosn, NpVosn);
@@ -44,51 +40,40 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
         _rule = this.GetRule();
     }
 
-    public override void _Process(double deltaD)
-    {
+    public override void _Process(double deltaD) {
         base._Process(deltaD);
         var delta = (float)deltaD;
-        if (_moving)
-        {
+        if (_moving) {
             Move(MoveSpeed * delta);
-        }
-        else if (_waitingForMarioToLeave)
-        {
-            if (_rule.W10EClampOffScreenPolicy && _rev && !_vosn.IsOnScreen())
-            {
+        } else if (_waitingForMarioToLeave) {
+            if (_rule.W10EClampOffScreenPolicy && _rev && !_vosn.IsOnScreen()) {
                 return;
             }
             var shyDistance = _forceShy ? ForceShyShyDistance : ShyDetectDistance;
             bool isGrowBlocked;
-            if (shyDistance != 0)
-            {
+            if (shyDistance != 0) {
                 isGrowBlocked = !_rev && GetTree().GetAllPlayers()
                     .OfType<Node2D>()
                     .Select(mario => ToLocal(mario.GlobalPosition))
                     .Any(rp => Mathf.Abs(rp.X) < shyDistance);
-            }
-            else
-            {
+            } else {
                 isGrowBlocked = false;
             }
-            if (!isGrowBlocked)
-            {
+            if (!isGrowBlocked) {
                 SwapMovement();
                 _forceShy = false;
             }
         }
     }
-    
 
-    private void Move(float distance)
-    {
+
+    private void Move(float distance) {
         if (!_moving) return;
-        
+
         var end = _rev ? 0 : MoveDistance;
         var offset = _moved.MoveToward(end, distance);
         Translate(MoveDirection * offset);
-        if (Mathf.IsEqualApprox(_moved, end))
-        {
+        if (Mathf.IsEqualApprox(_moved, end)) {
             EmitMoveEndSignal();
             _waitTimer.WaitTime = _rev ? WaitTimeUp : WaitTimeDown;
             _waitTimer.Start();
@@ -96,18 +81,15 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
         }
     }
 
-    private void EmitMoveEndSignal()
-    {
+    private void EmitMoveEndSignal() {
         EmitSignal(_rev ? SignalName.ClampMovedToTop : SignalName.ClampMovedToBottom);
     }
 
-    private void OnWaitTimerTimeout()
-    {
+    private void OnWaitTimerTimeout() {
         _waitingForMarioToLeave = true;
     }
 
-    private void SwapMovement()
-    {
+    private void SwapMovement() {
         _rev = !_rev;
         _moving = true;
         _waitingForMarioToLeave = false;
@@ -123,11 +105,10 @@ public partial class ClampFlower : Node2D, ICustomTileOffsetObject
     private float _moved;
     private bool _waitingForMarioToLeave;
     private bool _forceShy;
-    
+
     // ICustomTileOffsetObject implementation
-    
-    public void CustomOffset()
-    {
+
+    public void CustomOffset() {
         Translate(BasicOffset + DirectionalOffset.Rotated(Rotation));
     }
 

@@ -9,8 +9,7 @@ using Godot;
 namespace ChloePrime.MarioForever.Enemy;
 
 [GlobalClass]
-public partial class EnemyHurtDetector : Area2D, IStompable
-{
+public partial class EnemyHurtDetector : Area2D, IStompable {
     [Export] public bool Stompable { get; set; }
     [Export] public float StompBounceStrength { get; set; } = Units.Speed.CtfToGd(9);
     [Export] public DamageTypePreset AcceptedDamageTypes { get; set; }
@@ -20,10 +19,10 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     [Export, MaybeNull]
     public AudioStream HurtSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/enemies/SE_hit_common.wav");
-    
+
     [Export, MaybeNull]
     public AudioStream DeathSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/enemies/SE_enemy_down_2.ogg");
-    
+
     [Export, MaybeNull]
     public AudioStream StompedSound { get; set; } = GD.Load<AudioStream>("res://engine/resources/enemies/SE_stomp.wav");
 
@@ -35,19 +34,15 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     public EnemyCore Core { get; private set; }
     public Node2D Root => Core.Root;
 
-    public virtual void StompBy(Node2D stomper)
-    {
-        if (!Stompable || Core.NpcData.Friendly)
-        {
+    public virtual void StompBy(Node2D stomper) {
+        if (!Stompable || Core.NpcData.Friendly) {
             return;
         }
-        HurtBy(new DamageEvent(DamageType.Stomp, stomper)
-        {
+        HurtBy(new DamageEvent(DamageType.Stomp, stomper) {
             DamageToEnemy = stomper.GetRule().StompPower,
             ComboTracker = stomper is Mario { GameRule.ComboOnStomp: true } m ? m.StompComboTracker : null,
         });
-        if (stomper is Mario mario)
-        {
+        if (stomper is Mario mario) {
             GamepadHitFeedback(1, 1);
             var strength = Input.IsActionPressed(Mario.Constants.ActionJump) ? mario.JumpStrength : StompBounceStrength;
             Callable.From<float>(mario.Jump).CallDeferred(strength);
@@ -57,59 +52,48 @@ public partial class EnemyHurtDetector : Area2D, IStompable
     [Signal]
     public delegate void StompedEventHandler();
 
-    public virtual bool HurtBy(DamageEvent e)
-    {
-        if (!CanBeHurtBy(e) || Core.NpcData.Friendly)
-        {
+    public virtual bool HurtBy(DamageEvent e) {
+        if (!CanBeHurtBy(e) || Core.NpcData.Friendly) {
             PlayImmuneSound(e);
             return false;
         }
-        
-        if (e.DamageTypes.ContainsAny(DamageType.Stomp))
-        {
+
+        if (e.DamageTypes.ContainsAny(DamageType.Stomp)) {
             EmitSignal(SignalName.Stomped);
         }
 
         // 先掉血，血没掉完就不死
-        if (!CanBeOneHitKilledBy(e) && (Core.AsNpc.HitPoint > 0))
-        {
+        if (!CanBeOneHitKilledBy(e) && (Core.AsNpc.HitPoint > 0)) {
             Core.AsNpc.AlterHitPoint(-e.DamageToEnemy);
-            if (Core.AsNpc.HitPoint > 0)
-            {
+            if (Core.AsNpc.HitPoint > 0) {
                 OnHurt(e);
                 return false;
             }
         }
-        
+
         return Kill(e);
     }
 
-    public virtual bool Kill(DamageEvent e)
-    {
-        if (_killed)
-        {
+    public virtual bool Kill(DamageEvent e) {
+        if (_killed) {
             return true;
         }
         _killed = true;
 
-        if (e.ComboTracker is { } tracker)
-        {
+        if (e.ComboTracker is { } tracker) {
             tracker.MoveNext();
         }
 
-        if (!e.IsSilent)
-        {
+        if (!e.IsSilent) {
             PlayDeathSound(e);
         }
 
         var parent = this.GetPreferredRoot();
-        if (!this.GetRule().DisableScore && CreateScore(e) is { } score)
-        {
+        if (!this.GetRule().DisableScore && CreateScore(e) is { } score) {
             parent.AddChild(score);
             score.GlobalPosition = ToGlobal(ScorePivot);
         }
-        if (CreateCorpse(e) is { } corpse)
-        {
+        if (CreateCorpse(e) is { } corpse) {
             CustomizeCorpse(e, corpse);
             Callable.From<Node2D, Vector2>(parent.AddChildAt).CallDeferred(corpse, GlobalPosition);
         }
@@ -126,102 +110,79 @@ public partial class EnemyHurtDetector : Area2D, IStompable
 
     private static readonly AudioStream DefaultImmuneSound = GD.Load<AudioStream>("res://engine/resources/shared/SE_bump.wav");
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         Core = GetParent<EnemyCore>();
         BodyEntered += OnBodyEntered;
-        if (Core.Root is IGrabbable grabbable)
-        {
+        if (Core.Root is IGrabbable grabbable) {
             grabbable.Grabbed += e => _oldParent = e.OldParent;
-            grabbable.GrabReleased += _ =>
-            {
-                if (IsInstanceValid(this))
-                {
+            grabbable.GrabReleased += _ => {
+                if (IsInstanceValid(this)) {
                     SetDeferred(PropertyName._oldParent, (Node)null);
                 }
             };
         }
     }
 
-    private void OnBodyEntered(Node2D other)
-    {
-        if (Core.NpcData.Friendly)
-        {
+    private void OnBodyEntered(Node2D other) {
+        if (Core.NpcData.Friendly) {
             return;
         }
-        if (Stompable && other is Mario mario && mario.WillStomp(Core.Root))
-        {
+        if (Stompable && other is Mario mario && mario.WillStomp(Core.Root)) {
             StompBy(mario);
         }
     }
 
-    protected virtual void OnHurt(DamageEvent e)
-    {
+    protected virtual void OnHurt(DamageEvent e) {
         Core.EmitSignal(EnemyCore.SignalName.Hurt, e.DamageToEnemy);
         PlayHurtAnimation();
-        if (!e.IsSilent)
-        {
+        if (!e.IsSilent) {
             PlayHurtSound(e);
         }
     }
-    
-    public virtual void PlayImmuneSound(DamageEvent e)
-    {
-        if (e.DamageTypes.ContainsAny(DamageType.Fireball | DamageType.Beetroot))
-        {
+
+    public virtual void PlayImmuneSound(DamageEvent e) {
+        if (e.DamageTypes.ContainsAny(DamageType.Fireball | DamageType.Beetroot)) {
             DefaultImmuneSound.Play();
         }
     }
 
-    public virtual void PlayHurtAnimation()
-    {
-        if (Core.Animation is {} animation)
-        {
+    public virtual void PlayHurtAnimation() {
+        if (Core.Animation is { } animation) {
             animation.Stop();
             animation.Play(AnimHurt);
         }
     }
 
-    public virtual void PlayHurtSound(DamageEvent _)
-    {
+    public virtual void PlayHurtSound(DamageEvent _) {
         HurtSound?.Play();
     }
 
-    public virtual Node2D CreateScore(DamageEvent e)
-    {
+    public virtual Node2D CreateScore(DamageEvent e) {
         return e.ComboTracker is { } tracker ? tracker.CreateScore() : Score?.Instantiate<Node2D>();
     }
 
-    public virtual bool CanBeHurtBy(DamageEvent e)
-    {
+    public virtual bool CanBeHurtBy(DamageEvent e) {
         return AcceptedDamageTypes.ContainsAny(e.DamageTypes);
     }
-    
-    public virtual bool CanBeOneHitKilledBy(DamageEvent e)
-    {
+
+    public virtual bool CanBeOneHitKilledBy(DamageEvent e) {
         return OneHitDamageTypes.ContainsAny(e.DamageTypes);
     }
 
-    public virtual void PlayDeathSound(DamageEvent e)
-    {
-        if (e.DamageTypes == DamageType.Stomp)
-        {
+    public virtual void PlayDeathSound(DamageEvent e) {
+        if (e.DamageTypes == DamageType.Stomp) {
             StompedSound?.Play();
-        }
-        else
-        {
+        } else {
             (e.ComboTracker is { } tracker ? tracker.GetSound() : DeathSound)?.Play();
         }
     }
 
-    public virtual Node2D CreateCorpse(DamageEvent e)
-    {
+    public virtual Node2D CreateCorpse(DamageEvent e) {
         return Corpse.Instantiate<Node2D>();
     }
 
-    public virtual void CustomizeCorpse(DamageEvent e, Node2D corpse)
-    {
+    public virtual void CustomizeCorpse(DamageEvent e, Node2D corpse) {
         if (corpse is not GenericCorpse cor) return;
         cor.XSpeed = Units.Speed.CtfToGd(3);
         cor.YSpeed = Units.Speed.CtfMovementToGd(-35);
@@ -229,7 +190,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         var xDir = cor.XDirection = Math.Sign(e.AttackVector?.X ?? -((e.DirectSource ?? e.TrueSource).GlobalPosition.X - Root.GlobalPosition.X));
         cor.Rotator.Cycle *= xDir is 0 ? (GD.Randf() < 0.5F ? -1 : 1) : xDir;
 
-        if (Core.Sprite is not {} spr) return;
+        if (Core.Sprite is not { } spr) return;
         cor.Sprite.Position = spr.Position;
         cor.Sprite.SpriteFrames = spr.SpriteFrames;
         cor.Sprite.Stop();
@@ -238,7 +199,7 @@ public partial class EnemyHurtDetector : Area2D, IStompable
         cor.Sprite.FlipH = spr.FlipH;
         cor.Sprite.FlipV = spr.FlipV;
     }
-    
+
     // IStompable
 
     public Vector2 StompCenter => Root.GlobalPosition;

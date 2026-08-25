@@ -1,5 +1,3 @@
 ﻿namespace ChloePrime.MarioForever.Enemy;
 
-public interface ICorpse
-{
-}
+public interface ICorpse;

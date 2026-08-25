@@ -4,14 +4,11 @@ using Godot.Collections;
 namespace ChloePrime.Godot.Util;
 
 [GlobalClass]
-public partial class AudioStreamGroup : Resource
-{
+public partial class AudioStreamGroup : Resource {
     [Export] public Array<AudioStream> AudioStreamList;
 
-    public void Play()
-    {
-        switch (AudioStreamList.Count)
-        {
+    public void Play() {
+        switch (AudioStreamList.Count) {
             case 0:
                 return;
             case 1:
@@ -26,7 +23,7 @@ public partial class AudioStreamGroup : Resource
         var last = AudioStreamList[^1];
         AudioStreamList[^1] = stream;
         AudioStreamList[i] = last;
-        
+
         stream.Play();
     }
 }
