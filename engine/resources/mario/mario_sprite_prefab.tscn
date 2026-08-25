@@ -7,7 +7,7 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_ku3jn"]
 animations = [{
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"[00] stopped",
 "speed": 5.0
 }]

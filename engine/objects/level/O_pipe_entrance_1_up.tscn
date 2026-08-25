@@ -6,12 +6,12 @@
 [node name="Pipe Entrance (Up)" unique_id=1005944341 instance=ExtResource("1_fu6td")]
 Direction = 1
 
-[node name="Editor Display" parent="." index="0"]
+[node name="Editor Display" parent="." index="0" unique_id=739883209]
 texture = ExtResource("2_6to0a")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 
-[node name="Hitbox" parent="." index="1"]
+[node name="Hitbox" parent="." index="1" unique_id=2056227785]
 position = Vector2(0, -58)
 
 [node name="Enter Wait Timer" type="Timer" parent="." index="2" unique_id=1024281979]

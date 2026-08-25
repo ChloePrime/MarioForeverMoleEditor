@@ -10,5 +10,5 @@ region = Rect2(0, 128, 32, 32)
 [node name="Platform Speed Mark (Fast)" unique_id=1208610364 instance=ExtResource("1_indth")]
 TargetVelocity = Vector2(250, 0)
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=941342622]
 texture = SubResource("AtlasTexture_4f2fn")

@@ -5,6 +5,3 @@
 [node name="Score 1000" unique_id=566428687 instance=ExtResource("1_psgod")]
 region_rect = Rect2(0, 48, 42, 16)
 Amount = 1000
-
-[node name="Animation Player" parent="." index="0"]
-autoplay = &"disappearing"

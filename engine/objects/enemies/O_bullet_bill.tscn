@@ -23,7 +23,7 @@ script = ExtResource("1_do0wn")
 
 [node name="Enemy Core" parent="." unique_id=462940845 instance=ExtResource("1_aau2y")]
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 script = ExtResource("3_n4bos")
 StompedCorpse = ExtResource("4_mx1x1")
 Stompable = true
@@ -31,14 +31,14 @@ AcceptedDamageTypes = SubResource("Resource_rebif")
 OneHitDamageTypes = SubResource("Resource_rebif")
 IgnoreUnsupportedDamageTypes = true
 
-[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0"]
+[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0" unique_id=1030125473]
 shape = SubResource("RectangleShape2D_xlqrl")
 
-[node name="Collision Shape" parent="Enemy Core/Damage Source" index="0"]
+[node name="Collision Shape" parent="Enemy Core/Damage Source" parent_id_path=PackedInt32Array(462940845, 417058048) index="0" unique_id=70058063]
 position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_0x121")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = ExtResource("4_70toh")
 autoplay = "default"
 

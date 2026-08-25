@@ -6,11 +6,11 @@
 [node name="Pipe Exit (Right)" unique_id=1308802267 instance=ExtResource("1_othpe")]
 Direction = 3
 
-[node name="Editor Display" parent="." index="0"]
+[node name="Editor Display" parent="." index="0" unique_id=1808890047]
 position = Vector2(-16, -32)
 texture = ExtResource("2_7udeu")
 region_enabled = true
 region_rect = Rect2(192, 64, 64, 64)
 
-[node name="Clamp Detector" parent="." index="1"]
+[node name="Clamp Detector" parent="." index="1" unique_id=840012258]
 position = Vector2(32, -32)

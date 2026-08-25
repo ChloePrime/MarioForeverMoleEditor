@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m6imq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"0_walking",
 "speed": 6.0
 }, {
@@ -49,7 +49,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_kpfo4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"1_flying",
 "speed": 5.0
 }, {
@@ -57,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w4sii")
 }],
-"loop": true,
+"loop": 1,
 "name": &"3_shell_static",
 "speed": 0.0
 }, {
@@ -71,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3yv4t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"4_shell_moving",
 "speed": 67.0
 }]

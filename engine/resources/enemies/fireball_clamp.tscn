@@ -13,11 +13,11 @@ JumpStrength = 0.0
 TargetSpeed = 0.0
 Gravity = 500.0
 
-[node name="Action Zone" parent="." index="2"]
+[node name="Action Zone" parent="." index="2" unique_id=1674649049]
 collision_mask = 65536
 script = ExtResource("3_58eao")
 
-[node name="Collision Shape" parent="Action Zone" index="0"]
+[node name="Collision Shape" parent="Action Zone" index="0" unique_id=558757914]
 shape = SubResource("CircleShape2D_mdky4")
 
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." index="3" unique_id=169356883]

@@ -15,7 +15,7 @@ region = Rect2(0, 0, 96, 16)
 [node name="Standard Moving Platform" unique_id=2114951669 instance=ExtResource("1_e0g80")]
 script = ExtResource("2_iy5jj")
 
-[node name="Collision Shape" parent="." index="0"]
+[node name="Collision Shape" parent="." index="0" unique_id=86495568]
 shape = SubResource("RectangleShape2D_m8hl7")
 
 [node name="Static Sprite" type="Sprite2D" parent="." index="1" unique_id=76100530]

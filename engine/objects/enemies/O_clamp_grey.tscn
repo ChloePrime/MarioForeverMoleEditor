@@ -14,7 +14,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_78sn0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }]
@@ -36,21 +36,21 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qbnqt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
 [node name="Clamp (Grey)" unique_id=590032607 instance=ExtResource("1_086yn")]
 
-[node name="Stem" parent="." index="0"]
+[node name="Stem" parent="." index="0" unique_id=498225158]
 sprite_frames = SubResource("SpriteFrames_xcgw3")
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" parent_id_path=PackedInt32Array(2033821746) index="0" unique_id=1678321624]
 AcceptedDamageTypes = ExtResource("4_vkcng")
 OneHitDamageTypes = ExtResource("4_vkcng")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(2033821746) index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_5dqng")
 frame_progress = 0.158033
 

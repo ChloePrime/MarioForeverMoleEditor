@@ -33,10 +33,10 @@ rect = Rect2(-16, -16, 32, 32)
 [node name="Enemy Core" parent="." unique_id=1533463982 instance=ExtResource("3_ketea")]
 MyNpcData = null
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 Stompable = true
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = ExtResource("4_ayqsa")
 
 [editable path="Enemy Core"]

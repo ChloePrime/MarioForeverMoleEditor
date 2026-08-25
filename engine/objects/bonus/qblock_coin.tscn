@@ -11,7 +11,7 @@ ContentOffset = Vector2(0, -32)
 SmallMarioOverride = null
 BumpSound = ExtResource("3_2lktf")
 
-[node name="Editor Display" parent="." index="3"]
+[node name="Editor Display" parent="." index="3" unique_id=1692777881]
 texture = ExtResource("3_km4w1")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)

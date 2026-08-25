@@ -11,5 +11,5 @@ region = Rect2(96, 128, 32, 32)
 [node name="Platform Border Mark" unique_id=1725130412 instance=ExtResource("1_smogn")]
 script = ExtResource("2_030xa")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1442705298]
 texture = SubResource("AtlasTexture_m4ean")

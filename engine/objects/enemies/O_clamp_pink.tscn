@@ -15,7 +15,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_by5te")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }]
@@ -37,7 +37,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5xqdj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
@@ -45,10 +45,10 @@ animations = [{
 [node name="Clamp (Pink)" unique_id=417457290 instance=ExtResource("1_kxuxr")]
 WaitTimeUp = 1.2
 
-[node name="Stem" parent="." index="0"]
+[node name="Stem" parent="." index="0" unique_id=498225158]
 sprite_frames = SubResource("SpriteFrames_hooij")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(2033821746) index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_vh5tr")
 
 [node name="Shoot Component" type="Node" parent="." index="4" unique_id=1517526165]

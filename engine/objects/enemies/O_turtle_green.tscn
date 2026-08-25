@@ -48,7 +48,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5au10")
 }],
-"loop": true,
+"loop": 1,
 "name": &"0_walking",
 "speed": 6.0
 }, {
@@ -59,7 +59,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4su7l")
 }],
-"loop": true,
+"loop": 1,
 "name": &"1_flying",
 "speed": 5.0
 }, {
@@ -67,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bxpgy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"3_shell_static",
 "speed": 0.0
 }, {
@@ -84,14 +84,14 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3hix1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"4_shell_moving",
 "speed": 67.0
 }]
 
 [node name="Green Turtle" unique_id=1255177206 instance=ExtResource("1_kof02")]
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(1533463982) index="2" unique_id=38458147]
 position = Vector2(4, -7)
 sprite_frames = SubResource("SpriteFrames_pfvwb")
 animation = &"0_walking"

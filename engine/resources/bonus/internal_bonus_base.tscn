@@ -15,14 +15,14 @@ PickSound = ExtResource("4_qtpe2")
 TargetSpeed = 0.0
 CollideWithOthers = false
 
-[node name="Enemy Core" parent="." index="2"]
+[node name="Enemy Core" parent="." index="2" unique_id=1533463982]
 script = null
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 collision_layer = 0
 script = ExtResource("5_pkyu0")
 
-[node name="Damage Source" parent="Enemy Core" index="1"]
+[node name="Damage Source" parent="Enemy Core" index="1" unique_id=417058048]
 process_mode = 4
 collision_mask = 0
 monitoring = false

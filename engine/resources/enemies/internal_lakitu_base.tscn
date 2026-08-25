@@ -225,7 +225,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_311bj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"[00] default",
 "speed": 5.0
 }, {
@@ -263,7 +263,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s03sc")
 }],
-"loop": false,
+"loop": 0,
 "name": &"[01] attack_in",
 "speed": 50.0
 }, {
@@ -301,7 +301,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7vs5u")
 }],
-"loop": false,
+"loop": 0,
 "name": &"[02] attack_out",
 "speed": 50.0
 }, {
@@ -354,7 +354,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xio00")
 }],
-"loop": false,
+"loop": 0,
 "name": &"[03] blink_up",
 "speed": 50.0
 }, {
@@ -395,7 +395,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4i50r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"[04] blink_down",
 "speed": 50.0
 }]

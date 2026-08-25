@@ -12,5 +12,5 @@ region = Rect2(256, 0, 33, 32)
 Content = ExtResource("2_cyc6j")
 SmallMarioOverride = null
 
-[node name="Editor Display" parent="." index="3"]
+[node name="Editor Display" parent="." index="3" unique_id=1692777881]
 texture = SubResource("AtlasTexture_4f2nh")

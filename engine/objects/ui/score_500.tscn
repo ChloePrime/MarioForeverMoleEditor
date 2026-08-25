@@ -5,6 +5,3 @@
 [node name="Score 500" unique_id=1817828351 instance=ExtResource("1_40pwr")]
 region_rect = Rect2(0, 32, 42, 16)
 Amount = 500
-
-[node name="Animation Player" parent="." index="0"]
-autoplay = &"disappearing"

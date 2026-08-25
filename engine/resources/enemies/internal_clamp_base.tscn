@@ -15,7 +15,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0fo2x")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }]
@@ -37,20 +37,20 @@ sprite_frames = SubResource("SpriteFrames_dnxv3")
 [node name="Enemy Core" parent="." unique_id=2033821746 instance=ExtResource("1_3n0pw")]
 position = Vector2(0, -32)
 
-[node name="Hurt Detector" parent="Enemy Core" index="0"]
+[node name="Hurt Detector" parent="Enemy Core" index="0" unique_id=1678321624]
 position = Vector2(0, 8)
 
-[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0"]
+[node name="Collision Shape" parent="Enemy Core/Hurt Detector" index="0" unique_id=1030125473]
 shape = SubResource("RectangleShape2D_43am0")
 
-[node name="Damage Source" parent="Enemy Core" index="1"]
+[node name="Damage Source" parent="Enemy Core" index="1" unique_id=417058048]
 position = Vector2(0, 16)
 
-[node name="Collision Shape" parent="Enemy Core/Damage Source" index="0"]
+[node name="Collision Shape" parent="Enemy Core/Damage Source" index="0" unique_id=70058063]
 position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_juljo")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = ExtResource("3_cslh6")
 autoplay = "default"
 

@@ -5,7 +5,7 @@
 
 [node name="Fireball" unique_id=344665194 instance=ExtResource("1_dvd7v")]
 
-[node name="Action Zone" parent="." index="2"]
+[node name="Action Zone" parent="." index="2" unique_id=1674649049]
 collision_mask = 131072
 script = ExtResource("2_xjfv5")
 

@@ -20,17 +20,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7rr2f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
 [node name="Clamp (Green)" unique_id=1611254187 instance=ExtResource("1_yybt7")]
 
-[node name="Enemy Core" parent="." index="1"]
+[node name="Enemy Core" parent="." index="1" unique_id=2033821746]
 DieWhenThrownAndHitOther = false
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_5dqng")
 frame_progress = 0.158033
 

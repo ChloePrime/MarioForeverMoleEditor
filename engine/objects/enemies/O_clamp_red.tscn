@@ -20,7 +20,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jfsji")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
@@ -28,7 +28,7 @@ animations = [{
 [node name="Clamp (Red)" unique_id=1206479825 instance=ExtResource("1_wvdjp")]
 ShyDetectDistance = 40.0
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(2033821746) index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_baw4u")
 
 [editable path="Enemy Core"]

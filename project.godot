@@ -16,7 +16,7 @@ chloe_prime_rpg/config_resource="uid://ca2nbg1f77xir"
 
 config/name="MarioForeverMoleEditor"
 run/main_scene="res://engine/objects/O_level_frame.tscn"
-config/features=PackedStringArray("4.6", "C#")
+config/features=PackedStringArray("4.7", "C#")
 config/icon="uid://dt7pqquhl3hly"
 
 [audio]

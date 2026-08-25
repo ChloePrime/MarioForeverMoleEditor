@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j34do")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 7.0
 }]
@@ -48,5 +48,5 @@ region = Rect2(64, 0, 32, 32)
 AnimatedSprite = SubResource("SpriteFrames_0n425")
 AnimatedSpriteSize = Vector2(128, 32)
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=2022571357]
 texture = SubResource("AtlasTexture_8yld1")

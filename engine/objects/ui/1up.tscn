@@ -9,6 +9,3 @@ region_rect = Rect2(0, 112, 42, 16)
 script = ExtResource("2_3ytfx")
 Sound = ExtResource("3_otyle")
 Amount = 1
-
-[node name="Animation Player" parent="." index="0"]
-autoplay = &"disappearing"

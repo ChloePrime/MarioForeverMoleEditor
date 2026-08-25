@@ -5,7 +5,7 @@
 
 [node name="Launcher Base (Upper)" unique_id=411185471 instance=ExtResource("1_ddt6f")]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=277355404]
 texture = ExtResource("2_2234s")
 region_enabled = true
 region_rect = Rect2(0, 32, 32, 32)

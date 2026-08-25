@@ -119,7 +119,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cjmdb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -127,7 +127,7 @@ animations = [{
 [node name="Hedgehog Ball (Red)" unique_id=1319862508 instance=ExtResource("1_36h3b")]
 Ontology = ExtResource("2_j0io1")
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(1533463982) index="2" unique_id=38458147]
 sprite_frames = SubResource("SpriteFrames_5y6no")
 
 [editable path="Enemy Core"]

@@ -12,5 +12,5 @@ Count = 6
 Radius = 150.0
 CoreVisible = false
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=375291668]
 texture = ExtResource("4_vwc7o")

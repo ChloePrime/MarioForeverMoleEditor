@@ -50,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_orkwp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"0_walking",
 "speed": 6.0
 }, {
@@ -61,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y6uyx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"1_flying",
 "speed": 5.0
 }, {
@@ -69,7 +69,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4q4d2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"3_shell_static",
 "speed": 0.0
 }, {
@@ -86,7 +86,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eun2m")
 }],
-"loop": true,
+"loop": 1,
 "name": &"4_shell_moving",
 "speed": 67.0
 }]
@@ -95,12 +95,12 @@ animations = [{
 script = ExtResource("2_82ykn")
 JumpStrength = 550.0
 
-[node name="Sprite" parent="Enemy Core" index="2"]
+[node name="Sprite" parent="Enemy Core" parent_id_path=PackedInt32Array(1533463982) index="2" unique_id=38458147]
 position = Vector2(4, -7)
 sprite_frames = SubResource("SpriteFrames_el5ea")
 animation = &"0_walking"
 
-[node name="Fly Movement" parent="." index="4"]
+[node name="Fly Movement" parent="." index="4" unique_id=1652712844]
 script = ExtResource("4_1itbx")
 
 [editable path="Enemy Core"]

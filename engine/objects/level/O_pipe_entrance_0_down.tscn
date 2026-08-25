@@ -5,7 +5,7 @@
 
 [node name="Pipe Entrance (Down)" unique_id=270873893 instance=ExtResource("1_4fo23")]
 
-[node name="Editor Display" parent="." index="0"]
+[node name="Editor Display" parent="." index="0" unique_id=739883209]
 texture = ExtResource("2_tqsat")
 region_enabled = true
 region_rect = Rect2(64, 0, 64, 64)

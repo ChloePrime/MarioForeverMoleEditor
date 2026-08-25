@@ -15,5 +15,5 @@ region = Rect2(96, 0, 32, 32)
 [node name="Platform Style Mark (Castle, Long)" unique_id=1289242196 instance=ExtResource("1_fnq0d")]
 StaticSprite = SubResource("AtlasTexture_t1otx")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=2022571357]
 texture = SubResource("AtlasTexture_trutt")

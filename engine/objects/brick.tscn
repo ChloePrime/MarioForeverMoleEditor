@@ -16,7 +16,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jdpf1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -24,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jdpf1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"used",
 "speed": 0.0
 }]
@@ -35,5 +35,5 @@ BreakSound = ExtResource("3_o4lvq")
 OneTimeUse = false
 BumpSound = ExtResource("3_8l50f")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1932351312]
 sprite_frames = SubResource("SpriteFrames_5heba")
