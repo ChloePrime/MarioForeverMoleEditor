@@ -16,6 +16,9 @@ new_line_before_finally = false
 csharp_blank_lines_after_block_statements = 0
 # 去除行尾空格（效果不好）
 trim_trailing_whitespace = true
+# 长参数方法右括号换行设置
+csharp_wrap_parameters_style = chop_if_long
+csharp_align_multiline_parameter = false
 # Trailing Comma
 trailing_comma_in_multiline_lists = true
 # if while 等语句必须使用大括号，即使只有一行
