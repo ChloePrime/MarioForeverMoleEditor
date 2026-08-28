@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cexvlpqpvwd73" path="res://engine/scripts/tool/ImageResizerBase.cs" id="2_cnhte"]
 [ext_resource type="Texture2D" uid="uid://djbvbtl4j328x" path="res://engine/16x_testdata.png" id="3_jwqv0"]
 [ext_resource type="AudioStream" uid="uid://clojlxhrofwmh" path="res://engine/resources/shared/correct.se.wav" id="3_kv1rb"]
+[ext_resource type="AudioStream" uid="uid://lo13i2kvhf08" path="res://engine/resources/tool/image_resizer_bgm.mod" id="5_5od6j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h0atp"]
 shader = ExtResource("1_jwqv0")
@@ -68,3 +69,7 @@ centered = false
 
 [node name="Camera" type="Camera2D" parent="." unique_id=349452453]
 offset = Vector2(320, 240)
+
+[node name="Background Music" type="AudioStreamPlayer" parent="." unique_id=1790994127]
+stream = ExtResource("5_5od6j")
+autoplay = true

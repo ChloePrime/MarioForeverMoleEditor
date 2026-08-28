@@ -83,11 +83,53 @@ metadata/_custom_type_script = "uid://cf1sc3v3ksxst"
 [sub_resource type="ViewportTexture" id="ViewportTexture_jsnoi"]
 viewport_path = NodePath("Frame Buffer/XBRz Viewport/16x Pixelized Content")
 
-[node name="Tile Image Resizer" unique_id=220481887 instance=ExtResource("1_h0atp")]
+[node name="Tile Image Resizer" unique_id=220481887 node_paths=PackedStringArray("SrcMarginInput", "DstMarginInput") instance=ExtResource("1_h0atp")]
 texture = SubResource("ViewportTexture_wj16g")
 script = ExtResource("2_h0atp")
+SrcMargin = 1
+DstMargin = 2
 PrepareFormat = SubResource("Resource_wj16g")
 ExportFormat = SubResource("Resource_jsnoi")
+SrcMarginInput = NodePath("“Src Margin”/Src Margin Input")
+DstMarginInput = NodePath("“Dst Margin”/Dst Margin Input")
+
+[node name="“Src Margin”" type="Label" parent="." index="1" unique_id=566041487]
+offset_left = 3.0
+offset_top = 38.0
+offset_right = 82.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 12
+text = "Src Margin:"
+
+[node name="Src Margin Input" type="TextEdit" parent="“Src Margin”" index="0" unique_id=906454436]
+layout_mode = 0
+offset_left = 72.0
+offset_top = -3.0
+offset_right = 189.0
+offset_bottom = 21.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "1"
+placeholder_text = "Source image margin in pixels"
+
+[node name="“Dst Margin”" type="Label" parent="." index="2" unique_id=1704384037]
+offset_left = 2.0
+offset_top = 64.0
+offset_right = 113.0
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 12
+text = "Dst Margin:"
+
+[node name="Dst Margin Input" type="TextEdit" parent="“Dst Margin”" index="0" unique_id=479435641]
+layout_mode = 0
+offset_left = 73.0
+offset_top = -1.0
+offset_right = 190.0
+offset_bottom = 23.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "2"
+placeholder_text = "Destination image margin in pixels"
 
 [node name="XBRz Viewport" parent="Frame Buffer" parent_id_path=PackedInt32Array(1275563666) index="0" unique_id=970450840]
 texture = SubResource("ViewportTexture_jsnoi")
