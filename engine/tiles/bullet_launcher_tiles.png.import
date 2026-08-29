@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlwtrwivjxupw"
-path="res://.godot/imported/grass_green.png-51b1ca3df0423c813690c75d74c4ad04.ctex"
+uid="uid://dgsqt0skchyt6"
+path="res://.godot/imported/bullet_launcher_tiles.png-ad45ae4e8561eade9e9f3c52cbfe3a78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/tiles/grass_green.png"
-dest_files=["res://.godot/imported/grass_green.png-51b1ca3df0423c813690c75d74c4ad04.ctex"]
+source_file="res://engine/tiles/bullet_launcher_tiles.png"
+dest_files=["res://.godot/imported/bullet_launcher_tiles.png-ad45ae4e8561eade9e9f3c52cbfe3a78.ctex"]
 
 [params]
 
