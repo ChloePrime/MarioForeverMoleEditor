@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bmpufaagmh337"]
+
+[ext_resource type="Script" uid="uid://cnaholbf8012o" path="res://addons/brush2d/brush2d.gd" id="1_g6s2n"]
+
+[node name="Object Brush" type="Node2D" unique_id=1167891729]
+script = ExtResource("1_g6s2n")

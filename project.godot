@@ -45,7 +45,7 @@ import/use_multiple_threads=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ChloePrime.Godot.RPG/plugin.cfg", "res://addons/YATI/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/brush2d/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
+enabled=PackedStringArray("res://addons/ChloePrime.Godot.RPG/plugin.cfg", "res://addons/abfi/plugin.cfg", "res://addons/brush2d/plugin.cfg", "res://addons/godot-openmpt/plugin.cfg")
 
 [importer_defaults]
 

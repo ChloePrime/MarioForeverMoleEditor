@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bqphdpi8q6vk4"]
+
+[ext_resource type="TileSet" uid="uid://cg58xfi05utbg" path="res://engine/tiles/marioforever.tileset.tres" id="1_c0tld"]
+
+[node name="Tiles" type="TileMapLayer" unique_id=231005891]
+tile_set = ExtResource("1_c0tld")
