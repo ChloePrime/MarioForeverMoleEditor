@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://c0vwkrgvejmd8"]
+
+[ext_resource type="Script" uid="uid://t8k1iilbkyl5" path="res://addons/brush2d/param_dock.gd" id="1_tvl6v"]
+
+[node name="ParamDock" type="VBoxContainer" unique_id=634652624]
+offset_right = 320.0
+offset_bottom = 192.0
+script = ExtResource("1_tvl6v")
+
+[node name="Label" type="Label" parent="." unique_id=612104279]
+layout_mode = 2
+text = "Rect"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1608097701]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=292966317]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=2068199162]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=841638213]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49019608, 0.24313726, 0.28627452, 1)
+text = "x"
+
+[node name="Rx" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=357949084]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=2049017757]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=921317418]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42352942, 0.5019608, 0.24705882, 1)
+text = "y"
+
+[node name="Ry" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=831049900]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=609850102]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1040548893]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49019608, 0.24313726, 0.28627452, 1)
+text = "w"
+
+[node name="Rw" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=621631425]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=479071256]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1885493935]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42352942, 0.5019608, 0.24705882, 1)
+text = "h"
+
+[node name="Rh" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1244808952]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
+
+[node name="Label2" type="Label" parent="." unique_id=1312210368]
+layout_mode = 2
+text = "Offset"
+
+[node name="PanelContainer2" type="PanelContainer" parent="." unique_id=575543787]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2" unique_id=1083884916]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer2/HBoxContainer" unique_id=814369327]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49019608, 0.24313726, 0.28627452, 1)
+text = "x"
+
+[node name="Ox" type="SpinBox" parent="PanelContainer2/HBoxContainer" unique_id=80484377]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
+
+[node name="Control" type="Control" parent="PanelContainer2/HBoxContainer" unique_id=1100403255]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer2/HBoxContainer" unique_id=203154756]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42352942, 0.5019608, 0.24705882, 1)
+text = "y"
+
+[node name="Oy" type="SpinBox" parent="PanelContainer2/HBoxContainer" unique_id=944188966]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+step = 0.1
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+select_all_on_focus = true
