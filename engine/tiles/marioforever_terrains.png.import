@@ -3,25 +3,26 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c2xfexiy1rnqh"
-path="res://.godot/imported/marioforever_terrains.png-fa0347235560b7024d3290c90bea91c4.ctex"
+path.bptc="res://.godot/imported/marioforever_terrains.png-fa0347235560b7024d3290c90bea91c4.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://engine/tiles/marioforever_terrains.png"
-dest_files=["res://.godot/imported/marioforever_terrains.png-fa0347235560b7024d3290c90bea91c4.ctex"]
+dest_files=["res://.godot/imported/marioforever_terrains.png-fa0347235560b7024d3290c90bea91c4.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=2
 compress/channel_pack=0
 mipmaps/generate=false
 mipmaps/limit=-1
